@@ -1,0 +1,21 @@
+{
+  "item.fishandshiz.fishmeal": "Fishmeal",
+  "item.fishandshiz.fish_food": "Fish Food",
+  "item.fishandshiz.fanwort": "Fanwort",
+  "item.fishandshiz.angelfish_bucket": "Bucket of Angelfish",
+  "item.fishandshiz.angelfish_egg_bucket": "Bucket of Angelfish Eggs",
+  "item.fishandshiz.angelfish_fry_bucket": "Bucket of Angelfish Fry",
+  "item.fishandshiz.corn_kernels": "Corn Kernels",
+  "item.fishandshiz.corn": "Corn",
+  "item.fishandshiz.milkfish_bucket": "Bucket of Milkfish",
+  "item.fishandshiz.milkfish_egg_bucket": "Bucket of Milkfish Eggs",
+  "item.fishandshiz.milkfish_fry_bucket": "Bucket of Milkfish Fry",
+  "item.fishandshiz.archerfish_bucket": "Bucket of Archerfish",
+  "item.fishandshiz.milkfish": "Raw Milkfish",
+  "item.fishandshiz.cooked_milkfish": "Cooked Milkfish",
+  "item.fishandshiz.archerfish_spawn_egg": "Archerfish Spawn Egg",
+  "item.fishandshiz.milkfish_spawn_egg": "Milkfish Spawn Egg",
+  "item.fishandshiz.capybara_spawn_egg": "Capybara Spawn Egg",
+
+  "block.fishandshiz.fishmeal_block": "Block of Fishmeal"
+}
