@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:barrel",
+  "type": "minecraft:chest",
   "pools": [
     {
       "bonus_rolls": 0.0,
@@ -7,7 +7,7 @@
         {
           "type": "minecraft:item",
           "name": "fishandshiz:angelfish_egg_bucket",
-          "weight": 10
+          "weight": 20
         },
         {
           "type": "minecraft:item",
@@ -38,7 +38,7 @@
             }
           ],
           "name": "fishandshiz:fishmeal",
-          "weight": 20
+          "weight": 35
         },
         {
           "type": "minecraft:item",
@@ -70,7 +70,7 @@
             }
           ],
           "name": "fishandshiz:fish_food",
-          "weight": 10
+          "weight": 20
         },
         {
           "type": "minecraft:item",
@@ -79,7 +79,7 @@
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
+                "max": 5.0,
                 "min": 1.0
               },
               "function": "minecraft:set_count"
