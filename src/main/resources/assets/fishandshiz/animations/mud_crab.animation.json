@@ -7,12 +7,7 @@
 			"bones": {
 				"head": {
 					"rotation": {
-						"0.0": {
-							"vector": [0, -90, 0]
-						},
-						"0.4167": {
-							"vector": [0, -87.5, 0]
-						}
+						"vector": [0, -90, 0]
 					}
 				},
 				"rightClaw1": {

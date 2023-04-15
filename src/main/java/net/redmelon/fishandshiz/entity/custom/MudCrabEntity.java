@@ -1,26 +1,15 @@
 package net.redmelon.fishandshiz.entity.custom;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MovementType;
-import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
