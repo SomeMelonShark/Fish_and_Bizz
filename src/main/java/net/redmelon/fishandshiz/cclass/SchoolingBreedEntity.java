@@ -43,11 +43,6 @@ public abstract class SchoolingBreedEntity extends AnimalFishEntity {
         return !this.hasLeader();
     }
 
-    @Nullable
-    public AngelfishEntity createChild(ServerWorld world, AngelfishEntity entity) {
-        return null;
-    }
-
     @Override
     protected SoundEvent getFlopSound() {
         return null;

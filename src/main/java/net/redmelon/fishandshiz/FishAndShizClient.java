@@ -8,6 +8,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.redmelon.fishandshiz.block.ModBlocks;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.client.CapybaraRenderer;
+import net.redmelon.fishandshiz.entity.client.MudCrabRenderer;
 import net.redmelon.fishandshiz.entity.client.fish.*;
 
 public class FishAndShizClient implements ClientModInitializer {
@@ -28,6 +29,7 @@ public class FishAndShizClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.NEON_TETRA, NeonTetraRenderer::new);
         EntityRendererRegistry.register(ModEntities.NEON_TETRA_FRY, NeonTetraFryRenderer::new);
         EntityRendererRegistry.register(ModEntities.NEON_TETRA_EGG, NeonTetraEggRenderer::new);
+        EntityRendererRegistry.register(ModEntities.MUD_CRAB, MudCrabRenderer::new);
         EntityRendererRegistry.register(ModEntities.CAPYBARA, CapybaraRenderer::new);
     }
 }

@@ -51,6 +51,10 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "neon_tetra_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
                     NeonTetraEggEntity::new).dimensions(EntityDimensions.fixed(0.1f, 0.1f)).build());
 
+    public static final EntityType<MudCrabEntity> MUD_CRAB = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "mud_crab"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
+                    MudCrabEntity::new).dimensions(EntityDimensions.fixed(0.7f, 0.5f)).build());
+
     public static final EntityType<CapybaraEntity> CAPYBARA = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "capybara"), FabricEntityTypeBuilder.create(SpawnGroup.CREATURE,
                     CapybaraEntity::new).dimensions(EntityDimensions.fixed(0.8f, 0.6f)).build());

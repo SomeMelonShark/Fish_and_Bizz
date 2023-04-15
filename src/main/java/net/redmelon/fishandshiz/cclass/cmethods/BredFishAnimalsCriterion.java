@@ -10,6 +10,7 @@ import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
+import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,6 +32,15 @@ public class BredFishAnimalsCriterion extends AbstractCriterion<net.minecraft.ad
     }
 
     public void trigger(ServerPlayerEntity player, AnimalFishEntity parent, AnimalFishEntity partner, @Nullable PassiveWaterEntity child) {
+        LootContext lootContext = EntityPredicate.createAdvancementEntityLootContext(player, parent);
+        LootContext lootContext2 = EntityPredicate.createAdvancementEntityLootContext(player, partner);
+        LootContext lootContext3 = child != null ? EntityPredicate.createAdvancementEntityLootContext(player, child) : null;
+        this.trigger(player, (conditions) -> {
+            return conditions.matches(lootContext, lootContext2, lootContext3);
+        });
+    }
+
+    public void trigger2(ServerPlayerEntity player, AnimalWaterEntity parent, AnimalWaterEntity partner, @Nullable PassiveWaterEntity child) {
         LootContext lootContext = EntityPredicate.createAdvancementEntityLootContext(player, parent);
         LootContext lootContext2 = EntityPredicate.createAdvancementEntityLootContext(player, partner);
         LootContext lootContext3 = child != null ? EntityPredicate.createAdvancementEntityLootContext(player, child) : null;

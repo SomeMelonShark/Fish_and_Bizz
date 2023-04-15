@@ -19,6 +19,8 @@ public class ModItems {
             new SpawnEggItem(ModEntities.ARCHERFISH, 0xcdcc9d, 0x504848, new FabricItemSettings()));
     public static final Item MILKFISH_SPAWN_EGG = registerItem("milkfish_spawn_egg",
             new SpawnEggItem(ModEntities.MILKFISH, 0xc2d1e0, 0x79828b, new FabricItemSettings()));
+    public static final Item MUD_CRAB_SPAWN_EGG = registerItem("mud_crab_spawn_egg",
+            new SpawnEggItem(ModEntities.MUD_CRAB, 0x2f5553, 0xab5315, new FabricItemSettings()));
     public static final Item CAPYBARA_SPAWN_EGG = registerItem("capybara_spawn_egg",
             new SpawnEggItem(ModEntities.CAPYBARA, 0x745a3e, 0xbd8244, new FabricItemSettings()));
     public static final Item FANWORT = registerItem("fanwort",
@@ -37,6 +39,9 @@ public class ModItems {
             new EntityBucketItem(ModEntities.MILKFISH_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings()));
     public static final Item MILKFISH_EGG_BUCKET = registerItem("milkfish_egg_bucket",
             new EntityBucketItem(ModEntities.MILKFISH_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings()));
+
+    public static final Item MUD_CRAB_BUCKET = registerItem("mud_crab_bucket",
+            new EntityBucketItem(ModEntities.MUD_CRAB, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_POWDER_SNOW, new FabricItemSettings()));
     public static final Item MILKFISH = registerItem("milkfish",
             new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(2).saturationModifier(2f).build())));
     public static final Item COOKED_MILKFISH = registerItem("cooked_milkfish",
@@ -60,12 +65,14 @@ public class ModItems {
         addToItemGroup(ItemGroups.TOOLS, MILKFISH_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, MILKFISH_FRY_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, MILKFISH_EGG_BUCKET);
+        addToItemGroup(ItemGroups.TOOLS, MUD_CRAB_BUCKET);
         addToItemGroup(ItemGroups.FOOD_AND_DRINK, MILKFISH);
         addToItemGroup(ItemGroups.FOOD_AND_DRINK, COOKED_MILKFISH);
         addToItemGroup(ItemGroups.NATURAL, CORN_KERNELS);
         addToItemGroup(ItemGroups.FOOD_AND_DRINK, CORN);
         addToItemGroup(ItemGroups.SPAWN_EGGS, ARCHERFISH_SPAWN_EGG);
         addToItemGroup(ItemGroups.SPAWN_EGGS, MILKFISH_SPAWN_EGG);
+        addToItemGroup(ItemGroups.SPAWN_EGGS, MUD_CRAB_SPAWN_EGG);
         addToItemGroup(ItemGroups.SPAWN_EGGS, CAPYBARA_SPAWN_EGG);
     }
     private static void addToItemGroup(ItemGroup group, Item item) {

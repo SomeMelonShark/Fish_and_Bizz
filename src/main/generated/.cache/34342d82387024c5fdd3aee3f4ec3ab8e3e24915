@@ -1,11 +1,13 @@
-// 1.19.3	2023-04-14T18:17:41.9480642	Fish And Shiz/Model Definitions
+// 1.19.3	2023-04-15T19:42:47.5750237	Fish And Shiz/Model Definitions
 0b831e5854897fdb2f3accdaaf99461f3709ab74 assets\fishandshiz\models\item\fish_food.json
 9a3b314179b615b90d42b0574bd5ac772a180e07 assets\fishandshiz\models\block\fishmeal_block.json
 e1e0e37f94c5b16532887de896760ace55a17a78 assets\fishandshiz\models\item\milkfish_fry_bucket.json
 bf95c57bb030dfb738e07100fd4d86abdfeb1a27 assets\fishandshiz\models\item\milkfish.json
+12bcb5d4b7b8d5e66aeb76a0e2633230d22a7451 assets\fishandshiz\models\item\mud_crab_bucket.json
 85e16a14a335ff730d592129d66930e858c4c741 assets\fishandshiz\blockstates\fanwort_plant.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\fishandshiz\models\item\capybara_spawn_egg.json
 ef83488e9fe7d49ef4669255a5a1f6d66e29aa48 assets\fishandshiz\models\item\fishmeal.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\fishandshiz\models\item\mud_crab_spawn_egg.json
 b09894ad6433f7972d2d450b8f19e8432545b478 assets\fishandshiz\models\item\cooked_milkfish.json
 cd94a2c9964451d721a998a6bf5d9d2a0c0e9cb5 assets\fishandshiz\models\item\fishmeal_block.json
 a3905248f87adc947ec94270f381fb53b8bbd78c assets\fishandshiz\models\item\milkfish_bucket.json

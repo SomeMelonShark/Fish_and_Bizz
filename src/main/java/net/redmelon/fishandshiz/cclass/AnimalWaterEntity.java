@@ -15,11 +15,13 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -31,36 +33,20 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.*;
 import net.redmelon.fishandshiz.cclass.cmethods.CustomCriteria;
-import net.redmelon.fishandshiz.entity.custom.AngelfishEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
-public abstract class AnimalFishEntity extends PassiveWaterEntity implements Bucketable {
+public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bucketable {
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final int BREEDING_COOLDOWN = 6000;
     protected int loveTicks;
     @Override
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return dimensions.height * 0.65f;
-    }
-
-    public static DefaultAttributeContainer.Builder createFishAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 3.0);
-    }
-
-    @Override
-    public boolean cannotDespawn() {
-        return super.cannotDespawn() || this.isFromBucket();
-    }
-
-    @Override
-    public int getLimitPerChunk() {
-        return 8;
     }
 
     @Override
@@ -82,26 +68,6 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
     @Override
     protected void initGoals() {
         super.initGoals();
-        this.goalSelector.add(4, new AnimalFishEntity.SwimToRandomPlaceGoal(this));
-    }
-
-    @Override
-    protected EntityNavigation createNavigation(World world) {
-        return new SwimNavigation(this, world);
-    }
-
-    @Override
-    public void travel(Vec3d movementInput) {
-        if (this.canMoveVoluntarily() && this.isTouchingWater()) {
-            this.updateVelocity(0.01f, movementInput);
-            this.move(MovementType.SELF, this.getVelocity());
-            this.setVelocity(this.getVelocity().multiply(0.9));
-            if (this.getTarget() == null) {
-                this.setVelocity(this.getVelocity().add(0.0, -0.005, 0.0));
-            }
-        } else {
-            super.travel(movementInput);
-        }
     }
 
     @Override
@@ -123,8 +89,6 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         return true;
     }
 
-    protected abstract SoundEvent getFlopSound();
-
     @Override
     protected SoundEvent getSwimSound() {
         return SoundEvents.ENTITY_FISH_SWIM;
@@ -136,44 +100,19 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
 
     static class FishMoveControl
             extends MoveControl {
-        protected final AnimalFishEntity fish;
+        protected final AnimalWaterEntity fish;
 
-        FishMoveControl(AnimalFishEntity owner) {
+        FishMoveControl(AnimalWaterEntity owner) {
             super(owner);
             this.fish = owner;
-        }
-
-        @Override
-        public void tick() {
-            if (this.fish.isSubmergedIn(FluidTags.WATER)) {
-                this.fish.setVelocity(this.fish.getVelocity().add(0.0, 0.005, 0.0));
-            }
-            if (this.state != MoveControl.State.MOVE_TO || this.fish.getNavigation().isIdle()) {
-                this.fish.setMovementSpeed(0.0f);
-                return;
-            }
-            float f = (float)(this.speed * this.fish.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
-            this.fish.setMovementSpeed(MathHelper.lerp(0.125f, this.fish.getMovementSpeed(), f));
-            double d = this.targetX - this.fish.getX();
-            double e = this.targetY - this.fish.getY();
-            double g = this.targetZ - this.fish.getZ();
-            if (e != 0.0) {
-                double h = Math.sqrt(d * d + e * e + g * g);
-                this.fish.setVelocity(this.fish.getVelocity().add(0.0, (double)this.fish.getMovementSpeed() * (e / h) * 0.1, 0.0));
-            }
-            if (d != 0.0 || g != 0.0) {
-                float i = (float)(MathHelper.atan2(g, d) * 57.2957763671875) - 90.0f;
-                this.fish.setYaw(this.wrapDegrees(this.fish.getYaw(), i, 90.0f));
-                this.fish.bodyYaw = this.fish.getYaw();
-            }
         }
     }
 
     static class SwimToRandomPlaceGoal
             extends SwimAroundGoal {
-        private final AnimalFishEntity fish;
+        private final AnimalWaterEntity fish;
 
-        public SwimToRandomPlaceGoal(AnimalFishEntity fish) {
+        public SwimToRandomPlaceGoal(AnimalWaterEntity fish) {
             super(fish, 1.0, 40);
             this.fish = fish;
         }
@@ -187,11 +126,11 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
     @Nullable
     private UUID lovingPlayer;
 
-    protected AnimalFishEntity(EntityType<? extends AnimalFishEntity> entityType, World world) {
+    protected AnimalWaterEntity(EntityType<? extends AnimalWaterEntity> entityType, World world) {
         super((EntityType<? extends PassiveWaterEntity>) entityType, world);
         this.setPathfindingPenalty(PathNodeType.DANGER_FIRE, 16.0f);
         this.setPathfindingPenalty(PathNodeType.DAMAGE_FIRE, -1.0f);
-        this.moveControl = new AnimalFishEntity.FishMoveControl(this);
+        this.moveControl = new AnimalWaterEntity.FishMoveControl(this);
     }
 
     @Override
@@ -216,12 +155,6 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
                 double f = this.random.nextGaussian() * 0.02;
                 this.world.addParticle(ParticleTypes.HEART, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
             }
-        }
-        if (!this.isTouchingWater() && this.onGround && this.verticalCollision) {
-            this.setVelocity(this.getVelocity().add((this.random.nextFloat() * 2.0f - 1.0f) * 0.05f, 0.4f, (this.random.nextFloat() * 2.0f - 1.0f) * 0.05f));
-            this.onGround = false;
-            this.velocityDirty = true;
-            this.playSound(this.getFlopSound(), this.getSoundVolume(), this.getSoundPitch());
         }
         super.tickMovement();
     }
@@ -268,6 +201,12 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         this.setFromBucket(nbt.getBoolean("FromBucket"));
     }
 
+    public static boolean isValidNaturalSpawn(EntityType<? extends AnimalWaterEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        return world.getBlockState(pos.down()).isIn(BlockTags.ANIMALS_SPAWNABLE_ON) && isLightLevelValidForNaturalSpawn(world, pos);
+    }
+    protected static boolean isLightLevelValidForNaturalSpawn(BlockRenderView world, BlockPos pos) {
+        return world.getBaseLightLevel(pos, 0) > 0;
+    }
     @Override
     public int getMinAmbientSoundDelay() {
         return 120;
@@ -355,7 +294,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         this.loveTicks = 0;
     }
 
-    public boolean canBreedWith(AnimalFishEntity other) {
+    public boolean canBreedWith(AnimalWaterEntity other) {
         if (other == this) {
             return false;
         }
@@ -365,7 +304,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         return this.isInLove() && other.isInLove();
     }
 
-    public void breed(ServerWorld world, AnimalFishEntity other) {
+    public void breed(ServerWorld world, AnimalWaterEntity other) {
         PassiveWaterEntity passiveWaterEntity = this.createChild(world, other);
         if (passiveWaterEntity == null) {
             return;
@@ -376,7 +315,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         }
         if (serverPlayerEntity != null) {
             serverPlayerEntity.incrementStat(Stats.ANIMALS_BRED);
-            CustomCriteria.BRED_ANIMALS.trigger(serverPlayerEntity, this, other, passiveWaterEntity);
+            CustomCriteria.BRED_ANIMALS.trigger2(serverPlayerEntity, this, other, passiveWaterEntity);
         }
         this.setBreedingAge(6000);
         other.setBreedingAge(6000);
