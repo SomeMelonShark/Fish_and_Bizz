@@ -64,8 +64,6 @@ public class MudCrabEntity extends AnimalWaterEntity implements GeoEntity {
         return SoundEvents.ENTITY_GUARDIAN_FLOP;
     }
 
-
-
     private PlayState genericFlopController(AnimationState animationState) {
         if (animationState.isMoving() && this.isOnGround()) {
             animationState.getController().setAnimation(RawAnimation.begin()
@@ -93,7 +91,7 @@ public class MudCrabEntity extends AnimalWaterEntity implements GeoEntity {
 
     @Override
     public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return ModEntities.MUD_CRAB.create(world);
+        return ModEntities.MUD_CRAB_EGG.create(world);
     }
     @Override
     protected SoundEvent getDeathSound() {

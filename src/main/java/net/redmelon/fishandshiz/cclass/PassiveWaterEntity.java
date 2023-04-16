@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class PassiveWaterEntity extends WaterCreatureEntity {
-    private static final TrackedData<Boolean> CHILD = DataTracker.registerData(PassiveWaterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Boolean> CHILD = DataTracker.registerData(PassiveWaterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public static final int BABY_AGE = -24000;
     private static final int HAPPY_TICKS = 40;
     protected int breedingAge;
