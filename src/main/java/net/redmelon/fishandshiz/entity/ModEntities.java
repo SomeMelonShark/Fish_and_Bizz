@@ -39,6 +39,18 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "milkfish_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
                     MilkfishEggEntity::new).dimensions(EntityDimensions.fixed(1.0f, 0.1f)).build());
 
+    public static final EntityType<ClownfishEntity> CLOWNFISH = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "clownfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
+                    ClownfishEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.2f)).build());
+
+    public static final EntityType<ClownfishFryEntity> CLOWNFISH_FRY = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "clownfish_fry"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
+                    ClownfishFryEntity::new).dimensions(EntityDimensions.fixed(ClownfishFryEntity.WIDTH, ClownfishFryEntity.HEIGHT)).build());
+
+    public static final EntityType<ClownfishEggEntity> CLOWNFISH_EGG = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "clownfish_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
+                    ClownfishEggEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.1f)).build());
+
     public static final EntityType<NeonTetraEntity> NEON_TETRA = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "neon_tetra"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
                     NeonTetraEntity::new).dimensions(EntityDimensions.fixed(0.2f, 0.1f)).build());

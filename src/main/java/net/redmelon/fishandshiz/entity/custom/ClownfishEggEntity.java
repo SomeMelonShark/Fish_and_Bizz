@@ -16,6 +16,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
+import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
@@ -24,15 +25,16 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class NeonTetraEggEntity extends NeonTetraEntity implements GeoEntity {
+public class ClownfishEggEntity extends ClownfishEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_NEON_TETRA_EGG_AGE = Math.abs(-12000);
-    private int neonTetraEggAge;
+    public static int MAX_CLOWNFISH_EGG_AGE = Math.abs(-12000);
+    private int clowfishEggAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-    public NeonTetraEggEntity(EntityType<? extends NeonTetraEntity> entityType, World world) {
+
+    public ClownfishEggEntity(EntityType<? extends ClownfishEntity> entityType, World world) {
         super(entityType, world);
-        this.moveControl = new NeonTetraEggEntity.FishMoveControl(this);
+        this.moveControl = new ClownfishEggEntity.FishMoveControl(this);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -49,57 +51,53 @@ public class NeonTetraEggEntity extends NeonTetraEntity implements GeoEntity {
         }
 
         @Override
-        public void tick() {//does not move
+        public void tick() {/**does not move**/
         }
     }
+
     @Override
     public void tickMovement() {
         super.tickMovement();
         if (!this.world.isClient) {
-            this.setNeonTetraEggAge(this.neonTetraEggAge + 1);
+            this.setClowfishEggAge(this.clowfishEggAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.neonTetraEggAge);
+        nbt.putInt("Age", this.clowfishEggAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setNeonTetraEggAge(nbt.getInt("Age"));
+        this.setClowfishEggAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getNeonTetraEggAge());
+        nbtCompound.putInt("Age", this.getClowfishEggAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setNeonTetraEggAge(nbt.getInt("Age"));
+            this.setClowfishEggAge(nbt.getInt("Age"));
         }
     }
-    private int getNeonTetraEggAge() {
-        return this.neonTetraEggAge;
+
+    private int getClowfishEggAge() {
+        return this.clowfishEggAge;
     }
     private void increaseAge(int seconds) {
-        this.setNeonTetraEggAge(this.neonTetraEggAge + seconds * 20);
+        this.setClowfishEggAge(this.clowfishEggAge + seconds * 20);
     }
-    private void setNeonTetraEggAge(int neonTetraEggAge) {
-        this.neonTetraEggAge = neonTetraEggAge;
-        if (this.neonTetraEggAge >= MAX_NEON_TETRA_EGG_AGE) {
+    private void setClowfishEggAge(int clowfishEggAge) {
+        this.clowfishEggAge = clowfishEggAge;
+        if (this.clowfishEggAge >= MAX_CLOWNFISH_EGG_AGE) {
             this.growUp();
         }
     }
-
-    @Override
-    public boolean isBreedingItem(ItemStack stack) {
-        return false;
-    }
-
 
     private void growUp() {
         World world = this.world;
@@ -107,29 +105,34 @@ public class NeonTetraEggEntity extends NeonTetraEntity implements GeoEntity {
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                NeonTetraFryEntity neonTetraFryEntity = ModEntities.NEON_TETRA_FRY.create(this.world);
-                if (neonTetraFryEntity != null) {
-                    neonTetraFryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    neonTetraFryEntity.initialize(serverWorld, this.world.getLocalDifficulty(neonTetraFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                    neonTetraFryEntity.setAiDisabled(this.isAiDisabled());
+                ClownfishFryEntity clownfishFryEntity = ModEntities.CLOWNFISH_FRY.create(this.world);
+                if (clownfishFryEntity != null) {
+                    clownfishFryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                    clownfishFryEntity.initialize(serverWorld, this.world.getLocalDifficulty(clownfishFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    clownfishFryEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
-                        neonTetraFryEntity.setCustomName(this.getCustomName());
-                        neonTetraFryEntity.setCustomNameVisible(this.isCustomNameVisible());
+                        clownfishFryEntity.setCustomName(this.getCustomName());
+                        clownfishFryEntity.setCustomNameVisible(this.isCustomNameVisible());
                     }
-                    neonTetraFryEntity.setPersistent();
+                    clownfishFryEntity.setPersistent();
                     this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
-                    serverWorld.spawnEntityAndPassengers(neonTetraFryEntity);
+                    serverWorld.spawnEntityAndPassengers(clownfishFryEntity);
                     this.discard();
                 }
             }
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_NEON_TETRA_EGG_AGE - this.neonTetraEggAge);
+        return Math.max(0, MAX_CLOWNFISH_EGG_AGE - this.clowfishEggAge);
     }
 
     @Override
     public boolean shouldDropXp() {
+        return false;
+    }
+
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
         return false;
     }
 

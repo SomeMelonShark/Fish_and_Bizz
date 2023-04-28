@@ -30,15 +30,15 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class NeonTetraFryEntity extends NeonTetraEntity implements GeoEntity {
+public class ClownfishFryEntity extends ClownfishEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_NEON_TETRA_FRY_AGE = Math.abs(-18000);
-    public static float WIDTH = 0.15f;
-    public static float HEIGHT = 0.1f;
-    private int neonTetraFryAge;
+    public static int MAX_CLOWNFISH_FRY_AGE = Math.abs(-18000);
+    public static float WIDTH = 0.2f;
+    public static float HEIGHT = 0.15f;
+    private int clownfishFryAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
-    public NeonTetraFryEntity(EntityType<? extends NeonTetraEntity> entityType, World world) {
+    public ClownfishFryEntity(EntityType<? extends ClownfishEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -50,11 +50,11 @@ public class NeonTetraFryEntity extends NeonTetraEntity implements GeoEntity {
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater()) {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.neon_tetra_fry.swim", Animation.LoopType.LOOP));
+                    .then("animation.clownfish_fry.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.neon_tetra_fry.flop", Animation.LoopType.LOOP));
+                    .then("animation.clownfish_fry.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
     }
@@ -75,32 +75,33 @@ public class NeonTetraFryEntity extends NeonTetraEntity implements GeoEntity {
     public void tickMovement() {
         super.tickMovement();
         if (!this.world.isClient) {
-            this.setNeonTetraFryAge(this.neonTetraFryAge + 1);
+            this.setClownfishFryAge(this.clownfishFryAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.neonTetraFryAge);
+        nbt.putInt("Age", this.clownfishFryAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setNeonTetraFryAge(nbt.getInt("Age"));
+        this.setClownfishFryAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getNeonTetraFryAge());
+        nbtCompound.putInt("Age", this.getClownfishFryAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setNeonTetraFryAge(nbt.getInt("Age"));
+            this.setClownfishFryAge(nbt.getInt("Age"));
         }
     }
+
     private boolean isFishFood(ItemStack stack) {
         return MilkfishEntity.FISH_FOOD.test(stack);
     }
@@ -115,15 +116,15 @@ public class NeonTetraFryEntity extends NeonTetraEntity implements GeoEntity {
         }
     }
 
-    private int getNeonTetraFryAge() {
-        return this.neonTetraFryAge;
+    private int getClownfishFryAge() {
+        return this.clownfishFryAge;
     }
     private void increaseAge(int seconds) {
-        this.setNeonTetraFryAge(this.neonTetraFryAge + seconds * 20);
+        this.setClownfishFryAge(this.clownfishFryAge + seconds * 20);
     }
-    private void setNeonTetraFryAge(int neonTetraFryAge) {
-        this.neonTetraFryAge = neonTetraFryAge;
-        if (this.neonTetraFryAge >= MAX_NEON_TETRA_FRY_AGE) {
+    private void setClownfishFryAge(int clownfishFryAge) {
+        this.clownfishFryAge = clownfishFryAge;
+        if (this.clownfishFryAge >= MAX_CLOWNFISH_FRY_AGE) {
             this.growUp();
         }
     }
@@ -131,25 +132,25 @@ public class NeonTetraFryEntity extends NeonTetraEntity implements GeoEntity {
         World world = this.world;
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
-            NeonTetraEntity neonTetraEntity = ModEntities.NEON_TETRA.create(this.world);
-            if (neonTetraEntity != null) {
-                neonTetraEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                neonTetraEntity.initialize(serverWorld, this.world.getLocalDifficulty(neonTetraEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                neonTetraEntity.setAiDisabled(this.isAiDisabled());
+            ClownfishEntity clownfishEntity = ModEntities.CLOWNFISH.create(this.world);
+            if (clownfishEntity != null) {
+                clownfishEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                clownfishEntity.initialize(serverWorld, this.world.getLocalDifficulty(clownfishEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                clownfishEntity.setAiDisabled(this.isAiDisabled());
                 if (this.hasCustomName()) {
-                    neonTetraEntity.setCustomName(this.getCustomName());
-                    neonTetraEntity.setCustomNameVisible(this.isCustomNameVisible());
+                    clownfishEntity.setCustomName(this.getCustomName());
+                    clownfishEntity.setCustomNameVisible(this.isCustomNameVisible());
                 }
-                neonTetraEntity.setPersistent();
+                clownfishEntity.setPersistent();
                 this.playSound(SoundEvents.ENTITY_TROPICAL_FISH_FLOP, 0.15f, 1.0f);
-                serverWorld.spawnEntityAndPassengers(neonTetraEntity);
+                serverWorld.spawnEntityAndPassengers(clownfishEntity);
                 this.discard();
             }
         }
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_NEON_TETRA_FRY_AGE - this.neonTetraFryAge);
+        return Math.max(0, MAX_CLOWNFISH_FRY_AGE - this.clownfishFryAge);
     }
 
     @Override
@@ -175,11 +176,6 @@ public class NeonTetraFryEntity extends NeonTetraEntity implements GeoEntity {
     @Override
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.NEON_TETRA_FRY_BUCKET);
-    }
-
-    @Override
-    public void writeCustomDatatoNbt(NbtCompound nbt) {
-
     }
 
     @Override

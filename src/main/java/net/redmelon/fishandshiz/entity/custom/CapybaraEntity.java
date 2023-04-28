@@ -64,15 +64,6 @@ public class CapybaraEntity extends AnimalEntity implements GeoEntity {
         controllers.add(new AnimationController<>(this, "controller", 5, this::predicate));
     }
 
-    private <T extends GeoAnimatable> PlayState a(AnimationState<T> tAnimationState) {
-        if(tAnimationState.isMoving()) {
-            tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.capybara.walk", Animation.LoopType.LOOP));
-        }
-
-        tAnimationState.getController().setAnimation(RawAnimation.begin().then("animation.capybara.idle", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
-    }
-
     private PlayState predicate(AnimationState animationState) {
         if (animationState.isMoving()) {
             animationState.getController().setAnimation(RawAnimation.begin()

@@ -16,14 +16,30 @@ import java.util.Map;
 public class AngelfishRenderer extends GeoEntityRenderer<AngelfishEntity> {
     public static final Map<AngelfishEntity.AngelfishVariant, Identifier> LOCATION_BY_VARIANT =
             Util.make(Maps.newEnumMap(AngelfishEntity.AngelfishVariant.class), (angelfishVariantIdentifierEnumMap) -> {
-                angelfishVariantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.WILD,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfish_wild.png"));
-                angelfishVariantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.MARBLE,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfish_marble.png"));
-                angelfishVariantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.PANTS,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfish_pants.png"));
-                angelfishVariantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.STRIPES,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfish_stripes.png"));
+                angelfishVariantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.WILD1,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/wild1.png"));
+                angelfishVariantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.WILD2,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/wild2.png"));
+                angelfishVariantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.WILD3,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/wild3.png"));
+                angelfishVariantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.MARBLE1,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/marble1.png"));
+                angelfishVariantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.MARBLE2,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/marble2.png"));
+                angelfishVariantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.PANTS1,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/pants1.png"));
+                angelfishVariantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.PANTS2,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/pants2.png"));
+                angelfishVariantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.PANTS3,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/pants3.png"));
+                angelfishVariantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.PANTS4,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/pants4.png"));
+                angelfishVariantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.STRIPES1,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/stripes1.png"));
+                angelfishVariantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.STRIPES2,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/stripes2.png"));
+                angelfishVariantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.STRIPES3,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/stripes3.png"));
             });
     public AngelfishRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new AngelfishModel());

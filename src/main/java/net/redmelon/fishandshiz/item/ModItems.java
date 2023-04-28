@@ -31,6 +31,12 @@ public class ModItems {
             new EntityBucketItem(ModEntities.ANGELFISH_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings()));
     public static final Item ANGELFISH_EGG_BUCKET = registerItem("angelfish_egg_bucket",
             new EntityBucketItem(ModEntities.ANGELFISH_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings()));
+    public static final Item NEON_TETRA_BUCKET = registerItem("neon_tetra_bucket",
+            new EntityBucketItem(ModEntities.NEON_TETRA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings()));
+    public static final Item NEON_TETRA_FRY_BUCKET = registerItem("neon_tetra_fry_bucket",
+            new EntityBucketItem(ModEntities.NEON_TETRA_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings()));
+    public static final Item NEON_TETRA_EGG_BUCKET = registerItem("neon_tetra_egg_bucket",
+            new EntityBucketItem(ModEntities.NEON_TETRA_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings()));
     public static final Item ARCHERFISH_BUCKET = registerItem("archerfish_bucket",
             new EntityBucketItem(ModEntities.ARCHERFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings()));
     public static final Item MILKFISH_BUCKET = registerItem("milkfish_bucket",
@@ -39,7 +45,8 @@ public class ModItems {
             new EntityBucketItem(ModEntities.MILKFISH_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings()));
     public static final Item MILKFISH_EGG_BUCKET = registerItem("milkfish_egg_bucket",
             new EntityBucketItem(ModEntities.MILKFISH_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings()));
-
+    public static final Item CLOWNFISH_BUCKET = registerItem("clownfish_bucket",
+            new EntityBucketItem(ModEntities.CLOWNFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings()));
     public static final Item MUD_CRAB_BUCKET = registerItem("mud_crab_bucket",
             new EntityBucketItem(ModEntities.MUD_CRAB, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_POWDER_SNOW, new FabricItemSettings()));
     public static final Item MILKFISH = registerItem("milkfish",
@@ -61,10 +68,14 @@ public class ModItems {
         addToItemGroup(ItemGroups.TOOLS, ANGELFISH_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, ANGELFISH_FRY_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, ANGELFISH_EGG_BUCKET);
+        addToItemGroup(ItemGroups.TOOLS, NEON_TETRA_BUCKET);
+        addToItemGroup(ItemGroups.TOOLS, NEON_TETRA_FRY_BUCKET);
+        addToItemGroup(ItemGroups.TOOLS, NEON_TETRA_EGG_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, ARCHERFISH_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, MILKFISH_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, MILKFISH_FRY_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, MILKFISH_EGG_BUCKET);
+        addToItemGroup(ItemGroups.TOOLS, CLOWNFISH_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, MUD_CRAB_BUCKET);
         addToItemGroup(ItemGroups.FOOD_AND_DRINK, MILKFISH);
         addToItemGroup(ItemGroups.FOOD_AND_DRINK, COOKED_MILKFISH);

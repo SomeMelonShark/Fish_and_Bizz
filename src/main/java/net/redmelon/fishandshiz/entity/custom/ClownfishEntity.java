@@ -30,26 +30,27 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class NeonTetraEntity extends SchoolingBreedEntity implements GeoEntity {
+public class ClownfishEntity extends SchoolingBreedEntity implements GeoEntity {
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-    public NeonTetraEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
+
+    public ClownfishEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 2);
     }
 
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater()) {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.neon_tetra.swim", Animation.LoopType.LOOP));
+                    .then("animation.clownfish.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.neon_tetra.flop", Animation.LoopType.LOOP));
+                    .then("animation.clownfish.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
     }
@@ -65,7 +66,7 @@ public class NeonTetraEntity extends SchoolingBreedEntity implements GeoEntity {
 
     @Override
     public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return ModEntities.NEON_TETRA_EGG.create(world);
+        return ModEntities.CLOWNFISH_EGG.create(world);
     }
 
     @Override
@@ -90,7 +91,7 @@ public class NeonTetraEntity extends SchoolingBreedEntity implements GeoEntity {
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.NEON_TETRA_BUCKET);
+        return new ItemStack(ModItems.CLOWNFISH_BUCKET);
     }
 
     @Override

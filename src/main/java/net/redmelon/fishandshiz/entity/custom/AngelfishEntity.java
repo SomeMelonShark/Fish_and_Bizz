@@ -18,13 +18,16 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
@@ -42,7 +45,12 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import static net.redmelon.fishandshiz.FishAndShiz.MOD_ID;
+
 public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
+    protected static final TrackedData<Integer> VARIANT =
+            DataTracker.registerData(AngelfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(AngelfishEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
@@ -118,10 +126,18 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     }
 
     public enum AngelfishVariant {
-        WILD(0),
-        MARBLE(1),
-        PANTS(2),
-        STRIPES(3);
+        WILD1(0),
+        WILD2(1),
+        WILD3(2),
+        MARBLE1(3),
+        MARBLE2(4),
+        PANTS1(5),
+        PANTS2(6),
+        PANTS3(7),
+        PANTS4(8),
+        STRIPES1(9),
+        STRIPES2(10),
+        STRIPES3(11);
 
         private static final AngelfishVariant[] BY_ID = Arrays.stream(values()).sorted(Comparator.comparingInt(AngelfishVariant::getId))
                 .toArray(AngelfishVariant[]::new);
@@ -149,17 +165,32 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     @Override
     public void writeCustomDatatoNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Variant", this.getTypeVariant());
+        writeMateData(nbt);
+        nbt.put("MateData", getMateData());
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.dataTracker.set(VARIANT, nbt.getInt("Variant"));
+        if(nbt.contains("MateData", NbtElement.INT_TYPE))setMateData(nbt.getCompound("MateData"));
     }
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(VARIANT, 0);
+        this.dataTracker.startTracking(MATE_DATA, new NbtCompound());
+    }
+
+    public NbtCompound writeMateData(NbtCompound nbt) {
+        nbt.putInt("Variant", this.getTypeVariant());
+        return nbt;
+    }
+
+    public void setMateData(NbtCompound mateData) {
+        dataTracker.set(MATE_DATA, mateData);
+    }
+    public NbtCompound getMateData() {
+        return dataTracker.get(MATE_DATA);
     }
 
     @Override
@@ -182,9 +213,6 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
         NbtCompound nbtCompound = stack.getOrCreateNbt();
         nbtCompound.putInt(BUCKET_VARIANT_TAG_KEY, this.getTypeVariant());
     }
-
-    private static final TrackedData<Integer> VARIANT =
-            DataTracker.registerData(AngelfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     public AngelfishVariant getVariant() {
         return AngelfishVariant.byId(this.getTypeVariant() & 255);

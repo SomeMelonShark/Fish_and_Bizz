@@ -34,7 +34,7 @@ public class MudCrabEntity extends AnimalWaterEntity implements GeoEntity {
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 8)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2f);
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3f);
     }
 
 
