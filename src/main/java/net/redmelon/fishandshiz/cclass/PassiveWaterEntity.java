@@ -36,7 +36,7 @@ public abstract class PassiveWaterEntity extends WaterCreatureEntity {
             entityData = new PassiveWaterData(true);
         }
         if ((passiveWaterData = (PassiveWaterData)entityData).canSpawnBaby() && passiveWaterData.getSpawnedCount() > 0 && world.getRandom().nextFloat() <= passiveWaterData.getBabyChance()) {
-            this.setBreedingAge(-24000);
+            this.setBreedingAge(0);
         }
         passiveWaterData.countSpawned();
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);

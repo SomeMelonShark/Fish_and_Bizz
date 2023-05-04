@@ -22,6 +22,7 @@ public class ModModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerParentedItemModel(ModItems.MILKFISH_SPAWN_EGG, ModelIds.getMinecraftNamespacedItem("template_spawn_egg"));
         blockStateModelGenerator.registerParentedItemModel(ModItems.ARCHERFISH_SPAWN_EGG, ModelIds.getMinecraftNamespacedItem("template_spawn_egg"));
         blockStateModelGenerator.registerParentedItemModel(ModItems.MUD_CRAB_SPAWN_EGG, ModelIds.getMinecraftNamespacedItem("template_spawn_egg"));
+        blockStateModelGenerator.registerParentedItemModel(ModItems.LION_MANE_SPAWN_EGG, ModelIds.getMinecraftNamespacedItem("template_spawn_egg"));
     }
 
     @Override
@@ -40,9 +41,17 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.MILKFISH_FRY_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.MILKFISH_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.CLOWNFISH_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.CLOWNFISH_FRY_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.CLOWNFISH_EGG_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.SALMON_FRY_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.SALMON_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.MUD_CRAB_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.MUD_CRAB_LARVA_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.MUD_CRAB_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.MILKFISH, Models.GENERATED);
         itemModelGenerator.register(ModItems.COOKED_MILKFISH, Models.GENERATED);
+        itemModelGenerator.register(ModItems.MUD_CRAB, Models.GENERATED);
+        itemModelGenerator.register(ModItems.COOKED_MUD_CRAB, Models.GENERATED);
         itemModelGenerator.register(ModItems.CORN, Models.GENERATED);
         itemModelGenerator.register(ModItems.CORN_KERNELS, Models.GENERATED);
     }

@@ -144,7 +144,7 @@ public class NeonTetraEggEntity extends NeonTetraEntity implements GeoEntity {
 
     @Override
     protected SoundEvent getFlopSound() {
-        return null;
+        return SoundEvents.BLOCK_FROGSPAWN_HIT;
     }
 
     @Override

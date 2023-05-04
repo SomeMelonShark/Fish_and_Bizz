@@ -29,12 +29,4 @@ public class MudCrabRenderer extends GeoEntityRenderer<MudCrabEntity> {
                                      float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
     }
-
-    @Override
-    public void render(MudCrabEntity entity, float entityYaw, float partialTick, MatrixStack poseStack, VertexConsumerProvider bufferSource, int packedLight) {
-        if(entity.isBaby()) {
-            poseStack.scale(0.4f, 0.4f, 0.4f);
-        }
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
 }

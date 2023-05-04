@@ -25,7 +25,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class MudCrabEggEntity extends MudCrabEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_MUD_CRAB_EGG_AGE = Math.abs(-18000);
+    public static int MAX_MUD_CRAB_EGG_AGE = Math.abs(-12000);
     private int mudCrabEggAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
@@ -97,18 +97,18 @@ public class MudCrabEggEntity extends MudCrabEntity implements GeoEntity {
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                MudCrabEntity mudCrabEntity = ModEntities.MUD_CRAB.create(this.world);
-                if (mudCrabEntity != null) {
-                    mudCrabEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    mudCrabEntity.initialize(serverWorld, this.world.getLocalDifficulty(mudCrabEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                    mudCrabEntity.setAiDisabled(this.isAiDisabled());
+                MudCrabLarvaEntity mudCrabLarvaEntity = ModEntities.MUD_CRAB_LARVA.create(this.world);
+                if (mudCrabLarvaEntity != null) {
+                    mudCrabLarvaEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                    mudCrabLarvaEntity.initialize(serverWorld, this.world.getLocalDifficulty(mudCrabLarvaEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    mudCrabLarvaEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
-                        mudCrabEntity.setCustomName(this.getCustomName());
-                        mudCrabEntity.setCustomNameVisible(this.isCustomNameVisible());
+                        mudCrabLarvaEntity.setCustomName(this.getCustomName());
+                        mudCrabLarvaEntity.setCustomNameVisible(this.isCustomNameVisible());
                     }
-                    mudCrabEntity.setPersistent();
+                    mudCrabLarvaEntity.setPersistent();
                     this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
-                    serverWorld.spawnEntityAndPassengers(mudCrabEntity);
+                    serverWorld.spawnEntityAndPassengers(mudCrabLarvaEntity);
                     this.discard();
                 }
             }
@@ -134,12 +134,12 @@ public class MudCrabEggEntity extends MudCrabEntity implements GeoEntity {
 
     @Override
     protected SoundEvent getFlopSound() {
-        return null;
+        return SoundEvents.BLOCK_FROGSPAWN_HIT;
     }
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.MILKFISH_EGG_BUCKET);
+        return new ItemStack(ModItems.MUD_CRAB_EGG_BUCKET);
     }
 
     @Override

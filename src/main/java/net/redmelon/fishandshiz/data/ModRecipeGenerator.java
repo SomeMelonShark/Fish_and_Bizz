@@ -26,52 +26,55 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
         offerSmelting(exporter, List.of(ModItems.MILKFISH), RecipeCategory.FOOD, ModItems.COOKED_MILKFISH,
                 0.35f, 200, "food");
 
+        offerSmelting(exporter, List.of(ModItems.MUD_CRAB), RecipeCategory.FOOD, ModItems.COOKED_MUD_CRAB,
+                0.35f, 200, "food");
+
         ShapelessRecipeJsonBuilder.create(RecipeCategory.FOOD, ModItems.CORN_KERNELS, 3)
                 .input(ModItems.CORN)
-                .group(null)
-                .criterion(RecipeProvider.hasItem(ModItems.CORN), RecipeProvider.conditionsFromItem(ModItems.CORN))
-                .offerTo(exporter, RecipeProvider.convertBetween(ModItems.CORN_KERNELS, ModItems.CORN));
+                .group("food")
+                .criterion(FabricRecipeProvider.hasItem(ModItems.CORN), FabricRecipeProvider.conditionsFromItem(ModItems.CORN))
+                .offerTo(exporter, FabricRecipeProvider.convertBetween(ModItems.CORN_KERNELS, ModItems.CORN));
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.FISHMEAL, 2)
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.FISHMEAL, 3)
                 .input(Items.BONE_MEAL)
                 .input(Items.COOKED_COD)
-                .group(null)
-                .criterion(RecipeProvider.hasItem(Items.COOKED_COD), RecipeProvider.conditionsFromItem(Items.COOKED_COD))
-                .offerTo(exporter, RecipeProvider.convertBetween(ModItems.FISHMEAL, Items.COOKED_COD));
+                .group("misc")
+                .criterion(FabricRecipeProvider.hasItem(Items.COOKED_COD), FabricRecipeProvider.conditionsFromItem(Items.COOKED_COD))
+                .offerTo(exporter, FabricRecipeProvider.convertBetween(ModItems.FISHMEAL, Items.COOKED_COD));
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.FISHMEAL, 2)
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.FISHMEAL, 3)
                 .input(Items.BONE_MEAL)
                 .input(Items.COOKED_SALMON)
-                .group(null)
-                .criterion(RecipeProvider.hasItem(Items.COOKED_SALMON), RecipeProvider.conditionsFromItem(Items.COOKED_SALMON))
-                .offerTo(exporter, RecipeProvider.convertBetween(ModItems.FISHMEAL, Items.COOKED_SALMON));
+                .group("misc")
+                .criterion(FabricRecipeProvider.hasItem(Items.COOKED_SALMON), FabricRecipeProvider.conditionsFromItem(Items.COOKED_SALMON))
+                .offerTo(exporter, FabricRecipeProvider.convertBetween(ModItems.FISHMEAL, Items.COOKED_SALMON));
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.FISH_FOOD, 2)
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.FISH_FOOD, 3)
                 .input(Items.COOKED_CHICKEN)
                 .input(ModItems.FISHMEAL)
-                .group(null)
-                .criterion(RecipeProvider.hasItem(ModItems.FISHMEAL), RecipeProvider.conditionsFromItem(ModItems.FISHMEAL))
-                .offerTo(exporter, RecipeProvider.convertBetween(ModItems.FISH_FOOD, Items.COOKED_CHICKEN));
+                .group("misc")
+                .criterion(FabricRecipeProvider.hasItem(ModItems.FISHMEAL), FabricRecipeProvider.conditionsFromItem(ModItems.FISHMEAL))
+                .offerTo(exporter, FabricRecipeProvider.convertBetween(ModItems.FISH_FOOD, Items.COOKED_CHICKEN));
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.FISH_FOOD, 2)
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.FISH_FOOD, 3)
                 .input(Items.COOKED_BEEF)
                 .input(ModItems.FISHMEAL)
-                .group(null)
-                .criterion(RecipeProvider.hasItem(ModItems.FISHMEAL), RecipeProvider.conditionsFromItem(ModItems.FISHMEAL))
-                .offerTo(exporter, RecipeProvider.convertBetween(ModItems.FISH_FOOD, Items.COOKED_BEEF));
+                .group("misc")
+                .criterion(FabricRecipeProvider.hasItem(ModItems.FISHMEAL), FabricRecipeProvider.conditionsFromItem(ModItems.FISHMEAL))
+                .offerTo(exporter, FabricRecipeProvider.convertBetween(ModItems.FISH_FOOD, Items.COOKED_BEEF));
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.FISH_FOOD, 2)
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.FISH_FOOD, 3)
                 .input(Items.COOKED_PORKCHOP)
                 .input(ModItems.FISHMEAL)
-                .group(null)
-                .criterion(RecipeProvider.hasItem(ModItems.FISHMEAL), RecipeProvider.conditionsFromItem(ModItems.FISHMEAL))
-                .offerTo(exporter, RecipeProvider.convertBetween(ModItems.FISH_FOOD, Items.COOKED_PORKCHOP));
+                .group("misc")
+                .criterion(FabricRecipeProvider.hasItem(ModItems.FISHMEAL), FabricRecipeProvider.conditionsFromItem(ModItems.FISHMEAL))
+                .offerTo(exporter, FabricRecipeProvider.convertBetween(ModItems.FISH_FOOD, Items.COOKED_PORKCHOP));
 
-        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.FISH_FOOD, 2)
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.MISC, ModItems.FISH_FOOD, 3)
                 .input(Items.COOKED_MUTTON)
                 .input(ModItems.FISHMEAL)
-                .group(null)
-                .criterion(RecipeProvider.hasItem(ModItems.FISHMEAL), RecipeProvider.conditionsFromItem(ModItems.FISHMEAL))
-                .offerTo(exporter, RecipeProvider.convertBetween(ModItems.FISH_FOOD, Items.COOKED_MUTTON));
+                .group("misc")
+                .criterion(FabricRecipeProvider.hasItem(ModItems.FISHMEAL), FabricRecipeProvider.conditionsFromItem(ModItems.FISHMEAL))
+                .offerTo(exporter, FabricRecipeProvider.convertBetween(ModItems.FISH_FOOD, Items.COOKED_MUTTON));
         }
     }

@@ -21,6 +21,8 @@ public class ModItems {
             new SpawnEggItem(ModEntities.MILKFISH, 0xc2d1e0, 0x79828b, new FabricItemSettings()));
     public static final Item MUD_CRAB_SPAWN_EGG = registerItem("mud_crab_spawn_egg",
             new SpawnEggItem(ModEntities.MUD_CRAB, 0x2f5553, 0xab5315, new FabricItemSettings()));
+    public static final Item LION_MANE_SPAWN_EGG = registerItem("lion_mane_spawn_egg",
+            new SpawnEggItem(ModEntities.LION_MANE_JELLYFISH, 0xeea663, 0xeea663, new FabricItemSettings()));
     public static final Item CAPYBARA_SPAWN_EGG = registerItem("capybara_spawn_egg",
             new SpawnEggItem(ModEntities.CAPYBARA, 0x745a3e, 0xbd8244, new FabricItemSettings()));
     public static final Item FANWORT = registerItem("fanwort",
@@ -47,12 +49,28 @@ public class ModItems {
             new EntityBucketItem(ModEntities.MILKFISH_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings()));
     public static final Item CLOWNFISH_BUCKET = registerItem("clownfish_bucket",
             new EntityBucketItem(ModEntities.CLOWNFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings()));
+    public static final Item CLOWNFISH_FRY_BUCKET = registerItem("clownfish_fry_bucket",
+            new EntityBucketItem(ModEntities.CLOWNFISH_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings()));
+    public static final Item CLOWNFISH_EGG_BUCKET = registerItem("clownfish_egg_bucket",
+            new EntityBucketItem(ModEntities.CLOWNFISH_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings()));
+    public static final Item SALMON_FRY_BUCKET = registerItem("salmon_fry_bucket",
+            new EntityBucketItem(ModEntities.SALMON_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings()));
+    public static final Item SALMON_EGG_BUCKET = registerItem("salmon_egg_bucket",
+            new EntityBucketItem(ModEntities.SALMON_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings()));
     public static final Item MUD_CRAB_BUCKET = registerItem("mud_crab_bucket",
             new EntityBucketItem(ModEntities.MUD_CRAB, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_POWDER_SNOW, new FabricItemSettings()));
+    public static final Item MUD_CRAB_LARVA_BUCKET = registerItem("mud_crab_larva_bucket",
+            new EntityBucketItem(ModEntities.MUD_CRAB_LARVA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings()));
+    public static final Item MUD_CRAB_EGG_BUCKET = registerItem("mud_crab_egg_bucket",
+            new EntityBucketItem(ModEntities.MUD_CRAB_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings()));
     public static final Item MILKFISH = registerItem("milkfish",
             new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(2).saturationModifier(2f).build())));
     public static final Item COOKED_MILKFISH = registerItem("cooked_milkfish",
             new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(6).saturationModifier(5f).build())));
+    public static final Item MUD_CRAB = registerItem("mud_crab",
+            new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(2).saturationModifier(1f).build())));
+    public static final Item COOKED_MUD_CRAB = registerItem("cooked_mud_crab",
+            new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(5).saturationModifier(5f).build())));
     public static final Item CORN_KERNELS = registerItem("corn_kernels",
             new AliasedBlockItem(ModBlocks.CORN_CROP, new FabricItemSettings()));
     public static final Item CORN = registerItem("corn",
@@ -76,15 +94,24 @@ public class ModItems {
         addToItemGroup(ItemGroups.TOOLS, MILKFISH_FRY_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, MILKFISH_EGG_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, CLOWNFISH_BUCKET);
+        addToItemGroup(ItemGroups.TOOLS, CLOWNFISH_FRY_BUCKET);
+        addToItemGroup(ItemGroups.TOOLS, CLOWNFISH_EGG_BUCKET);
+        addToItemGroup(ItemGroups.TOOLS, SALMON_FRY_BUCKET);
+        addToItemGroup(ItemGroups.TOOLS, SALMON_EGG_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, MUD_CRAB_BUCKET);
+        addToItemGroup(ItemGroups.TOOLS, MUD_CRAB_LARVA_BUCKET);
+        addToItemGroup(ItemGroups.TOOLS, MUD_CRAB_EGG_BUCKET);
         addToItemGroup(ItemGroups.FOOD_AND_DRINK, MILKFISH);
         addToItemGroup(ItemGroups.FOOD_AND_DRINK, COOKED_MILKFISH);
+        addToItemGroup(ItemGroups.FOOD_AND_DRINK, MUD_CRAB);
+        addToItemGroup(ItemGroups.FOOD_AND_DRINK, COOKED_MUD_CRAB);
         addToItemGroup(ItemGroups.NATURAL, CORN_KERNELS);
         addToItemGroup(ItemGroups.FOOD_AND_DRINK, CORN);
         addToItemGroup(ItemGroups.SPAWN_EGGS, ARCHERFISH_SPAWN_EGG);
         addToItemGroup(ItemGroups.SPAWN_EGGS, MILKFISH_SPAWN_EGG);
         addToItemGroup(ItemGroups.SPAWN_EGGS, MUD_CRAB_SPAWN_EGG);
         addToItemGroup(ItemGroups.SPAWN_EGGS, CAPYBARA_SPAWN_EGG);
+        addToItemGroup(ItemGroups.SPAWN_EGGS, LION_MANE_SPAWN_EGG);
     }
     private static void addToItemGroup(ItemGroup group, Item item) {
         ItemGroupEvents.modifyEntriesEvent(group).register(entries -> entries.add(item));

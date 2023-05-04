@@ -147,12 +147,12 @@ public class ClownfishEggEntity extends ClownfishEntity implements GeoEntity {
 
     @Override
     protected SoundEvent getFlopSound() {
-        return null;
+        return SoundEvents.BLOCK_FROGSPAWN_HIT;
     }
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.NEON_TETRA_EGG_BUCKET);
+        return new ItemStack(ModItems.CLOWNFISH_EGG_BUCKET);
     }
 
     @Override

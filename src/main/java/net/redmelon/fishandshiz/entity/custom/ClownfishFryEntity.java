@@ -175,7 +175,7 @@ public class ClownfishFryEntity extends ClownfishEntity implements GeoEntity {
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.NEON_TETRA_FRY_BUCKET);
+        return new ItemStack(ModItems.CLOWNFISH_FRY_BUCKET);
     }
 
     @Override
