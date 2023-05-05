@@ -11,9 +11,11 @@ import net.redmelon.fishandshiz.block.ModBlocks;
 
 public class ModConfiguredFeatures {
     public static final RegistryKey<ConfiguredFeature<?, ?>> FANWORT_KEY = registerKey("fanwort");
+    public static final RegistryKey<ConfiguredFeature<?, ?>> SEA_ANEMONE_KEY = registerKey("sea_anemone");
 
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
         register(context, FANWORT_KEY, Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(BlockStateProvider.of(ModBlocks.FANWORT)));
+        register(context, SEA_ANEMONE_KEY, Feature.SIMPLE_BLOCK, new SimpleBlockFeatureConfig(BlockStateProvider.of(ModBlocks.SEA_ANEMONE)));
     }
 
     public static RegistryKey<ConfiguredFeature<?, ?>> registerKey(String name) {

@@ -20,7 +20,7 @@ public class BreedFollowGroupLeaderGoal
     }
 
     protected int getSurroundingSearchDelay(SchoolingBreedEntity fish) {
-        return net.minecraft.entity.ai.goal.FollowGroupLeaderGoal.toGoalTicks(200 + fish.getRandom().nextInt(200) % 20);
+        return toGoalTicks(200 + fish.getRandom().nextInt(200) % 20);
     }
 
     @Override

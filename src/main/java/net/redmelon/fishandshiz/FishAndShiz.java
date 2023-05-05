@@ -3,6 +3,7 @@ package net.redmelon.fishandshiz;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.redmelon.fishandshiz.block.ModBlocks;
+import net.redmelon.fishandshiz.block.entity.ModBlockEntities;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.custom.*;
 import net.redmelon.fishandshiz.item.ModItems;
@@ -20,6 +21,7 @@ public class FishAndShiz implements ModInitializer {
 	public void onInitialize() {
 		ModItems.registerModitems();
 		ModBlocks.registerModBlocks();
+		ModBlockEntities.registerAllBlockEntities();
 
 		ModWorldGeneration.generateModWorldGen();
 

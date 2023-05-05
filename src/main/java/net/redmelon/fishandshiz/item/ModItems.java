@@ -75,6 +75,9 @@ public class ModItems {
             new AliasedBlockItem(ModBlocks.CORN_CROP, new FabricItemSettings()));
     public static final Item CORN = registerItem("corn",
             new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(4).saturationModifier(4f).build())));
+    public static final Item SEA_ANEMONE = registerItem("sea_anemone",
+            new AliasedBlockItem(ModBlocks.SEA_ANEMONE,new FabricItemSettings()));
+
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(FishAndShiz.MOD_ID, name), item);
     }
@@ -83,6 +86,7 @@ public class ModItems {
         addToItemGroup(ItemGroups.INGREDIENTS, FISHMEAL);
         addToItemGroup(ItemGroups.INGREDIENTS, FISH_FOOD);
         addToItemGroup(ItemGroups.NATURAL, FANWORT);
+        addToItemGroup(ItemGroups.NATURAL, SEA_ANEMONE);
         addToItemGroup(ItemGroups.TOOLS, ANGELFISH_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, ANGELFISH_FRY_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, ANGELFISH_EGG_BUCKET);

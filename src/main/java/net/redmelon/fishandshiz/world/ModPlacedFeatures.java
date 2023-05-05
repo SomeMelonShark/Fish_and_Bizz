@@ -12,22 +12,28 @@ import net.minecraft.world.gen.placementmodifier.NoiseBasedCountPlacementModifie
 import net.minecraft.world.gen.placementmodifier.PlacementModifier;
 import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
 import net.redmelon.fishandshiz.FishAndShiz;
+import net.redmelon.fishandshiz.block.ModBlocks;
 
 import java.util.List;
 
 public class ModPlacedFeatures {
     public static final RegistryKey<PlacedFeature> PLACED_FANWORT = registerKey("placed_fanwort");
+    public static final RegistryKey<PlacedFeature> PLACED_SEA_ANEMONE = registerKey("placed_sea_anemone");
 
     public static void bootstrap(Registerable<PlacedFeature> context) {
         var configuredFeatureRegistryLookup = context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
         RegistryEntryLookup<ConfiguredFeature<?, ?>> registryEntryLookup =
                 context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
-        RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference7 =
+        RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference1 =
                 registryEntryLookup.getOrThrow(ModConfiguredFeatures.FANWORT_KEY);
-        register(context, PLACED_FANWORT, reference7,
+        register(context, PLACED_FANWORT, reference1,
                 NoiseBasedCountPlacementModifier.of(80, 80.0, 0.0),
                 SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, BiomePlacementModifier.of());
-
+        RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference2 =
+                registryEntryLookup.getOrThrow(ModConfiguredFeatures.SEA_ANEMONE_KEY);
+        register(context, PLACED_SEA_ANEMONE, reference2,
+                NoiseBasedCountPlacementModifier.of(240, 20.0, 0.0),
+                SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, BiomePlacementModifier.of());
     }
     public static RegistryKey<PlacedFeature> registerKey(String name) {
         return RegistryKey.of(RegistryKeys.PLACED_FEATURE, new Identifier(FishAndShiz.MOD_ID, name));

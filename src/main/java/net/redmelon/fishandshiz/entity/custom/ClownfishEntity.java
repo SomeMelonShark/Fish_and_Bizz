@@ -1,8 +1,10 @@
 package net.redmelon.fishandshiz.entity.custom;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
 import net.minecraft.entity.ai.goal.FleeEntityGoal;
+import net.minecraft.entity.ai.goal.MoveToTargetPosGoal;
 import net.minecraft.entity.ai.goal.SwimAroundGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -15,7 +17,10 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldView;
+import net.redmelon.fishandshiz.block.ModBlocks;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
@@ -59,9 +64,10 @@ public class ClownfishEntity extends SchoolingBreedEntity implements GeoEntity {
     protected void initGoals() {
         this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25));
         this.goalSelector.add(2, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
-        this.goalSelector.add(3, new BreedAnimalMateGoal(this, 1));
-        this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
+        this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));
+        this.goalSelector.add(3, new ClownfishAnemoneGoal(this));
         this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
+        this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
     }
 
     @Override
@@ -102,6 +108,24 @@ public class ClownfishEntity extends SchoolingBreedEntity implements GeoEntity {
     @Override
     public void writeCustomDatatoNbt(NbtCompound nbt) {
 
+    }
+
+    public class ClownfishAnemoneGoal extends MoveToTargetPosGoal {
+
+        public ClownfishAnemoneGoal(ClownfishEntity mob) {
+            super(mob, 1f, 15,2);
+        }
+
+        @Override
+        public double getDesiredDistanceToTarget() {
+            return 0d;
+        }
+
+        @Override
+        protected boolean isTargetPos(WorldView world, BlockPos pos) {
+            BlockState state = world.getBlockState(pos.up());
+            return state.isOf(ModBlocks.SEA_ANEMONE);
+        }
     }
 
     @Override

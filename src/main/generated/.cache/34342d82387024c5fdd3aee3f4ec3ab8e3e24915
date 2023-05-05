@@ -1,4 +1,4 @@
-// 1.19.3	2023-05-04T21:01:48.5419997	Fish And Shiz/Model Definitions
+// 1.19.3	2023-05-05T22:44:58.9468661	Fish And Shiz/Model Definitions
 0b831e5854897fdb2f3accdaaf99461f3709ab74 assets\fishandshiz\models\item\fish_food.json
 bcca8e6da6649128e4d63195947030a5db89b426 assets\fishandshiz\models\item\clownfish_bucket.json
 9a3b314179b615b90d42b0574bd5ac772a180e07 assets\fishandshiz\models\block\fishmeal_block.json
@@ -21,8 +21,8 @@ faa5ab9075c1857fa561091adb8b660778565e0e assets\fishandshiz\models\item\angelfis
 fc15396ce87ce5226b5ab5018adb17bc55a217b9 assets\fishandshiz\models\item\cooked_mud_crab.json
 8f0f76e5b8a713408c07f3c3b7ad40fd781c82b4 assets\fishandshiz\models\block\fanwort_plant.json
 4bf68b419f15241a2e55495b394dcc926c558929 assets\fishandshiz\models\block\fanwort.json
-ff91b51ff5e594c2b4b4c468e4bcef9ddcc26406 assets\fishandshiz\models\item\corn.json
 ebd34b24e791c046e5e4793024a068f99647f3f8 assets\fishandshiz\models\item\clownfish_fry_bucket.json
+ff91b51ff5e594c2b4b4c468e4bcef9ddcc26406 assets\fishandshiz\models\item\corn.json
 04ae1cede46074940f2b123c505ef92cd0eb4ad4 assets\fishandshiz\models\item\mud_crab_larva_bucket.json
 50758c98cd5185b7c6b35a0e4c00cfe309be9be4 assets\fishandshiz\models\item\angelfish_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\fishandshiz\models\item\archerfish_spawn_egg.json
@@ -30,6 +30,7 @@ ebd34b24e791c046e5e4793024a068f99647f3f8 assets\fishandshiz\models\item\clownfis
 c5615f3fae8fdd40b37358739514688dc81fcfbf assets\fishandshiz\models\item\mud_crab_egg_bucket.json
 ace437785eb4f9e4137360612fd04357270d3e7f assets\fishandshiz\models\item\salmon_egg_bucket.json
 c8bec21b9fe47e3032970c06757d03643b66d00c assets\fishandshiz\models\item\fanwort.json
+cdfd61c534e14e3ddeb4c08585f69e276d7c9d25 assets\fishandshiz\models\item\sea_anemone.json
 9cb5dee16ee1f0c83656d6048f333fbb6bfafd5b assets\fishandshiz\models\item\milkfish_egg_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\fishandshiz\models\item\lion_mane_spawn_egg.json
 068bcbb96ac8a0e4e0a49e06df60ce5f7c1bc40e assets\fishandshiz\models\item\archerfish_bucket.json

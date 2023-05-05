@@ -4,5 +4,6 @@ public class ModWorldGeneration {
     public static void generateModWorldGen() {
         ModEntitySpawn.addEntitySpawn();
         ModPlantGeneration.generateFanwort();
+        ModPlantGeneration.generateAnemone();
     }
 }

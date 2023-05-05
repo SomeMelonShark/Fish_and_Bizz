@@ -5,7 +5,10 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.redmelon.fishandshiz.block.ModBlocks;
+import net.redmelon.fishandshiz.block.entity.ModBlockEntities;
+import net.redmelon.fishandshiz.block.entity.client.SeaAnemoneRenderer;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.client.*;
 import net.redmelon.fishandshiz.entity.client.fish.*;
@@ -39,5 +42,7 @@ public class FishAndShizClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.MUD_CRAB_EGG, MudCrabEggRenderer::new);
         EntityRendererRegistry.register(ModEntities.LION_MANE_JELLYFISH, ManeJellyfishRenderer::new);
         EntityRendererRegistry.register(ModEntities.CAPYBARA, CapybaraRenderer::new);
+
+        BlockEntityRendererFactories.register(ModBlockEntities.SEA_ANEMONE_ENTITY, SeaAnemoneRenderer::new);
     }
 }

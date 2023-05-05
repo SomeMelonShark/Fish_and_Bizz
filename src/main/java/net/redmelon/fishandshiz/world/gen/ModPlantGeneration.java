@@ -11,4 +11,9 @@ public class ModPlantGeneration {
         BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.RIVER),
                 GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.PLACED_FANWORT);
     }
+
+    public static void generateAnemone() {
+        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN),
+                GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.PLACED_SEA_ANEMONE);
+    }
 }
