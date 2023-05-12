@@ -14,7 +14,8 @@ public class ModConfiguredFeatures {
     public static final RegistryKey<ConfiguredFeature<?, ?>> FANWORT_KEY = registerKey("fanwort");
 
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
-        register(context, FANWORT_KEY, ModFeatures.FANWORT, DefaultFeatureConfig.INSTANCE);
+        register(context, FANWORT_KEY, Feature.SIMPLE_BLOCK,
+                new SimpleBlockFeatureConfig(BlockStateProvider.of(ModBlocks.FANWORT)));
     }
 
     public static RegistryKey<ConfiguredFeature<?, ?>> registerKey(String name) {

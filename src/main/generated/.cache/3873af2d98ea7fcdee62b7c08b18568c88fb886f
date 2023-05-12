@@ -1,9 +1,9 @@
-// 1.19.3	2023-05-06T12:43:16.5458609	Fish And Shiz/Recipes
+// 1.19.3	2023-05-12T14:03:24.3175018	Fish And Shiz/Recipes
 2b0aa44e099d778baf1c75acf0603b269e960d3a data\fishandshiz\recipes\fishmeal.json
 25d081725e4466169312692e0821001f07680d1c data\fishandshiz\recipes\fishmeal_from_cooked_salmon.json
 3fcc4e41cfd3a00746a3cc3154be7607e9942ff7 data\fishandshiz\advancements\recipes\food\cooked_mud_crab_from_smelting_mud_crab.json
-837b2687040edea34fdf7f9b1a97697991fab048 data\fishandshiz\recipes\fish_food_from_cooked_beef.json
 fe9703c761759d4d18829c0b85e58c8d9b3c1a59 data\fishandshiz\advancements\recipes\misc\fish_food_from_cooked_chicken.json
+837b2687040edea34fdf7f9b1a97697991fab048 data\fishandshiz\recipes\fish_food_from_cooked_beef.json
 1722b346e98bfd2821e414ae6c165ef56ac52f90 data\fishandshiz\advancements\recipes\misc\fish_food_from_cooked_beef.json
 b3e4ffd6a584e2f9f3c19a2f2788a40f749a182e data\fishandshiz\recipes\cooked_milkfish_from_smelting_milkfish.json
 a1e8300421c8b17aa1178db6a7326b2aae1eb546 data\fishandshiz\recipes\fishmeal_block.json

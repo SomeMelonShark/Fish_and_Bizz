@@ -8,6 +8,7 @@ import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.custom.*;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.util.ModLootTableModifiers;
+import net.redmelon.fishandshiz.villager.ModVillagers;
 import net.redmelon.fishandshiz.world.gen.ModWorldGeneration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,9 @@ public class FishAndShiz implements ModInitializer {
 		ModItems.registerModitems();
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.registerAllBlockEntities();
+
+		ModVillagers.registerVillagers();
+		ModVillagers.registerTrades();
 
 		ModWorldGeneration.generateModWorldGen();
 
@@ -42,6 +46,9 @@ public class FishAndShiz implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.CLOWNFISH, ClownfishEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.CLOWNFISH_FRY, ClownfishFryEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.CLOWNFISH_EGG, ClownfishEggEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.CORYDORAS, CorydorasEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.CORYDORAS_FRY, CorydorasFryEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.CORYDORAS_EGG, CorydorasEggEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.SALMON_EGG, SalmonEggEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.SALMON_FRY, SalmonFryEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.MUD_CRAB, MudCrabEntity.setAttributes());

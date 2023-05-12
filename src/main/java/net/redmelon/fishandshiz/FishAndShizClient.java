@@ -10,9 +10,8 @@ import net.redmelon.fishandshiz.block.ModBlocks;
 import net.redmelon.fishandshiz.block.entity.ModBlockEntities;
 import net.redmelon.fishandshiz.block.entity.client.SeaAnemoneRenderer;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.client.*;
-import net.redmelon.fishandshiz.entity.client.fish.*;
-import net.redmelon.fishandshiz.entity.custom.ManeJellyfishEntity;
+import net.redmelon.fishandshiz.entity.client.fish.renderer.*;
+import net.redmelon.fishandshiz.entity.client.renderer.*;
 
 public class FishAndShizClient implements ClientModInitializer {
     @Override
@@ -35,6 +34,9 @@ public class FishAndShizClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.CLOWNFISH, ClownfishRenderer::new);
         EntityRendererRegistry.register(ModEntities.CLOWNFISH_FRY, ClownfishFryRenderer::new);
         EntityRendererRegistry.register(ModEntities.CLOWNFISH_EGG, ClownfishEggRenderer::new);
+        EntityRendererRegistry.register(ModEntities.CORYDORAS, CorydorasRenderer::new);
+        EntityRendererRegistry.register(ModEntities.CORYDORAS_FRY, CorydorasFryRenderer::new);
+        EntityRendererRegistry.register(ModEntities.CORYDORAS_EGG, CorydorasEggRenderer::new);
         EntityRendererRegistry.register(ModEntities.SALMON_EGG, SalmonEggRenderer::new);
         EntityRendererRegistry.register(ModEntities.SALMON_FRY, SalmonFryRenderer::new);
         EntityRendererRegistry.register(ModEntities.MUD_CRAB, MudCrabRenderer::new);

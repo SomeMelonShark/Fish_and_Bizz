@@ -18,6 +18,9 @@
   "item.fishandshiz.clownfish_bucket": "Bucket of Clownfish",
   "item.fishandshiz.clownfish_fry_bucket": "Bucket of Clownfish Fry",
   "item.fishandshiz.clownfish_egg_bucket": "Bucket of Clownfish Eggs",
+  "item.fishandshiz.corydoras_bucket": "Bucket of Corydoras",
+  "item.fishandshiz.corydoras_fry_bucket": "Bucket of Corydoras Fry",
+  "item.fishandshiz.corydoras_egg_bucket": "Bucket of Corydoras Eggs",
   "item.fishandshiz.archerfish_bucket": "Bucket of Archerfish",
   "item.fishandshiz.mud_crab_bucket": "Bucket of Mud Crab",
   "item.fishandshiz.mud_crab_larva_bucket": "Bucket of Mud Crab Larva",
@@ -33,5 +36,7 @@
   "item.fishandshiz.lion_mane_spawn_egg": "Lion's Mane Jellyfish Spawn Egg",
   "item.fishandshiz.sea_anemone": "Sea Anemone",
 
-  "block.fishandshiz.fishmeal_block": "Block of Fishmeal"
+  "block.fishandshiz.fishmeal_block": "Block of Fishmeal",
+
+  "entity.minecraft.villager.aquarist": "Aquarist"
 }

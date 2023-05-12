@@ -178,11 +178,6 @@ public class MilkfishFryEntity extends MilkfishEntity implements GeoEntity {
     }
 
     @Override
-    public void writeCustomDatatoNbt(NbtCompound nbt) {
-
-    }
-
-    @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_COD_HURT;
     }

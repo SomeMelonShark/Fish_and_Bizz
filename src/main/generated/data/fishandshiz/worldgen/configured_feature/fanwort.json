@@ -1,4 +1,14 @@
 {
-  "type": "fishandshiz:fanwort",
-  "config": {}
+  "type": "minecraft:simple_block",
+  "config": {
+    "to_place": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "fishandshiz:fanwort",
+        "Properties": {
+          "age": "0"
+        }
+      }
+    }
+  }
 }

@@ -8,8 +8,6 @@ import net.redmelon.fishandshiz.FishAndShiz;
 
 public class ModSounds {
     public static SoundEvent CAPYBARA_AMBIENT = registerSoundEvent("capybara_ambient");
-    public static SoundEvent CAPYBARA_HURT = registerSoundEvent("capybara_hurt");
-    public static SoundEvent CAPYBARA_DEATH = registerSoundEvent("capybara_death");
 
     private static SoundEvent registerSoundEvent(String name) {
         Identifier id = new Identifier(FishAndShiz.MOD_ID, name);

@@ -71,6 +71,18 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "neon_tetra_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
                     NeonTetraEggEntity::new).dimensions(EntityDimensions.fixed(0.1f, 0.1f)).build());
 
+    public static final EntityType<CorydorasEntity> CORYDORAS = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "corydoras"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
+                    CorydorasEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.2f)).build());
+
+    public static final EntityType<CorydorasFryEntity> CORYDORAS_FRY = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "corydoras_fry"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
+                    CorydorasFryEntity::new).dimensions(EntityDimensions.fixed(CorydorasFryEntity.WIDTH, CorydorasFryEntity.HEIGHT)).build());
+
+    public static final EntityType<CorydorasEggEntity> CORYDORAS_EGG = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "corydoras_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
+                    CorydorasEggEntity::new).dimensions(EntityDimensions.fixed(0.4f, 0.1f)).build());
+
     public static final EntityType<MudCrabEntity> MUD_CRAB = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "mud_crab"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
                     MudCrabEntity::new).dimensions(EntityDimensions.fixed(0.7f, 0.5f)).build());

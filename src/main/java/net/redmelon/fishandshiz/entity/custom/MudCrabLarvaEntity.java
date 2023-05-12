@@ -144,7 +144,7 @@ public class MudCrabLarvaEntity extends SchoolingFishEntity implements GeoEntity
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_GUARDIAN_AMBIENT;
+        return SoundEvents.BLOCK_MOSS_BREAK;
     }
 
     @Override

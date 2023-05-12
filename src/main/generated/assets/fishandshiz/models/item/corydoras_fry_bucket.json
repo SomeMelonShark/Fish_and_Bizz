@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "fishandshiz:item/corydoras_fry_bucket"
+  }
+}
