@@ -9,9 +9,8 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.item.Items;
 import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -19,10 +18,7 @@ import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.BottomFeederGoal;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
-import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -31,87 +27,69 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
-    public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
+public class OscarEntity extends AnimalFishEntity implements GeoEntity {
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-    public CorydorasEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
+    public OscarEntity(EntityType<? extends AnimalFishEntity> entityType, World world) {
         super(entityType, world);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 4);
     }
 
     private PlayState genericFlopController(AnimationState animationState) {
-        if (this.isTouchingWater() && animationState.isMoving()) {
+        if (this.isTouchingWater()) {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.corydoras.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        } else if (!this.isTouchingWater()){
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.corydoras.flop", Animation.LoopType.LOOP));
+                    .then("animation.oscar.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.corydoras.feed", Animation.LoopType.LOOP));
+                    .then("animation.oscar.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
     }
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25));
+        this.goalSelector.add(0, new EscapeDangerGoal(this, 2));
         this.goalSelector.add(2, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
-        this.goalSelector.add(3, new BreedAnimalMateGoal(this, 1));
         this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
-        this.goalSelector.add(4, new BottomFeederGoal(this, 1d, 10));
-        this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
-    }
-
-    @Override
-    public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return ModEntities.CORYDORAS_EGG.create(world);
-    }
-
-    @Override
-    public boolean isBreedingItem(ItemStack stack) {
-        return stack.getItem() == ModItems.FISH_FOOD;
     }
 
     @Override
     protected SoundEvent getFlopSound() {
-        return SoundEvents.ENTITY_TROPICAL_FISH_FLOP;
+        return SoundEvents.ENTITY_SALMON_FLOP;
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_TROPICAL_FISH_AMBIENT;
+        return SoundEvents.ENTITY_SALMON_AMBIENT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_TROPICAL_FISH_DEATH;
-    }
-
-    @Override
-    public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.MILKFISH_BUCKET);
+        return SoundEvents.ENTITY_COD_DEATH;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_TROPICAL_FISH_HURT;
+        return SoundEvents.ENTITY_COD_HURT;
     }
 
     @Override
-    public void writeCustomDatatoNbt(NbtCompound nbt) {
+    public ItemStack getBucketItem() {
+        return new ItemStack(ModItems.OSCAR_BUCKET);
+    }
 
+    @Override
+    public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+        return null;
     }
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 10, this::genericFlopController));
+        controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
     }
 
     @Override

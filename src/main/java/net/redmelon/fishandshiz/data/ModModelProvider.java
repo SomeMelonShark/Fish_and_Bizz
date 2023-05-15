@@ -46,6 +46,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.CORYDORAS_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.CORYDORAS_FRY_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.CORYDORAS_EGG_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.OSCAR_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.SALMON_FRY_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.SALMON_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.MUD_CRAB_BUCKET, Models.GENERATED);

@@ -18,21 +18,22 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.redmelon.fishandshiz.FishAndShiz;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
-import net.redmelon.fishandshiz.cclass.cmethods.BreedAnimalMateGoal;
-import net.redmelon.fishandshiz.cclass.cmethods.BreedFollowGroupLeaderGoal;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
@@ -44,8 +45,6 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Arrays;
 import java.util.Comparator;
-
-import static net.redmelon.fishandshiz.FishAndShiz.MOD_ID;
 
 public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     protected static final TrackedData<Integer> VARIANT =
@@ -196,13 +195,31 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        AngelfishVariant variant = Util.getRandom(AngelfishVariant.values(), this.random);
-        setVariant(variant);
-        entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
+        AngelfishVariant variant;
+
         if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
             this.setAngelfishVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
             return entityData;
         }
+
+        if (spawnReason == SpawnReason.NATURAL){
+            if (registryEntry.matchesKey(BiomeKeys.JUNGLE)) {
+                variant = AngelfishVariant.WILD1;
+            } else if (registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
+                variant = (AngelfishVariant.WILD1);
+            } else if (registryEntry.matchesKey(BiomeKeys.MANGROVE_SWAMP)) {
+                variant = (AngelfishVariant.WILD1);
+            } else if (registryEntry.isIn(BiomeTags.SPAWNS_WARM_VARIANT_FROGS)) {
+                variant = (AngelfishVariant.WILD1);
+            } else {
+                variant = Util.getRandom(AngelfishVariant.values(), this.random);
+            }
+        } else {
+            variant = Util.getRandom(AngelfishVariant.values(), this.random);
+        }
+        setVariant(variant);
+        entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         this.setAngelfishVariant(variant.getId());
         return entityData;
     }

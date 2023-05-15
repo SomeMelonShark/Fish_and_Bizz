@@ -22,8 +22,7 @@ import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
-import net.redmelon.fishandshiz.cclass.cmethods.BreedFollowGroupLeaderGoal;
-import net.redmelon.fishandshiz.entity.ModEntities;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
@@ -36,8 +35,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public class SalmonFryEntity extends SchoolingBreedEntity implements GeoEntity {
     @VisibleForTesting
     public static int MAX_SALMON_FRY_AGE = Math.abs(-24000);
-    public static float WIDTH = 0.4f;
-    public static float HEIGHT = 0.2f;
+    public static float WIDTH = 0.5f;
+    public static float HEIGHT = 0.3f;
     private int salmonFryAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 

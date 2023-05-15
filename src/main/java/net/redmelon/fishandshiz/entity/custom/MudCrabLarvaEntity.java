@@ -32,8 +32,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public class MudCrabLarvaEntity extends SchoolingFishEntity implements GeoEntity {
     @VisibleForTesting
     public static int MAX_CRAB_LARVA_AGE = Math.abs(-18000);
-    public static float WIDTH = 0.2f;
-    public static float HEIGHT = 0.1f;
+    public static float WIDTH = 0.4f;
+    public static float HEIGHT = 0.4f;
     private int mudCrabLarvaAge;
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public MudCrabLarvaEntity(EntityType<? extends SchoolingFishEntity> entityType, World world) {

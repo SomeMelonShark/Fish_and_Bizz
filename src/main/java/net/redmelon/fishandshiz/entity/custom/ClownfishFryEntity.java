@@ -20,7 +20,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
-import net.redmelon.fishandshiz.cclass.cmethods.BreedFollowGroupLeaderGoal;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.VisibleForTesting;
@@ -33,8 +33,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public class ClownfishFryEntity extends ClownfishEntity implements GeoEntity {
     @VisibleForTesting
     public static int MAX_CLOWNFISH_FRY_AGE = Math.abs(-18000);
-    public static float WIDTH = 0.2f;
-    public static float HEIGHT = 0.15f;
+    public static float WIDTH = 0.4f;
+    public static float HEIGHT = 0.3f;
     private int clownfishFryAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 

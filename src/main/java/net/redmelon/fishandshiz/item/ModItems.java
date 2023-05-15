@@ -59,6 +59,8 @@ public class ModItems {
             new EntityBucketItem(ModEntities.CORYDORAS_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item CORYDORAS_EGG_BUCKET = registerItem("corydoras_egg_bucket",
             new EntityBucketItem(ModEntities.CORYDORAS_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
+    public static final Item OSCAR_BUCKET = registerItem("oscar_bucket",
+            new EntityBucketItem(ModEntities.OSCAR, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item SALMON_FRY_BUCKET = registerItem("salmon_fry_bucket",
             new EntityBucketItem(ModEntities.SALMON_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item SALMON_EGG_BUCKET = registerItem("salmon_egg_bucket",
@@ -109,6 +111,7 @@ public class ModItems {
         addToItemGroup(ItemGroups.TOOLS, CORYDORAS_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, CORYDORAS_FRY_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, CORYDORAS_EGG_BUCKET);
+        addToItemGroup(ItemGroups.TOOLS, OSCAR_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, SALMON_FRY_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, SALMON_EGG_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, MUD_CRAB_BUCKET);

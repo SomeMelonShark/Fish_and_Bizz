@@ -11,8 +11,28 @@
         },
         {
           "type": "minecraft:item",
-          "name": "fishandshiz:archerfish_bucket",
+          "name": "fishandshiz:angelfish_bucket",
           "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fishandshiz:neon_tetra_bucket",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fishandshiz:oscar_bucket",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fishandshiz:corydoras_bucket",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fishandshiz:archerfish_bucket",
+          "weight": 5
         }
         ],
       "rolls": {
