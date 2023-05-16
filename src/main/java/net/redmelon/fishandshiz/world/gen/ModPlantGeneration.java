@@ -8,7 +8,7 @@ import net.redmelon.fishandshiz.world.ModPlacedFeatures;
 
 public class ModPlantGeneration {
     public static void generateFanwort() {
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.SWAMP, BiomeKeys.RIVER),
+        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.RIVER),
                 GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.PLACED_FANWORT);
     }
 }

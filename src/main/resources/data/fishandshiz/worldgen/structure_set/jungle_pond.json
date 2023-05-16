@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "fishandshiz:jungle_pond",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 218172614,
+    "spacing": 15,
+    "separation": 8,
+    "type": "minecraft:random_spread"
+  }
+}

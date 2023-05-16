@@ -210,6 +210,8 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
                 variant = (AngelfishVariant.WILD1);
             } else if (registryEntry.matchesKey(BiomeKeys.MANGROVE_SWAMP)) {
                 variant = (AngelfishVariant.WILD1);
+            } else if (registryEntry.matchesKey(BiomeKeys.RIVER)) {
+                variant = (AngelfishVariant.WILD1);
             } else if (registryEntry.isIn(BiomeTags.SPAWNS_WARM_VARIANT_FROGS)) {
                 variant = (AngelfishVariant.WILD1);
             } else {

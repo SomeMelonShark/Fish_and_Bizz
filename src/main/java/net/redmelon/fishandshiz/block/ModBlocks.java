@@ -24,7 +24,7 @@ public class ModBlocks {
     public static final Block CORN_CROP = registerBlockWithoutItem("corn_crop",
             new CornCropBlock(FabricBlockSettings.copyOf(Blocks.WHEAT)));
     public static final Block SEA_ANEMONE = Registry.register(Registries.BLOCK, new Identifier(FishAndShiz.MOD_ID, "sea_anemone"),
-            new SeaAnemoneBlock(FabricBlockSettings.of(Material.FROGLIGHT).breakInstantly().nonOpaque().sounds(BlockSoundGroup.WART_BLOCK)));
+            new SeaAnemoneBlock(FabricBlockSettings.of(Material.UNDERWATER_PLANT).breakInstantly().nonOpaque().sounds(BlockSoundGroup.WART_BLOCK)));
     private static Block registerBlock(String name, Block block, ItemGroup group) {
         registerBlockItems(name, block, group);
         return Registry.register(Registries.BLOCK, new Identifier(FishAndShiz.MOD_ID, name), block);
