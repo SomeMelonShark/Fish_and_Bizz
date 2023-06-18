@@ -1,5 +1,6 @@
 package net.redmelon.fishandshiz.entity.custom;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -12,6 +13,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -20,13 +22,17 @@ import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.BiomeTags;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
@@ -35,6 +41,7 @@ import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
+import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -204,15 +211,13 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
         }
 
         if (spawnReason == SpawnReason.NATURAL){
-            if (registryEntry.matchesKey(BiomeKeys.JUNGLE)) {
-                variant = AngelfishVariant.WILD1;
+            if (registryEntry.matchesKey(BiomeKeys.RIVER)) {
+                variant = (AngelfishVariant.WILD1);
+            } else if (registryEntry.isIn(TropicalSpawn.SPAWNS_TROPICAL)) {
+                variant = (AngelfishVariant.WILD1);
             } else if (registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
                 variant = (AngelfishVariant.WILD1);
-            } else if (registryEntry.matchesKey(BiomeKeys.MANGROVE_SWAMP)) {
-                variant = (AngelfishVariant.WILD1);
-            } else if (registryEntry.matchesKey(BiomeKeys.RIVER)) {
-                variant = (AngelfishVariant.WILD1);
-            } else if (registryEntry.isIn(BiomeTags.SPAWNS_WARM_VARIANT_FROGS)) {
+            } else if (registryEntry.matchesKey(BiomeKeys.JUNGLE)) {
                 variant = (AngelfishVariant.WILD1);
             } else {
                 variant = Util.getRandom(AngelfishVariant.values(), this.random);
@@ -247,6 +252,14 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
 
     private void setAngelfishVariant(int variant) {
         this.dataTracker.set(VARIANT, variant);
+    }
+
+    public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
+        RegistryEntry<Biome> registryEntry = world.getBiome(pos);
+        registryEntry.isIn(TropicalSpawn.SPAWNS_TROPICAL);
+        int i = world.getSeaLevel();
+        int j = i - 4;
+        return pos.getY() >= j && pos.getY() <= i && world.getFluidState(pos.down()).isIn(FluidTags.WATER) && world.getBlockState(pos.up()).isOf(Blocks.WATER);
     }
 }
 
