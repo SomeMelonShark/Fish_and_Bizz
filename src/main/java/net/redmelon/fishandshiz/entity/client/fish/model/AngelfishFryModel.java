@@ -18,6 +18,6 @@ public class AngelfishFryModel extends GeoModel<AngelfishFryEntity> {
 
     @Override
     public Identifier getAnimationResource(AngelfishFryEntity animatable) {
-        return new Identifier(FishAndShiz.MOD_ID, "animations/angelfish_fry.animation.json");
+        return new Identifier(FishAndShiz.MOD_ID, "animations/fry.animation.json");
     }
 }

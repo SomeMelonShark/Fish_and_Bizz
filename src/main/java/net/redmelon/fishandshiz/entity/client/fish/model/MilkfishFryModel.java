@@ -18,6 +18,6 @@ public class MilkfishFryModel extends GeoModel<MilkfishFryEntity> {
 
     @Override
     public Identifier getAnimationResource(MilkfishFryEntity animatable) {
-        return new Identifier(FishAndShiz.MOD_ID, "animations/milkfish_fry.animation.json");
+        return new Identifier(FishAndShiz.MOD_ID, "animations/fry.animation.json");
     }
 }

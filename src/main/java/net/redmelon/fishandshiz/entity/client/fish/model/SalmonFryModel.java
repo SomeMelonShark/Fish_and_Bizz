@@ -18,6 +18,6 @@ public class SalmonFryModel extends GeoModel<SalmonFryEntity> {
 
     @Override
     public Identifier getAnimationResource(SalmonFryEntity animatable) {
-        return new Identifier(FishAndShiz.MOD_ID, "animations/salmon_fry.animation.json");
+        return new Identifier(FishAndShiz.MOD_ID, "animations/fry.animation.json");
     }
 }

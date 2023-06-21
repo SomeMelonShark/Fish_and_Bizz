@@ -91,6 +91,14 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "rainbowfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
                     RainbowfishEntity::new).dimensions(EntityDimensions.fixed(0.5f, 0.3f)).build());
 
+    public static final EntityType<RainbowfishFryEntity> RAINBOWFISH_FRY = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "rainbowfish_fry"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
+                    RainbowfishFryEntity::new).dimensions(EntityDimensions.fixed(RainbowfishFryEntity.WIDTH, RainbowfishFryEntity.HEIGHT)).build());
+
+    public static final EntityType<RainbowfishEggEntity> RAINBOWFISH_EGG = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "rainbowfish_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
+                    RainbowfishEggEntity::new).dimensions(EntityDimensions.fixed(0.4f, 0.1f)).build());
+
     public static final EntityType<MudCrabEntity> MUD_CRAB = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "mud_crab"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
                     MudCrabEntity::new).dimensions(EntityDimensions.fixed(0.7f, 0.5f)).build());

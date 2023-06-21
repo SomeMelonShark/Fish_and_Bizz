@@ -18,6 +18,6 @@ public class ClownfishFryModel extends GeoModel<ClownfishFryEntity> {
 
     @Override
     public Identifier getAnimationResource(ClownfishFryEntity animatable) {
-        return new Identifier(FishAndShiz.MOD_ID, "animations/clownfish_fry.animation.json");
+        return new Identifier(FishAndShiz.MOD_ID, "animations/fry.animation.json");
     }
 }

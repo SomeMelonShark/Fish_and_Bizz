@@ -18,6 +18,6 @@ public class NeonTetraFryModel extends GeoModel<NeonTetraFryEntity> {
 
     @Override
     public Identifier getAnimationResource(NeonTetraFryEntity animatable) {
-        return new Identifier(FishAndShiz.MOD_ID, "animations/neon_tetra_fry.animation.json");
+        return new Identifier(FishAndShiz.MOD_ID, "animations/fry.animation.json");
     }
 }

@@ -18,6 +18,8 @@ import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
@@ -52,11 +54,11 @@ public class SalmonFryEntity extends SchoolingBreedEntity implements GeoEntity {
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater()) {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.salmon_fry.swim", Animation.LoopType.LOOP));
+                    .then("animation.fry.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.salmon_fry.flop", Animation.LoopType.LOOP));
+                    .then("animation.fry.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
     }
@@ -110,6 +112,15 @@ public class SalmonFryEntity extends SchoolingBreedEntity implements GeoEntity {
         }
     }
 
+    public ActionResult interactMob(PlayerEntity player, Hand hand) {
+        ItemStack itemStack = player.getStackInHand(hand);
+        if (this.isFishFood(itemStack)) {
+            this.eatFishFood(player, itemStack);
+            return ActionResult.success(this.world.isClient);
+        } else {
+            return (ActionResult)Bucketable.tryBucket(player, hand, this).orElse(super.interactMob(player, hand));
+        }
+    }
     private boolean isFishFood(ItemStack stack) {
         return MilkfishEntity.FISH_FOOD.test(stack);
     }

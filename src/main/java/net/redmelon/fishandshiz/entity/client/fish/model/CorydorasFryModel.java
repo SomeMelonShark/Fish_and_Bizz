@@ -18,6 +18,6 @@ public class CorydorasFryModel extends GeoModel<CorydorasFryEntity> {
 
     @Override
     public Identifier getAnimationResource(CorydorasFryEntity animatable) {
-        return new Identifier(FishAndShiz.MOD_ID, "animations/corydoras_fry.animation.json");
+        return new Identifier(FishAndShiz.MOD_ID, "animations/fry.animation.json");
     }
 }

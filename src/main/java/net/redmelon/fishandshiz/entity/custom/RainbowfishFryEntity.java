@@ -1,6 +1,5 @@
 package net.redmelon.fishandshiz.entity.custom;
 
-import com.google.common.annotations.VisibleForTesting;
 import net.minecraft.entity.Bucketable;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -26,21 +25,22 @@ import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
+import org.jetbrains.annotations.VisibleForTesting;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
+public class RainbowfishFryEntity extends RainbowfishEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_ANGELFISH_FRY_AGE = Math.abs(-18000);
-    public static float WIDTH = 0.4f;
-    public static float HEIGHT = 0.3f;
-    private int angelfishFryAge;
+    public static int MAX_RAINBOWFISH_FRY_AGE = Math.abs(-18000);
+    public static float WIDTH = 0.3f;
+    public static float HEIGHT = 0.2f;
+    private int rainbowfishFryAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
-    public AngelfishFryEntity(EntityType<? extends AngelfishEntity> entityType, World world) {
+    public RainbowfishFryEntity(EntityType<? extends RainbowfishEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -48,6 +48,7 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
         return AnimalFishEntity.createFishAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
     }
+
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater()) {
             animationState.getController().setAnimation(RawAnimation.begin()
@@ -67,6 +68,7 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
         this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
         this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
     }
+
     @Override
     public boolean isBreedingItem(ItemStack stack) {
         return false;
@@ -76,32 +78,33 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
     public void tickMovement() {
         super.tickMovement();
         if (!this.world.isClient) {
-            this.setAngelfishFryAge(this.angelfishFryAge + 1);
+            this.setRainbowfishFryAge(this.rainbowfishFryAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.angelfishFryAge);
+        nbt.putInt("Age", this.rainbowfishFryAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setAngelfishFryAge(nbt.getInt("Age"));
+        this.setRainbowfishFryAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getAngelfishFryAge());
+        nbtCompound.putInt("Age", this.getRainbowfishFryAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setAngelfishFryAge(nbt.getInt("Age"));
+            this.setRainbowfishFryAge(nbt.getInt("Age"));
         }
     }
+
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getStackInHand(hand);
         if (this.isFishFood(itemStack)) {
@@ -112,55 +115,55 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
         }
     }
     private boolean isFishFood(ItemStack stack) {
-        return AngelfishEntity.FISH_FOOD.test(stack);
+        return MilkfishEntity.FISH_FOOD.test(stack);
     }
     private void eatFishFood (PlayerEntity player, ItemStack stack) {
         this.decrementItem(player, stack);
         this.increaseAge(PassiveWaterEntity.toGrowUpAge(this.getTicksUntilGrowth()));
         this.world.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
     }
-
     private void decrementItem(PlayerEntity player, ItemStack stack) {
         if (!player.getAbilities().creativeMode) {
             stack.decrement(1);
         }
     }
 
-    private int getAngelfishFryAge() {
-        return this.angelfishFryAge;
+    private int getRainbowfishFryAge() {
+        return this.rainbowfishFryAge;
     }
     private void increaseAge(int seconds) {
-        this.setAngelfishFryAge(this.angelfishFryAge + seconds * 20);
+        this.setRainbowfishFryAge(this.rainbowfishFryAge + seconds * 20);
     }
-    private void setAngelfishFryAge(int angelfishFryAge) {
-        this.angelfishFryAge = angelfishFryAge;
-        if (this.angelfishFryAge >= MAX_ANGELFISH_FRY_AGE) {
+    private void setRainbowfishFryAge(int rainbowfishFryAge) {
+        this.rainbowfishFryAge = rainbowfishFryAge;
+        if (this.rainbowfishFryAge >= MAX_RAINBOWFISH_FRY_AGE) {
             this.growUp();
         }
     }
+
     private void growUp() {
         World world = this.world;
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
-            AngelfishEntity angelfishEntity = ModEntities.ANGELFISH.create(this.world);
-            if (angelfishEntity != null) {
-                angelfishEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                angelfishEntity.initialize(serverWorld, this.world.getLocalDifficulty(angelfishEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                angelfishEntity.setAiDisabled(this.isAiDisabled());
+            RainbowfishEntity rainbowfishEntity = ModEntities.RAINBOWFISH.create(this.world);
+            if (rainbowfishEntity != null) {
+                rainbowfishEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                rainbowfishEntity.initialize(serverWorld, this.world.getLocalDifficulty(rainbowfishEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                rainbowfishEntity.setAiDisabled(this.isAiDisabled());
                 if (this.hasCustomName()) {
-                    angelfishEntity.setCustomName(this.getCustomName());
-                    angelfishEntity.setCustomNameVisible(this.isCustomNameVisible());
+                    rainbowfishEntity.setCustomName(this.getCustomName());
+                    rainbowfishEntity.setCustomNameVisible(this.isCustomNameVisible());
                 }
-                angelfishEntity.setPersistent();
+                rainbowfishEntity.setPersistent();
                 this.playSound(SoundEvents.ENTITY_TROPICAL_FISH_FLOP, 0.15f, 1.0f);
-                serverWorld.spawnEntityAndPassengers(angelfishEntity);
+                serverWorld.spawnEntityAndPassengers(rainbowfishEntity);
                 this.discard();
             }
         }
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_ANGELFISH_FRY_AGE - this.angelfishFryAge);
+        return Math.max(0, MAX_RAINBOWFISH_FRY_AGE - this.rainbowfishFryAge);
     }
 
     @Override
@@ -185,7 +188,7 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.ANGELFISH_FRY_BUCKET);
+        return new ItemStack(ModItems.RAINBOWFISH_FRY_BUCKET);
     }
 
     @Override

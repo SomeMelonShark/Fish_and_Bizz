@@ -11,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -18,6 +19,7 @@ import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
+import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -27,6 +29,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class RainbowfishEntity extends SchoolingBreedEntity implements GeoEntity {
+    public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public RainbowfishEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
@@ -58,6 +61,16 @@ public class RainbowfishEntity extends SchoolingBreedEntity implements GeoEntity
     }
 
     @Override
+    public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+        return ModEntities.RAINBOWFISH_EGG.create(world);
+    }
+
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return stack.getItem() == ModItems.FISH_FOOD;
+    }
+
+    @Override
     protected SoundEvent getFlopSound() {
         return SoundEvents.ENTITY_TROPICAL_FISH_FLOP;
     }
@@ -79,12 +92,7 @@ public class RainbowfishEntity extends SchoolingBreedEntity implements GeoEntity
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.OSCAR_BUCKET);
-    }
-
-    @Override
-    public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return null;
+        return new ItemStack(ModItems.RAINBOWFISH_BUCKET);
     }
 
     @Override
