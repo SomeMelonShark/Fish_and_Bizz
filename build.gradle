@@ -48,10 +48,6 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	modImplementation ("curse.maven:terrablender-${terraBlenderCF}")
-	modImplementation 'com.electronwill.night-config:core:3.6.0'
-	modImplementation 'com.electronwill.night-config:toml:3.6.0'
-
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	modImplementation 'software.bernie.geckolib:geckolib-fabric-1.19.3:4.0.4'
 	// Uncomment the following line to enable the deprecated Fabric API modules. 

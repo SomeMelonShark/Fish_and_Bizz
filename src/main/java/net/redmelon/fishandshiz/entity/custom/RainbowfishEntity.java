@@ -3,12 +3,10 @@ package net.redmelon.fishandshiz.entity.custom;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
 import net.minecraft.entity.ai.goal.FleeEntityGoal;
-import net.minecraft.entity.ai.goal.LookAtEntityGoal;
 import net.minecraft.entity.ai.goal.SwimAroundGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.SpiderEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -17,9 +15,9 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
+import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -28,25 +26,26 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity {
-    boolean spit;
+public class RainbowfishEntity extends SchoolingBreedEntity implements GeoEntity {
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-    public ArcherfishEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
+
+    public RainbowfishEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
-        return SchoolingBreedEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 4);
+        return AnimalFishEntity.createFishAttributes()
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 2);
     }
+
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater()) {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.archerfish.swim", Animation.LoopType.LOOP));
+                    .then("animation.rainbowfish.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.archerfish.flop", Animation.LoopType.LOOP));
+                    .then("animation.rainbowfish.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
     }
@@ -55,25 +54,17 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity 
     protected void initGoals() {
         this.goalSelector.add(0, new EscapeDangerGoal(this, 2));
         this.goalSelector.add(2, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
-        this.goalSelector.add(3, new LookAtEntityGoal(this, SpiderEntity.class, 6.0f));
-        this.goalSelector.add(3, new LookAtEntityGoal(this, PlayerEntity.class, 6.0f));
         this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
-        this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
-    }
-
-    @Override
-    public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return null;
     }
 
     @Override
     protected SoundEvent getFlopSound() {
-        return SoundEvents.ENTITY_SALMON_FLOP;
+        return SoundEvents.ENTITY_TROPICAL_FISH_FLOP;
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SALMON_AMBIENT;
+        return SoundEvents.ENTITY_TROPICAL_FISH_AMBIENT;
     }
 
     @Override
@@ -82,13 +73,18 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity 
     }
 
     @Override
-    public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.ARCHERFISH_BUCKET);
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return SoundEvents.ENTITY_TROPICAL_FISH_HURT;
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_COD_HURT;
+    public ItemStack getBucketItem() {
+        return new ItemStack(ModItems.OSCAR_BUCKET);
+    }
+
+    @Override
+    public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+        return null;
     }
 
     @Override

@@ -258,8 +258,8 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
         RegistryEntry<Biome> registryEntry = world.getBiome(pos);
         registryEntry.isIn(TropicalSpawn.SPAWNS_TROPICAL);
         int i = world.getSeaLevel();
-        int j = i - 4;
-        return pos.getY() >= j && pos.getY() <= i && world.getFluidState(pos.down()).isIn(FluidTags.WATER) && world.getBlockState(pos.up()).isOf(Blocks.WATER);
+        int j = i - 2;
+        return pos.getY() >= j && pos.getY() <= i + 30 && world.getFluidState(pos.down()).isIn(FluidTags.WATER) && world.getBlockState(pos.up()).isOf(Blocks.WATER);
     }
 }
 

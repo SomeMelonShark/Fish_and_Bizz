@@ -1,5 +1,6 @@
 package net.redmelon.fishandshiz.world;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.registry.Registerable;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -12,10 +13,14 @@ import net.redmelon.fishandshiz.cclass.FanwortFeature;
 
 public class ModConfiguredFeatures {
     public static final RegistryKey<ConfiguredFeature<?, ?>> FANWORT_KEY = registerKey("fanwort");
+    public static final RegistryKey<ConfiguredFeature<?, ?>> LAKE = registerKey("lake");
 
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
         register(context, FANWORT_KEY, Feature.SIMPLE_BLOCK,
                 new SimpleBlockFeatureConfig(BlockStateProvider.of(ModBlocks.FANWORT)));
+        register(context, LAKE, Feature.LAKE,
+                new LakeFeature.Config(BlockStateProvider.of(Blocks.WATER.getDefaultState()),
+                        BlockStateProvider.of(Blocks.DIRT.getDefaultState())));
     }
 
     public static RegistryKey<ConfiguredFeature<?, ?>> registerKey(String name) {

@@ -1,22 +1,18 @@
 {
   "type": "minecraft:lake",
   "config": {
+    "barrier": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:dirt"
+      }
+    },
     "fluid": {
       "type": "minecraft:simple_state_provider",
       "state": {
         "Name": "minecraft:water",
         "Properties": {
-          "level": "0",
-          "scale": "48"
-        }
-      }
-    },
-    "barrier": {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "minecraft:stone",
-        "Properties": {
-          "scale": "48"
+          "level": "0"
         }
       }
     }

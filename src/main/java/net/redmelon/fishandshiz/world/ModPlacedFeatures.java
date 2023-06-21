@@ -18,6 +18,7 @@ import java.util.List;
 
 public class ModPlacedFeatures {
     public static final RegistryKey<PlacedFeature> PLACED_FANWORT = registerKey("placed_fanwort");
+    public static final RegistryKey<PlacedFeature> LAKE = registerKey("lake");
 
     public static void bootstrap(Registerable<PlacedFeature> context) {
         var configuredFeatureRegistryLookup = context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
@@ -26,6 +27,11 @@ public class ModPlacedFeatures {
         RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference1 =
                 registryEntryLookup.getOrThrow(ModConfiguredFeatures.FANWORT_KEY);
         register(context, PLACED_FANWORT, reference1,
+                NoiseBasedCountPlacementModifier.of(80, 80.0, 0.0),
+                SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, BiomePlacementModifier.of());
+        RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference2 =
+                registryEntryLookup.getOrThrow(ModConfiguredFeatures.LAKE);
+        register(context, LAKE, reference2,
                 NoiseBasedCountPlacementModifier.of(80, 80.0, 0.0),
                 SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, BiomePlacementModifier.of());
     }

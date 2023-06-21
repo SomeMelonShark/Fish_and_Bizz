@@ -19,7 +19,6 @@ public class FanwortFeature extends Feature<DefaultFeatureConfig> {
         super(codec);
     }
 
-    @Override
     public boolean generate(FeatureContext<DefaultFeatureConfig> context) {
         int i = 0;
         StructureWorldAccess structureWorldAccess = context.getWorld();
