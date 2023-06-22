@@ -16,6 +16,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
+import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
@@ -24,15 +25,15 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class RainbowfishEggEntity extends RainbowfishEntity implements GeoEntity {
+public class GraylingEggEntity extends GraylingEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_RAINBOWFISH_EGG_AGE = Math.abs(-12000);
-    private int rainbowfishEggAge;
+    public static int MAX_GRAYLING_EGG_AGE = Math.abs(-18000);
+    private int graylingEggAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-    public RainbowfishEggEntity(EntityType<? extends RainbowfishEntity> entityType, World world) {
+    public GraylingEggEntity(EntityType<? extends GraylingEntity> entityType, World world) {
         super(entityType, world);
-        this.moveControl = new RainbowfishEggEntity.FishMoveControl(this);
+        this.moveControl = new GraylingEggEntity.FishMoveControl(this);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -52,45 +53,46 @@ public class RainbowfishEggEntity extends RainbowfishEntity implements GeoEntity
         public void tick() {//does not move
         }
     }
+
     @Override
     public void tickMovement() {
         super.tickMovement();
         if (!this.world.isClient) {
-            this.setRainbowfishEggAge(this.rainbowfishEggAge + 1);
+            this.setGraylingEggAge(this.graylingEggAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.rainbowfishEggAge);
+        nbt.putInt("Age", this.graylingEggAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setRainbowfishEggAge(nbt.getInt("Age"));
+        this.setGraylingEggAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getRainbowfishEggAge());
+        nbtCompound.putInt("Age", this.getGraylingEggAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setRainbowfishEggAge(nbt.getInt("Age"));
+            this.setGraylingEggAge(nbt.getInt("Age"));
         }
     }
-    private int getRainbowfishEggAge() {
-        return this.rainbowfishEggAge;
+    private int getGraylingEggAge() {
+        return this.graylingEggAge;
     }
     private void increaseAge(int seconds) {
-        this.setRainbowfishEggAge(this.rainbowfishEggAge + seconds * 20);
+        this.setGraylingEggAge(this.graylingEggAge + seconds * 20);
     }
-    private void setRainbowfishEggAge(int rainbowfishEggAge) {
-        this.rainbowfishEggAge = rainbowfishEggAge;
-        if (this.rainbowfishEggAge >= MAX_RAINBOWFISH_EGG_AGE) {
+    private void setGraylingEggAge(int graylingEggAge) {
+        this.graylingEggAge = graylingEggAge;
+        if (this.graylingEggAge >= MAX_GRAYLING_EGG_AGE) {
             this.growUp();
         }
     }
@@ -100,31 +102,32 @@ public class RainbowfishEggEntity extends RainbowfishEntity implements GeoEntity
         return false;
     }
 
+
     private void growUp() {
         World world = this.world;
-        int i = random.nextBetweenExclusive(3, 5);
+        int i = random.nextBetweenExclusive(5, 10);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                RainbowfishFryEntity rainbowfishFryEntity = ModEntities.RAINBOWFISH_FRY.create(this.world);
-                if (rainbowfishFryEntity != null) {
-                    rainbowfishFryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    rainbowfishFryEntity.initialize(serverWorld, this.world.getLocalDifficulty(rainbowfishFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                    rainbowfishFryEntity.setAiDisabled(this.isAiDisabled());
+                GraylingFryEntity graylingFryEntity = ModEntities.GRAYLING_FRY.create(this.world);
+                if (graylingFryEntity != null) {
+                    graylingFryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                    graylingFryEntity.initialize(serverWorld, this.world.getLocalDifficulty(graylingFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    graylingFryEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
-                        rainbowfishFryEntity.setCustomName(this.getCustomName());
-                        rainbowfishFryEntity.setCustomNameVisible(this.isCustomNameVisible());
+                        graylingFryEntity.setCustomName(this.getCustomName());
+                        graylingFryEntity.setCustomNameVisible(this.isCustomNameVisible());
                     }
-                    rainbowfishFryEntity.setPersistent();
+                    graylingFryEntity.setPersistent();
                     this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
-                    serverWorld.spawnEntityAndPassengers(rainbowfishFryEntity);
+                    serverWorld.spawnEntityAndPassengers(graylingFryEntity);
                     this.discard();
                 }
             }
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_RAINBOWFISH_EGG_AGE - this.rainbowfishEggAge);
+        return Math.max(0, MAX_GRAYLING_EGG_AGE - this.graylingEggAge);
     }
 
     @Override
@@ -148,11 +151,11 @@ public class RainbowfishEggEntity extends RainbowfishEntity implements GeoEntity
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.RAINBOWFISH_EGG_BUCKET);
+        return new ItemStack(ModItems.MILKFISH_EGG_BUCKET);
     }
 
     @Override
-    public @Nullable NeonTetraEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+    public @Nullable MilkfishEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
         return null;
     }
 

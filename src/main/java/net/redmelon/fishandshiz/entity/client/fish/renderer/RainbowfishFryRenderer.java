@@ -31,7 +31,7 @@ public class RainbowfishFryRenderer extends GeoEntityRenderer<RainbowfishFryEnti
 
     @Override
     public void render(RainbowfishFryEntity entity, float entityYaw, float partialTick, MatrixStack poseStack, VertexConsumerProvider bufferSource, int packedLight) {
-        poseStack.scale(0.7f, 0.7f, 0.7f);
+        poseStack.scale(0.5f, 0.5f, 0.5f);
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 }

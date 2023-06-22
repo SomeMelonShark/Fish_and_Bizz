@@ -21,6 +21,7 @@ public class ModModelProvider extends FabricModelProvider {
         blockStateModelGenerator.registerParentedItemModel(ModItems.CAPYBARA_SPAWN_EGG, ModelIds.getMinecraftNamespacedItem("template_spawn_egg"));
         blockStateModelGenerator.registerParentedItemModel(ModItems.MILKFISH_SPAWN_EGG, ModelIds.getMinecraftNamespacedItem("template_spawn_egg"));
         blockStateModelGenerator.registerParentedItemModel(ModItems.ARCHERFISH_SPAWN_EGG, ModelIds.getMinecraftNamespacedItem("template_spawn_egg"));
+        blockStateModelGenerator.registerParentedItemModel(ModItems.GRAYLING_SPAWN_EGG, ModelIds.getMinecraftNamespacedItem("template_spawn_egg"));
         blockStateModelGenerator.registerParentedItemModel(ModItems.MUD_CRAB_SPAWN_EGG, ModelIds.getMinecraftNamespacedItem("template_spawn_egg"));
         blockStateModelGenerator.registerParentedItemModel(ModItems.LION_MANE_SPAWN_EGG, ModelIds.getMinecraftNamespacedItem("template_spawn_egg"));
     }
@@ -50,6 +51,9 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.RAINBOWFISH_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.RAINBOWFISH_FRY_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.RAINBOWFISH_EGG_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.GRAYLING_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.GRAYLING_FRY_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.GRAYLING_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.SALMON_FRY_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.SALMON_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.MUD_CRAB_BUCKET, Models.GENERATED);

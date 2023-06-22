@@ -53,6 +53,9 @@ public class FishAndShiz implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.RAINBOWFISH, RainbowfishEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.RAINBOWFISH_FRY, RainbowfishEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.RAINBOWFISH_EGG, RainbowfishEggEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.GRAYLING, GraylingEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.GRAYLING_FRY, GraylingFryEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.GRAYLING_EGG, GraylingEggEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.SALMON_EGG, SalmonEggEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.SALMON_FRY, SalmonFryEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.MUD_CRAB, MudCrabEntity.setAttributes());

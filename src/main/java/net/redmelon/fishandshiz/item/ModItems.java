@@ -19,6 +19,8 @@ public class ModItems {
             new SpawnEggItem(ModEntities.ARCHERFISH, 0xcdcc9d, 0x504848, new FabricItemSettings()));
     public static final Item MILKFISH_SPAWN_EGG = registerItem("milkfish_spawn_egg",
             new SpawnEggItem(ModEntities.MILKFISH, 0xc2d1e0, 0x79828b, new FabricItemSettings()));
+    public static final Item GRAYLING_SPAWN_EGG = registerItem("grayling_spawn_egg",
+            new SpawnEggItem(ModEntities.GRAYLING, 0x617558, 0x1e2d27, new FabricItemSettings()));
     public static final Item MUD_CRAB_SPAWN_EGG = registerItem("mud_crab_spawn_egg",
             new SpawnEggItem(ModEntities.MUD_CRAB, 0x2f5553, 0xab5315, new FabricItemSettings()));
     public static final Item LION_MANE_SPAWN_EGG = registerItem("lion_mane_spawn_egg",
@@ -67,6 +69,12 @@ public class ModItems {
             new EntityBucketItem(ModEntities.RAINBOWFISH_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item RAINBOWFISH_EGG_BUCKET = registerItem("rainbowfish_egg_bucket",
             new EntityBucketItem(ModEntities.RAINBOWFISH_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
+    public static final Item GRAYLING_BUCKET = registerItem("grayling_bucket",
+            new EntityBucketItem(ModEntities.GRAYLING, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item GRAYLING_FRY_BUCKET = registerItem("grayling_fry_bucket",
+            new EntityBucketItem(ModEntities.GRAYLING_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item GRAYLING_EGG_BUCKET = registerItem("grayling_egg_bucket",
+            new EntityBucketItem(ModEntities.GRAYLING_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
     public static final Item SALMON_FRY_BUCKET = registerItem("salmon_fry_bucket",
             new EntityBucketItem(ModEntities.SALMON_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item SALMON_EGG_BUCKET = registerItem("salmon_egg_bucket",
@@ -121,6 +129,9 @@ public class ModItems {
         addToItemGroup(ItemGroups.TOOLS, RAINBOWFISH_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, RAINBOWFISH_FRY_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, RAINBOWFISH_EGG_BUCKET);
+        addToItemGroup(ItemGroups.TOOLS, GRAYLING_BUCKET);
+        addToItemGroup(ItemGroups.TOOLS, GRAYLING_FRY_BUCKET);
+        addToItemGroup(ItemGroups.TOOLS, GRAYLING_EGG_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, SALMON_FRY_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, SALMON_EGG_BUCKET);
         addToItemGroup(ItemGroups.TOOLS, MUD_CRAB_BUCKET);
@@ -134,6 +145,7 @@ public class ModItems {
         addToItemGroup(ItemGroups.FOOD_AND_DRINK, CORN);
         addToItemGroup(ItemGroups.SPAWN_EGGS, ARCHERFISH_SPAWN_EGG);
         addToItemGroup(ItemGroups.SPAWN_EGGS, MILKFISH_SPAWN_EGG);
+        addToItemGroup(ItemGroups.SPAWN_EGGS, GRAYLING_SPAWN_EGG);
         addToItemGroup(ItemGroups.SPAWN_EGGS, MUD_CRAB_SPAWN_EGG);
         addToItemGroup(ItemGroups.SPAWN_EGGS, CAPYBARA_SPAWN_EGG);
         addToItemGroup(ItemGroups.SPAWN_EGGS, LION_MANE_SPAWN_EGG);

@@ -26,6 +26,6 @@ public class BottomFeederGoal extends MoveToTargetPosGoal {
     @Override
     protected boolean isTargetPos(WorldView world, BlockPos pos) {
         BlockState state = world.getBlockState(pos.up());
-        return state.isOf(Blocks.SEAGRASS) || state.isOf(Blocks.DIRT) || state.isOf(Blocks.SAND);
+        return state.isOf(Blocks.MUD) || state.isOf(Blocks.DIRT) || state.isOf(Blocks.SAND) || state.isOf(Blocks.GRAVEL);
     }
 }

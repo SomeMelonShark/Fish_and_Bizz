@@ -100,6 +100,12 @@ public class ModEntitySpawn {
         SpawnRestriction.register(ModEntities.RAINBOWFISH, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
 
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.FROZEN_RIVER), SpawnGroup.WATER_AMBIENT,
+                ModEntities.GRAYLING, 1, 1, 4);
+
+        SpawnRestriction.register(ModEntities.GRAYLING, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
+
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE), SpawnGroup.AMBIENT,
                 ModEntities.CAPYBARA, 3, 4, 7);
 
