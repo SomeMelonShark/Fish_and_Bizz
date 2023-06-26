@@ -24,6 +24,6 @@ public abstract class SalmonMixin extends WaterCreatureEntity {
     }
 
     public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return ModEntities.SALMON_EGG.create(world);
+        return ModEntities.SALMON_EGG.create(getWorld());
     }
 }

@@ -37,7 +37,7 @@ public class BreedFollowGroupLeaderGoal
         }
         this.checkSurroundingDelay = this.getSurroundingSearchDelay(this.fish);
         Predicate<SchoolingBreedEntity> predicate = fish -> fish.canHaveMoreFishInGroup() || !fish.hasLeader();
-        List<SchoolingBreedEntity> list = (List<SchoolingBreedEntity>) this.fish.world.getEntitiesByClass(this.fish.getClass(), this.fish.getBoundingBox().expand(8.0, 8.0, 8.0), predicate);
+        List<SchoolingBreedEntity> list = (List<SchoolingBreedEntity>) this.fish.getWorld().getEntitiesByClass(this.fish.getClass(), this.fish.getBoundingBox().expand(8.0, 8.0, 8.0), predicate);
         SchoolingBreedEntity schoolingBreedEntity = DataFixUtils.orElse(list.stream().filter(SchoolingBreedEntity::canHaveMoreFishInGroup).findAny(), this.fish);
         schoolingBreedEntity.pullInOtherFish(list.stream().filter(fish -> !fish.hasLeader()));
         return this.fish.hasLeader();

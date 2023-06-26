@@ -103,59 +103,7 @@ public class ModItems {
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(FishAndShiz.MOD_ID, name), item);
     }
-
-    public static void addItemsToItemGroup() {
-        addToItemGroup(ItemGroups.INGREDIENTS, FISHMEAL);
-        addToItemGroup(ItemGroups.INGREDIENTS, FISH_FOOD);
-        addToItemGroup(ItemGroups.NATURAL, FANWORT);
-        addToItemGroup(ItemGroups.NATURAL, SEA_ANEMONE);
-        addToItemGroup(ItemGroups.TOOLS, ANGELFISH_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, ANGELFISH_FRY_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, ANGELFISH_EGG_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, NEON_TETRA_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, NEON_TETRA_FRY_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, NEON_TETRA_EGG_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, ARCHERFISH_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, MILKFISH_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, MILKFISH_FRY_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, MILKFISH_EGG_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, CLOWNFISH_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, CLOWNFISH_FRY_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, CLOWNFISH_EGG_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, CORYDORAS_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, CORYDORAS_FRY_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, CORYDORAS_EGG_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, OSCAR_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, RAINBOWFISH_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, RAINBOWFISH_FRY_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, RAINBOWFISH_EGG_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, GRAYLING_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, GRAYLING_FRY_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, GRAYLING_EGG_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, SALMON_FRY_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, SALMON_EGG_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, MUD_CRAB_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, MUD_CRAB_LARVA_BUCKET);
-        addToItemGroup(ItemGroups.TOOLS, MUD_CRAB_EGG_BUCKET);
-        addToItemGroup(ItemGroups.FOOD_AND_DRINK, MILKFISH);
-        addToItemGroup(ItemGroups.FOOD_AND_DRINK, COOKED_MILKFISH);
-        addToItemGroup(ItemGroups.FOOD_AND_DRINK, MUD_CRAB);
-        addToItemGroup(ItemGroups.FOOD_AND_DRINK, COOKED_MUD_CRAB);
-        addToItemGroup(ItemGroups.NATURAL, CORN_KERNELS);
-        addToItemGroup(ItemGroups.FOOD_AND_DRINK, CORN);
-        addToItemGroup(ItemGroups.SPAWN_EGGS, ARCHERFISH_SPAWN_EGG);
-        addToItemGroup(ItemGroups.SPAWN_EGGS, MILKFISH_SPAWN_EGG);
-        addToItemGroup(ItemGroups.SPAWN_EGGS, GRAYLING_SPAWN_EGG);
-        addToItemGroup(ItemGroups.SPAWN_EGGS, MUD_CRAB_SPAWN_EGG);
-        addToItemGroup(ItemGroups.SPAWN_EGGS, CAPYBARA_SPAWN_EGG);
-        addToItemGroup(ItemGroups.SPAWN_EGGS, LION_MANE_SPAWN_EGG);
-    }
-    private static void addToItemGroup(ItemGroup group, Item item) {
-        ItemGroupEvents.modifyEntriesEvent(group).register(entries -> entries.add(item));
-    }
     public static void registerModitems(){
         FishAndShiz.LOGGER.debug("Registering Mod Items for "+ FishAndShiz.MOD_ID);
-
-        addItemsToItemGroup();
     }
 }

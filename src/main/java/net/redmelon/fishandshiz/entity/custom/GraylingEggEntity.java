@@ -57,7 +57,7 @@ public class GraylingEggEntity extends GraylingEntity implements GeoEntity {
     @Override
     public void tickMovement() {
         super.tickMovement();
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.setGraylingEggAge(this.graylingEggAge + 1);
         }
     }
@@ -104,15 +104,15 @@ public class GraylingEggEntity extends GraylingEntity implements GeoEntity {
 
 
     private void growUp() {
-        World world = this.world;
+        World world = this.getWorld();
         int i = random.nextBetweenExclusive(5, 10);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                GraylingFryEntity graylingFryEntity = ModEntities.GRAYLING_FRY.create(this.world);
+                GraylingFryEntity graylingFryEntity = ModEntities.GRAYLING_FRY.create(this.getWorld());
                 if (graylingFryEntity != null) {
                     graylingFryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    graylingFryEntity.initialize(serverWorld, this.world.getLocalDifficulty(graylingFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    graylingFryEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(graylingFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
                     graylingFryEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
                         graylingFryEntity.setCustomName(this.getCustomName());

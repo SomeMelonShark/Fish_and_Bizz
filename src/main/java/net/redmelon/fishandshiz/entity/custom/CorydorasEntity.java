@@ -71,7 +71,7 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
 
     @Override
     public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return ModEntities.CORYDORAS_EGG.create(world);
+        return ModEntities.CORYDORAS_EGG.create(getWorld());
     }
 
     @Override

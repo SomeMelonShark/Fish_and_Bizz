@@ -6,6 +6,7 @@ import net.redmelon.fishandshiz.block.ModBlocks;
 import net.redmelon.fishandshiz.block.entity.ModBlockEntities;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.custom.*;
+import net.redmelon.fishandshiz.item.ModItemGroup;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.util.ModLootTableModifiers;
 import net.redmelon.fishandshiz.villager.ModVillagers;
@@ -21,6 +22,7 @@ public class FishAndShiz implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItems.registerModitems();
+		ModItemGroup.registerItemGroups();
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.registerAllBlockEntities();
 

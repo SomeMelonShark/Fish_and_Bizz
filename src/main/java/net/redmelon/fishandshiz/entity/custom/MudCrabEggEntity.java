@@ -45,7 +45,7 @@ public class MudCrabEggEntity extends MudCrabEntity implements GeoEntity {
     @Override
     public void tickMovement() {
         super.tickMovement();
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.setMudCrabEggAge(this.mudCrabEggAge + 1);
         }
     }
@@ -92,15 +92,15 @@ public class MudCrabEggEntity extends MudCrabEntity implements GeoEntity {
 
 
     private void growUp() {
-        World world = this.world;
+        World world = this.getWorld();
         int i = random.nextBetweenExclusive(4, 7);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                MudCrabLarvaEntity mudCrabLarvaEntity = ModEntities.MUD_CRAB_LARVA.create(this.world);
+                MudCrabLarvaEntity mudCrabLarvaEntity = ModEntities.MUD_CRAB_LARVA.create(this.getWorld());
                 if (mudCrabLarvaEntity != null) {
                     mudCrabLarvaEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    mudCrabLarvaEntity.initialize(serverWorld, this.world.getLocalDifficulty(mudCrabLarvaEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    mudCrabLarvaEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(mudCrabLarvaEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
                     mudCrabLarvaEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
                         mudCrabLarvaEntity.setCustomName(this.getCustomName());

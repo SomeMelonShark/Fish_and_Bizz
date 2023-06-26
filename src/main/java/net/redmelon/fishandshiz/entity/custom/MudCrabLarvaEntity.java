@@ -59,7 +59,7 @@ public class MudCrabLarvaEntity extends SchoolingFishEntity implements GeoEntity
 
     @Override
     public void tickMovement() {
-        if(!this.isTouchingWater() && this.onGround && this.verticalCollision) {
+        if(!this.isTouchingWater() && this.verticalCollision) {
             this.verticalCollision = false;
         }
         super.tickMovement();
@@ -117,13 +117,13 @@ public class MudCrabLarvaEntity extends SchoolingFishEntity implements GeoEntity
     }
 
     private void growUp() {
-        World world = this.world;
+        World world = this.getWorld();
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
-            MudCrabEntity mudCrabEntity = ModEntities.MUD_CRAB.create(this.world);
+            MudCrabEntity mudCrabEntity = ModEntities.MUD_CRAB.create(this.getWorld());
             if (mudCrabEntity != null) {
                 mudCrabEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                mudCrabEntity.initialize(serverWorld, this.world.getLocalDifficulty(mudCrabEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                mudCrabEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(mudCrabEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
                 mudCrabEntity.setAiDisabled(this.isAiDisabled());
                 if (this.hasCustomName()) {
                     mudCrabEntity.setCustomName(this.getCustomName());

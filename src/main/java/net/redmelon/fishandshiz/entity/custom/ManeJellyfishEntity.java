@@ -36,7 +36,7 @@ public class ManeJellyfishEntity extends FishEntity implements GeoEntity {
 
     @Override
     public void tickMovement() {
-        if(!this.isTouchingWater() && this.onGround && this.verticalCollision) {
+        if(!this.isTouchingWater() && !this.isSubmergedInWater() && this.verticalCollision) {
             this.verticalCollision = false;
         }
         super.tickMovement();

@@ -78,7 +78,7 @@ public class SalmonFryEntity extends SchoolingBreedEntity implements GeoEntity {
     @Override
     public void tickMovement() {
         super.tickMovement();
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.setSalmonFryAge(this.salmonFryAge + 1);
         }
     }
@@ -116,7 +116,7 @@ public class SalmonFryEntity extends SchoolingBreedEntity implements GeoEntity {
         ItemStack itemStack = player.getStackInHand(hand);
         if (this.isFishFood(itemStack)) {
             this.eatFishFood(player, itemStack);
-            return ActionResult.success(this.world.isClient);
+            return ActionResult.success(this.getWorld().isClient);
         } else {
             return (ActionResult)Bucketable.tryBucket(player, hand, this).orElse(super.interactMob(player, hand));
         }
@@ -127,7 +127,7 @@ public class SalmonFryEntity extends SchoolingBreedEntity implements GeoEntity {
     private void eatFishFood (PlayerEntity player, ItemStack stack) {
         this.decrementItem(player, stack);
         this.increaseAge(PassiveWaterEntity.toGrowUpAge(this.getTicksUntilGrowth()));
-        this.world.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
+        this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
     }
     private void decrementItem(PlayerEntity player, ItemStack stack) {
         if (!player.getAbilities().creativeMode) {
@@ -149,13 +149,13 @@ public class SalmonFryEntity extends SchoolingBreedEntity implements GeoEntity {
     }
 
     private void growUp() {
-        World world = this.world;
+        World world = this.getWorld();
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
-            SalmonEntity salmonEntity = EntityType.SALMON.create(this.world);
+            SalmonEntity salmonEntity = EntityType.SALMON.create(this.getWorld());
             if (salmonEntity != null) {
                 salmonEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                salmonEntity.initialize(serverWorld, this.world.getLocalDifficulty(salmonEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                salmonEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(salmonEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
                 salmonEntity.setAiDisabled(this.isAiDisabled());
                 if (this.hasCustomName()) {
                     salmonEntity.setCustomName(this.getCustomName());

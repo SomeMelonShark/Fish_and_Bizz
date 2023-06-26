@@ -57,7 +57,7 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
     @Override
     public void tickMovement() {
         super.tickMovement();
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.setAngelfishEggAge(this.angelfishEggAge + 1);
         }
     }
@@ -104,15 +104,15 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
 
 
     private void growUp() {
-        World world = this.world;
+        World world = this.getWorld();
         int i = random.nextBetweenExclusive(3, 8);
         for (int j = 1; j <= i; ++j)
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
-            AngelfishFryEntity angelfishfryEntity = ModEntities.ANGELFISH_FRY.create(this.world);
+            AngelfishFryEntity angelfishfryEntity = ModEntities.ANGELFISH_FRY.create(this.getWorld());
             if (angelfishfryEntity != null) {
                 angelfishfryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                angelfishfryEntity.initialize(serverWorld, this.world.getLocalDifficulty(angelfishfryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                angelfishfryEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(angelfishfryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
                 angelfishfryEntity.setAiDisabled(this.isAiDisabled());
                 if (this.hasCustomName()) {
                     angelfishfryEntity.setCustomName(this.getCustomName());

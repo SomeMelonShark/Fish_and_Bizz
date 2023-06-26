@@ -57,7 +57,7 @@ public class SalmonEggEntity extends SchoolingBreedEntity implements GeoEntity {
     @Override
     public void tickMovement() {
         super.tickMovement();
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.setSalmonEggAge(this.salmonEggAge + 1);
         }
     }
@@ -105,15 +105,15 @@ public class SalmonEggEntity extends SchoolingBreedEntity implements GeoEntity {
 
 
     private void growUp() {
-        World world = this.world;
+        World world = this.getWorld();
         int i = random.nextBetweenExclusive(10, 15);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                SalmonFryEntity salmonFryEntity = ModEntities.SALMON_FRY.create(this.world);
+                SalmonFryEntity salmonFryEntity = ModEntities.SALMON_FRY.create(this.getWorld());
                 if (salmonFryEntity != null) {
                     salmonFryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    salmonFryEntity.initialize(serverWorld, this.world.getLocalDifficulty(salmonFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    salmonFryEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(salmonFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
                     salmonFryEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
                         salmonFryEntity.setCustomName(this.getCustomName());

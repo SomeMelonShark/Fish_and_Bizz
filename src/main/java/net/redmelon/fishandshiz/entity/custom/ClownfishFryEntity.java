@@ -76,7 +76,7 @@ public class ClownfishFryEntity extends ClownfishEntity implements GeoEntity {
     @Override
     public void tickMovement() {
         super.tickMovement();
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.setClownfishFryAge(this.clownfishFryAge + 1);
         }
     }
@@ -108,7 +108,7 @@ public class ClownfishFryEntity extends ClownfishEntity implements GeoEntity {
         ItemStack itemStack = player.getStackInHand(hand);
         if (this.isFishFood(itemStack)) {
             this.eatFishFood(player, itemStack);
-            return ActionResult.success(this.world.isClient);
+            return ActionResult.success(this.getWorld().isClient);
         } else {
             return (ActionResult)Bucketable.tryBucket(player, hand, this).orElse(super.interactMob(player, hand));
         }
@@ -119,7 +119,7 @@ public class ClownfishFryEntity extends ClownfishEntity implements GeoEntity {
     private void eatFishFood (PlayerEntity player, ItemStack stack) {
         this.decrementItem(player, stack);
         this.increaseAge(PassiveWaterEntity.toGrowUpAge(this.getTicksUntilGrowth()));
-        this.world.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
+        this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
     }
     private void decrementItem(PlayerEntity player, ItemStack stack) {
         if (!player.getAbilities().creativeMode) {
@@ -140,13 +140,13 @@ public class ClownfishFryEntity extends ClownfishEntity implements GeoEntity {
         }
     }
     private void growUp() {
-        World world = this.world;
+        World world = this.getWorld();
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
-            ClownfishEntity clownfishEntity = ModEntities.CLOWNFISH.create(this.world);
+            ClownfishEntity clownfishEntity = ModEntities.CLOWNFISH.create(this.getWorld());
             if (clownfishEntity != null) {
                 clownfishEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                clownfishEntity.initialize(serverWorld, this.world.getLocalDifficulty(clownfishEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                clownfishEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(clownfishEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
                 clownfishEntity.setAiDisabled(this.isAiDisabled());
                 if (this.hasCustomName()) {
                     clownfishEntity.setCustomName(this.getCustomName());

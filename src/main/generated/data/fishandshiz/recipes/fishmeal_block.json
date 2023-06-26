@@ -13,5 +13,6 @@
   ],
   "result": {
     "item": "fishandshiz:fishmeal_block"
-  }
+  },
+  "show_notification": true
 }

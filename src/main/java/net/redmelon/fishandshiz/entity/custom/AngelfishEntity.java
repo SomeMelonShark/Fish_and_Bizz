@@ -91,8 +91,8 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     }
 
     @Override
-    public @Nullable AngelfishEggEntity createChild(ServerWorld world, PassiveWaterEntity passiveWaterEntity) {
-        return ModEntities.ANGELFISH_EGG.create(world);
+    public @Nullable AngelfishEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+        return ModEntities.ANGELFISH_EGG.create(getWorld());
     }
 
     @Override

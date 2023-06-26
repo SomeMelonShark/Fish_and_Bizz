@@ -57,8 +57,8 @@ public class CapybaraEntity extends AnimalEntity implements GeoEntity {
 
     @Nullable
     @Override
-    public PassiveEntity createChild(ServerWorld world, PassiveEntity entity) {
-        return ModEntities.CAPYBARA.create(world);
+    public PassiveEntity createChild(ServerWorld var1, PassiveEntity entity) {
+        return ModEntities.CAPYBARA.create(var1);
     }
 
     @Override

@@ -72,7 +72,7 @@ public class ClownfishEntity extends SchoolingBreedEntity implements GeoEntity {
 
     @Override
     public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return ModEntities.CLOWNFISH_EGG.create(world);
+        return ModEntities.CLOWNFISH_EGG.create(getWorld());
     }
 
     @Override

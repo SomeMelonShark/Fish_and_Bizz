@@ -76,7 +76,7 @@ public class NeonTetraFryEntity extends NeonTetraEntity implements GeoEntity {
     @Override
     public void tickMovement() {
         super.tickMovement();
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.setNeonTetraFryAge(this.neonTetraFryAge + 1);
         }
     }
@@ -108,7 +108,7 @@ public class NeonTetraFryEntity extends NeonTetraEntity implements GeoEntity {
         ItemStack itemStack = player.getStackInHand(hand);
         if (this.isFishFood(itemStack)) {
             this.eatFishFood(player, itemStack);
-            return ActionResult.success(this.world.isClient);
+            return ActionResult.success(this.getWorld().isClient);
         } else {
             return (ActionResult)Bucketable.tryBucket(player, hand, this).orElse(super.interactMob(player, hand));
         }
@@ -119,7 +119,7 @@ public class NeonTetraFryEntity extends NeonTetraEntity implements GeoEntity {
     private void eatFishFood (PlayerEntity player, ItemStack stack) {
         this.decrementItem(player, stack);
         this.increaseAge(PassiveWaterEntity.toGrowUpAge(this.getTicksUntilGrowth()));
-        this.world.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
+        this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
     }
     private void decrementItem(PlayerEntity player, ItemStack stack) {
         if (!player.getAbilities().creativeMode) {
@@ -140,13 +140,13 @@ public class NeonTetraFryEntity extends NeonTetraEntity implements GeoEntity {
         }
     }
     private void growUp() {
-        World world = this.world;
+        World world = this.getWorld();
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
-            NeonTetraEntity neonTetraEntity = ModEntities.NEON_TETRA.create(this.world);
+            NeonTetraEntity neonTetraEntity = ModEntities.NEON_TETRA.create(this.getWorld());
             if (neonTetraEntity != null) {
                 neonTetraEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                neonTetraEntity.initialize(serverWorld, this.world.getLocalDifficulty(neonTetraEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                neonTetraEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(neonTetraEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
                 neonTetraEntity.setAiDisabled(this.isAiDisabled());
                 if (this.hasCustomName()) {
                     neonTetraEntity.setCustomName(this.getCustomName());

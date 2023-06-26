@@ -30,5 +30,6 @@
     "recipes": [
       "minecraft:cooked_mud_crab_from_smelting_mud_crab"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

@@ -77,7 +77,7 @@ public abstract class SchoolingBreedEntity extends AnimalFishEntity {
     public void tick() {
         List<?> list;
         super.tick();
-        if (this.hasOtherFishInGroup() && this.world.random.nextInt(200) == 1 && (list = this.world.getNonSpectatingEntities(this.getClass(), this.getBoundingBox().expand(8.0, 8.0, 8.0))).size() <= 1) {
+        if (this.hasOtherFishInGroup() && this.getWorld().random.nextInt(200) == 1 && (list = this.getWorld().getNonSpectatingEntities(this.getClass(), this.getBoundingBox().expand(8.0, 8.0, 8.0))).size() <= 1) {
             this.groupSize = 1;
         }
     }

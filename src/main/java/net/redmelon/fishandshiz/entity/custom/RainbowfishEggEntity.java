@@ -55,7 +55,7 @@ public class RainbowfishEggEntity extends RainbowfishEntity implements GeoEntity
     @Override
     public void tickMovement() {
         super.tickMovement();
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.setRainbowfishEggAge(this.rainbowfishEggAge + 1);
         }
     }
@@ -101,15 +101,15 @@ public class RainbowfishEggEntity extends RainbowfishEntity implements GeoEntity
     }
 
     private void growUp() {
-        World world = this.world;
+        World world = this.getWorld();
         int i = random.nextBetweenExclusive(3, 5);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                RainbowfishFryEntity rainbowfishFryEntity = ModEntities.RAINBOWFISH_FRY.create(this.world);
+                RainbowfishFryEntity rainbowfishFryEntity = ModEntities.RAINBOWFISH_FRY.create(this.getWorld());
                 if (rainbowfishFryEntity != null) {
                     rainbowfishFryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    rainbowfishFryEntity.initialize(serverWorld, this.world.getLocalDifficulty(rainbowfishFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    rainbowfishFryEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(rainbowfishFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
                     rainbowfishFryEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
                         rainbowfishFryEntity.setCustomName(this.getCustomName());

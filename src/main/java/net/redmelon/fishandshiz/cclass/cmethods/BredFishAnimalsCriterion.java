@@ -3,10 +3,12 @@ package net.redmelon.fishandshiz.cclass.cmethods;
 import com.google.gson.JsonObject;
 import net.minecraft.advancement.criterion.AbstractCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterionConditions;
+import net.minecraft.advancement.criterion.BredAnimalsCriterion;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateSerializer;
 import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
@@ -24,11 +26,11 @@ public class BredFishAnimalsCriterion extends AbstractCriterion<net.minecraft.ad
         return ID;
     }
 
-    public net.minecraft.advancement.criterion.BredAnimalsCriterion.Conditions conditionsFromJson(JsonObject jsonObject, EntityPredicate.Extended extended, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
-        EntityPredicate.Extended extended2 = EntityPredicate.Extended.getInJson(jsonObject, "parent", advancementEntityPredicateDeserializer);
-        EntityPredicate.Extended extended3 = EntityPredicate.Extended.getInJson(jsonObject, "partner", advancementEntityPredicateDeserializer);
-        EntityPredicate.Extended extended4 = EntityPredicate.Extended.getInJson(jsonObject, "child", advancementEntityPredicateDeserializer);
-        return new net.minecraft.advancement.criterion.BredAnimalsCriterion.Conditions(extended, extended2, extended3, extended4);
+    public BredAnimalsCriterion.Conditions conditionsFromJson(JsonObject jsonObject, LootContextPredicate lootContextPredicate, AdvancementEntityPredicateDeserializer advancementEntityPredicateDeserializer) {
+        LootContextPredicate lootContextPredicate2 = EntityPredicate.contextPredicateFromJson(jsonObject, "parent", advancementEntityPredicateDeserializer);
+        LootContextPredicate lootContextPredicate3 = EntityPredicate.contextPredicateFromJson(jsonObject, "partner", advancementEntityPredicateDeserializer);
+        LootContextPredicate lootContextPredicate4 = EntityPredicate.contextPredicateFromJson(jsonObject, "child", advancementEntityPredicateDeserializer);
+        return new BredAnimalsCriterion.Conditions(lootContextPredicate, lootContextPredicate2, lootContextPredicate3, lootContextPredicate4);
     }
 
     public void trigger(ServerPlayerEntity player, AnimalFishEntity parent, AnimalFishEntity partner, @Nullable PassiveWaterEntity child) {
@@ -50,31 +52,31 @@ public class BredFishAnimalsCriterion extends AbstractCriterion<net.minecraft.ad
     }
 
     public static class Conditions extends AbstractCriterionConditions {
-        private final EntityPredicate.Extended parent;
-        private final EntityPredicate.Extended partner;
-        private final EntityPredicate.Extended child;
+        private final LootContextPredicate parent;
+        private final LootContextPredicate partner;
+        private final LootContextPredicate child;
 
-        public Conditions(EntityPredicate.Extended player, EntityPredicate.Extended parent, EntityPredicate.Extended partner, EntityPredicate.Extended child) {
+        public Conditions(LootContextPredicate player, LootContextPredicate parent, LootContextPredicate partner, LootContextPredicate child) {
             super(BredFishAnimalsCriterion.ID, player);
             this.parent = parent;
             this.partner = partner;
             this.child = child;
         }
 
-        public static net.minecraft.advancement.criterion.BredAnimalsCriterion.Conditions any() {
-            return new net.minecraft.advancement.criterion.BredAnimalsCriterion.Conditions(EntityPredicate.Extended.EMPTY, EntityPredicate.Extended.EMPTY, EntityPredicate.Extended.EMPTY, EntityPredicate.Extended.EMPTY);
+        public static BredAnimalsCriterion.Conditions any() {
+            return new BredAnimalsCriterion.Conditions(LootContextPredicate.EMPTY, LootContextPredicate.EMPTY, LootContextPredicate.EMPTY, LootContextPredicate.EMPTY);
         }
 
-        public static net.minecraft.advancement.criterion.BredAnimalsCriterion.Conditions create(EntityPredicate.Builder child) {
-            return new net.minecraft.advancement.criterion.BredAnimalsCriterion.Conditions(EntityPredicate.Extended.EMPTY, EntityPredicate.Extended.EMPTY, EntityPredicate.Extended.EMPTY, EntityPredicate.Extended.ofLegacy(child.build()));
+        public static BredAnimalsCriterion.Conditions create(EntityPredicate.Builder child) {
+            return new BredAnimalsCriterion.Conditions(LootContextPredicate.EMPTY, LootContextPredicate.EMPTY, LootContextPredicate.EMPTY, EntityPredicate.asLootContextPredicate(child.build()));
         }
 
-        public static net.minecraft.advancement.criterion.BredAnimalsCriterion.Conditions create(EntityPredicate parent, EntityPredicate partner, EntityPredicate child) {
-            return new net.minecraft.advancement.criterion.BredAnimalsCriterion.Conditions(EntityPredicate.Extended.EMPTY, EntityPredicate.Extended.ofLegacy(parent), EntityPredicate.Extended.ofLegacy(partner), EntityPredicate.Extended.ofLegacy(child));
+        public static BredAnimalsCriterion.Conditions create(EntityPredicate parent, EntityPredicate partner, EntityPredicate child) {
+            return new BredAnimalsCriterion.Conditions(LootContextPredicate.EMPTY, EntityPredicate.asLootContextPredicate(parent), EntityPredicate.asLootContextPredicate(partner), EntityPredicate.asLootContextPredicate(child));
         }
 
         public boolean matches(LootContext parentContext, LootContext partnerContext, @Nullable LootContext childContext) {
-            if (this.child == EntityPredicate.Extended.EMPTY || childContext != null && this.child.test(childContext)) {
+            if (this.child == LootContextPredicate.EMPTY || childContext != null && this.child.test(childContext)) {
                 return this.parent.test(parentContext) && this.partner.test(partnerContext) || this.parent.test(partnerContext) && this.partner.test(parentContext);
             } else {
                 return false;

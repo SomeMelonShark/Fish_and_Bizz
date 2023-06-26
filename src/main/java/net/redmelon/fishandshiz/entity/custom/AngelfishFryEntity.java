@@ -75,7 +75,7 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
     @Override
     public void tickMovement() {
         super.tickMovement();
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.setAngelfishFryAge(this.angelfishFryAge + 1);
         }
     }
@@ -106,7 +106,7 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
         ItemStack itemStack = player.getStackInHand(hand);
         if (this.isFishFood(itemStack)) {
             this.eatFishFood(player, itemStack);
-            return ActionResult.success(this.world.isClient);
+            return ActionResult.success(this.getWorld().isClient);
         } else {
             return (ActionResult)Bucketable.tryBucket(player, hand, this).orElse(super.interactMob(player, hand));
         }
@@ -117,7 +117,7 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
     private void eatFishFood (PlayerEntity player, ItemStack stack) {
         this.decrementItem(player, stack);
         this.increaseAge(PassiveWaterEntity.toGrowUpAge(this.getTicksUntilGrowth()));
-        this.world.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
+        this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
     }
 
     private void decrementItem(PlayerEntity player, ItemStack stack) {
@@ -139,13 +139,13 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
         }
     }
     private void growUp() {
-        World world = this.world;
+        World world = this.getWorld();
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
-            AngelfishEntity angelfishEntity = ModEntities.ANGELFISH.create(this.world);
+            AngelfishEntity angelfishEntity = ModEntities.ANGELFISH.create(this.getWorld());
             if (angelfishEntity != null) {
                 angelfishEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                angelfishEntity.initialize(serverWorld, this.world.getLocalDifficulty(angelfishEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                angelfishEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(angelfishEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
                 angelfishEntity.setAiDisabled(this.isAiDisabled());
                 if (this.hasCustomName()) {
                     angelfishEntity.setCustomName(this.getCustomName());

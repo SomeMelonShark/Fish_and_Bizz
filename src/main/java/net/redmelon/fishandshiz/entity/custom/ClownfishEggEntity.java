@@ -58,7 +58,7 @@ public class ClownfishEggEntity extends ClownfishEntity implements GeoEntity {
     @Override
     public void tickMovement() {
         super.tickMovement();
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.setClowfishEggAge(this.clowfishEggAge + 1);
         }
     }
@@ -100,15 +100,15 @@ public class ClownfishEggEntity extends ClownfishEntity implements GeoEntity {
     }
 
     private void growUp() {
-        World world = this.world;
+        World world = this.getWorld();
         int i = random.nextBetweenExclusive(4, 9);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                ClownfishFryEntity clownfishFryEntity = ModEntities.CLOWNFISH_FRY.create(this.world);
+                ClownfishFryEntity clownfishFryEntity = ModEntities.CLOWNFISH_FRY.create(this.getWorld());
                 if (clownfishFryEntity != null) {
                     clownfishFryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    clownfishFryEntity.initialize(serverWorld, this.world.getLocalDifficulty(clownfishFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    clownfishFryEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(clownfishFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
                     clownfishFryEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
                         clownfishFryEntity.setCustomName(this.getCustomName());

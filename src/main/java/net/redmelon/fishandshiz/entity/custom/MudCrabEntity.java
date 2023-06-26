@@ -91,7 +91,7 @@ public class MudCrabEntity extends AnimalWaterEntity implements GeoEntity {
 
     @Override
     public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return ModEntities.MUD_CRAB_EGG.create(world);
+        return ModEntities.MUD_CRAB_EGG.create(getWorld());
     }
     @Override
     protected SoundEvent getDeathSound() {

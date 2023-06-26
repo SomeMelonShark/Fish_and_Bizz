@@ -214,13 +214,13 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
                 double d = this.random.nextGaussian() * 0.02;
                 double e = this.random.nextGaussian() * 0.02;
                 double f = this.random.nextGaussian() * 0.02;
-                this.world.addParticle(ParticleTypes.HEART, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
+                this.getWorld().addParticle(ParticleTypes.HEART, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
             }
         }
-        if (!this.isTouchingWater() && this.onGround && this.verticalCollision) {
+        if (!this.isTouchingWater() && this.isOnGround() && this.verticalCollision) {
             this.setVelocity(this.getVelocity().add((this.random.nextFloat() * 2.0f - 1.0f) * 0.05f, 0.4f, (this.random.nextFloat() * 2.0f - 1.0f) * 0.05f));
-            this.onGround = false;
             this.velocityDirty = true;
+            this.setOnGround(false);
             this.playSound(this.getFlopSound(), this.getSoundVolume(), this.getSoundPitch());
         }
         super.tickMovement();
@@ -280,7 +280,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
 
     @Override
     public int getXpToDrop() {
-        return 1 + this.world.random.nextInt(3);
+        return 1 + this.getWorld().random.nextInt(3);
     }
 
     public boolean isBreedingItem(ItemStack stack) {
@@ -292,7 +292,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         ItemStack itemStack = player.getStackInHand(hand);
         if (this.isBreedingItem(itemStack)) {
             int i = this.getBreedingAge();
-            if (!this.world.isClient && i == 0 && this.canEat()) {
+            if (!this.getWorld().isClient && i == 0 && this.canEat()) {
                 this.eat(player, hand, itemStack);
                 this.lovePlayer(player);
                 return ActionResult.SUCCESS;
@@ -300,9 +300,9 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
             if (this.isBaby()) {
                 this.eat(player, hand, itemStack);
                 this.growUp(AnimalFishEntity.toGrowUpAge(-i), true);
-                return ActionResult.success(this.world.isClient);
+                return ActionResult.success(this.getWorld().isClient);
             }
-            if (this.world.isClient) {
+            if (this.getWorld().isClient) {
                 return ActionResult.CONSUME;
             }
         }
@@ -324,7 +324,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         if (player != null) {
             this.lovingPlayer = player.getUuid();
         }
-        this.world.sendEntityStatus(this, EntityStatuses.ADD_BREEDING_PARTICLES);
+        this.getWorld().sendEntityStatus(this, EntityStatuses.ADD_BREEDING_PARTICLES);
     }
 
     public void setLoveTicks(int loveTicks) {
@@ -340,7 +340,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         if (this.lovingPlayer == null) {
             return null;
         }
-        PlayerEntity playerEntity = this.world.getPlayerByUuid(this.lovingPlayer);
+        PlayerEntity playerEntity = this.getWorld().getPlayerByUuid(this.lovingPlayer);
         if (playerEntity instanceof ServerPlayerEntity) {
             return (ServerPlayerEntity) playerEntity;
         }
@@ -398,7 +398,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
                 double d = this.random.nextGaussian() * 0.02;
                 double e = this.random.nextGaussian() * 0.02;
                 double f = this.random.nextGaussian() * 0.02;
-                this.world.addParticle(ParticleTypes.HEART, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
+                this.getWorld().addParticle(ParticleTypes.HEART, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
             }
         } else {
             super.handleStatus(status);

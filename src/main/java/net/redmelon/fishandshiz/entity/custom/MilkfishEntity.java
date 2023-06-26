@@ -65,7 +65,7 @@ public class MilkfishEntity extends SchoolingBreedEntity implements GeoEntity {
 
     @Override
     public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return ModEntities.MILKFISH_EGG.create(world);
+        return ModEntities.MILKFISH_EGG.create(getWorld());
     }
 
     @Override

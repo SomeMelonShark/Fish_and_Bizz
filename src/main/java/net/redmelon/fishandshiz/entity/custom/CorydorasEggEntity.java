@@ -55,7 +55,7 @@ public class CorydorasEggEntity extends CorydorasEntity implements GeoEntity {
     @Override
     public void tickMovement() {
         super.tickMovement();
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.setCorydorasEggAge(this.corydorasEggAge + 1);
         }
     }
@@ -102,15 +102,15 @@ public class CorydorasEggEntity extends CorydorasEntity implements GeoEntity {
 
 
     private void growUp() {
-        World world = this.world;
+        World world = this.getWorld();
         int i = random.nextBetweenExclusive(5, 10);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                CorydorasFryEntity corydorasFryEntity = ModEntities.CORYDORAS_FRY.create(this.world);
+                CorydorasFryEntity corydorasFryEntity = ModEntities.CORYDORAS_FRY.create(this.getWorld());
                 if (corydorasFryEntity != null) {
                     corydorasFryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    corydorasFryEntity.initialize(serverWorld, this.world.getLocalDifficulty(corydorasFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    corydorasFryEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(corydorasFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
                     corydorasFryEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
                         corydorasFryEntity.setCustomName(this.getCustomName());

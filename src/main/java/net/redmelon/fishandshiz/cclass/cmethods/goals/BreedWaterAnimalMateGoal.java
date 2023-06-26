@@ -25,7 +25,7 @@ public class BreedWaterAnimalMateGoal extends Goal {
 
     public BreedWaterAnimalMateGoal(AnimalWaterEntity animal, double speed, Class<? extends AnimalWaterEntity> entityClass) {
         this.animal = animal;
-        this.world = animal.world;
+        this.world = animal.getWorld();
         this.entityClass = entityClass;
         this.speed = speed;
         this.setControls(EnumSet.of(Goal.Control.MOVE, Goal.Control.LOOK));

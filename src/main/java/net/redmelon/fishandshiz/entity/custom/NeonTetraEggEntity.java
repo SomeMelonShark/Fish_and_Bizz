@@ -55,7 +55,7 @@ public class NeonTetraEggEntity extends NeonTetraEntity implements GeoEntity {
     @Override
     public void tickMovement() {
         super.tickMovement();
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.setNeonTetraEggAge(this.neonTetraEggAge + 1);
         }
     }
@@ -102,15 +102,15 @@ public class NeonTetraEggEntity extends NeonTetraEntity implements GeoEntity {
 
 
     private void growUp() {
-        World world = this.world;
+        World world = this.getWorld();
         int i = random.nextBetweenExclusive(4, 9);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                NeonTetraFryEntity neonTetraFryEntity = ModEntities.NEON_TETRA_FRY.create(this.world);
+                NeonTetraFryEntity neonTetraFryEntity = ModEntities.NEON_TETRA_FRY.create(this.getWorld());
                 if (neonTetraFryEntity != null) {
                     neonTetraFryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    neonTetraFryEntity.initialize(serverWorld, this.world.getLocalDifficulty(neonTetraFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    neonTetraFryEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(neonTetraFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
                     neonTetraFryEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
                         neonTetraFryEntity.setCustomName(this.getCustomName());

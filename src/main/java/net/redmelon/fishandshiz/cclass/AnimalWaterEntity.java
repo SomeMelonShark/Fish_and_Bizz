@@ -153,7 +153,7 @@ public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bu
                 double d = this.random.nextGaussian() * 0.02;
                 double e = this.random.nextGaussian() * 0.02;
                 double f = this.random.nextGaussian() * 0.02;
-                this.world.addParticle(ParticleTypes.HEART, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
+                this.getWorld().addParticle(ParticleTypes.HEART, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
             }
         }
         super.tickMovement();
@@ -219,7 +219,7 @@ public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bu
 
     @Override
     public int getXpToDrop() {
-        return 1 + this.world.random.nextInt(3);
+        return 1 + this.getWorld().random.nextInt(3);
     }
 
     public boolean isBreedingItem(ItemStack stack) {
@@ -231,7 +231,7 @@ public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bu
         ItemStack itemStack = player.getStackInHand(hand);
         if (this.isBreedingItem(itemStack)) {
             int i = this.getBreedingAge();
-            if (!this.world.isClient && i == 0 && this.canEat()) {
+            if (!this.getWorld().isClient && i == 0 && this.canEat()) {
                 this.eat(player, hand, itemStack);
                 this.lovePlayer(player);
                 return ActionResult.SUCCESS;
@@ -239,9 +239,9 @@ public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bu
             if (this.isBaby()) {
                 this.eat(player, hand, itemStack);
                 this.growUp(AnimalFishEntity.toGrowUpAge(-i), true);
-                return ActionResult.success(this.world.isClient);
+                return ActionResult.success(this.getWorld().isClient);
             }
-            if (this.world.isClient) {
+            if (this.getWorld().isClient) {
                 return ActionResult.CONSUME;
             }
         }
@@ -263,7 +263,7 @@ public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bu
         if (player != null) {
             this.lovingPlayer = player.getUuid();
         }
-        this.world.sendEntityStatus(this, EntityStatuses.ADD_BREEDING_PARTICLES);
+        this.getWorld().sendEntityStatus(this, EntityStatuses.ADD_BREEDING_PARTICLES);
     }
 
     public void setLoveTicks(int loveTicks) {
@@ -279,7 +279,7 @@ public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bu
         if (this.lovingPlayer == null) {
             return null;
         }
-        PlayerEntity playerEntity = this.world.getPlayerByUuid(this.lovingPlayer);
+        PlayerEntity playerEntity = this.getWorld().getPlayerByUuid(this.lovingPlayer);
         if (playerEntity instanceof ServerPlayerEntity) {
             return (ServerPlayerEntity) playerEntity;
         }
@@ -337,7 +337,7 @@ public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bu
                 double d = this.random.nextGaussian() * 0.02;
                 double e = this.random.nextGaussian() * 0.02;
                 double f = this.random.nextGaussian() * 0.02;
-                this.world.addParticle(ParticleTypes.HEART, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
+                this.getWorld().addParticle(ParticleTypes.HEART, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
             }
         } else {
             super.handleStatus(status);

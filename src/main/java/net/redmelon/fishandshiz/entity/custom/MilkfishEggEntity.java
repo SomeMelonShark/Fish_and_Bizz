@@ -55,7 +55,7 @@ public class MilkfishEggEntity extends MilkfishEntity implements GeoEntity {
     @Override
     public void tickMovement() {
         super.tickMovement();
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient) {
             this.setMilkfishEggAge(this.milkfishEggAge + 1);
         }
     }
@@ -102,15 +102,15 @@ public class MilkfishEggEntity extends MilkfishEntity implements GeoEntity {
 
 
     private void growUp() {
-        World world = this.world;
+        World world = this.getWorld();
         int i = random.nextBetweenExclusive(5, 10);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                MilkfishFryEntity milkfishFryEntity = ModEntities.MILKFISH_FRY.create(this.world);
+                MilkfishFryEntity milkfishFryEntity = ModEntities.MILKFISH_FRY.create(this.getWorld());
                 if (milkfishFryEntity != null) {
                     milkfishFryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    milkfishFryEntity.initialize(serverWorld, this.world.getLocalDifficulty(milkfishFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    milkfishFryEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(milkfishFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
                     milkfishFryEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
                         milkfishFryEntity.setCustomName(this.getCustomName());
