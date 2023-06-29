@@ -10,8 +10,26 @@
       "bonus_rolls": 0.0,
       "entries": [
         {
-          "type": "minecraft:item",
-          "name": "fishandshiz:corn"
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "block": "fishandshiz:corn_crop",
+                  "condition": "minecraft:block_state_property",
+                  "properties": {
+                    "age": "7"
+                  }
+                }
+              ],
+              "name": "fishandshiz:corn"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "fishandshiz:corn_kernels"
+            }
+          ]
         }
       ],
       "rolls": 1.0
