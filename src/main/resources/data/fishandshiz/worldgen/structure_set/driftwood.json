@@ -1,13 +1,13 @@
 {
   "structures": [
     {
-      "structure": "fishandshiz:aquarist_hut",
+      "structure": "fishandshiz:driftwood",
       "weight": 1
     }
   ],
   "placement": {
-    "salt": 159030912,
-    "spacing": 40,
+    "salt": 196172615,
+    "spacing": 50,
     "separation": 10,
     "type": "minecraft:random_spread"
   }

@@ -21,6 +21,8 @@ public class ModLootTableGenerator extends FabricBlockLootTableProvider {
             this.addDrop(ModBlocks.FANWORT, this.drops(ModItems.FANWORT));
         }
 
+        dropsWithSilkTouch(ModBlocks.SEA_ANEMONE);
+
         
 
     }

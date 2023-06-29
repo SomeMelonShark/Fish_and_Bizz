@@ -10,6 +10,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.redmelon.fishandshiz.FishAndShiz;
+import net.redmelon.fishandshiz.block.ModBlocks;
 
 public class ModItemGroup {
     /**Test Group**/
@@ -39,6 +40,8 @@ public class ModItemGroup {
             entries.add(ModItems.CORYDORAS_FRY_BUCKET);
             entries.add(ModItems.CORYDORAS_EGG_BUCKET);
             entries.add(ModItems.OSCAR_BUCKET);
+            entries.add(ModItems.OSCAR_FRY_BUCKET);
+            entries.add(ModItems.OSCAR_EGG_BUCKET);
             entries.add(ModItems.SALMON_FRY_BUCKET);
             entries.add(ModItems.SALMON_EGG_BUCKET);
             entries.add(ModItems.MUD_CRAB_BUCKET);
@@ -65,18 +68,22 @@ public class ModItemGroup {
             entries.add(ModItems.COOKED_MILKFISH);
             entries.add(ModItems.MUD_CRAB);
             entries.add(ModItems.COOKED_MUD_CRAB);
+            entries.add(ModItems.SUSHI);
             entries.add(ModItems.CORN);
+            entries.add(ModItems.CORNBREAD);
         });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
             entries.add(ModItems.FISHMEAL);
             entries.add(ModItems.FISH_FOOD);
             entries.add(ModItems.FISHMEAL);
+            entries.add(ModBlocks.FISHMEAL_BLOCK);
         });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(entries -> {
             entries.add(ModItems.FANWORT);
             entries.add(ModItems.CORN_KERNELS);
+            entries.add(ModItems.SEA_ANEMONE);
         });
     }
 }

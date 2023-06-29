@@ -4,9 +4,11 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.RecipeProvider;
+import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.data.server.recipe.ShapelessRecipeJsonBuilder;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.book.RecipeCategory;
+import net.minecraft.util.Identifier;
 import net.redmelon.fishandshiz.block.ModBlocks;
 import net.redmelon.fishandshiz.item.ModItems;
 
@@ -76,5 +78,36 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
                 .group("misc")
                 .criterion(FabricRecipeProvider.hasItem(ModItems.FISHMEAL), FabricRecipeProvider.conditionsFromItem(ModItems.FISHMEAL))
                 .offerTo(exporter, FabricRecipeProvider.convertBetween(ModItems.FISH_FOOD, Items.COOKED_MUTTON));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.FOOD, ModItems.CORNBREAD)
+                .pattern("ABA")
+                .input('A', ModItems.CORN)
+                .input('B', Items.SUGAR)
+                .criterion(FabricRecipeProvider.hasItem(ModItems.CORN), FabricRecipeProvider.conditionsFromItem(ModItems.CORN))
+                .offerTo(exporter, new Identifier(FabricRecipeProvider.getRecipeName(ModItems.CORNBREAD)));
+
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.FOOD, ModItems.SUSHI, 2)
+                .input(Items.WHEAT)
+                .input(ModItems.MILKFISH)
+                .input(Items.DRIED_KELP)
+                .group("food")
+                .criterion(FabricRecipeProvider.hasItem(ModItems.MILKFISH), FabricRecipeProvider.conditionsFromItem(ModItems.MILKFISH))
+                .offerTo(exporter, FabricRecipeProvider.convertBetween(ModItems.SUSHI, ModItems.MILKFISH));
+
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.FOOD, ModItems.SUSHI, 2)
+                .input(Items.WHEAT)
+                .input(Items.SALMON)
+                .input(Items.DRIED_KELP)
+                .group("food")
+                .criterion(FabricRecipeProvider.hasItem(Items.SALMON), FabricRecipeProvider.conditionsFromItem(Items.SALMON))
+                .offerTo(exporter, FabricRecipeProvider.convertBetween(ModItems.SUSHI, Items.SALMON));
+
+        ShapelessRecipeJsonBuilder.create(RecipeCategory.FOOD, ModItems.SUSHI, 2)
+                .input(Items.WHEAT)
+                .input(Items.COD)
+                .input(Items.DRIED_KELP)
+                .group("food")
+                .criterion(FabricRecipeProvider.hasItem(Items.COD), FabricRecipeProvider.conditionsFromItem(Items.COD))
+                .offerTo(exporter, FabricRecipeProvider.convertBetween(ModItems.SUSHI, Items.COD));
         }
     }

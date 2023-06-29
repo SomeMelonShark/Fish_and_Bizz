@@ -48,6 +48,8 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.CORYDORAS_FRY_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.CORYDORAS_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.OSCAR_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.OSCAR_FRY_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.OSCAR_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.RAINBOWFISH_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.RAINBOWFISH_FRY_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.RAINBOWFISH_EGG_BUCKET, Models.GENERATED);
@@ -63,7 +65,9 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.COOKED_MILKFISH, Models.GENERATED);
         itemModelGenerator.register(ModItems.MUD_CRAB, Models.GENERATED);
         itemModelGenerator.register(ModItems.COOKED_MUD_CRAB, Models.GENERATED);
+        itemModelGenerator.register(ModItems.SUSHI, Models.GENERATED);
         itemModelGenerator.register(ModItems.CORN, Models.GENERATED);
+        itemModelGenerator.register(ModItems.CORNBREAD, Models.GENERATED);
         itemModelGenerator.register(ModItems.CORN_KERNELS, Models.GENERATED);
         itemModelGenerator.register(ModItems.SEA_ANEMONE, Models.GENERATED);
     }

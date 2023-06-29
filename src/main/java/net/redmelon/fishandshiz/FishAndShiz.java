@@ -22,6 +22,7 @@ public class FishAndShiz implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItems.registerModitems();
+		ModItems.init();
 		ModItemGroup.registerItemGroups();
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.registerAllBlockEntities();
@@ -52,6 +53,8 @@ public class FishAndShiz implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.CORYDORAS_FRY, CorydorasFryEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.CORYDORAS_EGG, CorydorasEggEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.OSCAR, OscarEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.OSCAR_FRY, OscarEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.OSCAR_EGG, OscarEggEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.RAINBOWFISH, RainbowfishEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.RAINBOWFISH_FRY, RainbowfishEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.RAINBOWFISH_EGG, RainbowfishEggEntity.setAttributes());

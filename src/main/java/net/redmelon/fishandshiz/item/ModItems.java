@@ -2,6 +2,7 @@ package net.redmelon.fishandshiz.item;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
@@ -12,7 +13,14 @@ import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.block.ModBlocks;
 import net.redmelon.fishandshiz.entity.ModEntities;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import static net.fabricmc.fabric.api.registry.VillagerInteractionRegistries.registerCompostable;
+
 public class ModItems {
+    private static final Map<Item, Identifier> ITEMS = new LinkedHashMap<>();
+
     public static final Item FISHMEAL = registerItem("fishmeal", new Item(new FabricItemSettings()));
     public static final Item FISH_FOOD = registerItem("fish_food", new Item(new FabricItemSettings()));
     public static final Item ARCHERFISH_SPAWN_EGG = registerItem("archerfish_spawn_egg",
@@ -63,6 +71,10 @@ public class ModItems {
             new EntityBucketItem(ModEntities.CORYDORAS_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
     public static final Item OSCAR_BUCKET = registerItem("oscar_bucket",
             new EntityBucketItem(ModEntities.OSCAR, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item OSCAR_FRY_BUCKET = registerItem("oscar_fry_bucket",
+            new EntityBucketItem(ModEntities.OSCAR_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item OSCAR_EGG_BUCKET = registerItem("oscar_egg_bucket",
+            new EntityBucketItem(ModEntities.OSCAR_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
     public static final Item RAINBOWFISH_BUCKET = registerItem("rainbowfish_bucket",
             new EntityBucketItem(ModEntities.RAINBOWFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item RAINBOWFISH_FRY_BUCKET = registerItem("rainbowfish_fry_bucket",
@@ -93,17 +105,34 @@ public class ModItems {
             new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(2).saturationModifier(1f).build())));
     public static final Item COOKED_MUD_CRAB = registerItem("cooked_mud_crab",
             new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(5).saturationModifier(5f).build())));
+    public static final Item SUSHI = registerItem("sushi",
+            new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(7).saturationModifier(5f).build())));
     public static final Item CORN_KERNELS = registerItem("corn_kernels",
             new AliasedBlockItem(ModBlocks.CORN_CROP, new FabricItemSettings()));
     public static final Item CORN = registerItem("corn",
-            new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(4).saturationModifier(4f).build())));
+            new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(3).saturationModifier(3f).build())));
+    public static final Item CORNBREAD = registerItem("cornbread",
+            new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(8).saturationModifier(3f).build())));
     public static final Item SEA_ANEMONE = registerItem("sea_anemone",
             new AliasedBlockItem(ModBlocks.SEA_ANEMONE,new FabricItemSettings()));
+
+    public static void init() {
+
+        ITEMS.keySet().forEach(item -> Registry.register(Registries.ITEM, ITEMS.get(item), item));
+        registerCompostable(CORN, 0.5f);
+        registerCompostable(CORN_KERNELS, 0.3f);
+        registerCompostable(FANWORT, 0.3f);
+
+    }
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(FishAndShiz.MOD_ID, name), item);
     }
     public static void registerModitems(){
         FishAndShiz.LOGGER.debug("Registering Mod Items for "+ FishAndShiz.MOD_ID);
+    }
+
+    private static <T extends Item> void registerCompostable(T item, float chance){
+        CompostingChanceRegistry.INSTANCE.add(item, chance);
     }
 }

@@ -10,6 +10,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
@@ -19,6 +20,7 @@ import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
+import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -27,9 +29,9 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class OscarEntity extends AnimalFishEntity implements GeoEntity {
+public class OscarEntity extends SchoolingBreedEntity implements GeoEntity {
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-    public OscarEntity(EntityType<? extends AnimalFishEntity> entityType, World world) {
+    public OscarEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -58,6 +60,16 @@ public class OscarEntity extends AnimalFishEntity implements GeoEntity {
     }
 
     @Override
+    public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+        return ModEntities.OSCAR_EGG.create(getWorld());
+    }
+
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return stack.getItem() == ModItems.MUD_CRAB || stack.getItem() == Items.SPIDER_EYE;
+    }
+
+    @Override
     protected SoundEvent getFlopSound() {
         return SoundEvents.ENTITY_SALMON_FLOP;
     }
@@ -83,8 +95,8 @@ public class OscarEntity extends AnimalFishEntity implements GeoEntity {
     }
 
     @Override
-    public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return null;
+    public void writeCustomDatatoNbt(NbtCompound nbt) {
+
     }
 
     @Override

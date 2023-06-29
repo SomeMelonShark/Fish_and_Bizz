@@ -87,6 +87,14 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "oscar"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     OscarEntity::new).dimensions(EntityDimensions.fixed(1.0f, 0.7f)).build());
 
+    public static final EntityType<OscarFryEntity> OSCAR_FRY = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "oscar_fry"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    OscarFryEntity::new).dimensions(EntityDimensions.fixed(OscarFryEntity.WIDTH, OscarFryEntity.HEIGHT)).build());
+
+    public static final EntityType<OscarEggEntity> OSCAR_EGG = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "oscar_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    OscarEggEntity::new).dimensions(EntityDimensions.fixed(0.2f, 0.4f)).build());
+
     public static final EntityType<RainbowfishEntity> RAINBOWFISH = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "rainbowfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     RainbowfishEntity::new).dimensions(EntityDimensions.fixed(0.5f, 0.3f)).build());
