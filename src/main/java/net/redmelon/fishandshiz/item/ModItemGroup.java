@@ -61,6 +61,7 @@ public class ModItemGroup {
             entries.add(ModItems.MILKFISH_SPAWN_EGG);
             entries.add(ModItems.LION_MANE_SPAWN_EGG);
             entries.add(ModItems.MUD_CRAB_SPAWN_EGG);
+            entries.add(ModItems.VOLCANO_SNAIL_SPAWN_EGG);
             entries.add(ModItems.GRAYLING_SPAWN_EGG);
         });
 

@@ -126,7 +126,7 @@ public class ModEntitySpawn {
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_OCEAN, BiomeKeys.DEEP_LUKEWARM_OCEAN), SpawnGroup.WATER_CREATURE,
-                ModEntities.VOLCANO_SNAIL, 40, 1, 2);
+                ModEntities.VOLCANO_SNAIL, 90, 1, 2);
 
         SpawnRestriction.register(ModEntities.VOLCANO_SNAIL, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, VolcanoSnailEntity::canSpawn);

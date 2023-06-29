@@ -61,9 +61,13 @@ public class VolcanoSnailEntity extends AnimalWaterEntity implements GeoEntity {
     }
 
     private PlayState genericFlopController(AnimationState animationState) {
-        if (this.isTouchingWater()) {
+        if (this.isTouchingWater() && animationState.isMoving()) {
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.volcano_snail.crawl", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        } else if (this.isTouchingWater() && !animationState.isMoving()){
+            animationState.getController().setAnimation(RawAnimation.begin()
+                    .then("animation.volcano_snail.idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else {
             animationState.getController().setAnimation(RawAnimation.begin()
@@ -113,6 +117,6 @@ public class VolcanoSnailEntity extends AnimalWaterEntity implements GeoEntity {
     }
 
     public static boolean canSpawn(EntityType<VolcanoSnailEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        return pos.getY() <= world.getSeaLevel() - 40 && world.getBlockState(pos).isOf(Blocks.WATER) && world.getFluidState(pos.down()).isIn(FluidTags.WATER);
+        return pos.getY() <= world.getSeaLevel() - 35 && world.getBlockState(pos).isOf(Blocks.WATER) && world.getFluidState(pos.down()).isIn(FluidTags.WATER);
     }
 }

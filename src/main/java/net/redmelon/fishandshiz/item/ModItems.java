@@ -33,6 +33,8 @@ public class ModItems {
             new SpawnEggItem(ModEntities.MUD_CRAB, 0x2f5553, 0xab5315, new FabricItemSettings()));
     public static final Item LION_MANE_SPAWN_EGG = registerItem("lion_mane_spawn_egg",
             new SpawnEggItem(ModEntities.LION_MANE_JELLYFISH, 0xeea663, 0xeea663, new FabricItemSettings()));
+    public static final Item VOLCANO_SNAIL_SPAWN_EGG = registerItem("volcano_snail_spawn_egg",
+            new SpawnEggItem(ModEntities.LION_MANE_JELLYFISH, 0xd98fb0, 0x1a1614, new FabricItemSettings()));
     public static final Item CAPYBARA_SPAWN_EGG = registerItem("capybara_spawn_egg",
             new SpawnEggItem(ModEntities.CAPYBARA, 0x745a3e, 0xbd8244, new FabricItemSettings()));
     public static final Item FANWORT = registerItem("fanwort",

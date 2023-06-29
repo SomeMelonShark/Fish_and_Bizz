@@ -92,6 +92,60 @@
 					}
 				}
 			}
+		},
+		"animation.volcano_snail.idle": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"shell": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"1.0417": {
+							"vector": [5, 0, 0]
+						},
+						"1.375": {
+							"vector": [0, 0, 0]
+						},
+						"2.0": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"leftTentacle": {
+					"rotation": {
+						"0.0": {
+							"vector": [105, 0, 0]
+						},
+						"0.625": {
+							"vector": [92.5, 0, 0]
+						},
+						"1.3333": {
+							"vector": [110, 0, 0]
+						},
+						"2.0": {
+							"vector": [105, 0, 0]
+						}
+					}
+				},
+				"rightTentacle": {
+					"rotation": {
+						"0.0": {
+							"vector": [105, 0, 0]
+						},
+						"0.7917": {
+							"vector": [75, 0, 0]
+						},
+						"1.4583": {
+							"vector": [129.85, 0, 0]
+						},
+						"2.0": {
+							"vector": [105, 0, 0]
+						}
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2
