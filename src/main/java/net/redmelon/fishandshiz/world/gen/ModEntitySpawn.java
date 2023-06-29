@@ -41,7 +41,7 @@ public class ModEntitySpawn {
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AngelfishEntity::canSpawn);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN, BiomeKeys.LUKEWARM_OCEAN), SpawnGroup.WATER_AMBIENT,
-                ModEntities.MILKFISH, 1, 3, 9);
+                ModEntities.MILKFISH, 1, 7, 15);
 
         SpawnRestriction.register(ModEntities.MILKFISH, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);

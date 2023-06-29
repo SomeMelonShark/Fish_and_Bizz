@@ -61,6 +61,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.MUD_CRAB_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.MUD_CRAB_LARVA_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.MUD_CRAB_EGG_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.VOLCANO_SNAIL_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.MILKFISH, Models.GENERATED);
         itemModelGenerator.register(ModItems.COOKED_MILKFISH, Models.GENERATED);
         itemModelGenerator.register(ModItems.MUD_CRAB, Models.GENERATED);

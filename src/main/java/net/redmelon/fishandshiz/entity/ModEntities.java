@@ -135,6 +135,10 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "lion_mane_jellyfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
                     ManeJellyfishEntity::new).dimensions(EntityDimensions.fixed(2.0f, 2.0f)).build());
 
+    public static final EntityType<VolcanoSnailEntity> VOLCANO_SNAIL = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "volcano_snail"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
+                    VolcanoSnailEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.3f)).build());
+
     public static final EntityType<CapybaraEntity> CAPYBARA = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "capybara"), FabricEntityTypeBuilder.create(SpawnGroup.AMBIENT,
                     CapybaraEntity::new).dimensions(EntityDimensions.fixed(0.8f, 0.6f)).build());

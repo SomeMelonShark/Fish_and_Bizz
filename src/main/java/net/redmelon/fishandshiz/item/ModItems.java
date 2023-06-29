@@ -97,6 +97,8 @@ public class ModItems {
             new EntityBucketItem(ModEntities.MUD_CRAB_LARVA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
     public static final Item MUD_CRAB_EGG_BUCKET = registerItem("mud_crab_egg_bucket",
             new EntityBucketItem(ModEntities.MUD_CRAB_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
+    public static final Item VOLCANO_SNAIL_BUCKET = registerItem("volcano_snail_bucket",
+            new EntityBucketItem(ModEntities.VOLCANO_SNAIL, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY, new FabricItemSettings().maxCount(1)));
     public static final Item MILKFISH = registerItem("milkfish",
             new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(2).saturationModifier(2f).build())));
     public static final Item COOKED_MILKFISH = registerItem("cooked_milkfish",
