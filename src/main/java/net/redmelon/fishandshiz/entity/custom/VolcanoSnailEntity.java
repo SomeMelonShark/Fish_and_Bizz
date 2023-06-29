@@ -1,16 +1,20 @@
 package net.redmelon.fishandshiz.entity.custom;
 
-import net.minecraft.data.client.ModelIds;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
@@ -19,7 +23,6 @@ import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedWaterAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.WaterWanderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
-import net.redmelon.fishandshiz.world.gen.ModEntitySpawn;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -107,5 +110,9 @@ public class VolcanoSnailEntity extends AnimalWaterEntity implements GeoEntity {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
+    }
+
+    public static boolean canSpawn(EntityType<VolcanoSnailEntity> type, ServerWorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {
+        return pos.getY() <= world.getSeaLevel() - 40 && world.getBlockState(pos).isOf(Blocks.WATER) && world.getFluidState(pos.down()).isIn(FluidTags.WATER);
     }
 }

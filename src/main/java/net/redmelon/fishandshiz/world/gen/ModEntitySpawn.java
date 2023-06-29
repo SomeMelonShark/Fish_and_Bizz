@@ -13,6 +13,7 @@ import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.custom.AngelfishEntity;
+import net.redmelon.fishandshiz.entity.custom.VolcanoSnailEntity;
 
 public class ModEntitySpawn {
     public static void addEntitySpawn() {
@@ -123,6 +124,12 @@ public class ModEntitySpawn {
 
         SpawnRestriction.register(ModEntities.LION_MANE_JELLYFISH, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.DEEP_OCEAN, BiomeKeys.DEEP_LUKEWARM_OCEAN), SpawnGroup.WATER_CREATURE,
+                ModEntities.VOLCANO_SNAIL, 40, 1, 2);
+
+        SpawnRestriction.register(ModEntities.VOLCANO_SNAIL, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, VolcanoSnailEntity::canSpawn);
 
     }
 }
