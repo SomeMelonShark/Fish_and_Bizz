@@ -178,7 +178,7 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
             if (registryEntry.matchesKey(BiomeKeys.RIVER)) {
                 variant = (CorydorasVariant.BRONZE);
             } else if (registryEntry.isIn(TropicalSpawn.SPAWNS_TROPICAL)) {
-                variant = (CorydorasVariant.PANDA);
+                variant = (CorydorasVariant.BRONZE);
             } else {
                 variant = Util.getRandom(CorydorasVariant.values(), this.random);
             }
