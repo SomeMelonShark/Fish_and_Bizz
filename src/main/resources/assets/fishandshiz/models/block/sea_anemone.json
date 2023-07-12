@@ -1,4 +1,7 @@
 {
+  "textures": {
+    "particle": "fishandshiz:block/sea_anemone"
+  },
   "credit": "Made with Blockbench",
   "parent": "builtin/entity",
   "texture_size": [

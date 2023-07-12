@@ -3,6 +3,7 @@ package net.redmelon.fishandshiz.cclass;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.data.DataTracker;
@@ -14,12 +15,13 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
+import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Iterator;
+import java.util.List;
 
 public abstract class PassiveWaterEntity extends WaterCreatureEntity {
     protected static final TrackedData<Boolean> CHILD = DataTracker.registerData(PassiveWaterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -139,6 +141,10 @@ public abstract class PassiveWaterEntity extends WaterCreatureEntity {
                 this.setBreedingAge(--i);
             }
         }
+    }
+
+    public void movementTick() {
+        super.tickMovement();
     }
 
     protected void onGrowUp() {

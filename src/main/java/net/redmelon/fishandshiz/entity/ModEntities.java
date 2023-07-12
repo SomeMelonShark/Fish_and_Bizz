@@ -107,6 +107,18 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "rainbowfish_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     RainbowfishEggEntity::new).dimensions(EntityDimensions.fixed(0.4f, 0.1f)).build());
 
+    public static final EntityType<AuratusEntity> AURATUS = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "auratus"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    AuratusEntity::new).dimensions(EntityDimensions.fixed(0.4f, 0.3f)).build());
+
+    public static final EntityType<AuratusFryEntity> AURATUS_FRY = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "auratus_fry"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    AuratusFryEntity::new).dimensions(EntityDimensions.fixed(AuratusFryEntity.WIDTH, AuratusFryEntity.HEIGHT)).build());
+
+    public static final EntityType<AuratusEggEntity> AURATUS_EGG = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "auratus_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    AuratusEggEntity::new).dimensions(EntityDimensions.fixed(0.2f, 0.2f)).build());
+
     public static final EntityType<GraylingEntity> GRAYLING = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "grayling"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     GraylingEntity::new).dimensions(EntityDimensions.fixed(0.9f, 0.3f)).build());

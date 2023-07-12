@@ -94,6 +94,24 @@ public class ModVillagers {
                     )));
                 });
 
+        TradeOfferHelper.registerVillagerOffers(AQUARIST, 1,
+                factories -> {
+                    factories.add(((entity, random) -> new TradeOffer(
+                            new ItemStack(Items.PRISMARINE_CRYSTALS, 15),
+                            new ItemStack(Items.EMERALD, 3),
+                            10, 2, 0.02f
+                    )));
+                });
+
+        TradeOfferHelper.registerVillagerOffers(AQUARIST, 1,
+                factories -> {
+                    factories.add(((entity, random) -> new TradeOffer(
+                            new ItemStack(Items.PRISMARINE_SHARD, 15),
+                            new ItemStack(Items.EMERALD, 3),
+                            10, 2, 0.02f
+                    )));
+                });
+
         TradeOfferHelper.registerVillagerOffers(AQUARIST, 2,
                 factories -> {
                     factories.add(((entity, random) -> new TradeOffer(
@@ -166,6 +184,15 @@ public class ModVillagers {
                     )));
                 });
 
+        TradeOfferHelper.registerVillagerOffers(AQUARIST, 3,
+                factories -> {
+                    factories.add(((entity, random) -> new TradeOffer(
+                            new ItemStack(Items.EMERALD, 8),
+                            new ItemStack(ModItems.VOLCANO_SNAIL_BUCKET, 1),
+                            6, 4, 0.05f
+                    )));
+                });
+
         TradeOfferHelper.registerVillagerOffers(AQUARIST, 4,
                 factories -> {
                     factories.add(((entity, random) -> new TradeOffer(
@@ -180,6 +207,15 @@ public class ModVillagers {
                     factories.add(((entity, random) -> new TradeOffer(
                             new ItemStack(Items.EMERALD, 10),
                             new ItemStack(ModItems.ARCHERFISH_BUCKET, 1),
+                            6, 4, 0.05f
+                    )));
+                });
+
+        TradeOfferHelper.registerVillagerOffers(AQUARIST, 4,
+                factories -> {
+                    factories.add(((entity, random) -> new TradeOffer(
+                            new ItemStack(Items.EMERALD, 20),
+                            new ItemStack(ModItems.OSCAR_BUCKET, 1),
                             6, 4, 0.05f
                     )));
                 });

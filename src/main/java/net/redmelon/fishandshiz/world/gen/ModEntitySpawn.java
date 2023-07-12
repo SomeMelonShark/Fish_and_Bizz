@@ -102,6 +102,12 @@ public class ModEntitySpawn {
         SpawnRestriction.register(ModEntities.RAINBOWFISH, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
 
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SAVANNA, BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.WINDSWEPT_SAVANNA), SpawnGroup.WATER_AMBIENT,
+                ModEntities.AURATUS, 5, 2, 4);
+
+        SpawnRestriction.register(ModEntities.AURATUS, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AngelfishEntity::canSpawn);
+
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.FROZEN_RIVER), SpawnGroup.WATER_AMBIENT,
                 ModEntities.GRAYLING, 1, 1, 4);
 

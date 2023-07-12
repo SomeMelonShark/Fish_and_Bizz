@@ -9,13 +9,23 @@ import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.block.custom.CornCropBlock;
 import net.redmelon.fishandshiz.block.custom.FanwortBlock;
+import net.redmelon.fishandshiz.block.custom.PoweredPrismarineBlock;
 import net.redmelon.fishandshiz.block.custom.SeaAnemoneBlock;
 
+import java.util.function.ToIntFunction;
+
 public class ModBlocks {
+    private static ToIntFunction<BlockState> createLightLevelFromLitBlockState(int litLevel) {
+        return (state) -> {
+            return (Boolean)state.get(Properties.LIT) ? litLevel : 0;
+        };
+    }
+
     public static final Block FISHMEAL_BLOCK = registerBlock("fishmeal_block",
             new Block(FabricBlockSettings.copyOf(Blocks.SAND).strength(0.5f).sounds(BlockSoundGroup.SAND)));
     public static final Block FANWORT = registerBlockWithoutItem("fanwort",
@@ -26,6 +36,8 @@ public class ModBlocks {
             new CornCropBlock(FabricBlockSettings.copyOf(Blocks.WHEAT)));
     public static final Block SEA_ANEMONE = Registry.register(Registries.BLOCK, new Identifier(FishAndShiz.MOD_ID, "sea_anemone"),
             new SeaAnemoneBlock(FabricBlockSettings.of().mapColor(MapColor.ORANGE).pistonBehavior(PistonBehavior.DESTROY).noCollision().breakInstantly().nonOpaque().sounds(BlockSoundGroup.WART_BLOCK)));
+    public static final Block POWERED_PRISMARINE = registerBlock("powered_prismarine",
+            new PoweredPrismarineBlock(FabricBlockSettings.of().luminance(createLightLevelFromLitBlockState(15)).strength(0.3F).sounds(BlockSoundGroup.GLASS)));
     private static Block registerBlock(String name, Block block) {
         registerBlockItems(name, block);
         return Registry.register(Registries.BLOCK, new Identifier(FishAndShiz.MOD_ID, name), block);

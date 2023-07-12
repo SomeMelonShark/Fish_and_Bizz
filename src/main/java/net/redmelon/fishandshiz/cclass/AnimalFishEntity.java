@@ -218,12 +218,12 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
             }
         }
         if (!this.isTouchingWater() && this.isOnGround() && this.verticalCollision) {
-            this.setVelocity(this.getVelocity().add((this.random.nextFloat() * 2.0f - 1.0f) * 0.05f, 0.4f, (this.random.nextFloat() * 2.0f - 1.0f) * 0.05f));
+            this.setVelocity(this.getVelocity().add((double)((this.random.nextFloat() * 2.0F - 1.0F) * 0.05F), 0.4000000059604645, (double)((this.random.nextFloat() * 2.0F - 1.0F) * 0.05F)));
             this.velocityDirty = true;
             this.setOnGround(false);
             this.playSound(this.getFlopSound(), this.getSoundVolume(), this.getSoundPitch());
         }
-        super.tickMovement();
+        super.movementTick();
     }
 
     @Override

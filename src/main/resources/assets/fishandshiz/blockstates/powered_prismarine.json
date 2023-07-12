@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "fishandshiz:block/powered_prismarine_off"
+    },
+    "lit=true": {
+      "model": "fishandshiz:block/powered_prismarine"
+    }
+  }
+}

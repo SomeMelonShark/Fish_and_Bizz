@@ -83,6 +83,12 @@ public class ModItems {
             new EntityBucketItem(ModEntities.RAINBOWFISH_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item RAINBOWFISH_EGG_BUCKET = registerItem("rainbowfish_egg_bucket",
             new EntityBucketItem(ModEntities.RAINBOWFISH_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
+    public static final Item AURATUS_BUCKET = registerItem("auratus_bucket",
+            new EntityBucketItem(ModEntities.AURATUS, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item AURATUS_FRY_BUCKET = registerItem("auratus_fry_bucket",
+            new EntityBucketItem(ModEntities.AURATUS_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item AURATUS_EGG_BUCKET = registerItem("auratus_egg_bucket",
+            new EntityBucketItem(ModEntities.AURATUS_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
     public static final Item GRAYLING_BUCKET = registerItem("grayling_bucket",
             new EntityBucketItem(ModEntities.GRAYLING, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item GRAYLING_FRY_BUCKET = registerItem("grayling_fry_bucket",

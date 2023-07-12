@@ -109,5 +109,25 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
                 .group("food")
                 .criterion(FabricRecipeProvider.hasItem(Items.COD), FabricRecipeProvider.conditionsFromItem(Items.COD))
                 .offerTo(exporter, FabricRecipeProvider.convertBetween(ModItems.SUSHI, Items.COD));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.MISC, Items.SPONGE)
+                .pattern("ABA")
+                .pattern("BCB")
+                .pattern("ABA")
+                .input('A', ModItems.CORN)
+                .input('B', Items.SEAGRASS)
+                .input('C', Items.TUBE_CORAL_BLOCK)
+                .criterion(FabricRecipeProvider.hasItem(ModItems.CORN), FabricRecipeProvider.conditionsFromItem(ModItems.CORN))
+                .offerTo(exporter, new Identifier(FabricRecipeProvider.getRecipeName(Items.SPONGE)));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.BUILDING_BLOCKS, ModBlocks.POWERED_PRISMARINE)
+                .pattern("ABA")
+                .pattern("BCB")
+                .pattern("ABA")
+                .input('A', Items.PRISMARINE_CRYSTALS)
+                .input('B', Items.REDSTONE)
+                .input('C', Items.SEA_LANTERN)
+                .criterion(FabricRecipeProvider.hasItem(Items.SEA_LANTERN), FabricRecipeProvider.conditionsFromItem(Items.SEA_LANTERN))
+                .offerTo(exporter, new Identifier(FabricRecipeProvider.getRecipeName(ModBlocks.POWERED_PRISMARINE)));
         }
     }

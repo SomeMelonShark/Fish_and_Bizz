@@ -49,6 +49,9 @@ public class ModItemGroup {
             entries.add(ModItems.RAINBOWFISH_BUCKET);
             entries.add(ModItems.RAINBOWFISH_FRY_BUCKET);
             entries.add(ModItems.RAINBOWFISH_EGG_BUCKET);
+            entries.add(ModItems.AURATUS_BUCKET);
+            entries.add(ModItems.AURATUS_FRY_BUCKET);
+            entries.add(ModItems.AURATUS_FRY_BUCKET);
             entries.add(ModItems.GRAYLING_BUCKET);
             entries.add(ModItems.GRAYLING_FRY_BUCKET);
             entries.add(ModItems.GRAYLING_EGG_BUCKET);
@@ -86,6 +89,10 @@ public class ModItemGroup {
             entries.add(ModItems.FANWORT);
             entries.add(ModItems.CORN_KERNELS);
             entries.add(ModItems.SEA_ANEMONE);
+        });
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> {
+            entries.add(ModBlocks.POWERED_PRISMARINE);
         });
     }
 }
