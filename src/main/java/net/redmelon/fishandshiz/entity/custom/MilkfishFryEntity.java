@@ -34,10 +34,10 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class MilkfishFryEntity extends MilkfishEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_MILKFISH_FRY_AGE = Math.abs(-24000);
+    public static int MAX_FRY_AGE = Math.abs(-24000);
     public static float WIDTH = 0.5f;
     public static float HEIGHT = 0.3f;
-    private int milkfishFryAge;
+    private int fryAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public MilkfishFryEntity(EntityType<? extends MilkfishEntity> entityType, World world) {
@@ -77,30 +77,30 @@ public class MilkfishFryEntity extends MilkfishEntity implements GeoEntity {
     public void tickMovement() {
         super.tickMovement();
         if (!this.getWorld().isClient) {
-            this.setMilkfishFryAge(this.milkfishFryAge + 1);
+            this.setFryAge(this.fryAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.milkfishFryAge);
+        nbt.putInt("Age", this.fryAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setMilkfishFryAge(nbt.getInt("Age"));
+        this.setFryAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getMilkfishFryAge());
+        nbtCompound.putInt("Age", this.getFryAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setMilkfishFryAge(nbt.getInt("Age"));
+            this.setFryAge(nbt.getInt("Age"));
         }
     }
 
@@ -127,15 +127,15 @@ public class MilkfishFryEntity extends MilkfishEntity implements GeoEntity {
         }
     }
 
-    private int getMilkfishFryAge() {
-        return this.milkfishFryAge;
+    private int getFryAge() {
+        return this.fryAge;
     }
     private void increaseAge(int seconds) {
-        this.setMilkfishFryAge(this.milkfishFryAge + seconds * 20);
+        this.setFryAge(this.fryAge + seconds * 20);
     }
-    private void setMilkfishFryAge(int milkfishFryAge) {
-        this.milkfishFryAge = milkfishFryAge;
-        if (this.milkfishFryAge >= MAX_MILKFISH_FRY_AGE) {
+    private void setFryAge(int fryAge) {
+        this.fryAge = fryAge;
+        if (this.fryAge >= MAX_FRY_AGE) {
             this.growUp();
         }
     }
@@ -143,25 +143,25 @@ public class MilkfishFryEntity extends MilkfishEntity implements GeoEntity {
         World world = this.getWorld();
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
-            MilkfishEntity milkfishEntity = ModEntities.MILKFISH.create(this.getWorld());
-            if (milkfishEntity != null) {
-                milkfishEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                milkfishEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(milkfishEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                milkfishEntity.setAiDisabled(this.isAiDisabled());
+            MilkfishEntity nextEntity = ModEntities.MILKFISH.create(this.getWorld());
+            if (nextEntity != null) {
+                nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                nextEntity.setAiDisabled(this.isAiDisabled());
                 if (this.hasCustomName()) {
-                    milkfishEntity.setCustomName(this.getCustomName());
-                    milkfishEntity.setCustomNameVisible(this.isCustomNameVisible());
+                    nextEntity.setCustomName(this.getCustomName());
+                    nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                 }
-                milkfishEntity.setPersistent();
+                nextEntity.setPersistent();
                 this.playSound(SoundEvents.ENTITY_COD_FLOP, 0.15f, 1.0f);
-                serverWorld.spawnEntityAndPassengers(milkfishEntity);
+                serverWorld.spawnEntityAndPassengers(nextEntity);
                 this.discard();
             }
         }
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_MILKFISH_FRY_AGE - this.milkfishFryAge);
+        return Math.max(0, MAX_FRY_AGE - this.fryAge);
     }
 
     @Override

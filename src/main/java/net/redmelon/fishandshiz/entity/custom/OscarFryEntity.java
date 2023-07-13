@@ -34,10 +34,10 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class OscarFryEntity extends OscarEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_OSCAR_FRY_AGE = Math.abs(-24000);
+    public static int MAX_FRY_AGE = Math.abs(-24000);
     public static float WIDTH = 0.4f;
     public static float HEIGHT = 0.3f;
-    private int oscarFryAge;
+    private int fryAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public OscarFryEntity(EntityType<? extends OscarEntity> entityType, World world) {
         super(entityType, world);
@@ -77,30 +77,30 @@ public class OscarFryEntity extends OscarEntity implements GeoEntity {
     public void tickMovement() {
         super.tickMovement();
         if (!this.getWorld().isClient) {
-            this.setOscarFryAge(this.oscarFryAge + 1);
+            this.setFryAge(this.fryAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.oscarFryAge);
+        nbt.putInt("Age", this.fryAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setOscarFryAge(nbt.getInt("Age"));
+        this.setFryAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getOscarFryAge());
+        nbtCompound.putInt("Age", this.getFryAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setOscarFryAge(nbt.getInt("Age"));
+            this.setFryAge(nbt.getInt("Age"));
         }
     }
 
@@ -127,15 +127,15 @@ public class OscarFryEntity extends OscarEntity implements GeoEntity {
         }
     }
 
-    private int getOscarFryAge() {
-        return this.oscarFryAge;
+    private int getFryAge() {
+        return this.fryAge;
     }
     private void increaseAge(int seconds) {
-        this.setOscarFryAge(this.oscarFryAge + seconds * 20);
+        this.setFryAge(this.fryAge + seconds * 20);
     }
-    private void setOscarFryAge(int oscarFryAge) {
-        this.oscarFryAge = oscarFryAge;
-        if (this.oscarFryAge >= MAX_OSCAR_FRY_AGE) {
+    private void setFryAge(int fryAge) {
+        this.fryAge = fryAge;
+        if (this.fryAge >= MAX_FRY_AGE) {
             this.growUp();
         }
     }
@@ -144,25 +144,25 @@ public class OscarFryEntity extends OscarEntity implements GeoEntity {
         World world = this.getWorld();
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
-            OscarEntity oscarEntity = ModEntities.OSCAR.create(this.getWorld());
-            if (oscarEntity != null) {
-                oscarEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                oscarEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(oscarEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                oscarEntity.setAiDisabled(this.isAiDisabled());
+            OscarEntity nextEntity = ModEntities.OSCAR.create(this.getWorld());
+            if (nextEntity != null) {
+                nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                nextEntity.setAiDisabled(this.isAiDisabled());
                 if (this.hasCustomName()) {
-                    oscarEntity.setCustomName(this.getCustomName());
-                    oscarEntity.setCustomNameVisible(this.isCustomNameVisible());
+                    nextEntity.setCustomName(this.getCustomName());
+                    nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                 }
-                oscarEntity.setPersistent();
+                nextEntity.setPersistent();
                 this.playSound(SoundEvents.ENTITY_SALMON_FLOP, 0.15f, 1.0f);
-                serverWorld.spawnEntityAndPassengers(oscarEntity);
+                serverWorld.spawnEntityAndPassengers(nextEntity);
                 this.discard();
             }
         }
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_OSCAR_FRY_AGE - this.oscarFryAge);
+        return Math.max(0, MAX_FRY_AGE - this.fryAge);
     }
 
     @Override
@@ -187,7 +187,7 @@ public class OscarFryEntity extends OscarEntity implements GeoEntity {
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.RAINBOWFISH_FRY_BUCKET);
+        return new ItemStack(ModItems.OSCAR_FRY_BUCKET);
     }
 
     @Override

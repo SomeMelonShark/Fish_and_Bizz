@@ -34,10 +34,10 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_ANGELFISH_FRY_AGE = Math.abs(-18000);
+    public static int MAX_FRY_AGE = Math.abs(-18000);
     public static float WIDTH = 0.4f;
     public static float HEIGHT = 0.3f;
-    private int angelfishFryAge;
+    private int fryAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public AngelfishFryEntity(EntityType<? extends AngelfishEntity> entityType, World world) {
@@ -76,30 +76,30 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
     public void tickMovement() {
         super.tickMovement();
         if (!this.getWorld().isClient) {
-            this.setAngelfishFryAge(this.angelfishFryAge + 1);
+            this.setFryAge(this.fryAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.angelfishFryAge);
+        nbt.putInt("Age", this.fryAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setAngelfishFryAge(nbt.getInt("Age"));
+        this.setFryAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getAngelfishFryAge());
+        nbtCompound.putInt("Age", this.getFryAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setAngelfishFryAge(nbt.getInt("Age"));
+            this.setFryAge(nbt.getInt("Age"));
         }
     }
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
@@ -126,15 +126,15 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
         }
     }
 
-    private int getAngelfishFryAge() {
-        return this.angelfishFryAge;
+    private int getFryAge() {
+        return this.fryAge;
     }
     private void increaseAge(int seconds) {
-        this.setAngelfishFryAge(this.angelfishFryAge + seconds * 20);
+        this.setFryAge(this.fryAge + seconds * 20);
     }
-    private void setAngelfishFryAge(int angelfishFryAge) {
-        this.angelfishFryAge = angelfishFryAge;
-        if (this.angelfishFryAge >= MAX_ANGELFISH_FRY_AGE) {
+    private void setFryAge(int fryAge) {
+        this.fryAge = fryAge;
+        if (this.fryAge >= MAX_FRY_AGE) {
             this.growUp();
         }
     }
@@ -142,25 +142,25 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
         World world = this.getWorld();
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
-            AngelfishEntity angelfishEntity = ModEntities.ANGELFISH.create(this.getWorld());
-            if (angelfishEntity != null) {
-                angelfishEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                angelfishEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(angelfishEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                angelfishEntity.setAiDisabled(this.isAiDisabled());
+            AngelfishEntity nextEntity = ModEntities.ANGELFISH.create(this.getWorld());
+            if (nextEntity != null) {
+                nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                nextEntity.setAiDisabled(this.isAiDisabled());
                 if (this.hasCustomName()) {
-                    angelfishEntity.setCustomName(this.getCustomName());
-                    angelfishEntity.setCustomNameVisible(this.isCustomNameVisible());
+                    nextEntity.setCustomName(this.getCustomName());
+                    nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                 }
-                angelfishEntity.setPersistent();
+                nextEntity.setPersistent();
                 this.playSound(SoundEvents.ENTITY_TROPICAL_FISH_FLOP, 0.15f, 1.0f);
-                serverWorld.spawnEntityAndPassengers(angelfishEntity);
+                serverWorld.spawnEntityAndPassengers(nextEntity);
                 this.discard();
             }
         }
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_ANGELFISH_FRY_AGE - this.angelfishFryAge);
+        return Math.max(0, MAX_FRY_AGE - this.fryAge);
     }
 
     @Override

@@ -16,7 +16,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
-import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
@@ -27,8 +26,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class ClownfishEggEntity extends ClownfishEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_CLOWNFISH_EGG_AGE = Math.abs(-12000);
-    private int clowfishEggAge;
+    public static int MAX_EGG_AGE = Math.abs(-12000);
+    private int eggAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
@@ -59,42 +58,42 @@ public class ClownfishEggEntity extends ClownfishEntity implements GeoEntity {
     public void tickMovement() {
         super.tickMovement();
         if (!this.getWorld().isClient) {
-            this.setClowfishEggAge(this.clowfishEggAge + 1);
+            this.setEggAge(this.eggAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.clowfishEggAge);
+        nbt.putInt("Age", this.eggAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setClowfishEggAge(nbt.getInt("Age"));
+        this.setEggAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getClowfishEggAge());
+        nbtCompound.putInt("Age", this.getEggAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setClowfishEggAge(nbt.getInt("Age"));
+            this.setEggAge(nbt.getInt("Age"));
         }
     }
 
-    private int getClowfishEggAge() {
-        return this.clowfishEggAge;
+    private int getEggAge() {
+        return this.eggAge;
     }
     private void increaseAge(int seconds) {
-        this.setClowfishEggAge(this.clowfishEggAge + seconds * 20);
+        this.setEggAge(this.eggAge + seconds * 20);
     }
-    private void setClowfishEggAge(int clowfishEggAge) {
-        this.clowfishEggAge = clowfishEggAge;
-        if (this.clowfishEggAge >= MAX_CLOWNFISH_EGG_AGE) {
+    private void setEggAge(int eggAge) {
+        this.eggAge = eggAge;
+        if (this.eggAge >= MAX_EGG_AGE) {
             this.growUp();
         }
     }
@@ -105,25 +104,25 @@ public class ClownfishEggEntity extends ClownfishEntity implements GeoEntity {
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                ClownfishFryEntity clownfishFryEntity = ModEntities.CLOWNFISH_FRY.create(this.getWorld());
-                if (clownfishFryEntity != null) {
-                    clownfishFryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    clownfishFryEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(clownfishFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                    clownfishFryEntity.setAiDisabled(this.isAiDisabled());
+                ClownfishFryEntity nextEntity = ModEntities.CLOWNFISH_FRY.create(this.getWorld());
+                if (nextEntity != null) {
+                    nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                    nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    nextEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
-                        clownfishFryEntity.setCustomName(this.getCustomName());
-                        clownfishFryEntity.setCustomNameVisible(this.isCustomNameVisible());
+                        nextEntity.setCustomName(this.getCustomName());
+                        nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                     }
-                    clownfishFryEntity.setPersistent();
+                    nextEntity.setPersistent();
                     this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
-                    serverWorld.spawnEntityAndPassengers(clownfishFryEntity);
+                    serverWorld.spawnEntityAndPassengers(nextEntity);
                     this.discard();
                 }
             }
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_CLOWNFISH_EGG_AGE - this.clowfishEggAge);
+        return Math.max(0, MAX_EGG_AGE - this.eggAge);
     }
 
     @Override

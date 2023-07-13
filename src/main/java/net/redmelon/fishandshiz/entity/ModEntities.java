@@ -151,6 +151,10 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "volcano_snail"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
                     VolcanoSnailEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.3f)).build());
 
+    public static final EntityType<VolcanoSnailEggEntity> VOLCANO_SNAIL_EGG = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "volcano_snail_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
+                    VolcanoSnailEggEntity::new).dimensions(EntityDimensions.fixed(0.2f, 0.4f)).build());
+
     public static final EntityType<CapybaraEntity> CAPYBARA = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "capybara"), FabricEntityTypeBuilder.create(SpawnGroup.AMBIENT,
                     CapybaraEntity::new).dimensions(EntityDimensions.fixed(0.8f, 0.6f)).build());

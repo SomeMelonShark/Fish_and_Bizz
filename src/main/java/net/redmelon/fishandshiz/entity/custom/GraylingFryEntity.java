@@ -22,7 +22,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
-import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
@@ -35,10 +34,10 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class GraylingFryEntity extends GraylingEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_GRAYLING_FRY_AGE = Math.abs(-24000);
+    public static int MAX_FRY_AGE = Math.abs(-24000);
     public static float WIDTH = 0.4f;
     public static float HEIGHT = 0.2f;
-    private int graylingFryAge;
+    private int fryAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public GraylingFryEntity(EntityType<? extends GraylingEntity> entityType, World world) {
         super(entityType, world);
@@ -77,30 +76,30 @@ public class GraylingFryEntity extends GraylingEntity implements GeoEntity {
     public void tickMovement() {
         super.tickMovement();
         if (!this.getWorld().isClient) {
-            this.setGraylingFryAge(this.graylingFryAge + 1);
+            this.setFryAge(this.fryAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.graylingFryAge);
+        nbt.putInt("Age", this.fryAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setGraylingFryAge(nbt.getInt("Age"));
+        this.setFryAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getGraylingFryAge());
+        nbtCompound.putInt("Age", this.getFryAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setGraylingFryAge(nbt.getInt("Age"));
+            this.setFryAge(nbt.getInt("Age"));
         }
     }
 
@@ -127,15 +126,15 @@ public class GraylingFryEntity extends GraylingEntity implements GeoEntity {
         }
     }
 
-    private int getGraylingFryAge() {
-        return this.graylingFryAge;
+    private int getFryAge() {
+        return this.fryAge;
     }
     private void increaseAge(int seconds) {
-        this.setGraylingFryAge(this.graylingFryAge + seconds * 20);
+        this.setFryAge(this.fryAge + seconds * 20);
     }
-    private void setGraylingFryAge(int graylingFryAge) {
-        this.graylingFryAge = graylingFryAge;
-        if (this.graylingFryAge >= MAX_GRAYLING_FRY_AGE) {
+    private void setFryAge(int fryAge) {
+        this.fryAge = fryAge;
+        if (this.fryAge >= MAX_FRY_AGE) {
             this.growUp();
         }
     }
@@ -143,25 +142,25 @@ public class GraylingFryEntity extends GraylingEntity implements GeoEntity {
         World world = this.getWorld();
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
-            GraylingEntity graylingEntity = ModEntities.GRAYLING.create(this.getWorld());
-            if (graylingEntity != null) {
-                graylingEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                graylingEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(graylingEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                graylingEntity.setAiDisabled(this.isAiDisabled());
+            GraylingEntity nextEntity = ModEntities.GRAYLING.create(this.getWorld());
+            if (nextEntity != null) {
+                nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                nextEntity.setAiDisabled(this.isAiDisabled());
                 if (this.hasCustomName()) {
-                    graylingEntity.setCustomName(this.getCustomName());
-                    graylingEntity.setCustomNameVisible(this.isCustomNameVisible());
+                    nextEntity.setCustomName(this.getCustomName());
+                    nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                 }
-                graylingEntity.setPersistent();
+                nextEntity.setPersistent();
                 this.playSound(SoundEvents.ENTITY_COD_FLOP, 0.15f, 1.0f);
-                serverWorld.spawnEntityAndPassengers(graylingEntity);
+                serverWorld.spawnEntityAndPassengers(nextEntity);
                 this.discard();
             }
         }
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_GRAYLING_FRY_AGE - this.graylingFryAge);
+        return Math.max(0, MAX_FRY_AGE - this.fryAge);
     }
 
     @Override
@@ -186,7 +185,7 @@ public class GraylingFryEntity extends GraylingEntity implements GeoEntity {
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.MILKFISH_FRY_BUCKET);
+        return new ItemStack(ModItems.GRAYLING_FRY_BUCKET);
     }
 
     @Override

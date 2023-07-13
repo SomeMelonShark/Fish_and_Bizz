@@ -34,10 +34,10 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class RainbowfishFryEntity extends RainbowfishEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_RAINBOWFISH_FRY_AGE = Math.abs(-18000);
+    public static int MAX_FRY_AGE = Math.abs(-18000);
     public static float WIDTH = 0.3f;
     public static float HEIGHT = 0.2f;
-    private int rainbowfishFryAge;
+    private int fryAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public RainbowfishFryEntity(EntityType<? extends RainbowfishEntity> entityType, World world) {
@@ -78,30 +78,30 @@ public class RainbowfishFryEntity extends RainbowfishEntity implements GeoEntity
     public void tickMovement() {
         super.tickMovement();
         if (!this.getWorld().isClient) {
-            this.setRainbowfishFryAge(this.rainbowfishFryAge + 1);
+            this.setFryAge(this.fryAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.rainbowfishFryAge);
+        nbt.putInt("Age", this.fryAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setRainbowfishFryAge(nbt.getInt("Age"));
+        this.setFryAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getRainbowfishFryAge());
+        nbtCompound.putInt("Age", this.getFryAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setRainbowfishFryAge(nbt.getInt("Age"));
+            this.setFryAge(nbt.getInt("Age"));
         }
     }
 
@@ -128,15 +128,15 @@ public class RainbowfishFryEntity extends RainbowfishEntity implements GeoEntity
         }
     }
 
-    private int getRainbowfishFryAge() {
-        return this.rainbowfishFryAge;
+    private int getFryAge() {
+        return this.fryAge;
     }
     private void increaseAge(int seconds) {
-        this.setRainbowfishFryAge(this.rainbowfishFryAge + seconds * 20);
+        this.setFryAge(this.fryAge + seconds * 20);
     }
-    private void setRainbowfishFryAge(int rainbowfishFryAge) {
-        this.rainbowfishFryAge = rainbowfishFryAge;
-        if (this.rainbowfishFryAge >= MAX_RAINBOWFISH_FRY_AGE) {
+    private void setFryAge(int fryAge) {
+        this.fryAge = fryAge;
+        if (this.fryAge >= MAX_FRY_AGE) {
             this.growUp();
         }
     }
@@ -145,25 +145,25 @@ public class RainbowfishFryEntity extends RainbowfishEntity implements GeoEntity
         World world = this.getWorld();
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
-            RainbowfishEntity rainbowfishEntity = ModEntities.RAINBOWFISH.create(this.getWorld());
-            if (rainbowfishEntity != null) {
-                rainbowfishEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                rainbowfishEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(rainbowfishEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                rainbowfishEntity.setAiDisabled(this.isAiDisabled());
+            RainbowfishEntity nextEntity = ModEntities.RAINBOWFISH.create(this.getWorld());
+            if (nextEntity != null) {
+                nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                nextEntity.setAiDisabled(this.isAiDisabled());
                 if (this.hasCustomName()) {
-                    rainbowfishEntity.setCustomName(this.getCustomName());
-                    rainbowfishEntity.setCustomNameVisible(this.isCustomNameVisible());
+                    nextEntity.setCustomName(this.getCustomName());
+                    nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                 }
-                rainbowfishEntity.setPersistent();
+                nextEntity.setPersistent();
                 this.playSound(SoundEvents.ENTITY_TROPICAL_FISH_FLOP, 0.15f, 1.0f);
-                serverWorld.spawnEntityAndPassengers(rainbowfishEntity);
+                serverWorld.spawnEntityAndPassengers(nextEntity);
                 this.discard();
             }
         }
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_RAINBOWFISH_FRY_AGE - this.rainbowfishFryAge);
+        return Math.max(0, MAX_FRY_AGE - this.fryAge);
     }
 
     @Override

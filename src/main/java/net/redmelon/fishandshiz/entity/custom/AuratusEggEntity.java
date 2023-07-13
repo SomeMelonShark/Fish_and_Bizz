@@ -27,8 +27,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AuratusEggEntity extends AuratusEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_AURATUS_EGG_AGE = Math.abs(-12000);
-    private int auratusEggAge;
+    public static int MAX_EGG_AGE = Math.abs(-12000);
+    private int eggAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
@@ -59,41 +59,41 @@ public class AuratusEggEntity extends AuratusEntity implements GeoEntity {
     public void tickMovement() {
         super.tickMovement();
         if (!this.getWorld().isClient) {
-            this.setAuratusEggAge(this.auratusEggAge + 1);
+            this.setEggAge(this.eggAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.auratusEggAge);
+        nbt.putInt("Age", this.eggAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setAuratusEggAge(nbt.getInt("Age"));
+        this.setEggAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getAuratusEggAge());
+        nbtCompound.putInt("Age", this.getEggAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setAuratusEggAge(nbt.getInt("Age"));
+            this.setEggAge(nbt.getInt("Age"));
         }
     }
-    private int getAuratusEggAge() {
-        return this.auratusEggAge;
+    private int getEggAge() {
+        return this.eggAge;
     }
     private void increaseAge(int seconds) {
-        this.setAuratusEggAge(this.auratusEggAge + seconds * 20);
+        this.setEggAge(this.eggAge + seconds * 20);
     }
-    private void setAuratusEggAge(int auratusEggAge) {
-        this.auratusEggAge = auratusEggAge;
-        if (this.auratusEggAge >= MAX_AURATUS_EGG_AGE) {
+    private void setEggAge(int auratusEggAge) {
+        this.eggAge = auratusEggAge;
+        if (this.eggAge >= MAX_EGG_AGE) {
             this.growUp();
         }
     }
@@ -106,29 +106,29 @@ public class AuratusEggEntity extends AuratusEntity implements GeoEntity {
 
     private void growUp() {
         World world = this.getWorld();
-        int i = random.nextBetweenExclusive(5, 10);
+        int i = random.nextBetweenExclusive(3, 6);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                AuratusFryEntity auratusFryEntity = ModEntities.AURATUS_FRY.create(this.getWorld());
-                if (auratusFryEntity != null) {
-                    auratusFryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    auratusFryEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(auratusFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                    auratusFryEntity.setAiDisabled(this.isAiDisabled());
+                AuratusFryEntity nextEntity = ModEntities.AURATUS_FRY.create(this.getWorld());
+                if (nextEntity != null) {
+                    nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                    nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    nextEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
-                        auratusFryEntity.setCustomName(this.getCustomName());
-                        auratusFryEntity.setCustomNameVisible(this.isCustomNameVisible());
+                        nextEntity.setCustomName(this.getCustomName());
+                        nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                     }
-                    auratusFryEntity.setPersistent();
+                    nextEntity.setPersistent();
                     this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
-                    serverWorld.spawnEntityAndPassengers(auratusFryEntity);
+                    serverWorld.spawnEntityAndPassengers(nextEntity);
                     this.discard();
                 }
             }
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_AURATUS_EGG_AGE - this.auratusEggAge);
+        return Math.max(0, MAX_EGG_AGE - this.eggAge);
     }
 
     @Override

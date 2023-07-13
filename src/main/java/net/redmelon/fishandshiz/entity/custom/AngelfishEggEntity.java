@@ -8,10 +8,8 @@ import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -28,8 +26,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_ANGELFISH_EGG_AGE = Math.abs(-12000);
-    private int angelfishEggAge;
+    public static int MAX_EGG_AGE = Math.abs(-12000);
+    private int eggAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public AngelfishEggEntity(EntityType<? extends AngelfishEntity> entityType, World world) {
@@ -58,41 +56,41 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
     public void tickMovement() {
         super.tickMovement();
         if (!this.getWorld().isClient) {
-            this.setAngelfishEggAge(this.angelfishEggAge + 1);
+            this.setEggAge(this.eggAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.angelfishEggAge);
+        nbt.putInt("Age", this.eggAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setAngelfishEggAge(nbt.getInt("Age"));
+        this.setEggAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getAngelfishEggAge());
+        nbtCompound.putInt("Age", this.getEggAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setAngelfishEggAge(nbt.getInt("Age"));
+            this.setEggAge(nbt.getInt("Age"));
         }
     }
-    private int getAngelfishEggAge() {
-        return this.angelfishEggAge;
+    private int getEggAge() {
+        return this.eggAge;
     }
     private void increaseAge(int seconds) {
-        this.setAngelfishEggAge(this.angelfishEggAge + seconds * 20);
+        this.setEggAge(this.eggAge + seconds * 20);
     }
-    private void setAngelfishEggAge(int angelfishEggAge) {
-        this.angelfishEggAge = angelfishEggAge;
-        if (this.angelfishEggAge >= MAX_ANGELFISH_EGG_AGE) {
+    private void setEggAge(int angelfishEggAge) {
+        this.eggAge = angelfishEggAge;
+        if (this.eggAge >= MAX_EGG_AGE) {
             this.growUp();
         }
     }
@@ -105,29 +103,29 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
 
     private void growUp() {
         World world = this.getWorld();
-        int i = random.nextBetweenExclusive(3, 8);
+        int i = random.nextBetweenExclusive(2, 8);
         for (int j = 1; j <= i; ++j)
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
-            AngelfishFryEntity angelfishfryEntity = ModEntities.ANGELFISH_FRY.create(this.getWorld());
-            if (angelfishfryEntity != null) {
-                angelfishfryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                angelfishfryEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(angelfishfryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                angelfishfryEntity.setAiDisabled(this.isAiDisabled());
+            AngelfishFryEntity nextEntity = ModEntities.ANGELFISH_FRY.create(this.getWorld());
+            if (nextEntity != null) {
+                nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                nextEntity.setAiDisabled(this.isAiDisabled());
                 if (this.hasCustomName()) {
-                    angelfishfryEntity.setCustomName(this.getCustomName());
-                    angelfishfryEntity.setCustomNameVisible(this.isCustomNameVisible());
+                    nextEntity.setCustomName(this.getCustomName());
+                    nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                 }
-                angelfishfryEntity.setPersistent();
+                nextEntity.setPersistent();
                 this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
-                serverWorld.spawnEntityAndPassengers(angelfishfryEntity);
+                serverWorld.spawnEntityAndPassengers(nextEntity);
                 this.discard();
             }
         }
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_ANGELFISH_EGG_AGE - this.angelfishEggAge);
+        return Math.max(0, MAX_EGG_AGE - this.eggAge);
     }
 
     @Override

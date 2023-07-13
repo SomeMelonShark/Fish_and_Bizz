@@ -31,10 +31,10 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class MudCrabLarvaEntity extends SchoolingFishEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_CRAB_LARVA_AGE = Math.abs(-18000);
+    public static int MAX_LARVA_AGE = Math.abs(-18000);
     public static float WIDTH = 0.4f;
     public static float HEIGHT = 0.4f;
-    private int mudCrabLarvaAge;
+    private int larvaAge;
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public MudCrabLarvaEntity(EntityType<? extends SchoolingFishEntity> entityType, World world) {
         super(entityType, world);
@@ -76,24 +76,24 @@ public class MudCrabLarvaEntity extends SchoolingFishEntity implements GeoEntity
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.mudCrabLarvaAge);
+        nbt.putInt("Age", this.larvaAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setMudCrabLarvaAge(nbt.getInt("Age"));
+        this.setLarvaAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getMudCrabLarvaAge());
+        nbtCompound.putInt("Age", this.getLarvaAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setMudCrabLarvaAge(nbt.getInt("Age"));
+            this.setLarvaAge(nbt.getInt("Age"));
         }
     }
 
@@ -103,15 +103,15 @@ public class MudCrabLarvaEntity extends SchoolingFishEntity implements GeoEntity
         }
     }
 
-    private int getMudCrabLarvaAge() {
-        return this.mudCrabLarvaAge;
+    private int getLarvaAge() {
+        return this.larvaAge;
     }
     private void increaseAge(int seconds) {
-        this.setMudCrabLarvaAge(this.mudCrabLarvaAge + seconds * 20);
+        this.setLarvaAge(this.larvaAge + seconds * 20);
     }
-    private void setMudCrabLarvaAge(int mudCrabLarvaAge) {
-        this.mudCrabLarvaAge = mudCrabLarvaAge;
-        if (this.mudCrabLarvaAge >= MAX_CRAB_LARVA_AGE) {
+    private void setLarvaAge(int larvaAge) {
+        this.larvaAge = larvaAge;
+        if (this.larvaAge >= MAX_LARVA_AGE) {
             this.growUp();
         }
     }
@@ -120,18 +120,18 @@ public class MudCrabLarvaEntity extends SchoolingFishEntity implements GeoEntity
         World world = this.getWorld();
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
-            MudCrabEntity mudCrabEntity = ModEntities.MUD_CRAB.create(this.getWorld());
-            if (mudCrabEntity != null) {
-                mudCrabEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                mudCrabEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(mudCrabEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                mudCrabEntity.setAiDisabled(this.isAiDisabled());
+            MudCrabEntity nextEntity = ModEntities.MUD_CRAB.create(this.getWorld());
+            if (nextEntity != null) {
+                nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                nextEntity.setAiDisabled(this.isAiDisabled());
                 if (this.hasCustomName()) {
-                    mudCrabEntity.setCustomName(this.getCustomName());
-                    mudCrabEntity.setCustomNameVisible(this.isCustomNameVisible());
+                    nextEntity.setCustomName(this.getCustomName());
+                    nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                 }
-                mudCrabEntity.setPersistent();
+                nextEntity.setPersistent();
                 this.playSound(SoundEvents.ENTITY_TURTLE_EGG_CRACK, 0.15f, 1.0f);
-                serverWorld.spawnEntityAndPassengers(mudCrabEntity);
+                serverWorld.spawnEntityAndPassengers(nextEntity);
                 this.discard();
             }
         }
@@ -153,7 +153,7 @@ public class MudCrabLarvaEntity extends SchoolingFishEntity implements GeoEntity
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_CRAB_LARVA_AGE - this.mudCrabLarvaAge);
+        return Math.max(0, MAX_LARVA_AGE - this.larvaAge);
     }
 
     @Override

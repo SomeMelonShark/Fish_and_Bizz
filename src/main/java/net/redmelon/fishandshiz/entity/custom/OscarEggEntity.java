@@ -26,8 +26,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class OscarEggEntity extends OscarEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_OSCAR_EGG_AGE = Math.abs(-18000);
-    private int oscarEggAge;
+    public static int MAX_EGG_AGE = Math.abs(-18000);
+    private int eggAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public OscarEggEntity(EntityType<? extends OscarEntity> entityType, World world) {
@@ -56,41 +56,41 @@ public class OscarEggEntity extends OscarEntity implements GeoEntity {
     public void tickMovement() {
         super.tickMovement();
         if (!this.getWorld().isClient) {
-            this.setOscarEggAge(this.oscarEggAge + 1);
+            this.setEggAge(this.eggAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.oscarEggAge);
+        nbt.putInt("Age", this.eggAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setOscarEggAge(nbt.getInt("Age"));
+        this.setEggAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getOscarEggAge());
+        nbtCompound.putInt("Age", this.getEggAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setOscarEggAge(nbt.getInt("Age"));
+            this.setEggAge(nbt.getInt("Age"));
         }
     }
-    private int getOscarEggAge() {
-        return this.oscarEggAge;
+    private int getEggAge() {
+        return this.eggAge;
     }
     private void increaseAge(int seconds) {
-        this.setOscarEggAge(this.oscarEggAge + seconds * 20);
+        this.setEggAge(this.eggAge + seconds * 20);
     }
-    private void setOscarEggAge(int oscarEggAge) {
-        this.oscarEggAge = oscarEggAge;
-        if (this.oscarEggAge >= MAX_OSCAR_EGG_AGE) {
+    private void setEggAge(int eggAge) {
+        this.eggAge = eggAge;
+        if (this.eggAge >= MAX_EGG_AGE) {
             this.growUp();
         }
     }
@@ -102,29 +102,29 @@ public class OscarEggEntity extends OscarEntity implements GeoEntity {
 
     private void growUp() {
         World world = this.getWorld();
-        int i = random.nextBetweenExclusive(3, 5);
+        int i = random.nextBetweenExclusive(1, 3);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                OscarFryEntity oscarFryEntity = ModEntities.OSCAR_FRY.create(this.getWorld());
-                if (oscarFryEntity != null) {
-                    oscarFryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    oscarFryEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(oscarFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                    oscarFryEntity.setAiDisabled(this.isAiDisabled());
+                OscarFryEntity nextEntity = ModEntities.OSCAR_FRY.create(this.getWorld());
+                if (nextEntity != null) {
+                    nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                    nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    nextEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
-                        oscarFryEntity.setCustomName(this.getCustomName());
-                        oscarFryEntity.setCustomNameVisible(this.isCustomNameVisible());
+                        nextEntity.setCustomName(this.getCustomName());
+                        nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                     }
-                    oscarFryEntity.setPersistent();
+                    nextEntity.setPersistent();
                     this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
-                    serverWorld.spawnEntityAndPassengers(oscarFryEntity);
+                    serverWorld.spawnEntityAndPassengers(nextEntity);
                     this.discard();
                 }
             }
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_OSCAR_EGG_AGE - this.oscarEggAge);
+        return Math.max(0, MAX_EGG_AGE - this.eggAge);
     }
 
     @Override
@@ -148,7 +148,7 @@ public class OscarEggEntity extends OscarEntity implements GeoEntity {
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.RAINBOWFISH_EGG_BUCKET);
+        return new ItemStack(ModItems.OSCAR_EGG_BUCKET);
     }
 
     @Override

@@ -35,10 +35,10 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class CorydorasFryEntity extends CorydorasEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_CORYDORAS_FRY_AGE = Math.abs(-18000);
+    public static int MAX_FRY_AGE = Math.abs(-18000);
     public static float WIDTH = 0.4f;
     public static float HEIGHT = 0.3f;
-    private int corydorasFryAge;
+    private int fryAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public CorydorasFryEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
@@ -78,30 +78,30 @@ public class CorydorasFryEntity extends CorydorasEntity implements GeoEntity {
     public void tickMovement() {
         super.tickMovement();
         if (!this.getWorld().isClient) {
-            this.setCorydorasFryAge(this.corydorasFryAge + 1);
+            this.setFryAge(this.fryAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.corydorasFryAge);
+        nbt.putInt("Age", this.fryAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setCorydorasFryAge(nbt.getInt("Age"));
+        this.setFryAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getCorydorasFryAge());
+        nbtCompound.putInt("Age", this.getFryAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setCorydorasFryAge(nbt.getInt("Age"));
+            this.setFryAge(nbt.getInt("Age"));
         }
     }
 
@@ -128,15 +128,15 @@ public class CorydorasFryEntity extends CorydorasEntity implements GeoEntity {
         }
     }
 
-    private int getCorydorasFryAge() {
-        return this.corydorasFryAge;
+    private int getFryAge() {
+        return this.fryAge;
     }
     private void increaseAge(int seconds) {
-        this.setCorydorasFryAge(this.corydorasFryAge + seconds * 20);
+        this.setFryAge(this.fryAge + seconds * 20);
     }
-    private void setCorydorasFryAge(int corydorasFryAge) {
-        this.corydorasFryAge = corydorasFryAge;
-        if (this.corydorasFryAge >= MAX_CORYDORAS_FRY_AGE) {
+    private void setFryAge(int fryAge) {
+        this.fryAge = fryAge;
+        if (this.fryAge >= MAX_FRY_AGE) {
             this.growUp();
         }
     }
@@ -145,25 +145,25 @@ public class CorydorasFryEntity extends CorydorasEntity implements GeoEntity {
         World world = this.getWorld();
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
-            CorydorasEntity corydorasEntity = ModEntities.CORYDORAS.create(this.getWorld());
-            if (corydorasEntity != null) {
-                corydorasEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                corydorasEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(corydorasEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                corydorasEntity.setAiDisabled(this.isAiDisabled());
+            CorydorasEntity nextEntity = ModEntities.CORYDORAS.create(this.getWorld());
+            if (nextEntity != null) {
+                nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                nextEntity.setAiDisabled(this.isAiDisabled());
                 if (this.hasCustomName()) {
-                    corydorasEntity.setCustomName(this.getCustomName());
-                    corydorasEntity.setCustomNameVisible(this.isCustomNameVisible());
+                    nextEntity.setCustomName(this.getCustomName());
+                    nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                 }
-                corydorasEntity.setPersistent();
+                nextEntity.setPersistent();
                 this.playSound(SoundEvents.ENTITY_TROPICAL_FISH_FLOP, 0.15f, 1.0f);
-                serverWorld.spawnEntityAndPassengers(corydorasEntity);
+                serverWorld.spawnEntityAndPassengers(nextEntity);
                 this.discard();
             }
         }
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_CORYDORAS_FRY_AGE - this.corydorasFryAge);
+        return Math.max(0, MAX_FRY_AGE - this.fryAge);
     }
 
     @Override

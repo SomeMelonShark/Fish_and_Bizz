@@ -27,8 +27,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class SalmonEggEntity extends SchoolingBreedEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_SALMON_EGG_AGE = Math.abs(-18000);
-    private int salmonEggAge;
+    public static int MAX_EGG_AGE = Math.abs(-18000);
+    private int eggAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public SalmonEggEntity(EntityType<? extends SalmonEggEntity> entityType, World world) {
@@ -58,42 +58,42 @@ public class SalmonEggEntity extends SchoolingBreedEntity implements GeoEntity {
     public void tickMovement() {
         super.tickMovement();
         if (!this.getWorld().isClient) {
-            this.setSalmonEggAge(this.salmonEggAge + 1);
+            this.setEggAge(this.eggAge + 1);
         }
     }
     @Override
     public void writeCustomDatatoNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.salmonEggAge);
+        nbt.putInt("Age", this.eggAge);
     }
 
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setSalmonEggAge(nbt.getInt("Age"));
+        this.setEggAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getSalmonEggAge());
+        nbtCompound.putInt("Age", this.getEggAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setSalmonEggAge(nbt.getInt("Age"));
+            this.setEggAge(nbt.getInt("Age"));
         }
     }
-    private int getSalmonEggAge() {
-        return this.salmonEggAge;
+    private int getEggAge() {
+        return this.eggAge;
     }
     private void increaseAge(int seconds) {
-        this.setSalmonEggAge(this.salmonEggAge + seconds * 20);
+        this.setEggAge(this.eggAge + seconds * 20);
     }
-    private void setSalmonEggAge(int salmonEggAge) {
-        this.salmonEggAge = salmonEggAge;
-        if (this.salmonEggAge >= MAX_SALMON_EGG_AGE) {
+    private void setEggAge(int eggAge) {
+        this.eggAge = eggAge;
+        if (this.eggAge >= MAX_EGG_AGE) {
             this.growUp();
         }
     }
@@ -110,25 +110,25 @@ public class SalmonEggEntity extends SchoolingBreedEntity implements GeoEntity {
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                SalmonFryEntity salmonFryEntity = ModEntities.SALMON_FRY.create(this.getWorld());
-                if (salmonFryEntity != null) {
-                    salmonFryEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    salmonFryEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(salmonFryEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                    salmonFryEntity.setAiDisabled(this.isAiDisabled());
+                SalmonFryEntity nextEntity = ModEntities.SALMON_FRY.create(this.getWorld());
+                if (nextEntity != null) {
+                    nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                    nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    nextEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
-                        salmonFryEntity.setCustomName(this.getCustomName());
-                        salmonFryEntity.setCustomNameVisible(this.isCustomNameVisible());
+                        nextEntity.setCustomName(this.getCustomName());
+                        nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                     }
-                    salmonFryEntity.setPersistent();
+                    nextEntity.setPersistent();
                     this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
-                    serverWorld.spawnEntityAndPassengers(salmonFryEntity);
+                    serverWorld.spawnEntityAndPassengers(nextEntity);
                     this.discard();
                 }
             }
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_SALMON_EGG_AGE - this.salmonEggAge);
+        return Math.max(0, MAX_EGG_AGE - this.eggAge);
     }
 
     @Override

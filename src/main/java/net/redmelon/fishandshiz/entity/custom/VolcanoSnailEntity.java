@@ -108,7 +108,7 @@ public class VolcanoSnailEntity extends AnimalWaterEntity implements GeoEntity {
 
     @Override
     public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return ModEntities.VOLCANO_SNAIL.create(getWorld());
+        return ModEntities.VOLCANO_SNAIL_EGG.create(getWorld());
     }
 
     @Override

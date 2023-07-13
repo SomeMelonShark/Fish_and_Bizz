@@ -15,6 +15,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
+import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
@@ -24,33 +25,19 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class RainbowfishEggEntity extends RainbowfishEntity implements GeoEntity {
+public class VolcanoSnailEggEntity extends VolcanoSnailEntity implements GeoEntity {
     @VisibleForTesting
     public static int MAX_EGG_AGE = Math.abs(-12000);
     private int eggAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-    public RainbowfishEggEntity(EntityType<? extends RainbowfishEntity> entityType, World world) {
+    public VolcanoSnailEggEntity(EntityType<? extends AnimalWaterEntity> entityType, World world) {
         super(entityType, world);
-        this.moveControl = new RainbowfishEggEntity.FishMoveControl(this);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
-    }
-    static class FishMoveControl
-            extends MoveControl {
-        private final AnimalFishEntity fish;
-
-        FishMoveControl(AnimalFishEntity owner) {
-            super(owner);
-            this.fish = owner;
-        }
-
-        @Override
-        public void tick() {//does not move
-        }
     }
     @Override
     public void tickMovement() {
@@ -102,11 +89,11 @@ public class RainbowfishEggEntity extends RainbowfishEntity implements GeoEntity
 
     private void growUp() {
         World world = this.getWorld();
-        int i = random.nextBetweenExclusive(3, 5);
+        int i = random.nextBetweenExclusive(10, 17);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                RainbowfishFryEntity nextEntity = ModEntities.RAINBOWFISH_FRY.create(this.getWorld());
+                VolcanoSnailEntity nextEntity = ModEntities.VOLCANO_SNAIL.create(this.getWorld());
                 if (nextEntity != null) {
                     nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
                     nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
@@ -141,7 +128,6 @@ public class RainbowfishEggEntity extends RainbowfishEntity implements GeoEntity
         return SoundEvents.BLOCK_FROGSPAWN_BREAK;
     }
 
-    @Override
     protected SoundEvent getFlopSound() {
         return SoundEvents.BLOCK_FROGSPAWN_HIT;
     }

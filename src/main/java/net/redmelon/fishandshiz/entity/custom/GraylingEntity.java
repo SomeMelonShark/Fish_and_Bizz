@@ -94,7 +94,7 @@ public class GraylingEntity extends SchoolingBreedEntity implements GeoEntity {
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.MILKFISH_BUCKET);
+        return new ItemStack(ModItems.GRAYLING_BUCKET);
     }
 
     @Override
