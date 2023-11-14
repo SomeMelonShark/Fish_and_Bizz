@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_mud_crab": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fishandshiz:mud_crab"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:cooked_mud_crab_from_smelting_mud_crab"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_mud_crab",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:cooked_mud_crab_from_smelting_mud_crab"
+    ]
+  },
+  "sends_telemetry_event": false
+}

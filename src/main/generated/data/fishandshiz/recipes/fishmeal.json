@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "fishandshiz:fishmeal_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "fishandshiz:fishmeal"
+  }
+}

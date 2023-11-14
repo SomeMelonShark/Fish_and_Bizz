@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "fishandshiz:block/fanwort_plant"
+  }
+}

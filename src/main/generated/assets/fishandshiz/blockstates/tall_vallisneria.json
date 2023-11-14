@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "fishandshiz:block/tall_vallisneria"
+    },
+    "half=upper": {
+      "model": "fishandshiz:block/vallisneria"
+    }
+  }
+}

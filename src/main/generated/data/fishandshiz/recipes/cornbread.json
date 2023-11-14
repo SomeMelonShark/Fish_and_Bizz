@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "fishandshiz:corn"
+    },
+    "B": {
+      "item": "minecraft:sugar"
+    }
+  },
+  "pattern": [
+    "ABA"
+  ],
+  "result": {
+    "item": "fishandshiz:cornbread"
+  },
+  "show_notification": true
+}

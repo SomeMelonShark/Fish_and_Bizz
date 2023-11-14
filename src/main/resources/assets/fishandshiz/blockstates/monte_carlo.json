@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "fishandshiz:block/monte_carlo_stage0"
+    },
+    "age=1": {
+      "model": "fishandshiz:block/monte_carlo_stage1"
+    }
+  }
+}

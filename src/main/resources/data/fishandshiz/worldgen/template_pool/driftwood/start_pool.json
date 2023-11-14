@@ -1,0 +1,42 @@
+{
+  "name": "fishandshiz:driftwood/start_pool",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "element": {
+        "location": "fishandshiz:driftwood1",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "location": "fishandshiz:driftwood2",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "location": "fishandshiz:driftwood3",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "location": "fishandshiz:driftwood4",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      },
+      "weight": 1
+    }
+  ]
+}

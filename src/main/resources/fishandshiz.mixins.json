@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.redmelon.fishandshiz.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "AnemoneMixin",
+    "SalmonMixin",
+    "BucketTooltipMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}

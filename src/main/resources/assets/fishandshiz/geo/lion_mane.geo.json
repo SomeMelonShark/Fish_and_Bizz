@@ -1,0 +1,72 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 256,
+				"texture_height": 256,
+				"visible_bounds_width": 4,
+				"visible_bounds_height": 4,
+				"visible_bounds_offset": [0, 1, 0]
+			},
+			"bones": [
+				{
+					"name": "body",
+					"pivot": [1, 29, 2],
+					"cubes": [
+						{"origin": [-13, 32, -13], "size": [28, 8, 28], "uv": [60, 86]}
+					]
+				},
+				{
+					"name": "mantle",
+					"parent": "body",
+					"pivot": [0, 32, 0],
+					"cubes": [
+						{"origin": [-17, 15, -17], "size": [36, 17, 36], "uv": [0, 0]}
+					]
+				},
+				{
+					"name": "tentacle1",
+					"parent": "body",
+					"pivot": [1, 15, -13],
+					"cubes": [
+						{"origin": [-13, -18, -13], "size": [28, 33, 0], "uv": [56, 122]}
+					]
+				},
+				{
+					"name": "tentacle2",
+					"parent": "body",
+					"pivot": [1, 15, 15],
+					"cubes": [
+						{"origin": [-13, -18, 15], "size": [28, 33, 0], "uv": [108, 0]}
+					]
+				},
+				{
+					"name": "tentacle3",
+					"parent": "body",
+					"pivot": [15, 15, 1],
+					"cubes": [
+						{"origin": [15, -18, -13], "size": [0, 33, 28], "uv": [88, 25]}
+					]
+				},
+				{
+					"name": "tentacle4",
+					"parent": "body",
+					"pivot": [-13, 15, 1],
+					"cubes": [
+						{"origin": [-13, -18, -13], "size": [0, 33, 28], "uv": [0, 86]}
+					]
+				},
+				{
+					"name": "mane",
+					"parent": "body",
+					"pivot": [0, 16, 0],
+					"cubes": [
+						{"origin": [-10, -24, -10], "size": [22, 39, 22], "uv": [0, 53]}
+					]
+				}
+			]
+		}
+	]
+}

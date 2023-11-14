@@ -1,0 +1,119 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "fishandshiz:angelfish_egg_bucket",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fishandshiz:angelfish_bucket",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fishandshiz:neon_tetra_bucket",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fishandshiz:oscar_bucket",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fishandshiz:corydoras_bucket",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fishandshiz:archerfish_bucket",
+          "weight": 5
+        }
+        ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 3.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 5.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "fishandshiz:fishmeal",
+          "weight": 35
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "fishandshiz:fishmeal_block",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "fishandshiz:fish_food",
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 5.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:bone",
+          "weight": 15
+        }
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 4.0,
+        "min": 1.0
+      }
+    }
+  ]
+}

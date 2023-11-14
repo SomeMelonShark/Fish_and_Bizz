@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "fishandshiz:block/powered_prismarine_off"
+  }
+}

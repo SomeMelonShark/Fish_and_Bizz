@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "fishandshiz:aquarist_hut",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "salt": 159030912,
+    "spacing": 40,
+    "separation": 10,
+    "type": "minecraft:random_spread"
+  }
+}

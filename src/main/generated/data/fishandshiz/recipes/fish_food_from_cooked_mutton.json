@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:cooked_mutton"
+    },
+    {
+      "item": "fishandshiz:fishmeal"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "item": "fishandshiz:fish_food"
+  }
+}

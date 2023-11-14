@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "fishandshiz",
+	"version": "1.5.0",
+	"name": "Fish And Bizz",
+	"description": "This mod adds several aquatic creatures and their respective life cycles",
+	"authors": [
+		"RedMelonShark"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "MIT",
+	"icon": "assets/fishandshiz/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.redmelon.fishandshiz.FishAndShiz"
+		],
+		"client": [
+			"net.redmelon.fishandshiz.FishAndShizClient"
+		],
+		"fabric-datagen": [
+			"net.redmelon.fishandshiz.FishAndShizDataGenerator"
+		]
+
+	},
+	"mixins": [
+		"fishandshiz.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "~1.20",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

@@ -1,0 +1,80 @@
+{
+  "snail_ambient": {
+    "subtitle": "sounds.fishandshiz.snail_ambient",
+    "sounds": [
+      "fishandshiz:snail_ambient_1",
+      "fishandshiz:snail_ambient_2"
+    ]
+  },
+  "snail_hurt": {
+    "subtitle": "sounds.fishandshiz.snail_hurt",
+    "sounds": [
+      "fishandshiz:snail_hurt_1",
+      "fishandshiz:snail_hurt_2"
+    ]
+  },
+  "snail_death": {
+  "subtitle": "sounds.fishandshiz.snail_death",
+  "sounds": [
+    "fishandshiz:snail_death"
+  ]
+  },
+  "crab_ambient": {
+    "subtitle": "sounds.fishandshiz.crab_ambient",
+    "sounds": [
+      "fishandshiz:crab_ambient"
+    ]
+  },
+  "crab_hurt": {
+    "subtitle": "sounds.fishandshiz.crab_hurt",
+    "sounds": [
+      "fishandshiz:crab_hurt_1",
+      "fishandshiz:crab_hurt_2"
+    ]
+  },
+  "crab_death": {
+    "subtitle": "sounds.fishandshiz.crab_death",
+    "sounds": [
+      "fishandshiz:crab_death"
+    ]
+  },
+  "capybara_ambient": {
+    "subtitle": "sounds.fishandshiz.capybara_ambient",
+    "sounds": [
+      "fishandshiz:capybara_ambient_1",
+      "fishandshiz:capybara_ambient_2"
+    ]
+  },
+  "capybara_hurt": {
+    "subtitle": "sounds.fishandshiz.capybara_hurt",
+    "sounds": [
+      "fishandshiz:capybara_hurt_1",
+      "fishandshiz:capybara_hurt_2"
+    ]
+  },
+  "capybara_death": {
+    "subtitle": "sounds.fishandshiz.capybara_death",
+    "sounds": [
+      "fishandshiz:capybara_death"
+    ]
+  },
+  "jellyfish_ambient": {
+    "subtitle": "sounds.fishandshiz.jellyfish_ambient",
+    "sounds": [
+      "fishandshiz:jellyfish_ambient"
+    ]
+  },
+  "jellyfish_hurt": {
+    "subtitle": "sounds.fishandshiz.jellyfish_hurt",
+    "sounds": [
+      "fishandshiz:jellyfish_hurt_1",
+      "fishandshiz:jellyfish_hurt_2"
+    ]
+  },
+  "jellyfish_death": {
+    "subtitle": "sounds.fishandshiz.jellyfish_death",
+    "sounds": [
+      "fishandshiz:jellyfish_death"
+    ]
+  }
+}

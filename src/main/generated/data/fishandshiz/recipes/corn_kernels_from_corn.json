@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "food",
+  "ingredients": [
+    {
+      "item": "fishandshiz:corn"
+    }
+  ],
+  "result": {
+    "count": 3,
+    "item": "fishandshiz:corn_kernels"
+  }
+}

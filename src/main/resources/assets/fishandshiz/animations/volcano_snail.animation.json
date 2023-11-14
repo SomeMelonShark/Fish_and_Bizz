@@ -1,0 +1,152 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.volcano_snail.crawl": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {
+				"shell": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [2.5, 0, 0]
+						},
+						"0.625": {
+							"vector": [0, 0, 0]
+						},
+						"0.875": {
+							"vector": [6.67, 0, 0]
+						},
+						"1.0": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"body": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"foot": {
+					"scale": {
+						"0.0": {
+							"vector": [1, 1, 1]
+						},
+						"0.5": {
+							"vector": [1, 1, 1.2]
+						},
+						"1.0": {
+							"vector": [1, 1, 1]
+						}
+					}
+				},
+				"leftTentacle": {
+					"rotation": {
+						"0.0": {
+							"vector": [105, 0, 0]
+						},
+						"0.7917": {
+							"vector": [132.5, 0, 0]
+						},
+						"1.0": {
+							"vector": [105, 0, 0]
+						}
+					}
+				},
+				"rightTentacle": {
+					"rotation": {
+						"0.0": {
+							"vector": [105, 0, 0]
+						},
+						"0.1667": {
+							"vector": [90, 0, 0]
+						},
+						"0.5833": {
+							"vector": [117.5, 0, 0]
+						},
+						"1.0": {
+							"vector": [105, 0, 0]
+						}
+					}
+				}
+			}
+		},
+		"animation.volcano_snail.flop": {
+			"loop": true,
+			"bones": {
+				"shell": {
+					"rotation": {
+						"vector": [0, 0, 65]
+					}
+				},
+				"leftTentacle": {
+					"rotation": {
+						"vector": [135, 0, 0]
+					}
+				},
+				"rightTentacle": {
+					"rotation": {
+						"vector": [130, 0, 0]
+					}
+				}
+			}
+		},
+		"animation.volcano_snail.idle": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"shell": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"1.0417": {
+							"vector": [5, 0, 0]
+						},
+						"1.375": {
+							"vector": [0, 0, 0]
+						},
+						"2.0": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"leftTentacle": {
+					"rotation": {
+						"0.0": {
+							"vector": [105, 0, 0]
+						},
+						"0.625": {
+							"vector": [92.5, 0, 0]
+						},
+						"1.3333": {
+							"vector": [110, 0, 0]
+						},
+						"2.0": {
+							"vector": [105, 0, 0]
+						}
+					}
+				},
+				"rightTentacle": {
+					"rotation": {
+						"0.0": {
+							"vector": [105, 0, 0]
+						},
+						"0.7917": {
+							"vector": [75, 0, 0]
+						},
+						"1.4583": {
+							"vector": [129.85, 0, 0]
+						},
+						"2.0": {
+							"vector": [105, 0, 0]
+						}
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}
