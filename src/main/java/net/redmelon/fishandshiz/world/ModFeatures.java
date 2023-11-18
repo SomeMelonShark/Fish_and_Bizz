@@ -15,10 +15,12 @@ import static net.redmelon.fishandshiz.FishAndShiz.MOD_ID;
 
 public class ModFeatures {
     private static final String FANWORT_NAME = "fanwort";
+    private static final String MONTE_CARLO_NAME = "monte_carlo";
     private static final String VALLISNERIA_NAME = "vallisneria";
 
     public static final Feature<DefaultFeatureConfig> FANWORT = register(FANWORT_NAME, new FanwortFeature(DefaultFeatureConfig.CODEC));
-    public static final VallisneriaFeature VALLISNERIA = (VallisneriaFeature) register(VALLISNERIA_NAME, new VallisneriaFeature(ProbabilityConfig.CODEC));
+    public static final Feature<DefaultFeatureConfig> MONTE_CARLO = register(MONTE_CARLO_NAME, new MonteCarloFeature(DefaultFeatureConfig.CODEC));
+    public static final VallisneriaFeature VALLISNERIA = register(VALLISNERIA_NAME, new VallisneriaFeature(ProbabilityConfig.CODEC));
 
     private static <C extends FeatureConfig, F extends Feature<C>> F register(String name, F feature) {
         return Registry.register(Registries.FEATURE, new Identifier(MOD_ID, name), feature);

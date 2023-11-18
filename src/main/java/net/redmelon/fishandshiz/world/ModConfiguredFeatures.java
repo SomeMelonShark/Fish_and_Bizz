@@ -14,10 +14,12 @@ import net.redmelon.fishandshiz.block.ModBlocks;
 public class ModConfiguredFeatures {
     public static final RegistryKey<ConfiguredFeature<?, ?>> FANWORT_KEY = registerKey("fanwort");
     public static final RegistryKey<ConfiguredFeature<?, ?>> VALLISNERIA_KEY = registerKey("vallisneria");
+    public static final RegistryKey<ConfiguredFeature<?, ?>> MONTE_CARLO_KEY = registerKey("monte_carlo");
     public static final RegistryKey<ConfiguredFeature<?, ?>> LAKE = registerKey("lake");
 
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
         ConfiguredFeatures.register(context, FANWORT_KEY, ModFeatures.FANWORT);
+        ConfiguredFeatures.register(context, MONTE_CARLO_KEY, ModFeatures.MONTE_CARLO);
         ConfiguredFeatures.register(context, VALLISNERIA_KEY, ModFeatures.VALLISNERIA, new ProbabilityConfig(0.8F));
         register(context, LAKE, Feature.LAKE,
                 new LakeFeature.Config(BlockStateProvider.of(Blocks.WATER.getDefaultState()),

@@ -22,8 +22,8 @@ import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
 public class MonteCarloBlock extends PlantBlock implements Fertilizable {
-    public static final int MAX_AGE = 1;
-    public static final IntProperty AGE = IntProperty.of("age", 0, 1);
+    public static final int MAX_AGE = 3;
+    public static final IntProperty AGE = IntProperty.of("age", 0, 3);
     protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 1.0, 16.0);
 
     public MonteCarloBlock(Settings settings) {
@@ -43,7 +43,7 @@ public class MonteCarloBlock extends PlantBlock implements Fertilizable {
     }
 
     public int getMaxAge() {
-        return 1;
+        return 3;
     }
 
     public int getAge(BlockState state) {
@@ -88,7 +88,7 @@ public class MonteCarloBlock extends PlantBlock implements Fertilizable {
     }
 
     protected int getGrowthAmount(World world) {
-        return MathHelper.nextInt(world.random, 0, 1);
+        return MathHelper.nextInt(world.random, 1, 2);
     }
 
     public void applyGrowth(World world, BlockPos pos, BlockState state) {

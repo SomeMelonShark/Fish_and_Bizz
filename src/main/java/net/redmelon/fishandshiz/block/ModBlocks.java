@@ -40,7 +40,7 @@ public class ModBlocks {
     public static final Block SEA_ANEMONE = Registry.register(Registries.BLOCK, new Identifier(FishAndShiz.MOD_ID, "sea_anemone"),
             new SeaAnemoneBlock(FabricBlockSettings.of().mapColor(MapColor.ORANGE).pistonBehavior(PistonBehavior.DESTROY).noCollision().breakInstantly().nonOpaque().sounds(BlockSoundGroup.WART_BLOCK)));
     public static final Block POWERED_PRISMARINE = registerBlock("powered_prismarine",
-            new PoweredPrismarineBlock(FabricBlockSettings.of().luminance(createLightLevelFromLitBlockState(15)).strength(0.3F).sounds(BlockSoundGroup.GLASS)));
+            new PoweredPrismarineBlock(FabricBlockSettings.of().mapColor(MapColor.LIGHT_BLUE).luminance(createLightLevelFromLitBlockState(15)).strength(0.3F).sounds(BlockSoundGroup.GLASS)));
     private static Block registerBlock(String name, Block block) {
         registerBlockItems(name, block);
         return Registry.register(Registries.BLOCK, new Identifier(FishAndShiz.MOD_ID, name), block);
