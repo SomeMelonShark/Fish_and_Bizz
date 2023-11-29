@@ -1,5 +1,6 @@
 package net.redmelon.fishandshiz.cclass.cmethods.goals;
 
+import net.minecraft.entity.ai.brain.task.LookTargetUtil;
 import net.minecraft.entity.ai.goal.WanderAroundGoal;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.registry.tag.FluidTags;
@@ -24,9 +25,11 @@ public class WaterWanderGoal extends WanderAroundGoal {
     @Override
     protected Vec3d getWanderTarget() {
         Vec3d target = super.getWanderTarget();
-        if(target != null && entity.getWorld().getFluidState(new BlockPos((int) target.x, (int) target.y, (int) target.z)).isIn(FluidTags.WATER))
+        if(target != null && !entity.isOnGround() && entity.getWorld().getFluidState(new BlockPos((int) target.x, (int) target.y, (int) target.z)).isIn(FluidTags.WATER)) {
             return target;
-        return null;
+        } else {
+            return LookTargetUtil.find(this.mob, 10, 7);
+        }
     }
 }
 

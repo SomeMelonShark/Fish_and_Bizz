@@ -47,6 +47,9 @@ public class ModItemGroup {
             entries.add(ModItems.MUD_CRAB_BUCKET);
             entries.add(ModItems.MUD_CRAB_LARVA_BUCKET);
             entries.add(ModItems.MUD_CRAB_EGG_BUCKET);
+            entries.add(ModItems.CRAYFISH_BUCKET);
+            entries.add(ModItems.CRAYFISH_LARVA_BUCKET);
+            entries.add(ModItems.CRAYFISH_EGG_BUCKET);
             entries.add(ModItems.RAINBOWFISH_BUCKET);
             entries.add(ModItems.RAINBOWFISH_FRY_BUCKET);
             entries.add(ModItems.RAINBOWFISH_EGG_BUCKET);
@@ -68,6 +71,7 @@ public class ModItemGroup {
             entries.add(ModItems.MILKFISH_SPAWN_EGG);
             entries.add(ModItems.LION_MANE_SPAWN_EGG);
             entries.add(ModItems.MUD_CRAB_SPAWN_EGG);
+            entries.add(ModItems.CRAYFISH_SPAWN_EGG);
             entries.add(ModItems.VOLCANO_SNAIL_SPAWN_EGG);
             entries.add(ModItems.GRAYLING_SPAWN_EGG);
         });

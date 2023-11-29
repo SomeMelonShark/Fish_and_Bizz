@@ -60,6 +60,9 @@ public class FishAndShizClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.MUD_CRAB, BasicSmallMiscRenderer.create("mud_crab"));
         EntityRendererRegistry.register(ModEntities.MUD_CRAB_LARVA, BasicSmallMiscRenderer.create("mud_crab_larva"));
         EntityRendererRegistry.register(ModEntities.MUD_CRAB_EGG, BasicSmallMiscRenderer.create("mud_crab_egg"));
+        EntityRendererRegistry.register(ModEntities.CRAYFISH, BasicMiscRenderer.create("crayfish"));
+        EntityRendererRegistry.register(ModEntities.CRAYFISH_LARVA, BasicSmallMiscRenderer.create("crayfish_larva"));
+        EntityRendererRegistry.register(ModEntities.CRAYFISH_EGG, BasicSmallMiscRenderer.create("mud_crab_egg"));
         EntityRendererRegistry.register(ModEntities.LION_MANE_JELLYFISH, BasicMiscRenderer.create("lion_mane"));
         EntityRendererRegistry.register(ModEntities.VOLCANO_SNAIL, BasicSmallMiscRenderer.create("volcano_snail"));
         EntityRendererRegistry.register(ModEntities.VOLCANO_SNAIL_EGG, BasicSmallMiscRenderer.create("volcano_snail_egg"));

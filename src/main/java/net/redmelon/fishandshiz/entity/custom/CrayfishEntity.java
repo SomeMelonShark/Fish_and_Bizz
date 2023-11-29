@@ -34,19 +34,18 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class MudCrabEntity extends AnimalWaterEntity implements GeoEntity {
+public class CrayfishEntity extends AnimalWaterEntity implements GeoEntity {
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
-    public MudCrabEntity(EntityType<? extends AnimalWaterEntity> entityType, World world) {
+    public CrayfishEntity(EntityType<? extends AnimalWaterEntity> entityType, World world) {
         super(entityType, world);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 8)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2f);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 2)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.1f);
     }
-
 
     protected void initGoals() {
         this.goalSelector.add(1, new EscapeDangerGoal(this, 2.0));
@@ -54,7 +53,6 @@ public class MudCrabEntity extends AnimalWaterEntity implements GeoEntity {
         this.goalSelector.add(3, new WaterWanderGoal(this, 3.5));
         this.goalSelector.add(4, new LandWanderFarGoal(this, 1.0));
         this.goalSelector.add(4, new LookAroundGoal(this));
-        this.goalSelector.add(6, new LookAtEntityGoal(this, MudCrabEntity.class, 6.0f));
     }
 
     @Override
@@ -77,19 +75,19 @@ public class MudCrabEntity extends AnimalWaterEntity implements GeoEntity {
     private PlayState genericFlopController(AnimationState animationState) {
         if (animationState.isMoving() && this.isOnGround()) {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mud_crab.walk", Animation.LoopType.LOOP));
+                    .then("animation.crayfish.walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else if (!animationState.isMoving() && this.isOnGround()) {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mud_crab.idle", Animation.LoopType.LOOP));
+                    .then("animation.crayfish.idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else if (this.isTouchingWater()){
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mud_crab.swim", Animation.LoopType.LOOP));
+                    .then("animation.crayfish.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mud_crab.idle", Animation.LoopType.LOOP));
+                    .then("animation.crayfish.idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
     }
@@ -99,10 +97,6 @@ public class MudCrabEntity extends AnimalWaterEntity implements GeoEntity {
         return stack.getItem() == Items.COD;
     }
 
-    @Override
-    public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return ModEntities.MUD_CRAB_EGG.create(getWorld());
-    }
     @Override
     protected SoundEvent getDeathSound() {
         return ModSounds.CRAB_DEATH;
@@ -121,7 +115,7 @@ public class MudCrabEntity extends AnimalWaterEntity implements GeoEntity {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-       controllers.add(new AnimationController<>(this, "controller", 2, this::genericFlopController));
+        controllers.add(new AnimationController<>(this, "controller", 2, this::genericFlopController));
     }
 
     @Override
@@ -131,12 +125,11 @@ public class MudCrabEntity extends AnimalWaterEntity implements GeoEntity {
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.MUD_CRAB_BUCKET);
+        return new ItemStack(ModItems.CRAYFISH_BUCKET);
     }
 
-    public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
-        int i = world.getSeaLevel();
-        int j = i - 2;
-        return pos.getY() >= j && pos.getY() <= i + 30;
+    @Override
+    public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+        return ModEntities.CRAYFISH_EGG.create(getWorld());
     }
 }

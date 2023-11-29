@@ -31,6 +31,8 @@ public class ModItems {
             new SpawnEggItem(ModEntities.GRAYLING, 0x617558, 0x1e2d27, new FabricItemSettings()));
     public static final Item MUD_CRAB_SPAWN_EGG = registerItem("mud_crab_spawn_egg",
             new SpawnEggItem(ModEntities.MUD_CRAB, 0x2f5553, 0xab5315, new FabricItemSettings()));
+    public static final Item CRAYFISH_SPAWN_EGG = registerItem("crayfish_spawn_egg",
+            new SpawnEggItem(ModEntities.CRAYFISH, 0xb41010, 0xc15b2f, new FabricItemSettings()));
     public static final Item LION_MANE_SPAWN_EGG = registerItem("lion_mane_spawn_egg",
             new SpawnEggItem(ModEntities.LION_MANE_JELLYFISH, 0xfc4b26, 0xeea663, new FabricItemSettings()));
     public static final Item VOLCANO_SNAIL_SPAWN_EGG = registerItem("volcano_snail_spawn_egg",
@@ -115,6 +117,12 @@ public class ModItems {
             new EntityBucketItem(ModEntities.MUD_CRAB_LARVA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
     public static final Item MUD_CRAB_EGG_BUCKET = registerItem("mud_crab_egg_bucket",
             new EntityBucketItem(ModEntities.MUD_CRAB_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
+    public static final Item CRAYFISH_BUCKET = registerItem("crayfish_bucket",
+            new EntityBucketItem(ModEntities.CRAYFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_POWDER_SNOW, new FabricItemSettings().maxCount(1)));
+    public static final Item CRAYFISH_LARVA_BUCKET = registerItem("crayfish_larva_bucket",
+            new EntityBucketItem(ModEntities.CRAYFISH_LARVA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
+    public static final Item CRAYFISH_EGG_BUCKET = registerItem("crayfish_egg_bucket",
+            new EntityBucketItem(ModEntities.CRAYFISH_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
     public static final Item VOLCANO_SNAIL_BUCKET = registerItem("volcano_snail_bucket",
             new EntityBucketItem(ModEntities.VOLCANO_SNAIL, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY, new FabricItemSettings().maxCount(1)));
     public static final Item MILKFISH = registerItem("milkfish",

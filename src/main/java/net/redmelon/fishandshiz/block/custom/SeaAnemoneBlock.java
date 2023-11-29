@@ -9,6 +9,7 @@ import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
@@ -16,6 +17,7 @@ import net.redmelon.fishandshiz.block.entity.SeaAnemoneBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class SeaAnemoneBlock extends BlockWithEntity implements FluidFillable {
+    protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 12.0, 14.0);
     public SeaAnemoneBlock(Settings settings) {
         super(settings);
     }
@@ -24,6 +26,10 @@ public class SeaAnemoneBlock extends BlockWithEntity implements FluidFillable {
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new SeaAnemoneBlockEntity(pos, state);
+    }
+
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return SHAPE;
     }
 
     @Override

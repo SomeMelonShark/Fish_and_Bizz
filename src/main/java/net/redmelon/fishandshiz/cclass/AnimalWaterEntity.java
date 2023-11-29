@@ -85,7 +85,7 @@ public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bu
         return SoundEvents.ITEM_BUCKET_FILL_FISH;
     }
 
-    protected boolean hasSelfControl() {
+    public boolean hasSelfControl() {
         return true;
     }
 
@@ -105,21 +105,6 @@ public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bu
         FishMoveControl(AnimalWaterEntity owner) {
             super(owner);
             this.fish = owner;
-        }
-    }
-
-    static class SwimToRandomPlaceGoal
-            extends SwimAroundGoal {
-        private final AnimalWaterEntity fish;
-
-        public SwimToRandomPlaceGoal(AnimalWaterEntity fish) {
-            super(fish, 1.0, 40);
-            this.fish = fish;
-        }
-
-        @Override
-        public boolean canStart() {
-            return this.fish.hasSelfControl() && super.canStart();
         }
     }
     /** merge with AnimalEntity**/
