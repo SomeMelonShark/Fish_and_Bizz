@@ -15,6 +15,7 @@ import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.custom.AngelfishEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabEntity;
 import net.redmelon.fishandshiz.entity.custom.VolcanoSnailEntity;
+import net.redmelon.fishandshiz.world.biome.ModBiomes;
 
 public class ModEntitySpawn {
     public static void addEntitySpawn() {

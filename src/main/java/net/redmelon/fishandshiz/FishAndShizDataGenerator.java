@@ -10,6 +10,7 @@ import net.redmelon.fishandshiz.data.ModRecipeGenerator;
 import net.redmelon.fishandshiz.data.ModWorldGenerator;
 import net.redmelon.fishandshiz.world.ModConfiguredFeatures;
 import net.redmelon.fishandshiz.world.ModPlacedFeatures;
+import net.redmelon.fishandshiz.world.biome.ModBiomes;
 
 public class FishAndShizDataGenerator implements DataGeneratorEntrypoint {
 	@Override
@@ -25,5 +26,6 @@ public class FishAndShizDataGenerator implements DataGeneratorEntrypoint {
 	public void buildRegistry(RegistryBuilder registryBuilder) {
 		registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, ModConfiguredFeatures::bootstrap);
 		registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, ModPlacedFeatures::bootstrap);
+		registryBuilder.addRegistry(RegistryKeys.BIOME, ModBiomes::bootstrap);
 	}
 }
