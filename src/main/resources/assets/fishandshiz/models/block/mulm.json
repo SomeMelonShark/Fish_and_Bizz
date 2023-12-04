@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "minecraft:block/dirt",
+    "side": "fishandshiz:block/mulm_side",
+    "top": "fishandshiz:block/mulm_top"
+  }
+}

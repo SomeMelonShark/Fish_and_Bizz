@@ -43,6 +43,9 @@
   "item.fishandshiz.mud_crab_bucket": "Bucket of Mud Crab",
   "item.fishandshiz.mud_crab_larva_bucket": "Bucket of Mud Crab Larva",
   "item.fishandshiz.mud_crab_egg_bucket": "Bucket of Mud Crab Eggs",
+  "item.fishandshiz.crayfish_bucket": "Bucket of Crayfish",
+  "item.fishandshiz.crayfish_larva_bucket": "Bucket of Crayfish Larva",
+  "item.fishandshiz.crayfish_egg_bucket": "Bucket of Crayfish Eggs",
   "item.fishandshiz.volcano_snail_bucket": "Bucket of Volcano Snail",
   "item.fishandshiz.milkfish": "Raw Milkfish",
   "item.fishandshiz.cooked_milkfish": "Cooked Milkfish",
@@ -59,6 +62,8 @@
   "item.fishandshiz.sea_anemone": "Sea Anemone",
 
   "block.fishandshiz.fishmeal_block": "Block of Fishmeal",
+  "block.fishandshiz.mulm": "Mulm",
+  "block.fishandshiz.powered_prismarine": "Powered Prismarine",
 
   "entity.minecraft.villager.aquarist": "Aquarist",
   "entity.fishandshiz.angelfish": "Angelfish",

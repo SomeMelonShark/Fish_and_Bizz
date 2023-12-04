@@ -94,6 +94,7 @@ public class ModItemGroup {
         });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(entries -> {
+            entries.add(ModBlocks.MULM);
             entries.add(ModItems.FANWORT);
             entries.add(ModItems.VALLISNERIA);
             entries.add(ModItems.MONTE_CARLO);

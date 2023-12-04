@@ -48,13 +48,13 @@ public class ModBiomes {
                         context.getRegistryLookup(RegistryKeys.CONFIGURED_CARVER));
 
         globalOverworldGeneration(biomeBuilder);
-        DefaultBiomeFeatures.addMossyRocks(biomeBuilder);
         DefaultBiomeFeatures.addDefaultOres(biomeBuilder);
+        DefaultBiomeFeatures.addDefaultDisks(biomeBuilder);
         DefaultBiomeFeatures.addJungleTrees(biomeBuilder);
 
         biomeBuilder.feature(GenerationStep.Feature.LAKES, ModPlacedFeatures.LAKE);
-        biomeBuilder.feature(GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.PLACED_FANWORT);
-        DefaultBiomeFeatures.addForestFlowers(biomeBuilder);
+        DefaultBiomeFeatures.addExtraDefaultFlowers(biomeBuilder);
+        DefaultBiomeFeatures.addJungleGrass(biomeBuilder);
         DefaultBiomeFeatures.addLargeFerns(biomeBuilder);
 
         DefaultBiomeFeatures.addDefaultMushrooms(biomeBuilder);
@@ -62,16 +62,15 @@ public class ModBiomes {
 
         return new Biome.Builder()
                 .precipitation(true)
-                .downfall(0.8f)
+                .downfall(0.9f)
                 .temperature(0.95f)
                 .generationSettings(biomeBuilder.build())
                 .spawnSettings(spawnBuilder.build())
                 .effects((new BiomeEffects.Builder())
-                        .waterColor(0x853419)
+                        .waterColor(0x381400)
                         .waterFogColor(0xfa7900)
                         .skyColor(0x22a1e6)
-                        .grassColor(0x2c3a17)
-                        .foliageColor(0x00c707)
+                        .grassColor(0x612200)
                         .fogColor(0x22a1e6)
                         .moodSound(BiomeMoodSound.CAVE)
                         .music(MusicType.createIngameMusic(SoundEvents.MUSIC_OVERWORLD_SPARSE_JUNGLE)).build())

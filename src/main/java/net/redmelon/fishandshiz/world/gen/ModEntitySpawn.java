@@ -19,25 +19,25 @@ import net.redmelon.fishandshiz.world.biome.ModBiomes;
 
 public class ModEntitySpawn {
     public static void addEntitySpawn() {
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE), SpawnGroup.WATER_AMBIENT,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, ModBiomes.JUNGLE_BASIN), SpawnGroup.WATER_AMBIENT,
                 ModEntities.ANGELFISH, 5, 2, 4);
 
         SpawnRestriction.register(ModEntities.ANGELFISH, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AngelfishEntity::canSpawn);
 
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE), SpawnGroup.WATER_AMBIENT,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, ModBiomes.JUNGLE_BASIN), SpawnGroup.WATER_AMBIENT,
                 ModEntities.ANGELFISH_FRY, 1, 4, 6);
 
         SpawnRestriction.register(ModEntities.ANGELFISH_FRY, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AngelfishEntity::canSpawn);
 
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE), SpawnGroup.WATER_AMBIENT,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, ModBiomes.JUNGLE_BASIN), SpawnGroup.WATER_AMBIENT,
                 ModEntities.ANGELFISH_EGG, 1, 1, 3);
 
         SpawnRestriction.register(ModEntities.ANGELFISH_EGG, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AngelfishEntity::canSpawn);
 
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE), SpawnGroup.WATER_AMBIENT,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, ModBiomes.JUNGLE_BASIN), SpawnGroup.WATER_AMBIENT,
                 ModEntities.NEON_TETRA, 6, 5, 9);
 
         SpawnRestriction.register(ModEntities.NEON_TETRA, SpawnRestriction.Location.IN_WATER,
@@ -55,7 +55,7 @@ public class ModEntitySpawn {
         SpawnRestriction.register(ModEntities.MILKFISH_EGG, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
 
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE), SpawnGroup.WATER_AMBIENT,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, ModBiomes.JUNGLE_BASIN), SpawnGroup.WATER_AMBIENT,
                 ModEntities.CORYDORAS, 4, 4, 8);
 
         SpawnRestriction.register(ModEntities.CORYDORAS, SpawnRestriction.Location.IN_WATER,

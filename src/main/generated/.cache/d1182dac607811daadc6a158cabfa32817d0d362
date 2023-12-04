@@ -1,4 +1,4 @@
-// 1.20	2023-12-02T12:10:26.7616648	Fish And Bizz/Model Definitions
+// 1.20	2023-12-04T14:11:22.16276	Fish And Bizz/Model Definitions
 d8b540cf639cf904e28427347f551be5641b7ed5 assets\fishandshiz\models\item\grayling_fry_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\fishandshiz\models\item\volcano_snail_spawn_egg.json
 5ff2fb6265271139db46c047cf7d5a6b4e222ca4 assets\fishandshiz\models\item\amur_carp_bucket.json
@@ -48,8 +48,8 @@ b91e335c29e51be1dcea07f88f96e85936150ee0 assets\fishandshiz\models\item\crayfish
 068bcbb96ac8a0e4e0a49e06df60ce5f7c1bc40e assets\fishandshiz\models\item\archerfish_bucket.json
 50758c98cd5185b7c6b35a0e4c00cfe309be9be4 assets\fishandshiz\models\item\angelfish_bucket.json
 6cf7be55572ee0fe832cf48637fa012f37d42f7b assets\fishandshiz\models\item\crayfish_egg_bucket.json
-0b831e5854897fdb2f3accdaaf99461f3709ab74 assets\fishandshiz\models\item\fish_food.json
 3668447c8ddc6e2851772e90529fb2098cfd2816 assets\fishandshiz\models\item\salmon_fry_bucket.json
+0b831e5854897fdb2f3accdaaf99461f3709ab74 assets\fishandshiz\models\item\fish_food.json
 ef83488e9fe7d49ef4669255a5a1f6d66e29aa48 assets\fishandshiz\models\item\fishmeal.json
 c5615f3fae8fdd40b37358739514688dc81fcfbf assets\fishandshiz\models\item\mud_crab_egg_bucket.json
 ace437785eb4f9e4137360612fd04357270d3e7f assets\fishandshiz\models\item\salmon_egg_bucket.json
@@ -58,8 +58,8 @@ a3de75ff45d46999325c0290f6ac1fec3af8ff92 assets\fishandshiz\models\item\corydora
 b09894ad6433f7972d2d450b8f19e8432545b478 assets\fishandshiz\models\item\cooked_milkfish.json
 70a08397f10ba012f21e86ef1d103fdbb2e98640 assets\fishandshiz\models\item\crayfish_bucket.json
 a88b87bf59c392b1175fccca2c816e3609c4cfb5 assets\fishandshiz\models\item\rainbowfish_fry_bucket.json
-c79781b6b81fb9ae643380334d4dbad876bc665c assets\fishandshiz\models\item\vallisneria.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\fishandshiz\models\item\milkfish_spawn_egg.json
+c79781b6b81fb9ae643380334d4dbad876bc665c assets\fishandshiz\models\item\vallisneria.json
 fc15396ce87ce5226b5ab5018adb17bc55a217b9 assets\fishandshiz\models\item\cooked_mud_crab.json
 3b4c0b48aecb88e4022504435073d8d90773e4c4 assets\fishandshiz\models\item\rainbowfish_bucket.json
 cd94a2c9964451d721a998a6bf5d9d2a0c0e9cb5 assets\fishandshiz\models\item\fishmeal_block.json

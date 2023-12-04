@@ -4,7 +4,10 @@
     "barrier": {
       "type": "minecraft:simple_state_provider",
       "state": {
-        "Name": "minecraft:dirt"
+        "Name": "fishandshiz:mulm",
+        "Properties": {
+          "snowy": "false"
+        }
       }
     },
     "fluid": {

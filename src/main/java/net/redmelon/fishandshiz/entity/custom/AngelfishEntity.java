@@ -37,6 +37,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
+import net.redmelon.fishandshiz.block.ModBlocks;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
@@ -45,6 +46,7 @@ import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
 import net.redmelon.fishandshiz.item.ModItems;
+import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -226,6 +228,8 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
             } else if (registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
                 variant = (AngelfishVariant.WILD1);
             } else if (registryEntry.matchesKey(BiomeKeys.JUNGLE)) {
+                variant = (AngelfishVariant.WILD1);
+            } else if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN)) {
                 variant = (AngelfishVariant.WILD1);
             } else {
                 variant = Util.getRandom(AngelfishVariant.values(), this.random);

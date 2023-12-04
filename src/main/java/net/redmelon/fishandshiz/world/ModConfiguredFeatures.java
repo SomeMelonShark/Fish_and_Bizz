@@ -23,7 +23,7 @@ public class ModConfiguredFeatures {
         ConfiguredFeatures.register(context, VALLISNERIA_KEY, ModFeatures.VALLISNERIA, new ProbabilityConfig(0.8F));
         register(context, LAKE, Feature.LAKE,
                 new LakeFeature.Config(BlockStateProvider.of(Blocks.WATER.getDefaultState()),
-                        BlockStateProvider.of(Blocks.DIRT.getDefaultState())));
+                        BlockStateProvider.of(ModBlocks.MULM.getDefaultState())));
     }
 
     public static void configuredFeatures() {

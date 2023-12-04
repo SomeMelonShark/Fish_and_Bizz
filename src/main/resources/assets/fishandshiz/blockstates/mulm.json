@@ -1,0 +1,24 @@
+{
+  "variants": {
+    "snowy=false": [
+      {
+        "model": "fishandshiz:block/mulm"
+      },
+      {
+        "model": "fishandshiz:block/mulm",
+        "y": 90
+      },
+      {
+        "model": "fishandshiz:block/mulm",
+        "y": 180
+      },
+      {
+        "model": "fishandshiz:block/mulm",
+        "y": 270
+      }
+    ],
+    "snowy=true": {
+      "model": "minecraft:block/grass_block_snow"
+    }
+  }
+}

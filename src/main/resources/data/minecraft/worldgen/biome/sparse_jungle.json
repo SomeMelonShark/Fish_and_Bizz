@@ -6,10 +6,9 @@
       "minecraft:canyon"
     ]
   },
-  "downfall": 0.9,
+  "downfall": 0.8,
   "effects": {
-    "fog_color": 2269670,
-    "grass_color": 6365696,
+    "fog_color": 12638463,
     "mood_sound": {
       "block_search_extent": 8,
       "offset": 2.0,
@@ -22,16 +21,15 @@
       "replace_current_music": false,
       "sound": "minecraft:music.overworld.sparse_jungle"
     },
-    "sky_color": 2269670,
-    "water_color": 3675136,
-    "water_fog_color": 16414976
+    "sky_color": 7842047,
+    "water_color": 3347456,
+    "water_fog_color": 13390336
   },
   "features": [
     [],
     [
       "minecraft:lake_lava_underground",
-      "minecraft:lake_lava_surface",
-      "fishandshiz:lake"
+      "minecraft:lake_lava_surface"
     ],
     [
       "minecraft:amethyst_geode"
@@ -79,14 +77,15 @@
     ],
     [
       "minecraft:glow_lichen",
-      "minecraft:trees_jungle",
+      "minecraft:trees_sparse_jungle",
       "minecraft:flower_warm",
       "minecraft:patch_grass_jungle",
-      "minecraft:patch_large_fern",
       "minecraft:brown_mushroom_normal",
       "minecraft:red_mushroom_normal",
       "minecraft:patch_sugar_cane",
-      "minecraft:patch_pumpkin"
+      "minecraft:patch_pumpkin",
+      "minecraft:vines",
+      "minecraft:patch_melon_sparse"
     ],
     [
       "minecraft:freeze_top_layer"
@@ -128,6 +127,12 @@
         "maxCount": 4,
         "minCount": 4,
         "weight": 8
+      },
+      {
+        "type": "minecraft:chicken",
+        "maxCount": 4,
+        "minCount": 4,
+        "weight": 10
       }
     ],
     "misc": [],
