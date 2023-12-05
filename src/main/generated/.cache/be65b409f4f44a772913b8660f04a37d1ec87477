@@ -1,4 +1,4 @@
-// 1.20	2023-12-04T14:11:22.1540999	Fish And Bizz/Recipes
+// 1.20	2023-12-05T13:42:13.2136765	Fish And Bizz/Recipes
 a54a815f74663212b341a486d6dabdc6bd3b0ddc data\fishandshiz\recipes\fishmeal_block.json
 34c617b8507cc21726a5c76c5a8b8ce36bdd4699 data\fishandshiz\advancements\recipes\misc\fishmeal_from_cooked_salmon.json
 9f2072e1c61663e425cfc85ffe5b540e4cad0ec0 data\fishandshiz\recipes\sushi_from_milkfish.json
@@ -11,6 +11,7 @@ cf5b0be9b80a6040387a51761dd8362767b54310 data\fishandshiz\advancements\recipes\m
 5d2866333026b9c0197acdfd4429a28f0d2e4764 data\fishandshiz\recipes\cornbread.json
 0e4433a9641ec44e852ba63ee5a50a48cf65542c data\fishandshiz\advancements\recipes\misc\fishmeal_from_cooked_cod.json
 9dc48d6a3604bdbc4d44593c4dfc8d4fcb46aae1 data\fishandshiz\advancements\recipes\food\corn_kernels_from_corn.json
+8dc49f3cbd66ad28091a555250cd2c8c5b62d548 data\fishandshiz\advancements\recipes\misc\dried_mulm_from_smelting_mulm.json
 3087e8300a1806d139371c0547094f7142eceea9 data\fishandshiz\advancements\recipes\misc\fishmeal.json
 33c60f5759b617f57bfe4adcb960d44eaeb726c0 data\fishandshiz\recipes\fish_food_from_cooked_mutton.json
 33cd939d67b3b4f5d612b7f309d5abddc126b366 data\fishandshiz\recipes\powered_prismarine.json
@@ -32,4 +33,5 @@ fd632d183386cb3829f31acfeaabe85376864ca1 data\fishandshiz\recipes\fish_food_from
 cdf66fa67f11bc7c479109b8b41452466ceccbc1 data\fishandshiz\advancements\recipes\food\cooked_milkfish_from_smelting_milkfish.json
 837b2687040edea34fdf7f9b1a97697991fab048 data\fishandshiz\recipes\fish_food_from_cooked_beef.json
 a8df15494ce2fb6d638f836a83640b86c2d757d3 data\fishandshiz\advancements\recipes\misc\sponge.json
+a89564d0b789c719151a23c4f88fa72bdb9cbce1 data\fishandshiz\recipes\dried_mulm_from_smelting_mulm.json
 2b0aa44e099d778baf1c75acf0603b269e960d3a data\fishandshiz\recipes\fishmeal.json

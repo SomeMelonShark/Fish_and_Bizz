@@ -23,6 +23,7 @@ public class ModItems {
 
     public static final Item FISHMEAL = registerItem("fishmeal", new Item(new FabricItemSettings()));
     public static final Item FISH_FOOD = registerItem("fish_food", new Item(new FabricItemSettings()));
+    public static final Item DRIED_MULM = registerItem("dried_mulm", new Item(new FabricItemSettings()));
     public static final Item ARCHERFISH_SPAWN_EGG = registerItem("archerfish_spawn_egg",
             new SpawnEggItem(ModEntities.ARCHERFISH, 0xcdcc9d, 0x504848, new FabricItemSettings()));
     public static final Item MILKFISH_SPAWN_EGG = registerItem("milkfish_spawn_egg",
@@ -45,6 +46,8 @@ public class ModItems {
             new AliasedBlockItem(ModBlocks.VALLISNERIA,new FabricItemSettings()));
     public static final Item MONTE_CARLO = registerItem("monte_carlo",
             new AliasedBlockItem(ModBlocks.MONTE_CARLO,new FabricItemSettings()));
+    public static final Item AMAZON_SWORD = registerItem("amazon_sword",
+            new AliasedBlockItem(ModBlocks.AMAZON_SWORD,new FabricItemSettings()));
     public static final Item ANGELFISH_BUCKET = registerItem("angelfish_bucket",
             new EntityBucketItem(ModEntities.ANGELFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item ANGELFISH_FRY_BUCKET = registerItem("angelfish_fry_bucket",
@@ -152,6 +155,7 @@ public class ModItems {
         registerCompostable(FANWORT, 0.3f);
         registerCompostable(VALLISNERIA, 0.3f);
         registerCompostable(MONTE_CARLO, 0.3f);
+        registerCompostable(DRIED_MULM, 1.0f);
 
     }
 

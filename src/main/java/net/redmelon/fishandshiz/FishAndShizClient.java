@@ -8,6 +8,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
 import net.redmelon.fishandshiz.block.ModBlocks;
 import net.redmelon.fishandshiz.block.entity.ModBlockEntities;
+import net.redmelon.fishandshiz.block.entity.client.AmazonSwordRenderer;
 import net.redmelon.fishandshiz.block.entity.client.SeaAnemoneRenderer;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.client.fish.renderer.*;
@@ -69,5 +70,6 @@ public class FishAndShizClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.CAPYBARA, BasicMiscRenderer.create("capybara"));
 
         BlockEntityRendererFactories.register(ModBlockEntities.SEA_ANEMONE_ENTITY, SeaAnemoneRenderer::new);
+        BlockEntityRendererFactories.register(ModBlockEntities.AMAZON_SWORD_ENTITY, AmazonSwordRenderer::new);
     }
 }

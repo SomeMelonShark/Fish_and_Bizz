@@ -1,0 +1,11 @@
+{
+  "textures": {
+    "particle": "fishandshiz:block/amazon_sword"
+  },
+  "credit": "Made with Blockbench",
+  "parent": "builtin/entity",
+  "texture_size": [
+    64,
+    64
+  ]
+}

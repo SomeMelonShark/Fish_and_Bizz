@@ -13,6 +13,7 @@ public class ModLootTableGenerator extends FabricBlockLootTableProvider {
     @Override
     public void generate() {
         addDrop(ModBlocks.FISHMEAL_BLOCK);
+        addDrop(ModBlocks.MULM);
 
         addDrop(ModBlocks.FANWORT, ModItems.FANWORT); {
             this.addDrop(ModBlocks.FANWORT, this.drops(ModItems.FANWORT));

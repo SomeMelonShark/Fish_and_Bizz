@@ -37,6 +37,7 @@ import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
 import net.redmelon.fishandshiz.item.ModItems;
+import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -186,6 +187,8 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
             } else if (registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)){
                 variant = (CorydorasVariant.BRONZE);
             } else if (registryEntry.isIn(TropicalSpawn.SPAWNS_TROPICAL)) {
+                variant = (CorydorasVariant.BRONZE);
+            } else if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN)){
                 variant = (CorydorasVariant.BRONZE);
             } else {
                 variant = Util.getRandom(CorydorasVariant.values(), this.random);

@@ -91,6 +91,7 @@ public class ModItemGroup {
             entries.add(ModItems.FISH_FOOD);
             entries.add(ModItems.FISHMEAL);
             entries.add(ModBlocks.FISHMEAL_BLOCK);
+            entries.add(ModItems.DRIED_MULM);
         });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(entries -> {
@@ -98,6 +99,7 @@ public class ModItemGroup {
             entries.add(ModItems.FANWORT);
             entries.add(ModItems.VALLISNERIA);
             entries.add(ModItems.MONTE_CARLO);
+            entries.add(ModItems.AMAZON_SWORD);
             entries.add(ModItems.CORN_KERNELS);
             entries.add(ModItems.SEA_ANEMONE);
         });

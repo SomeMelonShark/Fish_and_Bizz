@@ -39,6 +39,8 @@ public class ModBlocks {
             new TallVallisneriaBlock(FabricBlockSettings.copyOf(Blocks.SEAGRASS).noCollision().breakInstantly().sounds(BlockSoundGroup.WET_GRASS)));
     public static final Block CORN_CROP = registerBlockWithoutItem("corn_crop",
             new CornCropBlock(FabricBlockSettings.copyOf(Blocks.WHEAT)));
+    public static final Block AMAZON_SWORD = Registry.register(Registries.BLOCK, new Identifier(FishAndShiz.MOD_ID, "amazon_sword"),
+            new AmazonSwordBlock(FabricBlockSettings.of().mapColor(MapColor.GREEN).pistonBehavior(PistonBehavior.DESTROY).noCollision().breakInstantly().nonOpaque().sounds(BlockSoundGroup.WET_GRASS)));
     public static final Block SEA_ANEMONE = Registry.register(Registries.BLOCK, new Identifier(FishAndShiz.MOD_ID, "sea_anemone"),
             new SeaAnemoneBlock(FabricBlockSettings.of().mapColor(MapColor.ORANGE).pistonBehavior(PistonBehavior.DESTROY).noCollision().breakInstantly().nonOpaque().sounds(BlockSoundGroup.WART_BLOCK)));
     public static final Block POWERED_PRISMARINE = registerBlock("powered_prismarine",

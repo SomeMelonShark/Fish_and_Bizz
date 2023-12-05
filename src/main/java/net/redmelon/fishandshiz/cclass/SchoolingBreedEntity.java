@@ -1,12 +1,22 @@
 package net.redmelon.fishandshiz.cclass;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldAccess;
+import net.minecraft.world.biome.Biome;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
+import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -114,5 +124,13 @@ public abstract class SchoolingBreedEntity extends AnimalFishEntity {
         public BreedFishData(SchoolingBreedEntity leader) {
             this.leader = leader;
         }
+    }
+
+    public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
+        RegistryEntry<Biome> registryEntry = world.getBiome(pos);
+        registryEntry.isIn(TropicalSpawn.SPAWNS_TROPICAL);
+        int i = world.getSeaLevel();
+        int j = i - 2;
+        return pos.getY() >= j && pos.getY() <= i + 30 && world.getFluidState(pos.down()).isIn(FluidTags.WATER) && world.getBlockState(pos.up()).isOf(Blocks.WATER);
     }
 }
