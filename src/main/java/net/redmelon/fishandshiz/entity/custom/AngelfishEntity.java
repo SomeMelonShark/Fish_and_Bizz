@@ -234,6 +234,13 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
             } else {
                 variant = Util.getRandom(AngelfishVariant.values(), this.random);
             }
+        } else if (spawnReason == SpawnReason.CONVERSION) {
+            int i = random.nextInt(7);
+            if (i == 1) {
+                variant = Util.getRandom(AngelfishVariant.values(), this.random);
+            } else {
+                variant = (AngelfishVariant.WILD1);
+            }
         } else {
             variant = Util.getRandom(AngelfishVariant.values(), this.random);
         }

@@ -34,7 +34,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_FRY_AGE = Math.abs(-18000);
+    public static int MAX_FRY_AGE = Math.abs(-18);
     public static float WIDTH = 0.4f;
     public static float HEIGHT = 0.3f;
     private int fryAge;

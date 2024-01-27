@@ -35,13 +35,13 @@ public class AmazonSwordFeature extends Feature<DefaultFeatureConfig> {
             for (int l = 0; l <= k; ++l) {
                 if (structureWorldAccess.getBlockState(blockPos2).isOf(Blocks.WATER) && structureWorldAccess.getBlockState(blockPos2.up()).isOf(Blocks.WATER)) {
                     if (l == k) {
-                        structureWorldAccess.setBlockState(blockPos2, blockState.with(AmazonSwordBlock.AGE, random.nextInt(1)), Block.NOTIFY_LISTENERS);
+                        structureWorldAccess.setBlockState(blockPos2, blockState.with(AmazonSwordBlock.AGE, random.nextInt(2)), Block.NOTIFY_LISTENERS);
                         ++i;
                     } else if (l > 0) {
                         BlockPos blockPos3 = blockPos2.down();
                         if (!blockState.canPlaceAt(structureWorldAccess, blockPos3) || structureWorldAccess.getBlockState(blockPos3.down()).isOf(ModBlocks.AMAZON_SWORD))
                             break;
-                        structureWorldAccess.setBlockState(blockPos3, blockState.with(AmazonSwordBlock.AGE, random.nextInt(1)), Block.NOTIFY_LISTENERS);
+                        structureWorldAccess.setBlockState(blockPos3, blockState.with(AmazonSwordBlock.AGE, random.nextInt(2)), Block.NOTIFY_LISTENERS);
                         ++i;
                         break;
                     }

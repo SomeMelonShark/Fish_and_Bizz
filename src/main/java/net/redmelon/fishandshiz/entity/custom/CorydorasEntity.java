@@ -193,6 +193,14 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
             } else {
                 variant = Util.getRandom(CorydorasVariant.values(), this.random);
             }
+
+        } else if (spawnReason == SpawnReason.CONVERSION) {
+            int i = random.nextInt(7);
+            if (i == 1) {
+                variant = Util.getRandom(CorydorasVariant.values(), this.random);
+            } else {
+                variant = (CorydorasVariant.BRONZE);
+            }
         } else {
             variant = Util.getRandom(CorydorasVariant.values(), this.random);
         }

@@ -8,6 +8,7 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -22,8 +23,8 @@ import net.redmelon.fishandshiz.cclass.EntityPlantBlock;
 import org.jetbrains.annotations.Nullable;
 
 public class AmazonSwordBlock extends PlantBlock implements Fertilizable {
-    public static final int MAX_AGE = 1;
-    public static final IntProperty AGE = IntProperty.of("age", 0, 1);
+    public static final int MAX_AGE = 2;
+    public static final IntProperty AGE = IntProperty.of("age", 0, 2);
     protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 12.0, 14.0);
     public AmazonSwordBlock(Settings settings) {
         super(settings);
@@ -42,7 +43,7 @@ public class AmazonSwordBlock extends PlantBlock implements Fertilizable {
     }
 
     public int getMaxAge() {
-        return 1;
+        return 2;
     }
 
     public int getAge(BlockState state) {
@@ -55,6 +56,15 @@ public class AmazonSwordBlock extends PlantBlock implements Fertilizable {
 
     public final boolean isMature(BlockState blockState) {
         return this.getAge(blockState) >= this.getMaxAge();
+    }
+
+    public boolean hasRandomTicks(BlockState state) {
+        return !this.isMature(state);
+    }
+
+    @Override
+    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+        builder.add(AGE);
     }
 
     @Nullable
@@ -72,22 +82,13 @@ public class AmazonSwordBlock extends PlantBlock implements Fertilizable {
         return blockState;
     }
 
-    public FluidState getFluidState(BlockState state) {
-        return Fluids.WATER.getStill(false);
-    }
-
-    @Override
-    public BlockRenderType getRenderType(BlockState state) {
-        return BlockRenderType.MODEL;
-    }
-
     @Override
     public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
         return !this.isMature(state);
     }
 
     protected int getGrowthAmount(World world) {
-        return MathHelper.nextInt(world.random, 1, 1);
+        return MathHelper.nextInt(world.random, 1, 2);
     }
 
     public void applyGrowth(World world, BlockPos pos, BlockState state) {
@@ -97,15 +98,17 @@ public class AmazonSwordBlock extends PlantBlock implements Fertilizable {
             i = j;
         }
 
-        world.setBlockState(pos, this.withAge(i), Block.NOTIFY_LISTENERS);
+        world.setBlockState(pos, this.withAge(i), 2);
     }
 
-        @Override
+    public FluidState getFluidState(BlockState state) {
+        return Fluids.WATER.getStill(false);
+    }
+
+    @Override
     public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
         return true;
     }
-
-
 
     @Override
     public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {

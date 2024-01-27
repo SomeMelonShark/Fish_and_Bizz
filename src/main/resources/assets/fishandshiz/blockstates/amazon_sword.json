@@ -5,6 +5,9 @@
     },
     "age=1": {
       "model": "fishandshiz:block/amazon_sword"
+    },
+    "age=2": {
+      "model": "fishandshiz:block/amazon_sword"
     }
   }
 }

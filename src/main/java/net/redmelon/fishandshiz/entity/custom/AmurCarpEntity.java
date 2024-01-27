@@ -205,6 +205,15 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
             } else {
                 variant = Util.getRandom(AmurCarpVariant.values(), this.random);
             }
+
+        }
+        else if (spawnReason == SpawnReason.CONVERSION) {
+            int i = random.nextInt(7);
+            if (i == 1) {
+                variant = Util.getRandom(AmurCarpVariant.values(), this.random);
+            } else {
+                variant = (AmurCarpVariant.WILD);
+            }
         } else {
             variant = Util.getRandom(AmurCarpVariant.values(), this.random);
         }
