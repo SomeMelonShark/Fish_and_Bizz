@@ -26,7 +26,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_EGG_AGE = Math.abs(-12);
+    public static int MAX_EGG_AGE = Math.abs(-12000);
     private int eggAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
