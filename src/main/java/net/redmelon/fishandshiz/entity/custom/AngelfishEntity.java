@@ -14,6 +14,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.WaterCreatureEntity;
+import net.minecraft.entity.passive.HorseColor;
 import net.minecraft.entity.passive.TropicalFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -96,7 +97,22 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
 
     @Override
     public @Nullable AngelfishEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return ModEntities.ANGELFISH_EGG.create(getWorld());
+        AngelfishEntity angelfishEntity = (AngelfishEntity) var2;
+        AngelfishEggEntity angelfishEggEntity = (AngelfishEggEntity) ModEntities.ANGELFISH_EGG.create(var1);
+        if (angelfishEggEntity != null) {
+            int i = random.nextInt(4);
+            AngelfishVariant variant;
+            if (i < 2) {
+                variant = this.getVariant();
+            } else if (i > 2) {
+                variant = angelfishEntity.getVariant();
+            } else {
+                variant = (AngelfishVariant) Util.getRandom(AngelfishVariant.values(), this.random);
+            }
+
+            angelfishEggEntity.setVariant(variant);
+        }
+        return angelfishEggEntity;
     }
 
     @Override
