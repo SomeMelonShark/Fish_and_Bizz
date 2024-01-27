@@ -16,6 +16,9 @@ public class ModPlantGeneration {
         BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.SPARSE_JUNGLE, BiomeKeys.SWAMP, ModBiomes.JUNGLE_BASIN),
                 GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.PLACED_MONTE_CARLO);
 
+        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.SPARSE_JUNGLE, BiomeKeys.SWAMP, ModBiomes.JUNGLE_BASIN),
+                GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.PLACED_AMAZON_SWORD);
+
         BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.SWAMP, BiomeKeys.MANGROVE_SWAMP, BiomeKeys.BAMBOO_JUNGLE),
                 GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.PLACED_VALLISNERIA);
     }

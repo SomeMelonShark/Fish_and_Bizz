@@ -1,5 +1,10 @@
 {
   "variants": {
-    "": {"model": "fishandshiz:block/amazon_sword"}
+    "age=0": {
+      "model": "fishandshiz:block/amazon_sword"
+    },
+    "age=1": {
+      "model": "fishandshiz:block/amazon_sword"
+    }
   }
 }

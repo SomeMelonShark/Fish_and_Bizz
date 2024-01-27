@@ -8,36 +8,53 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import net.redmelon.fishandshiz.block.entity.AmazonSwordBlockEntity;
 import net.redmelon.fishandshiz.cclass.EntityPlantBlock;
 import org.jetbrains.annotations.Nullable;
 
-public class AmazonSwordBlock extends EntityPlantBlock implements FluidFillable, Fertilizable {
+public class AmazonSwordBlock extends PlantBlock implements Fertilizable {
+    public static final int MAX_AGE = 1;
+    public static final IntProperty AGE = IntProperty.of("age", 0, 1);
     protected static final VoxelShape SHAPE = Block.createCuboidShape(2.0, 0.0, 2.0, 14.0, 12.0, 14.0);
     public AmazonSwordBlock(Settings settings) {
         super(settings);
     }
 
-    @Nullable
-    @Override
-    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
-        return new AmazonSwordBlockEntity(pos, state);
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return SHAPE;
     }
 
     protected boolean canPlantOnTop(BlockState floor, BlockView world, BlockPos pos) {
         return floor.isSideSolidFullSquare(world, pos, Direction.UP) && !floor.isOf(Blocks.MAGMA_BLOCK);
     }
 
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return SHAPE;
+    public IntProperty getAgeProperty() {
+        return AGE;
+    }
+
+    public int getMaxAge() {
+        return 1;
+    }
+
+    public int getAge(BlockState state) {
+        return (Integer)state.get(this.getAgeProperty());
+    }
+
+    public BlockState withAge(int age) {
+        return (BlockState)this.getDefaultState().with(this.getAgeProperty(), age);
+    }
+
+    public final boolean isMature(BlockState blockState) {
+        return this.getAge(blockState) >= this.getMaxAge();
     }
 
     @Nullable
@@ -66,17 +83,33 @@ public class AmazonSwordBlock extends EntityPlantBlock implements FluidFillable,
 
     @Override
     public boolean isFertilizable(WorldView world, BlockPos pos, BlockState state, boolean isClient) {
-        return false;
+        return !this.isMature(state);
     }
 
-    @Override
-    public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
-        return false;
+    protected int getGrowthAmount(World world) {
+        return MathHelper.nextInt(world.random, 1, 1);
     }
+
+    public void applyGrowth(World world, BlockPos pos, BlockState state) {
+        int i = this.getAge(state) + this.getGrowthAmount(world);
+        int j = this.getMaxAge();
+        if (i > j) {
+            i = j;
+        }
+
+        world.setBlockState(pos, this.withAge(i), Block.NOTIFY_LISTENERS);
+    }
+
+        @Override
+    public boolean canGrow(World world, Random random, BlockPos pos, BlockState state) {
+        return true;
+    }
+
+
 
     @Override
     public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-
+        this.applyGrowth(world, pos, state);
     }
 
     public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {

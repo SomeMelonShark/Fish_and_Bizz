@@ -9,7 +9,6 @@ import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.block.ModBlocks;
 
 public class ModBlockEntities {
-    public static BlockEntityType<AmazonSwordBlockEntity> AMAZON_SWORD_ENTITY;
     public static BlockEntityType<SeaAnemoneBlockEntity> SEA_ANEMONE_ENTITY;
 
     public static void registerAllBlockEntities() {
@@ -17,10 +16,5 @@ public class ModBlockEntities {
                 new Identifier(FishAndShiz.MOD_ID, "sea_anemone"),
                 FabricBlockEntityTypeBuilder.create(SeaAnemoneBlockEntity::new,
                         ModBlocks.SEA_ANEMONE).build());
-
-        AMAZON_SWORD_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,
-                new Identifier(FishAndShiz.MOD_ID, "amazon_sword"),
-                FabricBlockEntityTypeBuilder.create(AmazonSwordBlockEntity::new,
-                        ModBlocks.AMAZON_SWORD).build());
     }
 }

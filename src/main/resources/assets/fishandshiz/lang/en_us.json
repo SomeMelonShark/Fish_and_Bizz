@@ -58,12 +58,14 @@
   "item.fishandshiz.grayling_spawn_egg": "Grayling Spawn Egg",
   "item.fishandshiz.capybara_spawn_egg": "Capybara Spawn Egg",
   "item.fishandshiz.mud_crab_spawn_egg": "Mud Crab Spawn Egg",
+  "item.fishandshiz.crayfish_spawn_egg": "Crayfish Spawn Egg",
   "item.fishandshiz.lion_mane_spawn_egg": "Lion's Mane Jellyfish Spawn Egg",
   "item.fishandshiz.volcano_snail_spawn_egg": "Volcano Snail Spawn Egg",
   "item.fishandshiz.sea_anemone": "Sea Anemone",
 
   "block.fishandshiz.fishmeal_block": "Block of Fishmeal",
   "block.fishandshiz.mulm": "Mulm",
+  "block.fishandshiz.amazon_sword": "Amazon Sword",
   "block.fishandshiz.powered_prismarine": "Powered Prismarine",
 
   "entity.minecraft.villager.aquarist": "Aquarist",

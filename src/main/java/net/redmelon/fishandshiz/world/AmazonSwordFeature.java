@@ -12,11 +12,11 @@ import net.minecraft.world.gen.feature.DefaultFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 import net.redmelon.fishandshiz.block.ModBlocks;
-import net.redmelon.fishandshiz.block.custom.FanwortBlock;
+import net.redmelon.fishandshiz.block.custom.AmazonSwordBlock;
 import net.redmelon.fishandshiz.block.custom.MonteCarloBlock;
 
-public class MonteCarloFeature extends Feature<DefaultFeatureConfig> {
-    public MonteCarloFeature(Codec<DefaultFeatureConfig> codec) {
+public class AmazonSwordFeature extends Feature<DefaultFeatureConfig> {
+    public AmazonSwordFeature(Codec<DefaultFeatureConfig> codec) {
         super(codec);
     }
 
@@ -30,18 +30,18 @@ public class MonteCarloFeature extends Feature<DefaultFeatureConfig> {
 
         BlockPos blockPos2 = new BlockPos(blockPos.getX(), j, blockPos.getZ());
         if (structureWorldAccess.getBlockState(blockPos2).isOf(Blocks.WATER)) {
-            BlockState blockState = ModBlocks.MONTE_CARLO.getDefaultState();
+            BlockState blockState = ModBlocks.AMAZON_SWORD.getDefaultState();
             int k = 1 + random.nextInt(10);
             for (int l = 0; l <= k; ++l) {
                 if (structureWorldAccess.getBlockState(blockPos2).isOf(Blocks.WATER) && structureWorldAccess.getBlockState(blockPos2.up()).isOf(Blocks.WATER)) {
                     if (l == k) {
-                        structureWorldAccess.setBlockState(blockPos2, blockState.with(MonteCarloBlock.AGE, random.nextInt(3)), Block.NOTIFY_LISTENERS);
+                        structureWorldAccess.setBlockState(blockPos2, blockState.with(AmazonSwordBlock.AGE, random.nextInt(1)), Block.NOTIFY_LISTENERS);
                         ++i;
                     } else if (l > 0) {
                         BlockPos blockPos3 = blockPos2.down();
-                        if (!blockState.canPlaceAt(structureWorldAccess, blockPos3) || structureWorldAccess.getBlockState(blockPos3.down()).isOf(ModBlocks.MONTE_CARLO))
+                        if (!blockState.canPlaceAt(structureWorldAccess, blockPos3) || structureWorldAccess.getBlockState(blockPos3.down()).isOf(ModBlocks.AMAZON_SWORD))
                             break;
-                        structureWorldAccess.setBlockState(blockPos3, blockState.with(MonteCarloBlock.AGE, random.nextInt(3)), Block.NOTIFY_LISTENERS);
+                        structureWorldAccess.setBlockState(blockPos3, blockState.with(AmazonSwordBlock.AGE, random.nextInt(1)), Block.NOTIFY_LISTENERS);
                         ++i;
                         break;
                     }

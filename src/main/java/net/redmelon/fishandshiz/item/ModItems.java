@@ -1,7 +1,6 @@
 package net.redmelon.fishandshiz.item;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.*;
@@ -15,8 +14,6 @@ import net.redmelon.fishandshiz.entity.ModEntities;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import static net.fabricmc.fabric.api.registry.VillagerInteractionRegistries.registerCompostable;
 
 public class ModItems {
     private static final Map<Item, Identifier> ITEMS = new LinkedHashMap<>();
@@ -47,7 +44,7 @@ public class ModItems {
     public static final Item MONTE_CARLO = registerItem("monte_carlo",
             new AliasedBlockItem(ModBlocks.MONTE_CARLO,new FabricItemSettings()));
     public static final Item AMAZON_SWORD = registerItem("amazon_sword",
-            new AliasedBlockItem(ModBlocks.AMAZON_SWORD,new FabricItemSettings()));
+            new AliasedBlockItem(ModBlocks.AMAZON_SWORD, new FabricItemSettings()));
     public static final Item ANGELFISH_BUCKET = registerItem("angelfish_bucket",
             new EntityBucketItem(ModEntities.ANGELFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item ANGELFISH_FRY_BUCKET = registerItem("angelfish_fry_bucket",
