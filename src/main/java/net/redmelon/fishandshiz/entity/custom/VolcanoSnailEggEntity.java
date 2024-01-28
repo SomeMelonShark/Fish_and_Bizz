@@ -143,7 +143,7 @@ public class VolcanoSnailEggEntity extends VolcanoSnailEntity implements GeoEnti
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.RAINBOWFISH_EGG_BUCKET);
+        return new ItemStack(ModItems.VOLCANO_SNAIL_EGG_BUCKET);
     }
 
     @Override

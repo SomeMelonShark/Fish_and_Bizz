@@ -63,6 +63,7 @@ public class ModItemGroup {
             entries.add(ModItems.GRAYLING_FRY_BUCKET);
             entries.add(ModItems.GRAYLING_EGG_BUCKET);
             entries.add(ModItems.VOLCANO_SNAIL_BUCKET);
+            entries.add(ModItems.VOLCANO_SNAIL_EGG_BUCKET);
         });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(entries -> {

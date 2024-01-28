@@ -2,6 +2,7 @@ package net.redmelon.fishandshiz.entity.custom;
 
 import com.google.common.annotations.VisibleForTesting;
 import net.minecraft.entity.Bucketable;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.control.MoveControl;
@@ -10,14 +11,23 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Util;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.entity.ModEntities;
+import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
 import net.redmelon.fishandshiz.item.ModItems;
+import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -32,7 +42,7 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public AngelfishEggEntity(EntityType<? extends AngelfishEntity> entityType, World world) {
         super(entityType, world);
-        this.moveControl = new AngelfishEggEntity.FishMoveControl(this);
+        this.moveControl = new FishMoveControl(this);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -69,8 +79,15 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
         super.readCustomDataFromNbt(nbt);
         this.setEggAge(nbt.getInt("Age"));
     }
+
+    @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+    }
+
     @Override
     public void copyDataToStack(ItemStack stack) {
+        super.copyDataToStack(stack);
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
         nbtCompound.putInt("Age", this.getEggAge());
@@ -96,32 +113,70 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
     }
 
     @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
+                                 @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
+        RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
+        AngelfishVariant variant;
+
+        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
+            this.setAngelfishVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
+            return entityData;
+        }
+
+        if (spawnReason == SpawnReason.NATURAL) {
+            if (registryEntry.matchesKey(BiomeKeys.RIVER)) {
+                variant = (AngelfishVariant.WILD1);
+            } else if (registryEntry.isIn(TropicalSpawn.SPAWNS_TROPICAL)) {
+                variant = (AngelfishVariant.WILD1);
+            } else if (registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
+                variant = (AngelfishVariant.WILD1);
+            } else if (registryEntry.matchesKey(BiomeKeys.JUNGLE)) {
+                variant = (AngelfishVariant.WILD1);
+            } else if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN)) {
+                variant = (AngelfishVariant.WILD1);
+            } else {
+                variant = Util.getRandom(AngelfishVariant.values(), this.random);
+            }
+        } else {
+            variant = Util.getRandom(AngelfishVariant.values(), this.random);
+        }
+
+        setVariant(variant);
+        entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        this.setAngelfishVariant(variant.getId());
+        return entityData;
+    }
+
+    @Override
     public boolean isBreedingItem(ItemStack stack) {
         return false;
     }
 
 
     private void growUp() {
+        AngelfishVariant variant;
         World world = this.getWorld();
         int i = random.nextBetweenExclusive(2, 8);
         for (int j = 1; j <= i; ++j)
-           if (world instanceof ServerWorld) {
-            ServerWorld serverWorld = (ServerWorld)world;
-            AngelfishFryEntity nextEntity = ModEntities.ANGELFISH_FRY.create(this.getWorld());
-            if (nextEntity != null) {
-                nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
-                nextEntity.setAiDisabled(this.isAiDisabled());
-                if (this.hasCustomName()) {
-                    nextEntity.setCustomName(this.getCustomName());
-                    nextEntity.setCustomNameVisible(this.isCustomNameVisible());
+            if (world instanceof ServerWorld) {
+               variant = this.getVariant();
+                ServerWorld serverWorld = (ServerWorld)world;
+                AngelfishFryEntity nextEntity = ModEntities.ANGELFISH_FRY.create(this.getWorld());
+                if (nextEntity != null) {
+                    nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                    nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    nextEntity.setAiDisabled(this.isAiDisabled());
+                    if (this.hasCustomName()) {
+                        nextEntity.setCustomName(this.getCustomName());
+                        nextEntity.setCustomNameVisible(this.isCustomNameVisible());
+                    }
+                    nextEntity.setPersistent();
+                    nextEntity.setVariant(variant);
+                    this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
+                    serverWorld.spawnEntityAndPassengers(nextEntity);
+                    this.discard();
                 }
-                nextEntity.setPersistent();
-                this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
-                serverWorld.spawnEntityAndPassengers(nextEntity);
-                this.discard();
-            }
-        }
+           }
     }
 
     private int getTicksUntilGrowth() {

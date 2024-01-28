@@ -250,6 +250,9 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
             } else {
                 variant = Util.getRandom(AngelfishVariant.values(), this.random);
             }
+        } else if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
+            this.setAngelfishVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
+            return entityData;
         } else if (spawnReason == SpawnReason.CONVERSION) {
             int i = random.nextInt(7);
             if (i == 1) {
@@ -285,7 +288,7 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
         this.dataTracker.set(VARIANT, variant.getId() & 255);
     }
 
-    private void setAngelfishVariant(int variant) {
+    protected void setAngelfishVariant(int variant) {
         this.dataTracker.set(VARIANT, variant);
     }
 }

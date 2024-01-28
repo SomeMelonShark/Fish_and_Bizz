@@ -90,8 +90,23 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
     }
 
     @Override
-    public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return ModEntities.CORYDORAS_EGG.create(getWorld());
+    public @Nullable CorydorasEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+        CorydorasEntity corydorasEntity = (CorydorasEntity) var2;
+        CorydorasEggEntity corydorasEggEntity = (CorydorasEggEntity) ModEntities.CORYDORAS_EGG.create(var1);
+        if (corydorasEggEntity != null) {
+            int i = random.nextInt(4);
+            CorydorasVariant variant;
+            if (i < 2) {
+                variant = this.getVariant();
+            } else if (i > 2) {
+                variant = corydorasEntity.getVariant();
+            } else {
+                variant = (CorydorasVariant) Util.getRandom(CorydorasVariant.values(), this.random);
+            }
+
+            corydorasEggEntity.setVariant(variant);
+        }
+        return corydorasEggEntity;
     }
 
     @Override
@@ -194,6 +209,9 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
                 variant = Util.getRandom(CorydorasVariant.values(), this.random);
             }
 
+        } else if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
+            this.setCorydorasVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
+            return entityData;
         } else if (spawnReason == SpawnReason.CONVERSION) {
             int i = random.nextInt(7);
             if (i == 1) {
@@ -229,7 +247,7 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
         this.dataTracker.set(VARIANT, variant.getId() & 255);
     }
 
-    private void setCorydorasVariant(int variant) {
+    protected void setCorydorasVariant(int variant) {
         this.dataTracker.set(VARIANT, variant);
     }
 

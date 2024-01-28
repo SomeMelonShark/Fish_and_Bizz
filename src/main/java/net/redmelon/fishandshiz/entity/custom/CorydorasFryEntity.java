@@ -1,6 +1,7 @@
 package net.redmelon.fishandshiz.entity.custom;
 
 import net.minecraft.entity.Bucketable;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
@@ -12,20 +13,30 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Util;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
+import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
 import net.redmelon.fishandshiz.item.ModItems;
+import net.redmelon.fishandshiz.world.biome.ModBiomes;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -93,6 +104,7 @@ public class CorydorasFryEntity extends CorydorasEntity implements GeoEntity {
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
+        super.copyDataToStack(stack);
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
         nbtCompound.putInt("Age", this.getFryAge());
@@ -128,6 +140,41 @@ public class CorydorasFryEntity extends CorydorasEntity implements GeoEntity {
         }
     }
 
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
+                                 @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
+        RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
+        CorydorasVariant variant;
+
+        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
+            this.setCorydorasVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
+            return entityData;
+        }
+
+        if (spawnReason == SpawnReason.NATURAL) {
+            if (registryEntry.matchesKey(BiomeKeys.RIVER)) {
+                variant = (CorydorasVariant.BRONZE);
+            } else if (registryEntry.isIn(TropicalSpawn.SPAWNS_TROPICAL)) {
+                variant = (CorydorasVariant.BRONZE);
+            } else if (registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
+                variant = (CorydorasVariant.BRONZE);
+            } else if (registryEntry.matchesKey(BiomeKeys.JUNGLE)) {
+                variant = (CorydorasVariant.BRONZE);
+            } else if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN)) {
+                variant = (CorydorasVariant.BRONZE);
+            } else {
+                variant = Util.getRandom(CorydorasVariant.values(), this.random);
+            }
+        } else {
+            variant = Util.getRandom(CorydorasVariant.values(), this.random);
+        }
+
+        setVariant(variant);
+        entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        this.setCorydorasVariant(variant.getId());
+        return entityData;
+    }
+
     private int getFryAge() {
         return this.fryAge;
     }
@@ -142,8 +189,10 @@ public class CorydorasFryEntity extends CorydorasEntity implements GeoEntity {
     }
 
     private void growUp() {
+        CorydorasVariant variant;
         World world = this.getWorld();
         if (world instanceof ServerWorld) {
+            variant = this.getVariant();
             ServerWorld serverWorld = (ServerWorld)world;
             CorydorasEntity nextEntity = ModEntities.CORYDORAS.create(this.getWorld());
             if (nextEntity != null) {
@@ -155,6 +204,7 @@ public class CorydorasFryEntity extends CorydorasEntity implements GeoEntity {
                     nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                 }
                 nextEntity.setPersistent();
+                nextEntity.setVariant(variant);
                 this.playSound(SoundEvents.ENTITY_TROPICAL_FISH_FLOP, 0.15f, 1.0f);
                 serverWorld.spawnEntityAndPassengers(nextEntity);
                 this.discard();
@@ -188,7 +238,7 @@ public class CorydorasFryEntity extends CorydorasEntity implements GeoEntity {
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.MILKFISH_FRY_BUCKET);
+        return new ItemStack(ModItems.CORYDORAS_FRY_BUCKET);
     }
 
     @Override

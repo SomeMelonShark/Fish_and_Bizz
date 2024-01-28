@@ -1,4 +1,4 @@
-// 1.20	2024-01-27T11:27:52.6517788	Fish And Bizz/Model Definitions
+// 1.20	2024-01-28T18:58:45.6974391	Fish And Bizz/Model Definitions
 1041d05ad8924f97bd079c381072aed11ab4756c assets\fishandshiz\models\item\dried_mulm.json
 d8b540cf639cf904e28427347f551be5641b7ed5 assets\fishandshiz\models\item\grayling_fry_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\fishandshiz\models\item\volcano_snail_spawn_egg.json
@@ -25,18 +25,19 @@ f1088db1bc8ac1343a9f9027f8032f797d46558a assets\fishandshiz\models\item\oscar_fr
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\fishandshiz\models\item\lion_mane_spawn_egg.json
 61b5ce68c4a25d6ebe2b1e15772c9e5d08127049 assets\fishandshiz\models\item\volcano_snail_bucket.json
 6229bde7bb6df683dcee06cc77ae0f76f2ca69ac assets\fishandshiz\models\item\mud_crab.json
-c8bec21b9fe47e3032970c06757d03643b66d00c assets\fishandshiz\models\item\fanwort.json
 01804f620ffad523f73d230bfbaa4175b4dc4b7b assets\fishandshiz\models\item\angelfish_egg_bucket.json
+c8bec21b9fe47e3032970c06757d03643b66d00c assets\fishandshiz\models\item\fanwort.json
 8a515660f4def2c7db7c36c0245f61070f2b6322 assets\fishandshiz\models\item\grayling_egg_bucket.json
 2d19081026ec37d117241bb97e03e23af85f16f6 assets\fishandshiz\models\item\neon_tetra_bucket.json
-99746812746b95bba7386ea03dd979463cc2d31f assets\fishandshiz\models\item\corydoras_egg_bucket.json
 bf95c57bb030dfb738e07100fd4d86abdfeb1a27 assets\fishandshiz\models\item\milkfish.json
+99746812746b95bba7386ea03dd979463cc2d31f assets\fishandshiz\models\item\corydoras_egg_bucket.json
 5c61644b38f37cda1312b211352efcbb85de41d6 assets\fishandshiz\models\item\clownfish_egg_bucket.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\fishandshiz\models\item\grayling_spawn_egg.json
 10e94c0df36c0762f4e91d64887786947252b40c assets\fishandshiz\models\item\sushi.json
 135ff5382daa5a44cfe30c8068571dfb7b114c1e assets\fishandshiz\models\item\amur_carp_egg_bucket.json
 5adfab40194f2b6c0b3ed456d248d0f2284eeb35 assets\fishandshiz\blockstates\fanwort.json
 889cbc4ba955bcc30bc725fca902fe0f0edf5101 assets\fishandshiz\models\item\neon_tetra_egg_bucket.json
+99cd8b5429f5756837a4fffa1139dcbfb55c5215 assets\fishandshiz\models\item\volcano_snail_egg_bucket.json
 19f78dd6aace6a7cae8f0dfe007121b8f3db0a6f assets\fishandshiz\models\item\corydoras_bucket.json
 faa5ab9075c1857fa561091adb8b660778565e0e assets\fishandshiz\models\item\angelfish_fry_bucket.json
 4bf68b419f15241a2e55495b394dcc926c558929 assets\fishandshiz\models\block\fanwort.json

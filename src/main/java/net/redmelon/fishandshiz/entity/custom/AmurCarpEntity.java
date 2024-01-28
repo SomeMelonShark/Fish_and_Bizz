@@ -83,8 +83,23 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
     }
 
     @Override
-    public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return ModEntities.AMUR_CARP_EGG.create(getWorld());
+    public @Nullable AmurCarpEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+        AmurCarpEntity amurCarpEntity = (AmurCarpEntity) var2;
+        AmurCarpEggEntity amurCarpEggEntity = (AmurCarpEggEntity) ModEntities.AMUR_CARP_EGG.create(var1);
+        if (amurCarpEggEntity != null) {
+            int i = random.nextInt(4);
+            AmurCarpVariant variant;
+            if (i < 2) {
+                variant = this.getVariant();
+            } else if (i > 2) {
+                variant = amurCarpEggEntity.getVariant();
+            } else {
+                variant = (AmurCarpVariant) Util.getRandom(AmurCarpVariant.values(), this.random);
+            }
+
+            amurCarpEggEntity.setVariant(variant);
+        }
+        return amurCarpEggEntity;
     }
 
     @Override
@@ -206,8 +221,10 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
                 variant = Util.getRandom(AmurCarpVariant.values(), this.random);
             }
 
-        }
-        else if (spawnReason == SpawnReason.CONVERSION) {
+        } else if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
+            this.setAmurCarpVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
+            return entityData;
+        }else if (spawnReason == SpawnReason.CONVERSION) {
             int i = random.nextInt(7);
             if (i == 1) {
                 variant = Util.getRandom(AmurCarpVariant.values(), this.random);
@@ -242,7 +259,7 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
         this.dataTracker.set(VARIANT, variant.getId() & 255);
     }
 
-    private void setAmurCarpVariant(int variant) {
+    protected void setAmurCarpVariant(int variant) {
         this.dataTracker.set(VARIANT, variant);
     }
 }
