@@ -41,6 +41,9 @@
   "item.fishandshiz.amur_carp_bucket": "Bucket of Amur Carp",
   "item.fishandshiz.amur_carp_fry_bucket": "Bucket of Amur Carp Fry",
   "item.fishandshiz.amur_carp_egg_bucket": "Bucket of Amur Carp Eggs",
+  "item.fishandshiz.betta_bucket": "Bucket of Betta",
+  "item.fishandshiz.betta_fry_bucket": "Bucket of Betta Fry",
+  "item.fishandshiz.betta_egg_bucket": "Bucket of Betta Eggs",
   "item.fishandshiz.archerfish_bucket": "Bucket of Archerfish",
   "item.fishandshiz.mud_crab_bucket": "Bucket of Mud Crab",
   "item.fishandshiz.mud_crab_larva_bucket": "Bucket of Mud Crab Larva",
@@ -108,6 +111,9 @@
   "entity.fishandshiz.amur_carp": "Amur Carp",
   "entity.fishandshiz.amur_carp_fry": "Amur Carp Fry",
   "entity.fishandshiz.amur_carp_egg": "Amur Carp Eggs",
+  "entity.fishandshiz.betta": "Betta",
+  "entity.fishandshiz.betta_fry": "Betta Fry",
+  "entity.fishandshiz.betta_egg": "Betta Eggs",
   "entity.fishandshiz.capybara": "Capybara",
   "entity.fishandshiz.salmon_fry": "Salmon Fry",
   "entity.fishandshiz.salmon_egg": "Salmon Eggs",
@@ -144,5 +150,10 @@
   "entity.fishandshiz.amur_carp.type.CREAM1": "Cream Type",
   "entity.fishandshiz.amur_carp.type.CREAM2": "Red Cream Type",
   "entity.fishandshiz.amur_carp.type.CREAM3": "Red and Black Cream Type",
-  "entity.fishandshiz.amur_carp.type.CREAM4": "Black Cream Type"
+  "entity.fishandshiz.amur_carp.type.CREAM4": "Black Cream Type",
+  "entity.fishandshiz.betta.type.WILD1": "Swamp Wild Type",
+  "entity.fishandshiz.betta.type.WILD2": "Plains Wild Type",
+  "entity.fishandshiz.betta.type.VEIL1": "Red Veil Type",
+  "entity.fishandshiz.betta.type.VEIL2": "Blue Veil Type",
+  "entity.fishandshiz.betta.type.FAN1": "White Fan Type"
 }

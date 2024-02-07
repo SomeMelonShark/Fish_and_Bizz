@@ -59,6 +59,9 @@ public class ModItemGroup {
             entries.add(ModItems.AMUR_CARP_BUCKET);
             entries.add(ModItems.AMUR_CARP_FRY_BUCKET);
             entries.add(ModItems.AMUR_CARP_EGG_BUCKET);
+            entries.add(ModItems.BETTA_BUCKET);
+            entries.add(ModItems.BETTA_FRY_BUCKET);
+            entries.add(ModItems.BETTA_EGG_BUCKET);
             entries.add(ModItems.GRAYLING_BUCKET);
             entries.add(ModItems.GRAYLING_FRY_BUCKET);
             entries.add(ModItems.GRAYLING_EGG_BUCKET);

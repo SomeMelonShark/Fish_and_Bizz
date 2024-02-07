@@ -120,9 +120,15 @@ public class ModEntitySpawn {
 
         // Clownfish Spawns
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN), SpawnGroup.WATER_AMBIENT,
-                ModEntities.CLOWNFISH, 1, 6, 8);
+                ModEntities.CLOWNFISH, 2, 6, 8);
 
         SpawnRestriction.register(ModEntities.CLOWNFISH, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN), SpawnGroup.WATER_AMBIENT,
+                ModEntities.CLOWNFISH_EGG, 1, 1, 2);
+
+        SpawnRestriction.register(ModEntities.CLOWNFISH_EGG, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
 
         // Rainbowfish Spawns
@@ -147,9 +153,15 @@ public class ModEntitySpawn {
 
         // Grayling Spawns
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.FROZEN_RIVER), SpawnGroup.WATER_AMBIENT,
-                ModEntities.GRAYLING, 1, 1, 4);
+                ModEntities.GRAYLING, 2, 1, 4);
 
         SpawnRestriction.register(ModEntities.GRAYLING, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.FROZEN_RIVER), SpawnGroup.WATER_AMBIENT,
+                ModEntities.GRAYLING_EGG, 1, 3, 7);
+
+        SpawnRestriction.register(ModEntities.GRAYLING_EGG, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
 
         // Amur Carp Spawns
@@ -157,6 +169,25 @@ public class ModEntitySpawn {
                 ModEntities.AMUR_CARP, 1, 2, 5);
 
         SpawnRestriction.register(ModEntities.AMUR_CARP, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawn);
+
+        //Betta Spawns
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SWAMP, BiomeKeys.PLAINS), SpawnGroup.WATER_AMBIENT,
+                ModEntities.BETTA, 2, 1, 2);
+
+        SpawnRestriction.register(ModEntities.BETTA, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawn);
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SWAMP, BiomeKeys.PLAINS), SpawnGroup.WATER_AMBIENT,
+                ModEntities.BETTA_FRY, 1, 1, 3);
+
+        SpawnRestriction.register(ModEntities.BETTA_FRY, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawn);
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SWAMP, BiomeKeys.PLAINS), SpawnGroup.WATER_AMBIENT,
+                ModEntities.BETTA_EGG, 1, 1, 1);
+
+        SpawnRestriction.register(ModEntities.BETTA_EGG, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawn);
 
         // Capybara Spawns

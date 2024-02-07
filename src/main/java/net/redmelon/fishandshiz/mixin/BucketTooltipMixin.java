@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.custom.AmurCarpEntity;
 import net.redmelon.fishandshiz.entity.custom.AngelfishEntity;
+import net.redmelon.fishandshiz.entity.custom.BettaEntity;
 import net.redmelon.fishandshiz.entity.custom.CorydorasEntity;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -101,6 +102,30 @@ public abstract class BucketTooltipMixin {
             int i = nbtCompound.getInt("BucketVariantTag");
             Formatting[] formattings = new Formatting[]{Formatting.ITALIC, Formatting.GRAY};
             String string = "entity.fishandshiz.amur_carp.type." + AmurCarpEntity.getVariety(i);
+            MutableText mutableText = Text.translatable(string);
+            mutableText.formatted(formattings);
+            tooltip.add(mutableText);
+        }
+        if (this.entityType == ModEntities.BETTA && (nbtCompound = stack.getNbt()) != null && nbtCompound.contains("BucketVariantTag", NbtElement.INT_TYPE)) {
+            int i = nbtCompound.getInt("BucketVariantTag");
+            Formatting[] formattings = new Formatting[]{Formatting.ITALIC, Formatting.GRAY};
+            String string = "entity.fishandshiz.betta.type." + BettaEntity.getVariety(i);
+            MutableText mutableText = Text.translatable(string);
+            mutableText.formatted(formattings);
+            tooltip.add(mutableText);
+        }
+        if (this.entityType == ModEntities.BETTA_EGG && (nbtCompound = stack.getNbt()) != null && nbtCompound.contains("BucketVariantTag", NbtElement.INT_TYPE)) {
+            int i = nbtCompound.getInt("BucketVariantTag");
+            Formatting[] formattings = new Formatting[]{Formatting.ITALIC, Formatting.GRAY};
+            String string = "entity.fishandshiz.betta.type." + BettaEntity.getVariety(i);
+            MutableText mutableText = Text.translatable(string);
+            mutableText.formatted(formattings);
+            tooltip.add(mutableText);
+        }
+        if (this.entityType == ModEntities.BETTA_FRY && (nbtCompound = stack.getNbt()) != null && nbtCompound.contains("BucketVariantTag", NbtElement.INT_TYPE)) {
+            int i = nbtCompound.getInt("BucketVariantTag");
+            Formatting[] formattings = new Formatting[]{Formatting.ITALIC, Formatting.GRAY};
+            String string = "entity.fishandshiz.betta.type." + BettaEntity.getVariety(i);
             MutableText mutableText = Text.translatable(string);
             mutableText.formatted(formattings);
             tooltip.add(mutableText);

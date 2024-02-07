@@ -14,7 +14,6 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.predicate.entity.EntityPredicates;
@@ -46,29 +45,34 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
+public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
     protected static final TrackedData<Integer> VARIANT =
-            DataTracker.registerData(AmurCarpEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(AmurCarpEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
+            DataTracker.registerData(BettaEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(BettaEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-    public AmurCarpEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
+
+    public BettaEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 3);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 2);
     }
     private PlayState genericFlopController(AnimationState animationState) {
-        if (this.isTouchingWater()) {
+        if (this.isTouchingWater() && animationState.isMoving()) {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.amur_carp.swim", Animation.LoopType.LOOP));
+                    .then("animation.betta.swim", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        } else if (this.isTouchingWater() && !animationState.isMoving()){
+            animationState.getController().setAnimation(RawAnimation.begin()
+                    .then("animation.betta.idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.amur_carp.flop", Animation.LoopType.LOOP));
+                    .then("animation.betta.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
     }
@@ -83,23 +87,23 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
     }
 
     @Override
-    public @Nullable AmurCarpEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        AmurCarpEntity amurCarpEntity = (AmurCarpEntity) var2;
-        AmurCarpEggEntity amurCarpEggEntity = (AmurCarpEggEntity) ModEntities.AMUR_CARP_EGG.create(var1);
-        if (amurCarpEggEntity != null) {
+    public @Nullable BettaEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+        BettaEntity bettaEntity = (BettaEntity) var2;
+        BettaEggEntity bettaEggEntity = (BettaEggEntity) ModEntities.BETTA_EGG.create(var1);
+        if (bettaEggEntity != null) {
             int i = random.nextInt(4);
-            AmurCarpVariant variant;
+            BettaVariant variant;
             if (i < 2) {
                 variant = this.getVariant();
             } else if (i > 2) {
-                variant = amurCarpEntity.getVariant();
+                variant = bettaEntity.getVariant();
             } else {
-                variant = (AmurCarpVariant) Util.getRandom(AmurCarpVariant.values(), this.random);
+                variant = (BettaVariant) Util.getRandom(BettaVariant.values(), this.random);
             }
 
-            amurCarpEggEntity.setVariant(variant);
+            bettaEggEntity.setVariant(variant);
         }
-        return amurCarpEggEntity;
+        return bettaEggEntity;
     }
 
     @Override
@@ -124,7 +128,7 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.AMUR_CARP_BUCKET);
+        return new ItemStack(ModItems.BETTA_BUCKET);
     }
 
     @Override
@@ -142,18 +146,18 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
         return factory;
     }
 
-    public enum AmurCarpVariant {
-        WILD(0),
-        CREAM1(1),
-        CREAM2(2),
-        CREAM3(3),
-        CREAM4(4);
+    public enum BettaVariant {
+        WILD1(0),
+        WILD2(1),
+        VEIL1(2),
+        VEIL2(3),
+        FAN1(4);
 
-        private static final AmurCarpVariant[] BY_ID = Arrays.stream(values()).sorted(Comparator.comparingInt(AmurCarpVariant::getId))
-                .toArray(AmurCarpVariant[]::new);
+        private static final BettaVariant[] BY_ID = Arrays.stream(values()).sorted(Comparator.comparingInt(BettaVariant::getId))
+                .toArray(BettaVariant[]::new);
         private final int id;
 
-        AmurCarpVariant(int id) {
+        BettaVariant(int id) {
             this.id = id;
         }
 
@@ -161,13 +165,13 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
             return this.id;
         }
 
-        public static AmurCarpVariant byId(int id) {
+        public static BettaVariant byId(int id) {
             return BY_ID[id % BY_ID.length];
         }
     }
 
-    public static AmurCarpVariant getVariety(int variant) {
-        return AmurCarpVariant.byId(variant);
+    public static BettaVariant getVariety(int variant) {
+        return BettaVariant.byId(variant);
     }
 
     @Override
@@ -205,38 +209,38 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
-        AmurCarpVariant variant;
+        BettaVariant variant;
 
         if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
-            this.setAmurCarpVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
+            this.setBettaVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
             return entityData;
         }
 
         if (spawnReason == SpawnReason.NATURAL){
-            if (registryEntry.matchesKey(BiomeKeys.TAIGA)) {
-                variant = (AmurCarpVariant.WILD);
-            } else if (registryEntry.matchesKey(BiomeKeys.FROZEN_RIVER)) {
-                variant = (AmurCarpVariant.WILD);
+            if (registryEntry.matchesKey(BiomeKeys.SWAMP)) {
+                variant = (BettaVariant.WILD1);
+            } else if (registryEntry.matchesKey(BiomeKeys.PLAINS)) {
+                variant = (BettaVariant.WILD2);
             } else {
-                variant = Util.getRandom(AmurCarpVariant.values(), this.random);
+                variant = Util.getRandom(BettaVariant.values(), this.random);
             }
 
         } else if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
-            this.setAmurCarpVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
+            this.setBettaVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
             return entityData;
         }else if (spawnReason == SpawnReason.CONVERSION) {
             int i = random.nextInt(7);
             if (i == 1) {
-                variant = Util.getRandom(AmurCarpVariant.values(), this.random);
+                variant = Util.getRandom(BettaVariant.values(), this.random);
             } else {
-                variant = (AmurCarpVariant.WILD);
+                variant = (BettaVariant.WILD1);
             }
         } else {
-            variant = Util.getRandom(AmurCarpVariant.values(), this.random);
+            variant = Util.getRandom(BettaVariant.values(), this.random);
         }
         setVariant(variant);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-        this.setAmurCarpVariant(variant.getId());
+        this.setBettaVariant(variant.getId());
         return entityData;
     }
 
@@ -247,19 +251,19 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
         nbtCompound.putInt(BUCKET_VARIANT_TAG_KEY, this.getTypeVariant());
     }
 
-    public AmurCarpVariant getVariant() {
-        return AmurCarpVariant.byId(this.getTypeVariant() & 255);
+    public BettaVariant getVariant() {
+        return BettaVariant.byId(this.getTypeVariant() & 255);
     }
 
     private int getTypeVariant() {
         return this.dataTracker.get(VARIANT);
     }
 
-    protected void setVariant(AmurCarpVariant variant) {
+    protected void setVariant(BettaVariant variant) {
         this.dataTracker.set(VARIANT, variant.getId() & 255);
     }
 
-    protected void setAmurCarpVariant(int variant) {
+    protected void setBettaVariant(int variant) {
         this.dataTracker.set(VARIANT, variant);
     }
 }

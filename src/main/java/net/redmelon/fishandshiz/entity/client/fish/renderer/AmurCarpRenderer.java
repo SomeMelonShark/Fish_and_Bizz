@@ -19,16 +19,16 @@ import java.util.Map;
 
 public class AmurCarpRenderer extends GeoEntityRenderer<AmurCarpEntity> {
     public static final Map<AmurCarpEntity.AmurCarpVariant, Identifier> LOCATION_BY_VARIANT =
-            Util.make(Maps.newEnumMap(AmurCarpEntity.AmurCarpVariant.class), (angelfishVariantIdentifierEnumMap) -> {
-                angelfishVariantIdentifierEnumMap.put(AmurCarpEntity.AmurCarpVariant.WILD,
+            Util.make(Maps.newEnumMap(AmurCarpEntity.AmurCarpVariant.class), (variantIdentifierEnumMap) -> {
+                variantIdentifierEnumMap.put(AmurCarpEntity.AmurCarpVariant.WILD,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carp1.png"));
-                angelfishVariantIdentifierEnumMap.put(AmurCarpEntity.AmurCarpVariant.CREAM1,
+                variantIdentifierEnumMap.put(AmurCarpEntity.AmurCarpVariant.CREAM1,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carp2.png"));
-                angelfishVariantIdentifierEnumMap.put(AmurCarpEntity.AmurCarpVariant.CREAM2,
+                variantIdentifierEnumMap.put(AmurCarpEntity.AmurCarpVariant.CREAM2,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carp3.png"));
-                angelfishVariantIdentifierEnumMap.put(AmurCarpEntity.AmurCarpVariant.CREAM3,
+                variantIdentifierEnumMap.put(AmurCarpEntity.AmurCarpVariant.CREAM3,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carp4.png"));
-                angelfishVariantIdentifierEnumMap.put(AmurCarpEntity.AmurCarpVariant.CREAM4,
+                variantIdentifierEnumMap.put(AmurCarpEntity.AmurCarpVariant.CREAM4,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carp5.png"));
             });
     public AmurCarpRenderer(EntityRendererFactory.Context renderManager) {

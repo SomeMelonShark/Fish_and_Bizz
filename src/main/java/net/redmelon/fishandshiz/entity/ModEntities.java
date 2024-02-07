@@ -143,6 +143,18 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "amur_carp_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     AmurCarpEggEntity::new).dimensions(EntityDimensions.fixed(0.5f, 0.1f)).build());
 
+    public static final EntityType<BettaEntity> BETTA = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "betta"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    BettaEntity::new).dimensions(EntityDimensions.fixed(0.4f, 0.2f)).build());
+
+    public static final EntityType<BettaFryEntity> BETTA_FRY = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "betta_fry"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    BettaFryEntity::new).dimensions(EntityDimensions.fixed(BettaFryEntity.WIDTH, BettaFryEntity.HEIGHT)).build());
+
+    public static final EntityType<BettaEggEntity> BETTA_EGG = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "betta_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    BettaEggEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.1f)).build());
+
     public static final EntityType<MudCrabEntity> MUD_CRAB = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "mud_crab"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
                     MudCrabEntity::new).dimensions(EntityDimensions.fixed(0.7f, 0.5f)).build());
