@@ -1,7 +1,6 @@
 package net.redmelon.fishandshiz.block.custom;
 
 import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -19,7 +18,6 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import net.redmelon.fishandshiz.cclass.EntityPlantBlock;
 import org.jetbrains.annotations.Nullable;
 
 public class AmazonSwordBlock extends PlantBlock implements Fertilizable {

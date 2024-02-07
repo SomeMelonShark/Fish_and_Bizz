@@ -14,7 +14,6 @@ public class ModLootTableGenerator extends FabricBlockLootTableProvider {
     public void generate() {
         addDrop(ModBlocks.FISHMEAL_BLOCK);
         addDropWithSilkTouch(ModBlocks.MULM);
-        addDrop(ModBlocks.AMAZON_SWORD);
 
         addDrop(ModBlocks.FANWORT, ModItems.FANWORT); {
             this.addDrop(ModBlocks.FANWORT, this.drops(ModItems.FANWORT));

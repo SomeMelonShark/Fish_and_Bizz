@@ -1,13 +1,13 @@
 {
   "variants": {
     "age=0": {
-      "model": "fishandshiz:block/amazon_sword"
+      "model": "fishandshiz:block/amazon_sword_stage0"
     },
     "age=1": {
-      "model": "fishandshiz:block/amazon_sword"
+      "model": "fishandshiz:block/amazon_sword_stage1"
     },
     "age=2": {
-      "model": "fishandshiz:block/amazon_sword"
+      "model": "fishandshiz:block/amazon_sword_stage2"
     }
   }
 }

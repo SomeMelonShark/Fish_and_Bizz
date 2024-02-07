@@ -1,9 +1,8 @@
-// 1.20	2024-01-28T18:58:45.6964381	Fish And Bizz/Block Loot Tables
+// 1.20	2024-01-30T11:43:09.2919002	Fish And Bizz/Block Loot Tables
 f1fec996ca3195822dfd9a75d8ef5b70b1138f31 data\fishandshiz\loot_tables\blocks\sea_anemone.json
 ceaa52940e30e0aa38e2e911a61081fe7e27fce8 data\fishandshiz\loot_tables\blocks\fishmeal_block.json
 4950eb8d76c4361960be12bec410113ab4d53075 data\fishandshiz\loot_tables\blocks\mulm.json
 88a85e79cd96618886ea1d4ed315c0605c74e7e6 data\fishandshiz\loot_tables\blocks\fanwort.json
-485ddeb936b35b9bae44259b811c0116e5cbe812 data\fishandshiz\loot_tables\blocks\amazon_sword.json
 198b44adf1c0a74df4a2c708b837d7b091390232 data\fishandshiz\loot_tables\blocks\vallisneria.json
 88a85e79cd96618886ea1d4ed315c0605c74e7e6 data\fishandshiz\loot_tables\blocks\fanwort_plant.json
 198b44adf1c0a74df4a2c708b837d7b091390232 data\fishandshiz\loot_tables\blocks\tall_vallisneria.json

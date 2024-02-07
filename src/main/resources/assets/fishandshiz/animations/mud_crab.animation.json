@@ -356,6 +356,31 @@
 							"vector": [0, 0, 0]
 						}
 					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [-10, 0, 0]
+					}
+				},
+				"leftLeg1": {
+					"rotation": {
+						"vector": [0, 0, 20]
+					}
+				},
+				"leftLeg2": {
+					"rotation": {
+						"vector": [0, 0, 5]
+					}
+				},
+				"rightLeg1": {
+					"rotation": {
+						"vector": [0, 0, -20]
+					}
+				},
+				"rightLeg2": {
+					"rotation": {
+						"vector": [0, 0, -5]
+					}
 				}
 			}
 		},

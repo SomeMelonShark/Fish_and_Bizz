@@ -11,7 +11,8 @@ import net.redmelon.fishandshiz.block.entity.ModBlockEntities;
 import net.redmelon.fishandshiz.block.entity.client.SeaAnemoneRenderer;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.client.fish.renderer.*;
-import net.redmelon.fishandshiz.entity.client.renderer.*;
+import net.redmelon.fishandshiz.entity.client.renderer.BasicMiscRenderer;
+import net.redmelon.fishandshiz.entity.client.renderer.BasicSmallMiscRenderer;
 
 public class FishAndShizClient implements ClientModInitializer {
     @Override

@@ -22,6 +22,8 @@ public class CorydorasRenderer extends GeoEntityRenderer<CorydorasEntity> {
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/corydoras1.png"));
                 corydorasVariantIdentifierEnumMap.put(CorydorasEntity.CorydorasVariant.PANDA,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/corydoras2.png"));
+                corydorasVariantIdentifierEnumMap.put(CorydorasEntity.CorydorasVariant.ALBINO,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/corydoras3.png"));
             });
 
     public CorydorasRenderer(EntityRendererFactory.Context renderManager) {

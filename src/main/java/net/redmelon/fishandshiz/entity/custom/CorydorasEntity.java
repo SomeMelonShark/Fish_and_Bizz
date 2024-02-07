@@ -146,7 +146,8 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
 
     public enum CorydorasVariant {
         BRONZE(0),
-        PANDA(1);
+        PANDA(1),
+        ALBINO(2);
         private static final CorydorasVariant[] BY_ID = Arrays.stream(values()).sorted(Comparator.comparingInt(CorydorasVariant::getId))
                 .toArray(CorydorasVariant[]::new);
         private final int id;
