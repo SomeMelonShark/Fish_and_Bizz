@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
@@ -56,6 +57,7 @@ public class OscarEntity extends SchoolingBreedEntity implements GeoEntity {
     protected void initGoals() {
         this.goalSelector.add(0, new EscapeDangerGoal(this, 2));
         this.goalSelector.add(2, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
+        this.goalSelector.add(3, new BreedAnimalMateGoal(this, 1));
         this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
     }
 

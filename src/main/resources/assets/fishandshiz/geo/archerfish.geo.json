@@ -12,7 +12,7 @@
 			},
 			"bones": [
 				{
-					"name": "head",
+					"name": "root",
 					"pivot": [0, 3, -1],
 					"cubes": [
 						{"origin": [-1, 0, -5], "size": [2, 6, 10], "uv": [0, 0]},
@@ -23,7 +23,7 @@
 				},
 				{
 					"name": "tailFin",
-					"parent": "head",
+					"parent": "root",
 					"pivot": [0, 3, 5],
 					"cubes": [
 						{"origin": [0, 0, 5], "size": [0, 6, 5], "uv": [12, 11]}
@@ -31,7 +31,7 @@
 				},
 				{
 					"name": "leftfin",
-					"parent": "head",
+					"parent": "root",
 					"pivot": [1, 2, -3],
 					"rotation": [0, -35, 0],
 					"cubes": [
@@ -40,7 +40,7 @@
 				},
 				{
 					"name": "rightfin",
-					"parent": "head",
+					"parent": "root",
 					"pivot": [-1, 2, -3],
 					"rotation": [0, 35, 0],
 					"cubes": [

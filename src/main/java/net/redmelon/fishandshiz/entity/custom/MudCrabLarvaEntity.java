@@ -62,6 +62,9 @@ public class MudCrabLarvaEntity extends SchoolingFishEntity implements GeoEntity
         if(!this.isTouchingWater() && this.verticalCollision) {
             this.verticalCollision = false;
         }
+        if (!this.getWorld().isClient) {
+            this.setLarvaAge(this.larvaAge + 1);
+        }
         super.tickMovement();
     }
 
@@ -135,6 +138,11 @@ public class MudCrabLarvaEntity extends SchoolingFishEntity implements GeoEntity
                 this.discard();
             }
         }
+    }
+
+    @Override
+    public boolean shouldDropXp() {
+        return false;
     }
 
     @Override

@@ -10,9 +10,6 @@ import net.minecraft.world.WorldView;
 import net.redmelon.fishandshiz.block.ModBlocks;
 
 public class BottomFeederGoal extends MoveToTargetPosGoal {
-    public static int FORAGE_DURATION = Math.abs(-60);
-
-    private int forageDuration;
 
     public BottomFeederGoal(PathAwareEntity animal, double speed, int range) {
         super(animal, speed, range);

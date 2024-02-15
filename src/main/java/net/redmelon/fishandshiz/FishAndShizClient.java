@@ -60,6 +60,7 @@ public class FishAndShizClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.BETTA, BettaRenderer::new);
         EntityRendererRegistry.register(ModEntities.BETTA_FRY, BasicFryRenderer.create("betta"));
         EntityRendererRegistry.register(ModEntities.BETTA_EGG, BasicEggRenderer.create("betta", "betta"));
+        EntityRendererRegistry.register(ModEntities.RED_TAIL_CATFISH, BasicFishRenderer.create("red_tail_catfish"));
         EntityRendererRegistry.register(ModEntities.SALMON_EGG, BasicEggRenderer.create("salmon", "salmon"));
         EntityRendererRegistry.register(ModEntities.SALMON_FRY, BasicFryRenderer.create("salmon"));
         EntityRendererRegistry.register(ModEntities.MUD_CRAB, BasicSmallMiscRenderer.create("mud_crab"));
@@ -72,6 +73,7 @@ public class FishAndShizClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.VOLCANO_SNAIL, BasicSmallMiscRenderer.create("volcano_snail"));
         EntityRendererRegistry.register(ModEntities.VOLCANO_SNAIL_EGG, BasicSmallMiscRenderer.create("volcano_snail_egg"));
         EntityRendererRegistry.register(ModEntities.CAPYBARA, BasicMiscRenderer.create("capybara"));
+        EntityRendererRegistry.register(ModEntities.ARCHERFISH_SPIT, ArcherfishSpitRenderer::new);
 
         BlockEntityRendererFactories.register(ModBlockEntities.SEA_ANEMONE_ENTITY, SeaAnemoneRenderer::new);
     }

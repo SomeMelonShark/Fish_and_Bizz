@@ -27,6 +27,8 @@ public class ModItems {
             new SpawnEggItem(ModEntities.MILKFISH, 0xc2d1e0, 0x79828b, new FabricItemSettings()));
     public static final Item GRAYLING_SPAWN_EGG = registerItem("grayling_spawn_egg",
             new SpawnEggItem(ModEntities.GRAYLING, 0x617558, 0x1e2d27, new FabricItemSettings()));
+    public static final Item RED_TAIL_CATFISH_SPAWN_EGG = registerItem("red_tail_catfish_spawn_egg",
+            new SpawnEggItem(ModEntities.RED_TAIL_CATFISH, 0x373737, 0xdf5e28, new FabricItemSettings()));
     public static final Item MUD_CRAB_SPAWN_EGG = registerItem("mud_crab_spawn_egg",
             new SpawnEggItem(ModEntities.MUD_CRAB, 0x2f5553, 0xab5315, new FabricItemSettings()));
     public static final Item CRAYFISH_SPAWN_EGG = registerItem("crayfish_spawn_egg",

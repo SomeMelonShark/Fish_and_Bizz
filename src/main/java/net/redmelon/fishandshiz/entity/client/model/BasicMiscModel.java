@@ -3,12 +3,16 @@ package net.redmelon.fishandshiz.entity.client.model;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.constant.DataTickets;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
+import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib.model.data.EntityModelData;
 
 import static net.redmelon.fishandshiz.FishAndShiz.MOD_ID;
 
-public class BasicMiscModel <A extends LivingEntity & GeoAnimatable> extends GeoModel<A> {
+public class BasicMiscModel <E extends LivingEntity & GeoAnimatable> extends GeoModel<E> {
 
     private final Identifier model;
     private final Identifier texture;
@@ -35,16 +39,30 @@ public class BasicMiscModel <A extends LivingEntity & GeoAnimatable> extends Geo
     }
 
     @Override
-    public Identifier getModelResource(A entity) {
+    public Identifier getModelResource(E entity) {
         return model;
     }
 
     @Override
-    public Identifier getTextureResource(A entity) {
+    public Identifier getTextureResource(E entity) {
         return texture;
     }
     @Override
-    public Identifier getAnimationResource(A entity) {
+    public Identifier getAnimationResource(E entity) {
         return animation;
     }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void setCustomAnimations(E animatable, long instanceId, AnimationState<E> animationState) {
+        if (head != null) {
+            CoreGeoBone headBone = this.getAnimationProcessor().getBone("head");
+            EntityModelData entityModelData = (EntityModelData) animationState.getExtraData().get(0);
+            if (headBone != null) {;
+                headBone.setRotX(entityModelData.headPitch() * ((float) Math.PI / 180F));
+                headBone.setRotY(entityModelData.netHeadYaw() * ((float) Math.PI / 180F));
+            }
+        }
+    }
+
 }

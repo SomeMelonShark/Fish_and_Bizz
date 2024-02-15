@@ -204,7 +204,12 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
 
     @Override
     public void tickMovement() {
-        super.tickMovement();
+        if (!this.isTouchingWater() && this.isOnGround() && this.verticalCollision) {
+            this.setVelocity(this.getVelocity().add((this.random.nextFloat() * 2.0f - 1.0f) * 0.05f, 0.4f, (this.random.nextFloat() * 2.0f - 1.0f) * 0.05f));
+            this.setOnGround(false);
+            this.velocityDirty = true;
+            this.playSound(this.getFlopSound(), this.getSoundVolume(), this.getSoundPitch());
+        }
         if (this.getBreedingAge() != 0) {
             this.loveTicks = 0;
         }
@@ -216,12 +221,6 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
                 double f = this.random.nextGaussian() * 0.02;
                 this.getWorld().addParticle(ParticleTypes.HEART, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
             }
-        }
-        if (!this.isTouchingWater() && this.isOnGround() && this.verticalCollision) {
-            this.setVelocity(this.getVelocity().add((double)((this.random.nextFloat() * 2.0F - 1.0F) * 0.05F), 0.4000000059604645, (double)((this.random.nextFloat() * 2.0F - 1.0F) * 0.05F)));
-            this.velocityDirty = true;
-            this.setOnGround(false);
-            this.playSound(this.getFlopSound(), this.getSoundVolume(), this.getSoundPitch());
         }
         super.movementTick();
     }

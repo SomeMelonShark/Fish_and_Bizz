@@ -78,6 +78,7 @@ public class ModItemGroup {
             entries.add(ModItems.CRAYFISH_SPAWN_EGG);
             entries.add(ModItems.VOLCANO_SNAIL_SPAWN_EGG);
             entries.add(ModItems.GRAYLING_SPAWN_EGG);
+            entries.add(ModItems.RED_TAIL_CATFISH_SPAWN_EGG);
         });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FOOD_AND_DRINK).register(entries -> {

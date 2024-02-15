@@ -26,7 +26,7 @@ public class ModBlocks {
     public static final Block FISHMEAL_BLOCK = registerBlock("fishmeal_block",
             new Block(FabricBlockSettings.copyOf(Blocks.SAND).strength(0.5f).sounds(BlockSoundGroup.SAND)));
     public static final Block MULM = registerBlock("mulm",
-            new GrassBlock(FabricBlockSettings.copyOf(Blocks.PODZOL).strength(0.5f).sounds(BlockSoundGroup.GRASS)));
+            new MulmBlock(FabricBlockSettings.copyOf(Blocks.PODZOL).strength(0.5f).sounds(BlockSoundGroup.GRASS)));
     public static final Block FANWORT = registerBlockWithoutItem("fanwort",
             new FanwortBlock(FabricBlockSettings.copyOf(Blocks.KELP).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.WET_GRASS)));
     public static final Block FANWORT_PLANT = registerBlockWithoutItem("fanwort_plant",

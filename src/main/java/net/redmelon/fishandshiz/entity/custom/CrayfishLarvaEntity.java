@@ -70,6 +70,9 @@ public class CrayfishLarvaEntity extends SchoolingFishEntity implements GeoEntit
         if(!this.isTouchingWater() && this.verticalCollision) {
             this.verticalCollision = false;
         }
+        if (!this.getWorld().isClient) {
+            this.setLarvaAge(this.larvaAge + 1);
+        }
         super.tickMovement();
     }
 
@@ -143,6 +146,11 @@ public class CrayfishLarvaEntity extends SchoolingFishEntity implements GeoEntit
                 this.discard();
             }
         }
+    }
+
+    @Override
+    public boolean shouldDropXp() {
+        return false;
     }
 
     @Override

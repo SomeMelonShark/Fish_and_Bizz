@@ -128,7 +128,6 @@ public abstract class SchoolingBreedEntity extends AnimalFishEntity {
 
     public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
         RegistryEntry<Biome> registryEntry = world.getBiome(pos);
-        registryEntry.isIn(TropicalSpawn.SPAWNS_TROPICAL);
         int i = world.getSeaLevel();
         int j = i - 2;
         return pos.getY() >= j && pos.getY() <= i + 30 && world.getFluidState(pos.down()).isIn(FluidTags.WATER) && world.getBlockState(pos.up()).isOf(Blocks.WATER);

@@ -105,8 +105,8 @@ public class ModEntitySpawn {
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
 
         // Oscar Spawns
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE), SpawnGroup.WATER_AMBIENT,
-                ModEntities.OSCAR, 1, 1, 2);
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE), SpawnGroup.WATER_CREATURE,
+                ModEntities.OSCAR, 30, 1, 2);
 
         SpawnRestriction.register(ModEntities.OSCAR, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawn);
@@ -188,6 +188,13 @@ public class ModEntitySpawn {
                 ModEntities.BETTA_EGG, 1, 1, 1);
 
         SpawnRestriction.register(ModEntities.BETTA_EGG, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawn);
+
+        //Red Tail Catfish Spawns
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(ModBiomes.JUNGLE_BASIN), SpawnGroup.WATER_CREATURE,
+                ModEntities.RED_TAIL_CATFISH, 10, 1, 1);
+
+        SpawnRestriction.register(ModEntities.RED_TAIL_CATFISH, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawn);
 
         // Capybara Spawns

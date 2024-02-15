@@ -151,7 +151,8 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
         WILD2(1),
         VEIL1(2),
         VEIL2(3),
-        FAN1(4);
+        FAN1(4),
+        FAN2(5);
 
         private static final BettaVariant[] BY_ID = Arrays.stream(values()).sorted(Comparator.comparingInt(BettaVariant::getId))
                 .toArray(BettaVariant[]::new);
@@ -228,7 +229,7 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
         } else if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
             this.setBettaVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
             return entityData;
-        }else if (spawnReason == SpawnReason.CONVERSION) {
+        } else if (spawnReason == SpawnReason.CONVERSION) {
             int i = random.nextInt(7);
             if (i == 1) {
                 variant = Util.getRandom(BettaVariant.values(), this.random);
