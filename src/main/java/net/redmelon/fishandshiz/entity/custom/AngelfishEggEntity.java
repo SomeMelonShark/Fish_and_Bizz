@@ -73,6 +73,7 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Age", this.eggAge);
+        nbt.putInt("Variant", this.getTypeVariant());
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {

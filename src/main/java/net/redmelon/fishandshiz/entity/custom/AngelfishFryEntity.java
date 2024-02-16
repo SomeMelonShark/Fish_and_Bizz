@@ -243,11 +243,6 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
     }
 
     @Override
-    public void writeCustomDatatoNbt(NbtCompound nbt) {
-
-    }
-
-    @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_TROPICAL_FISH_HURT;
     }

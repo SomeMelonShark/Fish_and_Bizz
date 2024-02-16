@@ -60,9 +60,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
-    protected static final TrackedData<Integer> VARIANT;
+    protected static final TrackedData<Integer> VARIANT = DataTracker.registerData(AngelfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
-    public static final String VARIANT_TAG_KEY = "Variant";
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
@@ -210,7 +209,7 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     @Override
     public void writeCustomDatatoNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt(VARIANT_TAG_KEY, this.getTypeVariant());
+        nbt.putInt("Variant", this.getTypeVariant());
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
@@ -288,10 +287,6 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
 
     protected void setAngelfishVariant(int variant) {
         this.dataTracker.set(VARIANT, variant);
-    }
-
-    static {
-        VARIANT = DataTracker.registerData(AngelfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
     }
 }
 
