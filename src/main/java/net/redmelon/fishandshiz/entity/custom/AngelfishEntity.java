@@ -61,7 +61,6 @@ import java.util.Comparator;
 public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     protected static final TrackedData<Integer> VARIANT =
             DataTracker.registerData(AngelfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(AngelfishEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
@@ -210,32 +209,17 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     @Override
     public void writeCustomDatatoNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        writeMateData(nbt);
-        nbt.put("MateData", getMateData());
+        nbt.putInt("Variant", this.getTypeVariant());
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.dataTracker.set(VARIANT, nbt.getInt("Variant"));
-        if(nbt.contains("MateData", NbtElement.INT_TYPE))setMateData(nbt.getCompound("MateData"));
     }
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(VARIANT, 0);
-        this.dataTracker.startTracking(MATE_DATA, new NbtCompound());
-    }
-
-    public NbtCompound writeMateData(NbtCompound nbt) {
-        nbt.putInt("Variant", this.getTypeVariant());
-        return nbt;
-    }
-
-    public void setMateData(NbtCompound mateData) {
-        dataTracker.set(MATE_DATA, mateData);
-    }
-    public NbtCompound getMateData() {
-        return dataTracker.get(MATE_DATA);
     }
 
     @Override
