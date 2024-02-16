@@ -1,12 +1,11 @@
 package net.redmelon.fishandshiz.entity.custom;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.EscapeDangerGoal;
-import net.minecraft.entity.ai.goal.FleeEntityGoal;
-import net.minecraft.entity.ai.goal.SwimAroundGoal;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -38,7 +37,8 @@ public class OscarEntity extends SchoolingBreedEntity implements GeoEntity {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 4);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 4)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3);
     }
 
     private PlayState genericFlopController(AnimationState animationState) {
@@ -59,6 +59,14 @@ public class OscarEntity extends SchoolingBreedEntity implements GeoEntity {
         this.goalSelector.add(2, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
         this.goalSelector.add(3, new BreedAnimalMateGoal(this, 1));
         this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
+        this.goalSelector.add(6, new MeleeAttackGoal(this, 1.2f, true));
+
+        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, AngelfishEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, AuratusEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, RainbowfishEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, BettaEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, CorydorasEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, NeonTetraEntity.class, true));
     }
 
     @Override

@@ -9,8 +9,23 @@ import net.minecraft.world.WorldView;
 import net.redmelon.fishandshiz.block.ModBlocks;
 
 public class WaterStopGoal extends MoveToTargetPosGoal {
+
+    private int safeWaitingTime;
+
     public WaterStopGoal(PathAwareEntity animal, double speed, int range) {
         super(animal, speed, range);
+    }
+
+    @Override
+    public boolean shouldContinue() {
+        return this.tryingTime >= -this.safeWaitingTime && this.tryingTime <= 600 && this.isTargetPos(this.mob.getWorld(), this.targetPos);
+    }
+
+    @Override
+    public void start() {
+        this.startMovingToTarget();
+        this.tryingTime = 0;
+        this.safeWaitingTime = this.mob.getRandom().nextInt(this.mob.getRandom().nextInt(2400) + 1200) + 1200;
     }
 
     @Override

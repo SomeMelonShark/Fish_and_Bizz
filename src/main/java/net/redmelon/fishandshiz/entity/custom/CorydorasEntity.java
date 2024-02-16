@@ -3,15 +3,14 @@ package net.redmelon.fishandshiz.entity.custom;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.EscapeDangerGoal;
-import net.minecraft.entity.ai.goal.FleeEntityGoal;
-import net.minecraft.entity.ai.goal.SwimAroundGoal;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -60,7 +59,9 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 1)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 5);
     }
 
     private PlayState genericFlopController(AnimationState animationState) {
@@ -82,11 +83,23 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
     @Override
     protected void initGoals() {
         this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25));
-        this.goalSelector.add(2, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
-        this.goalSelector.add(3, new BreedAnimalMateGoal(this, 1));
-        this.goalSelector.add(4, new BottomFeederGoal(this, 1d, 10));
+        this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
+        this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));
+        this.goalSelector.add(3, new BottomFeederGoal(this, 1d, 10));
+        this.goalSelector.add(3, new BreedFollowGroupLeaderGoal(this));
         this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
-        this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
+        this.goalSelector.add(6, new MeleeAttackGoal(this, 0.2f, true));
+
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, CorydorasEggEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, AngelfishEggEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, AmurCarpEggEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, CrayfishEggEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, NeonTetraEggEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, MilkfishEggEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, GraylingEggEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, RainbowfishEggEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, OscarEggEntity.class, true));
+
     }
 
     @Override
