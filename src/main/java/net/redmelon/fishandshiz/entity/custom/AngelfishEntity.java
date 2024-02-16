@@ -14,6 +14,7 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.passive.HorseColor;
+import net.minecraft.entity.passive.HorseEntity;
 import net.minecraft.entity.passive.TropicalFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -59,9 +60,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
-    protected static final TrackedData<Integer> VARIANT =
-            DataTracker.registerData(AngelfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    protected static final TrackedData<Integer> VARIANT;
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
+    public static final String VARIANT_TAG_KEY = "Variant";
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
@@ -209,12 +210,12 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     @Override
     public void writeCustomDatatoNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Variant", this.getTypeVariant());
+        nbt.putInt(VARIANT_TAG_KEY, this.getTypeVariant());
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.dataTracker.set(VARIANT, nbt.getInt("Variant"));
+        this.setAngelfishVariant(nbt.getInt("Variant"));
     }
     @Override
     protected void initDataTracker() {
@@ -287,6 +288,10 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
 
     protected void setAngelfishVariant(int variant) {
         this.dataTracker.set(VARIANT, variant);
+    }
+
+    static {
+        VARIANT = DataTracker.registerData(AngelfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
     }
 }
 
