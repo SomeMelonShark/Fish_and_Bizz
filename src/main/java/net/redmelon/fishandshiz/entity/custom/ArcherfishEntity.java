@@ -10,6 +10,9 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,17 +21,21 @@ import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Util;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
+import net.redmelon.fishandshiz.entity.variant.AngelfishVariant;
+import net.redmelon.fishandshiz.entity.variant.ArcherfishVariant;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -38,7 +45,8 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity, RangedAttackMob {
-    boolean spit;
+    protected static final TrackedData<Integer> VARIANT = DataTracker.registerData(ArcherfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public ArcherfishEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
@@ -109,8 +117,46 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
     }
 
     @Override
-    public void writeCustomDatatoNbt(NbtCompound nbt) {
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putInt("Variant", this.getTypeVariant());
+    }
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.setArcherfishVariant(nbt.getInt("Variant"));
+    }
 
+    @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(VARIANT, 0);
+    }
+
+    public static ArcherfishVariant getVariety(int variant) {
+        return ArcherfishVariant.byId(variant);
+    }
+
+    public ArcherfishVariant getVariant() {
+        return ArcherfishVariant.byId(this.getTypeVariant() & 255);
+    }
+
+    public int getTypeVariant() {
+        return this.dataTracker.get(VARIANT);
+    }
+
+    protected void setVariant(ArcherfishVariant variant) {
+        this.dataTracker.set(VARIANT, variant.getId() & 255);
+    }
+
+    protected void setArcherfishVariant(int variant) {
+        this.dataTracker.set(VARIANT, variant);
+    }
+    @Override
+    public void copyDataToStack(ItemStack stack) {
+        super.copyDataToStack(stack);
+        NbtCompound nbtCompound = stack.getOrCreateNbt();
+        nbtCompound.putInt(BUCKET_VARIANT_TAG_KEY, this.getTypeVariant());
     }
 
     @Override
@@ -121,11 +167,28 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        ArcherfishVariant variant;
         int i = random.nextInt(2);
+        int j = random.nextInt(9);
+        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
+            this.setArcherfishVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
+            return entityData;
+        }
         if (spawnReason == SpawnReason.NATURAL && i == 0) {
             this.setBaby(true);
         }
+        if (spawnReason == SpawnReason.NATURAL) {
+            if (j == 0){
+                variant = ArcherfishVariant.EVIL;
+            } else {
+                variant = ArcherfishVariant.NORMAL;
+            }
+        } else {
+            variant = Util.getRandom(ArcherfishVariant.values(), this.random);
+        }
+        setVariant(variant);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        this.setArcherfishVariant(variant.getId());
         return entityData;
     }
 

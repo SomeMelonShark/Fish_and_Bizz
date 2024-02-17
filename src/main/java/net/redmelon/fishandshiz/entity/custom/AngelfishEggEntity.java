@@ -24,8 +24,10 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
+import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
+import net.redmelon.fishandshiz.entity.variant.AngelfishVariant;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
@@ -36,9 +38,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_EGG_AGE = Math.abs(-12);
-    private int eggAge;
-
+    public static int MAX_EGG_AGE = Math.abs(-12000);
+    protected int stageAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public AngelfishEggEntity(EntityType<? extends AngelfishEntity> entityType, World world) {
         super(entityType, world);
@@ -66,19 +67,18 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
     public void tickMovement() {
         super.tickMovement();
         if (!this.getWorld().isClient) {
-            this.setEggAge(this.eggAge + 1);
+            this.setStageAge(this.stageAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.eggAge);
-        nbt.putInt("Variant", this.getTypeVariant());
+        nbt.putInt("Age", this.stageAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setEggAge(nbt.getInt("Age"));
+        this.setStageAge(nbt.getInt("Age"));
     }
 
     @Override
@@ -91,24 +91,24 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
         super.copyDataToStack(stack);
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getEggAge());
+        nbtCompound.putInt("Age", this.getStageAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setEggAge(nbt.getInt("Age"));
+            this.setStageAge(nbt.getInt("Age"));
         }
     }
-    private int getEggAge() {
-        return this.eggAge;
+    private int getStageAge() {
+        return this.stageAge;
     }
     private void increaseAge(int seconds) {
-        this.setEggAge(this.eggAge + seconds * 20);
+        this.setStageAge(this.stageAge + seconds * 20);
     }
-    private void setEggAge(int eggAge) {
-        this.eggAge = eggAge;
-        if (this.eggAge >= MAX_EGG_AGE) {
+    private void setStageAge(int stageAge) {
+        this.stageAge = stageAge;
+        if (this.stageAge >= MAX_EGG_AGE) {
             this.growUp();
         }
     }
@@ -160,7 +160,7 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
         int i = random.nextBetweenExclusive(2, 8);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
-               variant = this.getVariant();
+                variant = this.getVariant();
                 ServerWorld serverWorld = (ServerWorld)world;
                 AngelfishFryEntity nextEntity = ModEntities.ANGELFISH_FRY.create(this.getWorld());
                 if (nextEntity != null) {
@@ -177,11 +177,11 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
                     serverWorld.spawnEntityAndPassengers(nextEntity);
                     this.discard();
                 }
-           }
+            }
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_EGG_AGE - this.eggAge);
+        return Math.max(0, MAX_EGG_AGE - this.stageAge);
     }
 
     @Override

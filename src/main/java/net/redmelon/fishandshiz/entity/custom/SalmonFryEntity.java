@@ -89,7 +89,7 @@ public class SalmonFryEntity extends SchoolingBreedEntity implements GeoEntity {
     }
 
     @Override
-    public void writeCustomDatatoNbt(NbtCompound nbt) {
+    public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Age", this.fryAge);
     }

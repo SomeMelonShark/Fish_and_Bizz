@@ -26,6 +26,7 @@ import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
+import net.redmelon.fishandshiz.entity.variant.CorydorasVariant;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;

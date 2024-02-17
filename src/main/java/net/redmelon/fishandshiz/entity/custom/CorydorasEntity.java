@@ -35,6 +35,7 @@ import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
+import net.redmelon.fishandshiz.entity.variant.CorydorasVariant;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
@@ -157,34 +158,14 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
         controllers.add(new AnimationController(this, "controller", 10, this::genericFlopController));
     }
 
-    public enum CorydorasVariant {
-        BRONZE(0),
-        PANDA(1),
-        ALBINO(2);
-        private static final CorydorasVariant[] BY_ID = Arrays.stream(values()).sorted(Comparator.comparingInt(CorydorasVariant::getId))
-                .toArray(CorydorasVariant[]::new);
-        private final int id;
-
-        CorydorasVariant(int id) {
-            this.id = id;
-        }
-
-        public int getId() {
-            return this.id;
-        }
-
-        public static CorydorasVariant byId(int id) {
-            return BY_ID[id % BY_ID.length];
-        }
-    }
-
     public static CorydorasVariant getVariety(int variant) {
         return CorydorasVariant.byId(variant);
     }
 
     @Override
-    public void writeCustomDatatoNbt(NbtCompound nbt) {
+    public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
+        nbt.putInt("Variant", this.getTypeVariant());
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {

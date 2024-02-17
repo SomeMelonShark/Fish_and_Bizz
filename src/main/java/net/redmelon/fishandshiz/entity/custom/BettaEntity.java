@@ -33,6 +33,7 @@ import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
+import net.redmelon.fishandshiz.entity.variant.BettaVariant;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -47,7 +48,6 @@ import java.util.Comparator;
 public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
     protected static final TrackedData<Integer> VARIANT =
             DataTracker.registerData(BettaEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(BettaEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
@@ -150,64 +150,24 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
         return factory;
     }
 
-    public enum BettaVariant {
-        WILD1(0),
-        WILD2(1),
-        VEIL1(2),
-        VEIL2(3),
-        FAN1(4),
-        FAN2(5);
-
-        private static final BettaVariant[] BY_ID = Arrays.stream(values()).sorted(Comparator.comparingInt(BettaVariant::getId))
-                .toArray(BettaVariant[]::new);
-        private final int id;
-
-        BettaVariant(int id) {
-            this.id = id;
-        }
-
-        public int getId() {
-            return this.id;
-        }
-
-        public static BettaVariant byId(int id) {
-            return BY_ID[id % BY_ID.length];
-        }
-    }
-
     public static BettaVariant getVariety(int variant) {
         return BettaVariant.byId(variant);
     }
 
     @Override
-    public void writeCustomDatatoNbt(NbtCompound nbt) {
+    public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        writeMateData(nbt);
-        nbt.put("MateData", getMateData());
+        nbt.putInt("Variant", this.getTypeVariant());
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.dataTracker.set(VARIANT, nbt.getInt("Variant"));
-        if(nbt.contains("MateData", NbtElement.INT_TYPE))setMateData(nbt.getCompound("MateData"));
     }
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(VARIANT, 0);
-        this.dataTracker.startTracking(MATE_DATA, new NbtCompound());
-    }
-
-    public NbtCompound writeMateData(NbtCompound nbt) {
-        nbt.putInt("Variant", this.getTypeVariant());
-        return nbt;
-    }
-
-    public void setMateData(NbtCompound mateData) {
-        dataTracker.set(MATE_DATA, mateData);
-    }
-    public NbtCompound getMateData() {
-        return dataTracker.get(MATE_DATA);
     }
 
     @Override

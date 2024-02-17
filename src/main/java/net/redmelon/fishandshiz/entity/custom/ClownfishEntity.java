@@ -105,11 +105,6 @@ public class ClownfishEntity extends SchoolingBreedEntity implements GeoEntity {
         return SoundEvents.ENTITY_TROPICAL_FISH_HURT;
     }
 
-    @Override
-    public void writeCustomDatatoNbt(NbtCompound nbt) {
-
-    }
-
     public class ClownfishAnemoneGoal extends MoveToTargetPosGoal {
 
         public ClownfishAnemoneGoal(ClownfishEntity mob) {

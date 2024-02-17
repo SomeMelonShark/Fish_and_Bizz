@@ -33,6 +33,7 @@ import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
+import net.redmelon.fishandshiz.entity.variant.AmurCarpVariant;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -232,11 +233,6 @@ public class AmurCarpFryEntity extends AmurCarpEntity implements GeoEntity {
     @Override
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.AMUR_CARP_FRY_BUCKET);
-    }
-
-    @Override
-    public void writeCustomDatatoNbt(NbtCompound nbt) {
-
     }
 
     @Override

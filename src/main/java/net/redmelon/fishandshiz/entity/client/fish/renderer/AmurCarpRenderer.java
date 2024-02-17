@@ -12,23 +12,24 @@ import net.redmelon.fishandshiz.entity.client.fish.model.AmurCarpModel;
 import net.redmelon.fishandshiz.entity.client.fish.model.AngelfishModel;
 import net.redmelon.fishandshiz.entity.custom.AmurCarpEntity;
 import net.redmelon.fishandshiz.entity.custom.AngelfishEntity;
+import net.redmelon.fishandshiz.entity.variant.AmurCarpVariant;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 import java.util.Map;
 
 public class AmurCarpRenderer extends GeoEntityRenderer<AmurCarpEntity> {
-    public static final Map<AmurCarpEntity.AmurCarpVariant, Identifier> LOCATION_BY_VARIANT =
-            Util.make(Maps.newEnumMap(AmurCarpEntity.AmurCarpVariant.class), (variantIdentifierEnumMap) -> {
-                variantIdentifierEnumMap.put(AmurCarpEntity.AmurCarpVariant.WILD,
+    public static final Map<AmurCarpVariant, Identifier> LOCATION_BY_VARIANT =
+            Util.make(Maps.newEnumMap(AmurCarpVariant.class), (variantIdentifierEnumMap) -> {
+                variantIdentifierEnumMap.put(AmurCarpVariant.WILD,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carp1.png"));
-                variantIdentifierEnumMap.put(AmurCarpEntity.AmurCarpVariant.CREAM1,
+                variantIdentifierEnumMap.put(AmurCarpVariant.CREAM1,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carp2.png"));
-                variantIdentifierEnumMap.put(AmurCarpEntity.AmurCarpVariant.CREAM2,
+                variantIdentifierEnumMap.put(AmurCarpVariant.CREAM2,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carp3.png"));
-                variantIdentifierEnumMap.put(AmurCarpEntity.AmurCarpVariant.CREAM3,
+                variantIdentifierEnumMap.put(AmurCarpVariant.CREAM3,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carp4.png"));
-                variantIdentifierEnumMap.put(AmurCarpEntity.AmurCarpVariant.CREAM4,
+                variantIdentifierEnumMap.put(AmurCarpVariant.CREAM4,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carp5.png"));
             });
     public AmurCarpRenderer(EntityRendererFactory.Context renderManager) {

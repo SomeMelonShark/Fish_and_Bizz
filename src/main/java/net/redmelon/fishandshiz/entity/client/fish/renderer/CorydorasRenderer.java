@@ -10,19 +10,20 @@ import net.minecraft.util.Util;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.entity.client.fish.model.CorydorasModel;
 import net.redmelon.fishandshiz.entity.custom.CorydorasEntity;
+import net.redmelon.fishandshiz.entity.variant.CorydorasVariant;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 import java.util.Map;
 
 public class CorydorasRenderer extends GeoEntityRenderer<CorydorasEntity> {
-    public static final Map<CorydorasEntity.CorydorasVariant, Identifier> LOCATION_BY_VARIANT =
-            Util.make(Maps.newEnumMap(CorydorasEntity.CorydorasVariant.class), (corydorasVariantIdentifierEnumMap) -> {
-                corydorasVariantIdentifierEnumMap.put(CorydorasEntity.CorydorasVariant.BRONZE,
+    public static final Map<CorydorasVariant, Identifier> LOCATION_BY_VARIANT =
+            Util.make(Maps.newEnumMap(CorydorasVariant.class), (corydorasVariantIdentifierEnumMap) -> {
+                corydorasVariantIdentifierEnumMap.put(CorydorasVariant.BRONZE,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/corydoras1.png"));
-                corydorasVariantIdentifierEnumMap.put(CorydorasEntity.CorydorasVariant.PANDA,
+                corydorasVariantIdentifierEnumMap.put(CorydorasVariant.PANDA,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/corydoras2.png"));
-                corydorasVariantIdentifierEnumMap.put(CorydorasEntity.CorydorasVariant.ALBINO,
+                corydorasVariantIdentifierEnumMap.put(CorydorasVariant.ALBINO,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/corydoras3.png"));
             });
 

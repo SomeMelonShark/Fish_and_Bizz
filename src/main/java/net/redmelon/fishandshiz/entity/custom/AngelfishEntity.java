@@ -1,6 +1,5 @@
 package net.redmelon.fishandshiz.entity.custom;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -12,10 +11,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.WaterCreatureEntity;
-import net.minecraft.entity.passive.HorseColor;
-import net.minecraft.entity.passive.HorseEntity;
-import net.minecraft.entity.passive.TropicalFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -23,22 +18,15 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.BiomeTags;
-import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
 import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
-import net.redmelon.fishandshiz.block.ModBlocks;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
@@ -47,6 +35,7 @@ import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal
 import net.redmelon.fishandshiz.cclass.cmethods.goals.WaterStopGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
+import net.redmelon.fishandshiz.entity.variant.AngelfishVariant;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
@@ -56,13 +45,10 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-import java.util.Arrays;
-import java.util.Comparator;
-
 public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
+    public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     protected static final TrackedData<Integer> VARIANT = DataTracker.registerData(AngelfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
-    public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public AngelfishEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
@@ -163,51 +149,13 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
         controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
     }
 
-    public enum AngelfishVariant {
-        WILD1("",0),
-        WILD2("",1),
-        WILD3("",2),
-        MARBLE1("",3),
-        MARBLE2("",4),
-        PANTS1("",5),
-        PANTS2("",6),
-        PANTS3("",7),
-        PANTS4("",8),
-        STRIPES1("",9),
-        STRIPES2("",10),
-        STRIPES3("",11);
-
-        private static final AngelfishVariant[] BY_ID = Arrays.stream(values()).sorted(Comparator.comparingInt(AngelfishVariant::getId))
-                .toArray(AngelfishVariant[]::new);
-        private final int id;
-
-        public final String name;
-
-        AngelfishVariant(String name, int id) {
-            this.name=name;
-            this.id = id;
-        }
-
-        public int getId() {
-            return this.id;
-        }
-
-        public static AngelfishVariant byId(int id) {
-            return BY_ID[id % BY_ID.length];
-        }
-    }
-
-    public static AngelfishEntity.AngelfishVariant getVariety(int variant) {
-        return AngelfishEntity.AngelfishVariant.byId(variant);
-    }
-
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.factory;
     }
 
     @Override
-    public void writeCustomDatatoNbt(NbtCompound nbt) {
+    public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Variant", this.getTypeVariant());
     }
@@ -266,11 +214,8 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
         return entityData;
     }
 
-    @Override
-    public void copyDataToStack(ItemStack stack) {
-        super.copyDataToStack(stack);
-        NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt(BUCKET_VARIANT_TAG_KEY, this.getTypeVariant());
+    public static AngelfishVariant getVariety(int variant) {
+        return AngelfishVariant.byId(variant);
     }
 
     public AngelfishVariant getVariant() {
@@ -287,6 +232,12 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
 
     protected void setAngelfishVariant(int variant) {
         this.dataTracker.set(VARIANT, variant);
+    }
+    @Override
+    public void copyDataToStack(ItemStack stack) {
+        super.copyDataToStack(stack);
+        NbtCompound nbtCompound = stack.getOrCreateNbt();
+        nbtCompound.putInt(BUCKET_VARIANT_TAG_KEY, this.getTypeVariant());
     }
 }
 

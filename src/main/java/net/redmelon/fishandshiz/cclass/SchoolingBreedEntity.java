@@ -16,7 +16,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.Biome;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
-import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -114,8 +113,6 @@ public abstract class SchoolingBreedEntity extends AnimalFishEntity {
     public ItemStack getBucketItem() {
         return null;
     }
-
-    public abstract void writeCustomDatatoNbt(NbtCompound nbt);
 
     public static class BreedFishData
             implements EntityData {

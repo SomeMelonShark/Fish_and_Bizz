@@ -12,25 +12,26 @@ import net.redmelon.fishandshiz.entity.client.fish.model.AmurCarpModel;
 import net.redmelon.fishandshiz.entity.client.fish.model.BettaModel;
 import net.redmelon.fishandshiz.entity.custom.AmurCarpEntity;
 import net.redmelon.fishandshiz.entity.custom.BettaEntity;
+import net.redmelon.fishandshiz.entity.variant.BettaVariant;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 import java.util.Map;
 
 public class BettaRenderer extends GeoEntityRenderer<BettaEntity> {
-    public static final Map<BettaEntity.BettaVariant, Identifier> LOCATION_BY_VARIANT =
-            Util.make(Maps.newEnumMap(BettaEntity.BettaVariant.class), (variantIdentifierEnumMap) -> {
-                variantIdentifierEnumMap.put(BettaEntity.BettaVariant.WILD1,
+    public static final Map<BettaVariant, Identifier> LOCATION_BY_VARIANT =
+            Util.make(Maps.newEnumMap(BettaVariant.class), (variantIdentifierEnumMap) -> {
+                variantIdentifierEnumMap.put(BettaVariant.WILD1,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettaw1.png"));
-                variantIdentifierEnumMap.put(BettaEntity.BettaVariant.WILD2,
+                variantIdentifierEnumMap.put(BettaVariant.WILD2,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettaw2.png"));
-                variantIdentifierEnumMap.put(BettaEntity.BettaVariant.VEIL1,
+                variantIdentifierEnumMap.put(BettaVariant.VEIL1,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettav1.png"));
-                variantIdentifierEnumMap.put(BettaEntity.BettaVariant.VEIL2,
+                variantIdentifierEnumMap.put(BettaVariant.VEIL2,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettav2.png"));
-                variantIdentifierEnumMap.put(BettaEntity.BettaVariant.FAN1,
+                variantIdentifierEnumMap.put(BettaVariant.FAN1,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettaf1.png"));
-                variantIdentifierEnumMap.put(BettaEntity.BettaVariant.FAN2,
+                variantIdentifierEnumMap.put(BettaVariant.FAN2,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettaf2.png"));
             });
     public BettaRenderer(EntityRendererFactory.Context renderManager) {

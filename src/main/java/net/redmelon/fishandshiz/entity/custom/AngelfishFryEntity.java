@@ -34,6 +34,7 @@ import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
+import net.redmelon.fishandshiz.entity.variant.AngelfishVariant;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
@@ -45,10 +46,10 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_FRY_AGE = Math.abs(-18);
+    public static int MAX_AGE = Math.abs(-18000);
     public static float WIDTH = 0.4f;
     public static float HEIGHT = 0.3f;
-    private int fryAge;
+    protected int stageAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public AngelfishFryEntity(EntityType<? extends AngelfishEntity> entityType, World world) {
@@ -87,18 +88,18 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
     public void tickMovement() {
         super.tickMovement();
         if (!this.getWorld().isClient) {
-            this.setFryAge(this.fryAge + 1);
+            this.setStageAge(this.stageAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.fryAge);
+        nbt.putInt("Age", this.stageAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setFryAge(nbt.getInt("Age"));
+        this.setStageAge(nbt.getInt("Age"));
     }
     @Override
     protected void initDataTracker() {
@@ -109,13 +110,13 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
         super.copyDataToStack(stack);
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getFryAge());
+        nbtCompound.putInt("Age", this.getStageAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setFryAge(nbt.getInt("Age"));
+            this.setStageAge(nbt.getInt("Age"));
         }
     }
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
@@ -177,15 +178,20 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
         return entityData;
     }
 
-    private int getFryAge() {
-        return this.fryAge;
+    @Override
+    public @Nullable AngelfishEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+        return null;
+    }
+
+    private int getStageAge() {
+        return this.stageAge;
     }
     private void increaseAge(int seconds) {
-        this.setFryAge(this.fryAge + seconds * 20);
+        this.setStageAge(this.stageAge + seconds * 20);
     }
-    private void setFryAge(int fryAge) {
-        this.fryAge = fryAge;
-        if (this.fryAge >= MAX_FRY_AGE) {
+    private void setStageAge(int stageAge) {
+        this.stageAge = stageAge;
+        if (this.stageAge >= MAX_AGE) {
             this.growUp();
         }
     }
@@ -214,7 +220,7 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_FRY_AGE - this.fryAge);
+        return Math.max(0, MAX_AGE - this.stageAge);
     }
 
     @Override

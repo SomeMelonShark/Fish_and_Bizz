@@ -100,11 +100,6 @@ public class RainbowfishEntity extends SchoolingBreedEntity implements GeoEntity
     }
 
     @Override
-    public void writeCustomDatatoNbt(NbtCompound nbt) {
-
-    }
-
-    @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
     }

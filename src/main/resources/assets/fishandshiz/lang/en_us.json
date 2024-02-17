@@ -156,5 +156,7 @@
   "entity.fishandshiz.betta.type.WILD2": "Plains Wild Type",
   "entity.fishandshiz.betta.type.VEIL1": "Red Veil Type",
   "entity.fishandshiz.betta.type.VEIL2": "Blue Veil Type",
-  "entity.fishandshiz.betta.type.FAN1": "White Fan Type"
+  "entity.fishandshiz.betta.type.FAN1": "White Fan Type",
+  "entity.fishandshiz.archerfish.type.NORMAL": "Normal",
+  "entity.fishandshiz.archerfish.type.EVIL": "Evil"
 }

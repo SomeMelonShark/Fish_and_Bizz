@@ -10,38 +10,38 @@ import net.minecraft.util.Util;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.entity.client.fish.model.AngelfishModel;
 import net.redmelon.fishandshiz.entity.custom.AngelfishEntity;
-import net.redmelon.fishandshiz.entity.custom.OscarEntity;
+import net.redmelon.fishandshiz.entity.variant.AngelfishVariant;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 import java.util.Map;
 
 public class AngelfishRenderer extends GeoEntityRenderer<AngelfishEntity> {
-    public static final Map<AngelfishEntity.AngelfishVariant, Identifier> LOCATION_BY_VARIANT =
-            Util.make(Maps.newEnumMap(AngelfishEntity.AngelfishVariant.class), (variantIdentifierEnumMap) -> {
-                variantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.WILD1,
+    public static final Map<AngelfishVariant, Identifier> LOCATION_BY_VARIANT =
+            Util.make(Maps.newEnumMap(AngelfishVariant.class), (variantIdentifierEnumMap) -> {
+                variantIdentifierEnumMap.put(AngelfishVariant.WILD1,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishw1.png"));
-                variantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.WILD2,
+                variantIdentifierEnumMap.put(AngelfishVariant.WILD2,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishw2.png"));
-                variantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.WILD3,
+                variantIdentifierEnumMap.put(AngelfishVariant.WILD3,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishw3.png"));
-                variantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.MARBLE1,
+                variantIdentifierEnumMap.put(AngelfishVariant.MARBLE1,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishm1.png"));
-                variantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.MARBLE2,
+                variantIdentifierEnumMap.put(AngelfishVariant.MARBLE2,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishm2.png"));
-                variantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.PANTS1,
+                variantIdentifierEnumMap.put(AngelfishVariant.PANTS1,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishp1.png"));
-                variantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.PANTS2,
+                variantIdentifierEnumMap.put(AngelfishVariant.PANTS2,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishp2.png"));
-                variantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.PANTS3,
+                variantIdentifierEnumMap.put(AngelfishVariant.PANTS3,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishp3.png"));
-                variantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.PANTS4,
+                variantIdentifierEnumMap.put(AngelfishVariant.PANTS4,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishp4.png"));
-                variantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.STRIPES1,
+                variantIdentifierEnumMap.put(AngelfishVariant.STRIPES1,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishs1.png"));
-                variantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.STRIPES2,
+                variantIdentifierEnumMap.put(AngelfishVariant.STRIPES2,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishs2.png"));
-                variantIdentifierEnumMap.put(AngelfishEntity.AngelfishVariant.STRIPES3,
+                variantIdentifierEnumMap.put(AngelfishVariant.STRIPES3,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishs3.png"));
             });
     public AngelfishRenderer(EntityRendererFactory.Context renderManager) {
