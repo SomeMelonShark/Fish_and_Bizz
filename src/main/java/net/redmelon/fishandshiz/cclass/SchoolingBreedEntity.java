@@ -127,6 +127,6 @@ public abstract class SchoolingBreedEntity extends AnimalFishEntity {
         RegistryEntry<Biome> registryEntry = world.getBiome(pos);
         int i = world.getSeaLevel();
         int j = i - 2;
-        return pos.getY() >= j && pos.getY() <= i + 30 && world.getFluidState(pos.down()).isIn(FluidTags.WATER) && world.getBlockState(pos.up()).isOf(Blocks.WATER);
+        return pos.getY() >= j && pos.getY() <= i + 90 && world.getFluidState(pos.down()).isIn(FluidTags.WATER) && world.getBlockState(pos.up()).isOf(Blocks.WATER);
     }
 }

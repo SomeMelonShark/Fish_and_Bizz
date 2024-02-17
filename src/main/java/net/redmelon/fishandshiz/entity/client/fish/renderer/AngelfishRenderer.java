@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.entity.client.fish.model.AngelfishModel;
-import net.redmelon.fishandshiz.entity.custom.AngelfishEntity;
+import net.redmelon.fishandshiz.entity.custom.fish.AngelfishEntity;
 import net.redmelon.fishandshiz.entity.variant.AngelfishVariant;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
@@ -43,6 +43,8 @@ public class AngelfishRenderer extends GeoEntityRenderer<AngelfishEntity> {
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishs2.png"));
                 variantIdentifierEnumMap.put(AngelfishVariant.STRIPES3,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishs3.png"));
+                variantIdentifierEnumMap.put(AngelfishVariant.SPECIAL,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishm3.png"));
             });
     public AngelfishRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new AngelfishModel());

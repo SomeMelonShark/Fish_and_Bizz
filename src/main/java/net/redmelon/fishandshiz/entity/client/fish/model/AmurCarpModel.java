@@ -3,7 +3,7 @@ package net.redmelon.fishandshiz.entity.client.fish.model;
 import net.minecraft.util.Identifier;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.entity.client.fish.renderer.AmurCarpRenderer;
-import net.redmelon.fishandshiz.entity.custom.AmurCarpEntity;
+import net.redmelon.fishandshiz.entity.custom.fish.AmurCarpEntity;
 import software.bernie.geckolib.model.GeoModel;
 
 public class AmurCarpModel extends GeoModel<AmurCarpEntity> {

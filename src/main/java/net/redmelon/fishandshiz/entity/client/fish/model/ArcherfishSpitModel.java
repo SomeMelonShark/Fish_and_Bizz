@@ -2,7 +2,7 @@ package net.redmelon.fishandshiz.entity.client.fish.model;
 
 import net.minecraft.util.Identifier;
 import net.redmelon.fishandshiz.FishAndShiz;
-import net.redmelon.fishandshiz.entity.custom.ArcherfishSpitEntity;
+import net.redmelon.fishandshiz.entity.custom.fish.ArcherfishSpitEntity;
 import software.bernie.geckolib.model.GeoModel;
 
 public class ArcherfishSpitModel extends GeoModel<ArcherfishSpitEntity> {

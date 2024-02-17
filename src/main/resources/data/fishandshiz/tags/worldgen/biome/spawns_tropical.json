@@ -1,5 +1,6 @@
 {
   "values": [
-    "#minecraft:is_jungle"
+    "#minecraft:is_jungle",
+    "fishandshiz:jungle_basin"
   ]
 }

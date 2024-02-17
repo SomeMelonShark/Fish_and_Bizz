@@ -1,7 +1,5 @@
 package net.redmelon.fishandshiz.entity.variant;
 
-import net.redmelon.fishandshiz.entity.custom.AngelfishEntity;
-
 import java.util.Arrays;
 import java.util.Comparator;
 
@@ -17,7 +15,8 @@ public enum AngelfishVariant {
     PANTS4(8),
     STRIPES1(9),
     STRIPES2(10),
-    STRIPES3(11);
+    STRIPES3(11),
+    SPECIAL(12);
 
     private static final AngelfishVariant[] BY_ID = Arrays.stream(values()).sorted(Comparator.comparingInt(AngelfishVariant::getId))
             .toArray(AngelfishVariant[]::new);

@@ -3,7 +3,7 @@ package net.redmelon.fishandshiz.entity.client.fish.model;
 import net.minecraft.util.Identifier;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.entity.client.fish.renderer.AngelfishRenderer;
-import net.redmelon.fishandshiz.entity.custom.AngelfishEntity;
+import net.redmelon.fishandshiz.entity.custom.fish.AngelfishEntity;
 import software.bernie.geckolib.model.GeoModel;
 
 public class AngelfishModel extends GeoModel<AngelfishEntity> {

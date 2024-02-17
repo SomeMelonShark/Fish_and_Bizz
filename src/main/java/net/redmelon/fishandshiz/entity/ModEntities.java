@@ -9,6 +9,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.entity.custom.*;
+import net.redmelon.fishandshiz.entity.custom.fish.*;
 
 public class ModEntities {
     public static final EntityType<AngelfishEntity> ANGELFISH = Registry.register(Registries.ENTITY_TYPE,

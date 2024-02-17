@@ -1,9 +1,10 @@
-package net.redmelon.fishandshiz.entity.custom;
+package net.redmelon.fishandshiz.entity.custom.fish;
 
 import com.google.common.annotations.VisibleForTesting;
 import net.minecraft.entity.Bucketable;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -14,10 +15,8 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
-import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.custom.fish.NeonTetraEggEntity;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -25,23 +24,33 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class VolcanoSnailEggEntity extends VolcanoSnailEntity implements GeoEntity {
+public class MilkfishEggEntity extends MilkfishEntity implements GeoEntity {
     @VisibleForTesting
-    public static int MAX_EGG_AGE = Math.abs(-12000);
+    public static int MAX_EGG_AGE = Math.abs(-18000);
     private int eggAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-    public VolcanoSnailEggEntity(EntityType<? extends AnimalWaterEntity> entityType, World world) {
+    public MilkfishEggEntity(EntityType<? extends MilkfishEntity> entityType, World world) {
         super(entityType, world);
-    }
-
-    protected void initGoals() {
-
+        this.moveControl = new MilkfishEggEntity.FishMoveControl(this);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
+    }
+    static class FishMoveControl
+            extends MoveControl {
+        private final AnimalFishEntity fish;
+
+        FishMoveControl(AnimalFishEntity owner) {
+            super(owner);
+            this.fish = owner;
+        }
+
+        @Override
+        public void tick() {//does not move
+        }
     }
     @Override
     public void tickMovement() {
@@ -91,13 +100,14 @@ public class VolcanoSnailEggEntity extends VolcanoSnailEntity implements GeoEnti
         return false;
     }
 
+
     private void growUp() {
         World world = this.getWorld();
-        int i = random.nextBetweenExclusive(10, 17);
+        int i = random.nextBetweenExclusive(5, 10);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                VolcanoSnailEntity nextEntity = ModEntities.VOLCANO_SNAIL.create(this.getWorld());
+                MilkfishFryEntity nextEntity = ModEntities.MILKFISH_FRY.create(this.getWorld());
                 if (nextEntity != null) {
                     nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
                     nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
@@ -132,22 +142,18 @@ public class VolcanoSnailEggEntity extends VolcanoSnailEntity implements GeoEnti
         return SoundEvents.BLOCK_FROGSPAWN_BREAK;
     }
 
+    @Override
     protected SoundEvent getFlopSound() {
         return SoundEvents.BLOCK_FROGSPAWN_HIT;
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_TROPICAL_FISH_AMBIENT;
-    }
-
-    @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.VOLCANO_SNAIL_EGG_BUCKET);
+        return new ItemStack(ModItems.MILKFISH_EGG_BUCKET);
     }
 
     @Override
-    public @Nullable NeonTetraEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+    public @Nullable MilkfishEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
         return null;
     }
 

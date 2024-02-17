@@ -1,47 +1,67 @@
-package net.redmelon.fishandshiz.entity.custom;
+package net.redmelon.fishandshiz.entity.custom.fish;
 
 import com.google.common.annotations.VisibleForTesting;
 import net.minecraft.entity.Bucketable;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Util;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
-import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.custom.fish.NeonTetraEggEntity;
+import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
+import net.redmelon.fishandshiz.entity.variant.CorydorasVariant;
 import net.redmelon.fishandshiz.item.ModItems;
+import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class VolcanoSnailEggEntity extends VolcanoSnailEntity implements GeoEntity {
+public class CorydorasEggEntity extends CorydorasEntity implements GeoEntity {
     @VisibleForTesting
     public static int MAX_EGG_AGE = Math.abs(-12000);
     private int eggAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-    public VolcanoSnailEggEntity(EntityType<? extends AnimalWaterEntity> entityType, World world) {
+    public CorydorasEggEntity(EntityType<? extends CorydorasEntity> entityType, World world) {
         super(entityType, world);
-    }
-
-    protected void initGoals() {
-
+        this.moveControl = new CorydorasEggEntity.FishMoveControl(this);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
+    }
+    static class FishMoveControl
+            extends MoveControl {
+        private final AnimalFishEntity fish;
+
+        FishMoveControl(AnimalFishEntity owner) {
+            super(owner);
+            this.fish = owner;
+        }
+
+        @Override
+        public void tick() {//does not move
+        }
     }
     @Override
     public void tickMovement() {
@@ -62,6 +82,7 @@ public class VolcanoSnailEggEntity extends VolcanoSnailEntity implements GeoEnti
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
+        super.copyDataToStack(stack);
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
         nbtCompound.putInt("Age", this.getEggAge());
@@ -87,17 +108,55 @@ public class VolcanoSnailEggEntity extends VolcanoSnailEntity implements GeoEnti
     }
 
     @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
+                                 @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
+        RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
+        CorydorasVariant variant;
+
+        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
+            this.setCorydorasVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
+            return entityData;
+        }
+
+        if (spawnReason == SpawnReason.NATURAL) {
+            if (registryEntry.matchesKey(BiomeKeys.RIVER)) {
+                variant = (CorydorasVariant.BRONZE);
+            } else if (registryEntry.isIn(TropicalSpawn.SPAWNS_TROPICAL)) {
+                variant = (CorydorasVariant.BRONZE);
+            } else if (registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
+                variant = (CorydorasVariant.BRONZE);
+            } else if (registryEntry.matchesKey(BiomeKeys.JUNGLE)) {
+                variant = (CorydorasVariant.BRONZE);
+            } else if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN)) {
+                variant = (CorydorasVariant.BRONZE);
+            } else {
+                variant = Util.getRandom(CorydorasVariant.values(), this.random);
+            }
+        } else {
+            variant = Util.getRandom(CorydorasVariant.values(), this.random);
+        }
+
+        setVariant(variant);
+        entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        this.setCorydorasVariant(variant.getId());
+        return entityData;
+    }
+
+    @Override
     public boolean isBreedingItem(ItemStack stack) {
         return false;
     }
 
+
     private void growUp() {
+        CorydorasVariant variant;
         World world = this.getWorld();
-        int i = random.nextBetweenExclusive(10, 17);
+        int i = random.nextBetweenExclusive(3, 6);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
+                variant = this.getVariant();
                 ServerWorld serverWorld = (ServerWorld)world;
-                VolcanoSnailEntity nextEntity = ModEntities.VOLCANO_SNAIL.create(this.getWorld());
+                CorydorasFryEntity nextEntity = ModEntities.CORYDORAS_FRY.create(this.getWorld());
                 if (nextEntity != null) {
                     nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
                     nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
@@ -107,6 +166,7 @@ public class VolcanoSnailEggEntity extends VolcanoSnailEntity implements GeoEnti
                         nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                     }
                     nextEntity.setPersistent();
+                    nextEntity.setVariant(variant);
                     this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
                     serverWorld.spawnEntityAndPassengers(nextEntity);
                     this.discard();
@@ -132,22 +192,18 @@ public class VolcanoSnailEggEntity extends VolcanoSnailEntity implements GeoEnti
         return SoundEvents.BLOCK_FROGSPAWN_BREAK;
     }
 
+    @Override
     protected SoundEvent getFlopSound() {
         return SoundEvents.BLOCK_FROGSPAWN_HIT;
     }
 
     @Override
-    protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_TROPICAL_FISH_AMBIENT;
-    }
-
-    @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.VOLCANO_SNAIL_EGG_BUCKET);
+        return new ItemStack(ModItems.CORYDORAS_EGG_BUCKET);
     }
 
     @Override
-    public @Nullable NeonTetraEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+    public @Nullable CorydorasEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
         return null;
     }
 

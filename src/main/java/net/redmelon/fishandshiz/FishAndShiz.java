@@ -6,6 +6,7 @@ import net.redmelon.fishandshiz.block.ModBlocks;
 import net.redmelon.fishandshiz.block.entity.ModBlockEntities;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.custom.*;
+import net.redmelon.fishandshiz.entity.custom.fish.*;
 import net.redmelon.fishandshiz.item.ModItemGroup;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.sound.ModSounds;

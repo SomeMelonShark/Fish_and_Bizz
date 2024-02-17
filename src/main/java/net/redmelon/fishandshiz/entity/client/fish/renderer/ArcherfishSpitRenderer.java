@@ -7,7 +7,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.entity.client.fish.model.ArcherfishSpitModel;
-import net.redmelon.fishandshiz.entity.custom.ArcherfishSpitEntity;
+import net.redmelon.fishandshiz.entity.custom.fish.ArcherfishSpitEntity;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 

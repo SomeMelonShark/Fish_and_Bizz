@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.entity.client.fish.model.CorydorasModel;
-import net.redmelon.fishandshiz.entity.custom.CorydorasEntity;
+import net.redmelon.fishandshiz.entity.custom.fish.CorydorasEntity;
 import net.redmelon.fishandshiz.entity.variant.CorydorasVariant;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;

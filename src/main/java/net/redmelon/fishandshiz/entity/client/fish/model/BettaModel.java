@@ -3,7 +3,7 @@ package net.redmelon.fishandshiz.entity.client.fish.model;
 import net.minecraft.util.Identifier;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.entity.client.fish.renderer.BettaRenderer;
-import net.redmelon.fishandshiz.entity.custom.BettaEntity;
+import net.redmelon.fishandshiz.entity.custom.fish.BettaEntity;
 import software.bernie.geckolib.model.GeoModel;
 
 public class BettaModel extends GeoModel<BettaEntity> {
