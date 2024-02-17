@@ -57,7 +57,7 @@ public class BasicFishModel<E extends LivingEntity & GeoAnimatable> extends GeoM
         if (root != null) {
             CoreGeoBone rootBone = this.getAnimationProcessor().getBone("root");
             EntityModelData entityModelData = (EntityModelData) animationState.getExtraData().get(0);
-            if (rootBone != null) {;
+            if (rootBone != null) {
                 rootBone.setRotX(entityModelData.headPitch() * ((float) Math.PI / 180F));
                 rootBone.setRotY(entityModelData.netHeadYaw() * ((float) Math.PI / 180F));
             }

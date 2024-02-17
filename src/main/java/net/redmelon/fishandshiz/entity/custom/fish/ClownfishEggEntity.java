@@ -27,7 +27,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public class ClownfishEggEntity extends ClownfishEntity implements GeoEntity {
     @VisibleForTesting
     public static int MAX_EGG_AGE = Math.abs(-12000);
-    private int eggAge;
+    private int stageAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
@@ -58,42 +58,42 @@ public class ClownfishEggEntity extends ClownfishEntity implements GeoEntity {
     public void tickMovement() {
         super.tickMovement();
         if (!this.getWorld().isClient) {
-            this.setEggAge(this.eggAge + 1);
+            this.setStageAge(this.stageAge + 1);
         }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Age", this.eggAge);
+        nbt.putInt("Age", this.stageAge);
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setEggAge(nbt.getInt("Age"));
+        this.setStageAge(nbt.getInt("Age"));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt("Age", this.getEggAge());
+        nbtCompound.putInt("Age", this.getStageAge());
     }
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
         if (nbt.contains("Age")) {
-            this.setEggAge(nbt.getInt("Age"));
+            this.setStageAge(nbt.getInt("Age"));
         }
     }
 
-    private int getEggAge() {
-        return this.eggAge;
+    private int getStageAge() {
+        return this.stageAge;
     }
     private void increaseAge(int seconds) {
-        this.setEggAge(this.eggAge + seconds * 20);
+        this.setStageAge(this.stageAge + seconds * 20);
     }
-    private void setEggAge(int eggAge) {
-        this.eggAge = eggAge;
-        if (this.eggAge >= MAX_EGG_AGE) {
+    private void setStageAge(int stageAge) {
+        this.stageAge = stageAge;
+        if (this.stageAge >= MAX_EGG_AGE) {
             this.growUp();
         }
     }
@@ -122,7 +122,7 @@ public class ClownfishEggEntity extends ClownfishEntity implements GeoEntity {
     }
 
     private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_EGG_AGE - this.eggAge);
+        return Math.max(0, MAX_EGG_AGE - this.stageAge);
     }
 
     @Override

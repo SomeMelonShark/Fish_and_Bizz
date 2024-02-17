@@ -49,7 +49,7 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return SchoolingBreedEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 4)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 6)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 20);
     }
     private PlayState genericFlopController(AnimationState animationState) {
@@ -72,13 +72,14 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
         this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
         this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
 
-        this.targetSelector.add(1, new ActiveTargetGoal<SpiderEntity>((MobEntity)this, SpiderEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<SpiderEntity>((MobEntity)this, SpiderEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<CaveSpiderEntity>((MobEntity)this, CaveSpiderEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<SilverfishEntity>((MobEntity)this, SilverfishEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<DrownedEntity>((MobEntity)this, DrownedEntity.class, true));
         this.targetSelector.add(4, new ActiveTargetGoal<GuardianEntity>((MobEntity)this, GuardianEntity.class, true));
         this.targetSelector.add(4, new ActiveTargetGoal<ElderGuardianEntity>((MobEntity)this, ElderGuardianEntity.class, true));
         this.targetSelector.add(5, new ActiveTargetGoal<WitherEntity>((MobEntity)this, WitherEntity.class, true));
-        this.targetSelector.add(6, new ActiveTargetGoal<PlayerEntity>((MobEntity)this, PlayerEntity.class, true));
+        this.targetSelector.add(1, (new RevengeGoal(this)).setGroupRevenge());
     }
 
     @Override
