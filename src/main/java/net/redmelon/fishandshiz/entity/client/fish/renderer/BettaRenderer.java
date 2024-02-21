@@ -31,6 +31,10 @@ public class BettaRenderer extends GeoEntityRenderer<BettaEntity> {
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettaf1.png"));
                 variantIdentifierEnumMap.put(BettaVariant.FAN2,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettaf2.png"));
+                variantIdentifierEnumMap.put(BettaVariant.FAN3,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettaf3.png"));
+                variantIdentifierEnumMap.put(BettaVariant.SPECIAL,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettaf4.png"));
             });
     public BettaRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new BettaModel());

@@ -6,7 +6,8 @@ import java.util.Comparator;
 public enum CorydorasVariant {
     BRONZE(0),
     PANDA(1),
-    ALBINO(2);
+    ALBINO(2),
+    SPECIAL(3);
     private static final CorydorasVariant[] BY_ID = Arrays.stream(values()).sorted(Comparator.comparingInt(CorydorasVariant::getId))
             .toArray(CorydorasVariant[]::new);
     private final int id;

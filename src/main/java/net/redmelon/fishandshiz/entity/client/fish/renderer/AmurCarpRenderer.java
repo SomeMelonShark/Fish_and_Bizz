@@ -29,6 +29,8 @@ public class AmurCarpRenderer extends GeoEntityRenderer<AmurCarpEntity> {
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carp4.png"));
                 variantIdentifierEnumMap.put(AmurCarpVariant.CREAM4,
                         new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carp5.png"));
+                variantIdentifierEnumMap.put(AmurCarpVariant.SPECIAL,
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carp6.png"));
             });
     public AmurCarpRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new AmurCarpModel());

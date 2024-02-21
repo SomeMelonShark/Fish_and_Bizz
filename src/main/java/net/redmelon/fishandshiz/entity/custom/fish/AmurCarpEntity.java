@@ -37,8 +37,11 @@ import net.redmelon.fishandshiz.entity.custom.CrayfishEggEntity;
 import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabEggEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
+import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
 import net.redmelon.fishandshiz.entity.variant.AmurCarpVariant;
+import net.redmelon.fishandshiz.entity.variant.AngelfishVariant;
 import net.redmelon.fishandshiz.item.ModItems;
+import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -202,33 +205,41 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
         AmurCarpVariant variant;
+        int j = random.nextInt(1200);
 
         if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
             this.setAmurCarpVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
             return entityData;
         }
 
-        if (spawnReason == SpawnReason.NATURAL){
-            if (registryEntry.matchesKey(BiomeKeys.TAIGA)) {
-                variant = (AmurCarpVariant.WILD);
-            } else if (registryEntry.matchesKey(BiomeKeys.FROZEN_RIVER)) {
-                variant = (AmurCarpVariant.WILD);
-            } else {
-                variant = Util.getRandom(AmurCarpVariant.values(), this.random);
-            }
-
-        } else if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
+        if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE) && j != 0) {
             this.setAmurCarpVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
             return entityData;
+        } else if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE) && j == 0) {
+            variant = (AmurCarpVariant.SPECIAL);
+            this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.0f, 1.5f);
         }else if (spawnReason == SpawnReason.CONVERSION) {
             int i = random.nextInt(7);
             if (i == 1) {
-                variant = Util.getRandom(AmurCarpVariant.values(), this.random);
+                variant = AmurCarpVariant.byId(random.nextInt(5));
             } else {
                 variant = (AmurCarpVariant.WILD);
             }
         } else {
-            variant = Util.getRandom(AmurCarpVariant.values(), this.random);
+            variant = AmurCarpVariant.byId(random.nextInt(5));
+        }
+
+        if (spawnReason == SpawnReason.NATURAL && j == 0){
+            variant = (AmurCarpVariant.SPECIAL);
+            this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 2.0f, 1.5f);
+        } else if (spawnReason == SpawnReason.NATURAL) {
+            if (registryEntry.matchesKey(BiomeKeys.TAIGA)) {
+                variant = (AmurCarpVariant.WILD);
+            } else if (registryEntry.matchesKey(BiomeKeys.FROZEN_RIVER)) {
+                variant = (AmurCarpVariant.WILD);
+            }
+        } else {
+            variant = AmurCarpVariant.byId(random.nextInt(5));
         }
         setVariant(variant);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);

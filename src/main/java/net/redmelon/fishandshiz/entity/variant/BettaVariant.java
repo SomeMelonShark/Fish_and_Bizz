@@ -9,7 +9,9 @@ public enum BettaVariant {
     VEIL1(2),
     VEIL2(3),
     FAN1(4),
-    FAN2(5);
+    FAN2(5),
+    FAN3(6),
+    SPECIAL(7);
 
     private static final BettaVariant[] BY_ID = Arrays.stream(values()).sorted(Comparator.comparingInt(BettaVariant::getId))
             .toArray(BettaVariant[]::new);

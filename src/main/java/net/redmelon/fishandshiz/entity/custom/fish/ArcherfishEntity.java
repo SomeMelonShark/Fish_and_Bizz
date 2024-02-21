@@ -13,24 +13,28 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionUtil;
+import net.minecraft.potion.Potions;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Util;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
-import net.redmelon.fishandshiz.entity.variant.AngelfishVariant;
-import net.redmelon.fishandshiz.entity.variant.ArcherfishVariant;
+import net.redmelon.fishandshiz.entity.variant.BiVariant;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -38,6 +42,8 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
+
+import java.util.List;
 
 public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity, RangedAttackMob {
     protected static final TrackedData<Integer> VARIANT = DataTracker.registerData(ArcherfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -129,19 +135,19 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
         this.dataTracker.startTracking(VARIANT, 0);
     }
 
-    public static ArcherfishVariant getVariety(int variant) {
-        return ArcherfishVariant.byId(variant);
+    public static BiVariant getVariety(int variant) {
+        return BiVariant.byId(variant);
     }
 
-    public ArcherfishVariant getVariant() {
-        return ArcherfishVariant.byId(this.getTypeVariant() & 255);
+    public BiVariant getVariant() {
+        return BiVariant.byId(this.getTypeVariant() & 255);
     }
 
     public int getTypeVariant() {
         return this.dataTracker.get(VARIANT);
     }
 
-    protected void setVariant(ArcherfishVariant variant) {
+    protected void setVariant(BiVariant variant) {
         this.dataTracker.set(VARIANT, variant.getId() & 255);
     }
 
@@ -163,9 +169,9 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        ArcherfishVariant variant;
-        int i = random.nextInt(2);
-        int j = random.nextInt(1200);
+        BiVariant variant;
+        int i = random.nextInt(3);
+        int j = random.nextInt(600);
         if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
             this.setArcherfishVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
             return entityData;
@@ -175,13 +181,13 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
         }
         if (spawnReason == SpawnReason.NATURAL) {
             if (j == 0){
-                variant = ArcherfishVariant.EVIL;
+                variant = BiVariant.SPECIAL;
                 this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.0f, 1.5f);
             } else {
-                variant = ArcherfishVariant.NORMAL;
+                variant = BiVariant.NORMAL;
             }
         } else {
-            variant = ArcherfishVariant.byId(random.nextInt(1));
+            variant = BiVariant.byId(random.nextInt(1));
         }
         setVariant(variant);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
@@ -204,6 +210,15 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
         archerfishSpitEntity.setVelocity(d, e + g * (double)0.2f, f, 1.6f, 14 - this.getWorld().getDifficulty().getId() * 4);
         this.playSound(SoundEvents.AMBIENT_UNDERWATER_ENTER, 0.6f, 2.0f / (this.getRandom().nextFloat() * 0.4f + 0.8f));
         this.getWorld().spawnEntity(archerfishSpitEntity);
+    }
+
+    @Override
+    public boolean damage(DamageSource source, float amount) {
+        boolean bl = source.getSource() instanceof ArcherfishSpitEntity;
+        if (bl) {
+            return false;
+        }
+        return super.damage(source, amount);
     }
 
     static class WaterAttackGoal

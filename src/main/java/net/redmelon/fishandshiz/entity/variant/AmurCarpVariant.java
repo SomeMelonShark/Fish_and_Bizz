@@ -8,7 +8,8 @@ public enum AmurCarpVariant {
     CREAM1(1),
     CREAM2(2),
     CREAM3(3),
-    CREAM4(4);
+    CREAM4(4),
+    SPECIAL(5);
 
     private static final AmurCarpVariant[] BY_ID = Arrays.stream(values()).sorted(Comparator.comparingInt(AmurCarpVariant::getId))
             .toArray(AmurCarpVariant[]::new);

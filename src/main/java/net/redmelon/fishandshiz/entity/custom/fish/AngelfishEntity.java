@@ -227,7 +227,10 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
             variant = AngelfishVariant.byId(random.nextInt(11));
         }
 
-        if (spawnReason == SpawnReason.NATURAL && j != 0){
+        if (spawnReason == SpawnReason.NATURAL && j == 0){
+            variant = (AngelfishVariant.SPECIAL);
+            this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 2.0f, 1.5f);
+        } else if (spawnReason == SpawnReason.NATURAL) {
             if (registryEntry.matchesKey(BiomeKeys.RIVER)) {
                 variant = (AngelfishVariant.WILD1);
             } else if (registryEntry.isIn(TropicalSpawn.SPAWNS_TROPICAL)) {
@@ -239,9 +242,6 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
             } else if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN)) {
                 variant = (AngelfishVariant.WILD1);
             }
-        } else if (spawnReason == SpawnReason.NATURAL && j == 0) {
-            variant = (AngelfishVariant.SPECIAL);
-            this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 2.0f, 1.5f);
         } else {
             variant = AngelfishVariant.byId(random.nextInt(11));
         }
