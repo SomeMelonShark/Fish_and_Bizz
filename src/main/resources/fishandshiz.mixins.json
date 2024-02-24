@@ -4,8 +4,9 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AnemoneMixin",
-    "SalmonMixin",
-    "BucketTooltipMixin"
+    "BucketTooltipMixin",
+    "MultifaceGrowthMixin",
+    "SalmonMixin"
   ],
   "injectors": {
     "defaultRequire": 1

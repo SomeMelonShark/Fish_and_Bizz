@@ -1,7 +1,6 @@
 package net.redmelon.fishandshiz.block;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.piston.PistonBehavior;
@@ -11,6 +10,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.block.custom.*;
 
@@ -45,6 +45,8 @@ public class ModBlocks {
             new SeaAnemoneBlock(FabricBlockSettings.of().mapColor(MapColor.ORANGE).pistonBehavior(PistonBehavior.DESTROY).noCollision().breakInstantly().nonOpaque().sounds(BlockSoundGroup.WART_BLOCK)));
     public static final Block POWERED_PRISMARINE = registerBlock("powered_prismarine",
             new PoweredPrismarineBlock(FabricBlockSettings.of().mapColor(MapColor.LIGHT_BLUE).luminance(createLightLevelFromLitBlockState(15)).strength(0.3F).sounds(BlockSoundGroup.GLASS)));
+    public static final Block CULTURE_FEED = registerBlock("culture_feed",
+            new CultureFeedBlock(FabricBlockSettings.of().mapColor(MapColor.BROWN).noCollision().breakInstantly().nonOpaque().sounds(BlockSoundGroup.GLOW_LICHEN)));
     private static Block registerBlock(String name, Block block) {
         registerBlockItems(name, block);
         return Registry.register(Registries.BLOCK, new Identifier(FishAndShiz.MOD_ID, name), block);

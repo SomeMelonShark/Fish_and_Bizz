@@ -2,12 +2,13 @@ package net.redmelon.fishandshiz.data;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.minecraft.data.client.*;
+import net.minecraft.data.client.BlockStateModelGenerator;
+import net.minecraft.data.client.ItemModelGenerator;
+import net.minecraft.data.client.ModelIds;
+import net.minecraft.data.client.Models;
 import net.minecraft.util.Identifier;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.block.ModBlocks;
-import net.redmelon.fishandshiz.block.custom.TallVallisneriaBlock;
-import net.redmelon.fishandshiz.block.custom.VallisneriaBlock;
 import net.redmelon.fishandshiz.item.ModItems;
 
 public class ModModelProvider extends FabricModelProvider {
@@ -37,6 +38,8 @@ public class ModModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+        itemModelGenerator.register(ModItems.CULTURE_FEED_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.DRIED_CULTURE_FEED, Models.GENERATED);
         itemModelGenerator.register(ModItems.FISHMEAL, Models.GENERATED);
         itemModelGenerator.register(ModItems.FISH_FOOD, Models.GENERATED);
         itemModelGenerator.register(ModItems.DRIED_MULM, Models.GENERATED);

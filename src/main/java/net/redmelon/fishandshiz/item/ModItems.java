@@ -11,6 +11,7 @@ import net.minecraft.util.Identifier;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.block.ModBlocks;
 import net.redmelon.fishandshiz.entity.ModEntities;
+import net.redmelon.fishandshiz.item.custom.CultureFeedBucketItem;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -135,6 +136,9 @@ public class ModItems {
             new EntityBucketItem(ModEntities.VOLCANO_SNAIL, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY, new FabricItemSettings().maxCount(1)));
     public static final Item VOLCANO_SNAIL_EGG_BUCKET = registerItem("volcano_snail_egg_bucket",
             new EntityBucketItem(ModEntities.VOLCANO_SNAIL_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY, new FabricItemSettings().maxCount(1)));
+    public static final Item CULTURE_FEED_BUCKET = registerItem("culture_feed_bucket",
+            new CultureFeedBucketItem(ModBlocks.CULTURE_FEED, SoundEvents.ITEM_BUCKET_EMPTY, new FabricItemSettings().maxCount(1)));
+    public static final Item DRIED_CULTURE_FEED = registerItem("dried_culture_feed", new Item(new FabricItemSettings()));
     public static final Item MILKFISH = registerItem("milkfish",
             new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(2).saturationModifier(2f).build())));
     public static final Item COOKED_MILKFISH = registerItem("cooked_milkfish",

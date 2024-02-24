@@ -59,6 +59,7 @@ public class ModBiomes {
 
         DefaultBiomeFeatures.addDefaultMushrooms(biomeBuilder);
         DefaultBiomeFeatures.addDefaultVegetation(biomeBuilder);
+        biomeBuilder.feature(GenerationStep.Feature.TOP_LAYER_MODIFICATION, ModPlacedFeatures.PLACED_CULTURE_FEED);
 
         return new Biome.Builder()
                 .precipitation(true)

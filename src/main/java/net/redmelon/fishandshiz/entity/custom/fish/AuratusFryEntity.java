@@ -113,7 +113,7 @@ public class AuratusFryEntity extends AuratusEntity implements GeoEntity {
         }
     }
     private boolean isFishFood(ItemStack stack) {
-        return MilkfishEntity.FISH_FOOD.test(stack);
+        return FISH_FOOD.test(stack);
     }
     private void eatFishFood (PlayerEntity player, ItemStack stack) {
         this.decrementItem(player, stack);
