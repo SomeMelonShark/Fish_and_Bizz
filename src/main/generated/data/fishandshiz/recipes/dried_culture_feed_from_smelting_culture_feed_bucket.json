@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.2,
+  "group": "misc",
+  "ingredient": {
+    "item": "fishandshiz:culture_feed_bucket"
+  },
+  "result": "fishandshiz:dried_culture_feed"
+}

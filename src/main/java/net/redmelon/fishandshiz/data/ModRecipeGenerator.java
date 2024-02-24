@@ -34,6 +34,10 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
         offerSmelting(exporter, List.of(ModBlocks.MULM), RecipeCategory.MISC, ModItems.DRIED_MULM,
                 0.5f, 200, "misc");
 
+        //DO!
+        offerSmelting(exporter, List.of(ModItems.CULTURE_FEED_BUCKET), RecipeCategory.MISC, ModItems.DRIED_CULTURE_FEED,
+                0.20f, 200, "misc");
+
         ShapelessRecipeJsonBuilder.create(RecipeCategory.FOOD, ModItems.CORN_KERNELS, 3)
                 .input(ModItems.CORN)
                 .group("food")

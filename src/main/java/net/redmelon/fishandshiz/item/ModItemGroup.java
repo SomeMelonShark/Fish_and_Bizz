@@ -23,6 +23,7 @@ public class ModItemGroup {
 
     public static void registerItemGroups() {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(entries -> {
+            entries.add(ModItems.CULTURE_FEED_BUCKET);
             entries.add(ModItems.ANGELFISH_BUCKET);
             entries.add(ModItems.ANGELFISH_FRY_BUCKET);
             entries.add(ModItems.ANGELFISH_EGG_BUCKET);
@@ -92,7 +93,7 @@ public class ModItemGroup {
         });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
-            entries.add(ModItems.FISHMEAL);
+            entries.add(ModItems.DRIED_CULTURE_FEED);
             entries.add(ModItems.FISH_FOOD);
             entries.add(ModItems.FISHMEAL);
             entries.add(ModBlocks.FISHMEAL_BLOCK);

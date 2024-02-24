@@ -84,6 +84,10 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
     protected void initDataTracker() {
         super.initDataTracker();
     }
+    @Override
+    protected void initGoals() {
+
+    }
 
     @Override
     public void copyDataToStack(ItemStack stack) {

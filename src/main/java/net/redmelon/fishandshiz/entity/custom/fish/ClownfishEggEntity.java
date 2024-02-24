@@ -72,6 +72,10 @@ public class ClownfishEggEntity extends ClownfishEntity implements GeoEntity {
         this.setStageAge(nbt.getInt("Age"));
     }
     @Override
+    protected void initGoals() {
+
+    }
+    @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();

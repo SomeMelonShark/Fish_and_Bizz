@@ -1,4 +1,4 @@
-// 1.20	2024-02-09T15:36:05.727129	Fish And Bizz/Recipes
+// 1.20	2024-02-24T15:13:20.5603241	Fish And Bizz/Recipes
 a54a815f74663212b341a486d6dabdc6bd3b0ddc data\fishandshiz\recipes\fishmeal_block.json
 34c617b8507cc21726a5c76c5a8b8ce36bdd4699 data\fishandshiz\advancements\recipes\misc\fishmeal_from_cooked_salmon.json
 9f2072e1c61663e425cfc85ffe5b540e4cad0ec0 data\fishandshiz\recipes\sushi_from_milkfish.json
@@ -16,7 +16,9 @@ cf5b0be9b80a6040387a51761dd8362767b54310 data\fishandshiz\advancements\recipes\m
 33c60f5759b617f57bfe4adcb960d44eaeb726c0 data\fishandshiz\recipes\fish_food_from_cooked_mutton.json
 33cd939d67b3b4f5d612b7f309d5abddc126b366 data\fishandshiz\recipes\powered_prismarine.json
 a0a68c48a4a1003c511697473e5d99e388e71750 data\fishandshiz\advancements\recipes\misc\fish_food_from_cooked_chicken.json
+056aa59d60ef4a1d0a4ae23b995062fcfd5c0dd1 data\fishandshiz\advancements\recipes\misc\dried_culture_feed_from_smelting_culture_feed_bucket.json
 7f0ab0fa8b99971e46e367e74683ea044702991e data\fishandshiz\advancements\recipes\misc\fishmeal_block.json
+a0f9dd5e6e33ef86d8b0ed6bf3d3687188c1aae7 data\fishandshiz\recipes\dried_culture_feed_from_smelting_culture_feed_bucket.json
 de6e84c6cd43bfd10e0c29a15a04e3a53ceae9aa data\fishandshiz\advancements\recipes\food\sushi_from_salmon.json
 52a9358ffbc109efb4051786dd56588704839413 data\fishandshiz\advancements\recipes\building_blocks\powered_prismarine.json
 57700ec75a9b435e58b463e3f44f4b7cc76441d9 data\fishandshiz\advancements\recipes\food\cornbread.json

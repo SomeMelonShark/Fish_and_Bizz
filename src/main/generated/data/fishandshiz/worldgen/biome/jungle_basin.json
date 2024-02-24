@@ -89,7 +89,8 @@
       "minecraft:patch_pumpkin"
     ],
     [
-      "minecraft:freeze_top_layer"
+      "minecraft:freeze_top_layer",
+      "fishandshiz:placed_culture_feed"
     ]
   ],
   "has_precipitation": true,
