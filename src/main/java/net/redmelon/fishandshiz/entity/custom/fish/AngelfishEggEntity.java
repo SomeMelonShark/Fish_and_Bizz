@@ -119,35 +119,8 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
-        RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
-        AngelfishVariant variant;
 
-        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
-            this.setAngelfishVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        }
-
-        if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.RIVER)) {
-                variant = (AngelfishVariant.WILD1);
-            } else if (registryEntry.isIn(TropicalSpawn.SPAWNS_TROPICAL)) {
-                variant = (AngelfishVariant.WILD1);
-            } else if (registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
-                variant = (AngelfishVariant.WILD1);
-            } else if (registryEntry.matchesKey(BiomeKeys.JUNGLE)) {
-                variant = (AngelfishVariant.WILD1);
-            } else if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN)) {
-                variant = (AngelfishVariant.WILD1);
-            } else {
-                variant = Util.getRandom(AngelfishVariant.values(), this.random);
-            }
-        } else {
-            variant = Util.getRandom(AngelfishVariant.values(), this.random);
-        }
-
-        setVariant(variant);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-        this.setAngelfishVariant(variant.getId());
         return entityData;
     }
 
@@ -163,7 +136,6 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
         int i = random.nextBetweenExclusive(2, 8);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
-                variant = this.getVariant();
                 ServerWorld serverWorld = (ServerWorld)world;
                 AngelfishFryEntity nextEntity = ModEntities.ANGELFISH_FRY.create(this.getWorld());
                 if (nextEntity != null) {
@@ -175,7 +147,6 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
                         nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                     }
                     nextEntity.setPersistent();
-                    nextEntity.setVariant(variant);
                     this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
                     serverWorld.spawnEntityAndPassengers(nextEntity);
                     this.discard();

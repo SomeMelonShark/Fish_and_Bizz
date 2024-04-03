@@ -31,30 +31,6 @@ public abstract class BucketTooltipMixin {
     @Inject(method = "appendTooltip", at = @At("TAIL"))
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context, CallbackInfo ci) {
         NbtCompound nbtCompound;
-        if (this.entityType == ModEntities.ANGELFISH && (nbtCompound = stack.getNbt()) != null && nbtCompound.contains("BucketVariantTag", NbtElement.INT_TYPE)) {
-            int i = nbtCompound.getInt("BucketVariantTag");
-            Formatting[] formattings = new Formatting[]{Formatting.ITALIC, Formatting.GRAY};
-            String string = "entity.fishandshiz.angelfish.type." + AngelfishEntity.getVariety(i);
-            MutableText mutableText = Text.translatable(string);
-            mutableText.formatted(formattings);
-            tooltip.add(mutableText);
-        }
-        if (this.entityType == ModEntities.ANGELFISH_EGG && (nbtCompound = stack.getNbt()) != null && nbtCompound.contains("BucketVariantTag", NbtElement.INT_TYPE)) {
-            int i = nbtCompound.getInt("BucketVariantTag");
-            Formatting[] formattings = new Formatting[]{Formatting.ITALIC, Formatting.GRAY};
-            String string = "entity.fishandshiz.angelfish.type." + AngelfishEntity.getVariety(i);
-            MutableText mutableText = Text.translatable(string);
-            mutableText.formatted(formattings);
-            tooltip.add(mutableText);
-        }
-        if (this.entityType == ModEntities.ANGELFISH_FRY && (nbtCompound = stack.getNbt()) != null && nbtCompound.contains("BucketVariantTag", NbtElement.INT_TYPE)) {
-            int i = nbtCompound.getInt("BucketVariantTag");
-            Formatting[] formattings = new Formatting[]{Formatting.ITALIC, Formatting.GRAY};
-            String string = "entity.fishandshiz.angelfish.type." + AngelfishEntity.getVariety(i);
-            MutableText mutableText = Text.translatable(string);
-            mutableText.formatted(formattings);
-            tooltip.add(mutableText);
-        }
         if (this.entityType == ModEntities.CORYDORAS && (nbtCompound = stack.getNbt()) != null && nbtCompound.contains("BucketVariantTag", NbtElement.INT_TYPE)) {
             int i = nbtCompound.getInt("BucketVariantTag");
             Formatting[] formattings = new Formatting[]{Formatting.ITALIC, Formatting.GRAY};

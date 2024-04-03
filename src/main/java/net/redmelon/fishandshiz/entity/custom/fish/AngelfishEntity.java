@@ -43,8 +43,11 @@ import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabEggEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
 import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
+import net.redmelon.fishandshiz.entity.variant.AngelfishColor;
+import net.redmelon.fishandshiz.entity.variant.AngelfishPattern;
 import net.redmelon.fishandshiz.entity.variant.AngelfishVariant;
 import net.redmelon.fishandshiz.item.ModItems;
+import net.redmelon.fishandshiz.util.ModUtil;
 import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -54,8 +57,10 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
+    private static final TrackedData<AngelfishPattern> PATTERN = DataTracker.registerData(AngelfishEntity.class, AngelfishPattern.TRACKED_DATA_HANDLER);
+    private static final TrackedData<AngelfishColor> BASE_COLOR = DataTracker.registerData(AngelfishEntity.class, AngelfishColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<AngelfishColor> PATTERN_COLOR = DataTracker.registerData(AngelfishEntity.class, AngelfishColor.TRACKED_DATA_HANDLER);
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
-    protected static final TrackedData<Integer> VARIANT = DataTracker.registerData(AngelfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
@@ -127,22 +132,7 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
 
     @Override
     public @Nullable AngelfishEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        AngelfishEntity angelfishEntity = (AngelfishEntity) var2;
-        AngelfishEggEntity angelfishEggEntity = (AngelfishEggEntity) ModEntities.ANGELFISH_EGG.create(var1);
-        if (angelfishEggEntity != null) {
-            int i = random.nextInt(4);
-            AngelfishVariant variant;
-            if (i < 2) {
-                variant = this.getVariant();
-            } else if (i > 2) {
-                variant = angelfishEntity.getVariant();
-            } else {
-                variant = (AngelfishVariant) AngelfishVariant.byId(random.nextInt(11));
-            }
-
-            angelfishEggEntity.setVariant(variant);
-        }
-        return angelfishEggEntity;
+        return ModEntities.ANGELFISH_EGG.create(getWorld());
     }
 
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
@@ -218,96 +208,56 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Variant", this.getTypeVariant());
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setAngelfishVariant(nbt.getInt("Variant"));
     }
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(VARIANT, 0);
+        dataTracker.startTracking(PATTERN, AngelfishPattern.NONE);
+        dataTracker.startTracking(BASE_COLOR, AngelfishColor.IVORY);
+        dataTracker.startTracking(PATTERN_COLOR, AngelfishColor.IVORY);
     }
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
-        AngelfishVariant variant;
-        int j = random.nextInt(1200);
-
-        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
-            this.setAngelfishVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        }
-
-        if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE) && j != 0) {
-            this.setAngelfishVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        } else if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE) && j == 0) {
-            variant = (AngelfishVariant.SPECIAL);
-            this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.0f, 1.5f);
-        }else if (spawnReason == SpawnReason.CONVERSION) {
-            int i = random.nextInt(7);
-            if (i == 1) {
-                variant = AngelfishVariant.byId(random.nextInt(11));
-            } else {
-                variant = (AngelfishVariant.WILD1);
-            }
-        } else {
-            variant = AngelfishVariant.byId(random.nextInt(11));
-        }
-
-        if (spawnReason == SpawnReason.NATURAL && j == 0){
-            variant = (AngelfishVariant.SPECIAL);
-            this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 2.0f, 1.5f);
-        } else if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.RIVER)) {
-                variant = (AngelfishVariant.WILD1);
-            } else if (registryEntry.isIn(TropicalSpawn.SPAWNS_TROPICAL)) {
-                variant = (AngelfishVariant.WILD1);
-            } else if (registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
-                variant = (AngelfishVariant.WILD1);
-            } else if (registryEntry.matchesKey(BiomeKeys.JUNGLE)) {
-                variant = (AngelfishVariant.WILD1);
-            } else if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN)) {
-                variant = (AngelfishVariant.WILD1);
-            }
-        } else {
-            variant = AngelfishVariant.byId(random.nextInt(11));
-        }
-        setVariant(variant);
+        setPattern(ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.NATURAL_PATTERNS, random));
+        setBaseColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.BASE_COLORS, random));
+        setPatternColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.PATTERN_COLORS, random));
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-        this.setAngelfishVariant(variant.getId());
         return entityData;
     }
 
-    public static AngelfishVariant getVariety(int variant) {
-        return AngelfishVariant.byId(variant);
+    public void setBaseColor(AngelfishColor color) {
+        dataTracker.set(BASE_COLOR, color);
     }
 
-    public AngelfishVariant getVariant() {
-        return AngelfishVariant.byId(this.getTypeVariant() & 255);
+    public AngelfishColor getBaseColor() {
+        return dataTracker.get(BASE_COLOR);
     }
 
-    public int getTypeVariant() {
-        return this.dataTracker.get(VARIANT);
+    public void setPatternColor(AngelfishColor color) {
+        dataTracker.set(PATTERN_COLOR, color);
     }
 
-    protected void setVariant(AngelfishVariant variant) {
-        this.dataTracker.set(VARIANT, variant.getId() & 255);
+    public AngelfishColor getPatternColor() {
+        return dataTracker.get(PATTERN_COLOR);
     }
 
-    protected void setAngelfishVariant(int variant) {
-        this.dataTracker.set(VARIANT, variant);
+    public void setPattern(AngelfishPattern pattern) {
+        dataTracker.set(PATTERN, pattern);
+    }
+
+    public AngelfishPattern getPattern() {
+        return dataTracker.get(PATTERN);
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
         super.copyDataToStack(stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt(BUCKET_VARIANT_TAG_KEY, this.getTypeVariant());
     }
 }
 

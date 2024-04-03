@@ -7,6 +7,8 @@ import net.redmelon.fishandshiz.block.entity.ModBlockEntities;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.custom.*;
 import net.redmelon.fishandshiz.entity.custom.fish.*;
+import net.redmelon.fishandshiz.entity.variant.AngelfishColor;
+import net.redmelon.fishandshiz.entity.variant.AngelfishPattern;
 import net.redmelon.fishandshiz.item.ModItemGroup;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.sound.ModSounds;
@@ -20,7 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import software.bernie.geckolib.GeckoLib;
 
-public class FishAndShiz implements ModInitializer {
+public class 	FishAndShiz implements ModInitializer {
 	public static final String MOD_ID = "fishandshiz";
 	public static final Logger LOGGER = LoggerFactory.getLogger("fishandshiz");
 
@@ -32,6 +34,9 @@ public class FishAndShiz implements ModInitializer {
 		ModBlocks.registerModBlocks();
 		ModBlockEntities.registerAllBlockEntities();
 		ModSounds.registerSounds();
+
+		AngelfishPattern.init();
+		AngelfishColor.init();
 
 		ModVillagers.registerVillagers();
 		ModVillagers.registerTrades();
