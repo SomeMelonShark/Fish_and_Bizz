@@ -239,6 +239,10 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
+        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.COMPOUND_TYPE)) {
+            this.setMateData(entityNbt.getCompound(BUCKET_VARIANT_TAG_KEY));
+            return entityData;
+        }
         if (spawnReason == SpawnReason.NATURAL) {
             if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN)) {
                 setPattern(ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.NATURAL_PATTERNS, random));
