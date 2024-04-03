@@ -69,6 +69,8 @@ public record AngelfishColor(int color) {
 
         public static final TagKey<AngelfishColor> BASE_COLORS = of("base_colors");
         public static final TagKey<AngelfishColor> PATTERN_COLORS = of("pattern_colors");
+        public static final TagKey<AngelfishColor> NATURAL_BASE_COLORS = of("natural_base_colors");
+        public static final TagKey<AngelfishColor> NATURAL_PATTERN_COLORS = of("natural_pattern_colors");
 
         private static TagKey<AngelfishColor> of(String id) {
             return of(new Identifier(FishAndShiz.MOD_ID, id));

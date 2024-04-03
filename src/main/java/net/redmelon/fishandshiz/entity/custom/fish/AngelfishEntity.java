@@ -19,6 +19,7 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -27,6 +28,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
@@ -38,10 +41,12 @@ import net.redmelon.fishandshiz.entity.custom.CrayfishEggEntity;
 import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabEggEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
+import net.redmelon.fishandshiz.entity.variant.AmurCarpVariant;
 import net.redmelon.fishandshiz.entity.variant.AngelfishColor;
 import net.redmelon.fishandshiz.entity.variant.AngelfishPattern;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.util.ModUtil;
+import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -233,11 +238,23 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.COMPOUND_TYPE)) {
-            this.setMateData(entityNbt.getCompound(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
+        RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
+        if (spawnReason == SpawnReason.NATURAL) {
+            if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN)) {
+                setPattern(ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.NATURAL_PATTERNS, random));
+                setBaseColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.NATURAL_BASE_COLORS, random));
+                setPatternColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.NATURAL_PATTERN_COLORS, random));
+            } else if (registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
+                setPattern(ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.NATURAL_PATTERNS, random));
+                setBaseColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.NATURAL_BASE_COLORS, random));
+                setPatternColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.NATURAL_PATTERN_COLORS, random));
+            } else if (registryEntry.matchesKey(BiomeKeys.JUNGLE)) {
+                setPattern(ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.NATURAL_PATTERNS, random));
+                setBaseColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.NATURAL_BASE_COLORS, random));
+                setPatternColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.NATURAL_PATTERN_COLORS, random));
+            }
         }
-        setPattern(ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.NATURAL_PATTERNS, random));
+        setPattern(ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.PATTERNS, random));
         setBaseColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.BASE_COLORS, random));
         setPatternColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.PATTERN_COLORS, random));
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
