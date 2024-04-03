@@ -26,7 +26,6 @@ public class ProceduralAngelfishRenderer extends GeoEntityRenderer<AngelfishEnti
 
         private void render(MatrixStack poseStack, AngelfishEntity animatable, BakedGeoModel bakedModel, int color, Identifier texture, VertexConsumerProvider bufferSource, int packedLight, int packedOverlay, float partialTick) {
             if(texture != null) {
-                Identifier model = this.getGeoModel().getModelResource(animatable);
                 float r = ((color >> 16) & 0xff) / 255f;
                 float g = ((color >> 8) & 0xff) / 255f;
                 float b = (color & 0xff) / 255f;
