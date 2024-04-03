@@ -21,6 +21,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -39,9 +40,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Map;
 
-public class RedTailCatfishEntity extends AnimalFishEntity implements GeoEntity, AngledModelEntity {
+public class RedTailCatfishEntity extends AnimalFishEntity implements AngledModelEntity {
     private final Map<String, Vector3f> modelAngles = Maps.newHashMap();
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public RedTailCatfishEntity(EntityType<? extends RedTailCatfishEntity> entityType, World world) {
         super(entityType, world);
         this.moveControl = new FishMoveControl(this, 85, 10, 0.06f, 0.1f, true);
@@ -122,7 +122,7 @@ public class RedTailCatfishEntity extends AnimalFishEntity implements GeoEntity,
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 17)
                 .add(EntityAttributes.GENERIC_ARMOR, 4)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 15)
-                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 8)
+                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 4)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 1.5f)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 6);
     }
@@ -219,11 +219,6 @@ public class RedTailCatfishEntity extends AnimalFishEntity implements GeoEntity,
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 2, this::genericFlopController));
-    }
-
-    @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         int i = random.nextInt(3);
@@ -232,11 +227,6 @@ public class RedTailCatfishEntity extends AnimalFishEntity implements GeoEntity,
         }
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         return entityData;
-    }
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
     }
 
     @Override

@@ -2,17 +2,23 @@ package net.redmelon.fishandshiz;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactories;
+import net.minecraft.entity.EntityType;
 import net.redmelon.fishandshiz.block.ModBlocks;
 import net.redmelon.fishandshiz.block.entity.ModBlockEntities;
 import net.redmelon.fishandshiz.block.entity.client.SeaAnemoneRenderer;
 import net.redmelon.fishandshiz.entity.ModEntities;
+import net.redmelon.fishandshiz.entity.client.ModModelLayers;
+import net.redmelon.fishandshiz.entity.client.fish.model.RedTailCatfishModel;
 import net.redmelon.fishandshiz.entity.client.fish.renderer.*;
 import net.redmelon.fishandshiz.entity.client.renderer.BasicMiscRenderer;
 import net.redmelon.fishandshiz.entity.client.renderer.BasicSmallMiscRenderer;
+import net.redmelon.fishandshiz.entity.client.renderer.ReplacedSquidRenderer;
+import software.bernie.shadowed.eliotlash.mclib.math.functions.classic.Mod;
 
 public class FishAndShizClient implements ClientModInitializer {
     @Override
@@ -61,7 +67,6 @@ public class FishAndShizClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.BETTA, BettaRenderer::new);
         EntityRendererRegistry.register(ModEntities.BETTA_FRY, BasicFryRenderer.create("betta"));
         EntityRendererRegistry.register(ModEntities.BETTA_EGG, BasicEggRenderer.create("betta", "betta"));
-        EntityRendererRegistry.register(ModEntities.RED_TAIL_CATFISH, BasicFishRenderer.create("red_tail_catfish"));
         EntityRendererRegistry.register(ModEntities.SALMON_EGG, BasicEggRenderer.create("salmon", "salmon"));
         EntityRendererRegistry.register(ModEntities.SALMON_FRY, BasicFryRenderer.create("salmon"));
         EntityRendererRegistry.register(ModEntities.MUD_CRAB, BasicSmallMiscRenderer.create("mud_crab"));
@@ -76,6 +81,12 @@ public class FishAndShizClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.CAPYBARA, BasicMiscRenderer.create("capybara"));
         EntityRendererRegistry.register(ModEntities.ARCHERFISH_SPIT, ArcherfishSpitRenderer::new);
 
+        EntityRendererRegistry.register(ModEntities.RED_TAIL_CATFISH, RedTailCatfishRenderer::new);
+
+        EntityRendererRegistry.register(EntityType.SQUID, ReplacedSquidRenderer::new);
+
         BlockEntityRendererFactories.register(ModBlockEntities.SEA_ANEMONE_ENTITY, SeaAnemoneRenderer::new);
+
+        EntityModelLayerRegistry.registerModelLayer(ModModelLayers.RED_TAIL_CATFISH, RedTailCatfishModel::getTexturedModelData);
     }
 }
