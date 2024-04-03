@@ -19,18 +19,14 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Util;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeKeys;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
@@ -42,13 +38,10 @@ import net.redmelon.fishandshiz.entity.custom.CrayfishEggEntity;
 import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabEggEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
-import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
 import net.redmelon.fishandshiz.entity.variant.AngelfishColor;
 import net.redmelon.fishandshiz.entity.variant.AngelfishPattern;
-import net.redmelon.fishandshiz.entity.variant.AngelfishVariant;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.util.ModUtil;
-import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -60,6 +53,7 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     private static final TrackedData<AngelfishPattern> PATTERN = DataTracker.registerData(AngelfishEntity.class, AngelfishPattern.TRACKED_DATA_HANDLER);
     private static final TrackedData<AngelfishColor> BASE_COLOR = DataTracker.registerData(AngelfishEntity.class, AngelfishColor.TRACKED_DATA_HANDLER);
     private static final TrackedData<AngelfishColor> PATTERN_COLOR = DataTracker.registerData(AngelfishEntity.class, AngelfishColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(AngelfishEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
@@ -205,25 +199,44 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
         return this.factory;
     }
 
+    public NbtCompound writeMateData(NbtCompound nbt) {
+        nbt.putString("Pattern", getPattern().getId().toString());
+        nbt.putString("BaseColor", getBaseColor().getId().toString());
+        nbt.putString("PatternColor", getPatternColor().getId().toString());
+        return nbt;
+    }
+
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
+        writeMateData(nbt);
+        nbt.put("MateData", getMateData());
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
+        setPattern(AngelfishPattern.fromId(nbt.getString("Pattern")));
+        setBaseColor(AngelfishColor.fromId(nbt.getString("BaseColor")));
+        setPatternColor(AngelfishColor.fromId(nbt.getString("PatternColor")));
+        if(nbt.contains("MateData", NbtElement.COMPOUND_TYPE))
+            setMateData(nbt.getCompound("MateData"));
     }
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        dataTracker.startTracking(PATTERN, AngelfishPattern.NONE);
-        dataTracker.startTracking(BASE_COLOR, AngelfishColor.IVORY);
-        dataTracker.startTracking(PATTERN_COLOR, AngelfishColor.IVORY);
+        dataTracker.startTracking(PATTERN, AngelfishPattern.WILD);
+        dataTracker.startTracking(BASE_COLOR, AngelfishColor.SILVER);
+        dataTracker.startTracking(PATTERN_COLOR, AngelfishColor.SILVER);
+        dataTracker.startTracking(MATE_DATA, new NbtCompound());
     }
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.COMPOUND_TYPE)) {
+            this.setMateData(entityNbt.getCompound(BUCKET_VARIANT_TAG_KEY));
+            return entityData;
+        }
         setPattern(ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.NATURAL_PATTERNS, random));
         setBaseColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.BASE_COLORS, random));
         setPatternColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.PATTERN_COLORS, random));
@@ -254,10 +267,22 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     public AngelfishPattern getPattern() {
         return dataTracker.get(PATTERN);
     }
+
+    public void setMateData(NbtCompound mateData) {
+        dataTracker.set(MATE_DATA, mateData);
+    }
+
+    public NbtCompound getMateData() {
+        return dataTracker.get(MATE_DATA);
+    }
+
     @Override
     public void copyDataToStack(ItemStack stack) {
         super.copyDataToStack(stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
+        writeMateData(nbtCompound);
+        nbtCompound.put("MateData", getMateData());
+        nbtCompound.put(BUCKET_VARIANT_TAG_KEY, this.getMateData());
     }
 }
 

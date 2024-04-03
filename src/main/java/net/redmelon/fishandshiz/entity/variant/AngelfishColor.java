@@ -15,12 +15,25 @@ import java.util.Map;
 public record AngelfishColor(int color) {
     private static final Map<AngelfishColor, Identifier> COLORS = new LinkedHashMap<>();
 
-    public static final AngelfishColor IVORY = create("ivory", 0xFFFFF0);
-    public static final AngelfishColor ONYX = create("onyx", 0x353839);
-    public static final AngelfishColor PERIWINKLE = create("periwinkle", 0xCCCCFF);
+    public static final AngelfishColor SILVER = create("silver", 0xffeae5);
+    public static final AngelfishColor MATTE_BLACK = create("matte_black", 0x241e1e);
+    public static final AngelfishColor MUDDY = create("muddy", 0x8d7b65);
+    public static final AngelfishColor BRED = create("bred", 0x592213);
+    public static final AngelfishColor BROWN = create("brown", 0x421e00);
+    public static final AngelfishColor LIGHT_BLUE = create("light_blue", 0x00aae5);
+    public static final AngelfishColor NEON_BLUE = create("neon_blue", 0x84ab1);
+    public static final AngelfishColor ORANGE = create("orange", 0xf47500);
+    public static final AngelfishColor RERANGE = create("rerange", 0xf43700);
+    public static final AngelfishColor DEEP_RED = create("deep_red", 0xf40000);
+    public static final AngelfishColor YELLOW = create("yellow", 0xfde005);
+    public static final AngelfishColor GOLD = create("gold", 0xc58921);
+    public static final AngelfishColor MATTE_ORANGE = create("matte_orange", 0x7f3d00);
+    public static final AngelfishColor BILE = create("bile", 0x006700);
+    public static final AngelfishColor SICKLY = create("sickly", 0x638672);
+    public static final AngelfishColor PURPLE = create("purple", 0xb559a1);
 
     public static final Registry<AngelfishColor> REGISTRY = FabricRegistryBuilder
-            .createDefaulted(AngelfishColor.class, new Identifier(FishAndShiz.MOD_ID, "angelfish_color"), new Identifier(FishAndShiz.MOD_ID, "ivory"))
+            .createDefaulted(AngelfishColor.class, new Identifier(FishAndShiz.MOD_ID, "angelfish_color"), new Identifier(FishAndShiz.MOD_ID, "silver"))
             .attribute(RegistryAttribute.SYNCED).buildAndRegister();
 
     public static final TrackedDataHandler<AngelfishColor> TRACKED_DATA_HANDLER = TrackedDataHandler.of(REGISTRY);

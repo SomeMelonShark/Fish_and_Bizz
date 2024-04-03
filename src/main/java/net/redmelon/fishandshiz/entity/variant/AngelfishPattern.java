@@ -16,15 +16,14 @@ import java.util.Map;
 public record AngelfishPattern(@Nullable Identifier texture) {
 
     private static final Map<AngelfishPattern, Identifier> PATTERNS = new LinkedHashMap<>();
-
-    public static final AngelfishPattern NONE = create("none", true);
     public static final AngelfishPattern WILD = create("wild", false);
     public static final AngelfishPattern MARBLE = create("marble", false);
 
     public static final AngelfishPattern STRIPES = create("stripes", false);
+    public static final AngelfishPattern PANTS = create("pants", false);
 
     public static final Registry<AngelfishPattern> REGISTRY = FabricRegistryBuilder
-            .createDefaulted(AngelfishPattern.class, new Identifier(FishAndShiz.MOD_ID, "angelfish_pattern"), new Identifier(FishAndShiz.MOD_ID, "none"))
+            .createDefaulted(AngelfishPattern.class, new Identifier(FishAndShiz.MOD_ID, "angelfish_pattern"), new Identifier(FishAndShiz.MOD_ID, "wild"))
             .attribute(RegistryAttribute.SYNCED).buildAndRegister();
 
     public String getTranslationKey() {
@@ -46,7 +45,7 @@ public record AngelfishPattern(@Nullable Identifier texture) {
     }
 
     private static AngelfishPattern create(String name, boolean empty) {
-        AngelfishPattern pattern = new AngelfishPattern(empty ? null : new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/" + name + ".png"));
+        AngelfishPattern pattern = new AngelfishPattern(empty ? null : new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishpa_" + name + ".png"));
         PATTERNS.put(pattern, new Identifier(FishAndShiz.MOD_ID, name));
         return pattern;
     }
