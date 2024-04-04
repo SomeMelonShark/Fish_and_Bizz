@@ -131,8 +131,23 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
 
     @Override
     public @Nullable AngelfishEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return ModEntities.ANGELFISH_EGG.create(getWorld());
+        AngelfishEntity angelfishEntity = (AngelfishEntity) var2;
+        AngelfishEggEntity angelfishEggEntity = (AngelfishEggEntity) ModEntities.ANGELFISH_EGG.create(var1);
+        if (angelfishEggEntity != null) {
+            AngelfishColor color;
+            AngelfishColor color2;
+            AngelfishPattern pattern;
+                color = random.nextBoolean() ? this.getBaseColor() : angelfishEntity.getBaseColor();
+                color2 = random.nextBoolean() ? this.getPatternColor() : angelfishEntity.getPatternColor();
+                pattern = random.nextBoolean() ? this.getPattern() : angelfishEntity.getPattern();
+
+            angelfishEggEntity.setBaseColor(color);
+            angelfishEggEntity.setPatternColor(color2);
+            angelfishEggEntity.setPattern(pattern);
+        }
+        return angelfishEggEntity;
     }
+
 
     public ActionResult interactMob(PlayerEntity player, Hand hand) {
         ItemStack itemStack = player.getStackInHand(hand);
@@ -239,28 +254,35 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
-        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.COMPOUND_TYPE)) {
-            this.setMateData(entityNbt.getCompound(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        }
+        AngelfishColor color;
+        AngelfishColor color2;
+        AngelfishPattern pattern;
         if (spawnReason == SpawnReason.NATURAL) {
             if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN)) {
-                setPattern(ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.NATURAL_PATTERNS, random));
-                setBaseColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.NATURAL_BASE_COLORS, random));
-                setPatternColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.NATURAL_PATTERN_COLORS, random));
+                pattern = (AngelfishPattern.WILD);
+                color = (AngelfishColor.SILVER);
+                color2 = (AngelfishColor.MATTE_BLACK);
             } else if (registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
-                setPattern(ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.NATURAL_PATTERNS, random));
-                setBaseColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.NATURAL_BASE_COLORS, random));
-                setPatternColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.NATURAL_PATTERN_COLORS, random));
+                pattern = (AngelfishPattern.WILD);
+                color = (AngelfishColor.SILVER);
+                color2 = (AngelfishColor.MATTE_BLACK);
             } else if (registryEntry.matchesKey(BiomeKeys.JUNGLE)) {
-                setPattern(ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.NATURAL_PATTERNS, random));
-                setBaseColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.NATURAL_BASE_COLORS, random));
-                setPatternColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.NATURAL_PATTERN_COLORS, random));
+                pattern = (AngelfishPattern.WILD);
+                color = (AngelfishColor.SILVER);
+                color2 = (AngelfishColor.MATTE_BLACK);
+            } else {
+                pattern = (ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.PATTERNS, random));
+                color = (ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.BASE_COLORS, random));
+                color2 = (ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.PATTERN_COLORS, random));
             }
+        } else {
+            pattern = (ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.PATTERNS, random));
+            color = (ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.BASE_COLORS, random));
+            color2 = (ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.PATTERN_COLORS, random));
         }
-        setPattern(ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.PATTERNS, random));
-        setBaseColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.BASE_COLORS, random));
-        setPatternColor(ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.PATTERN_COLORS, random));
+        setPattern(pattern);
+        setBaseColor(color);
+        setPatternColor(color2);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         return entityData;
     }
@@ -296,6 +318,15 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     public NbtCompound getMateData() {
         return dataTracker.get(MATE_DATA);
     }
+
+    @Override @SuppressWarnings("deprecation")
+    public void copyDataFromNbt(NbtCompound nbt) {
+        Bucketable.copyDataFromNbt(this, nbt);
+        if(nbt.contains("Pattern", NbtElement.STRING_TYPE)) {
+            readCustomDataFromNbt(nbt);
+        }
+    }
+
 
     @Override
     public void copyDataToStack(ItemStack stack) {

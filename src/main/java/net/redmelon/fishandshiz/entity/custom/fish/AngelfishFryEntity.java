@@ -28,6 +28,8 @@ import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
+import net.redmelon.fishandshiz.entity.variant.AngelfishColor;
+import net.redmelon.fishandshiz.entity.variant.AngelfishPattern;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -160,8 +162,14 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
         }
     }
     private void growUp() {
+        AngelfishColor color;
+        AngelfishColor color2;
+        AngelfishPattern pattern;
         World world = this.getWorld();
         if (world instanceof ServerWorld) {
+            color = this.getBaseColor();
+            color2 = this.getPatternColor();
+            pattern = this.getPattern();
             ServerWorld serverWorld = (ServerWorld)world;
             AngelfishEntity nextEntity = ModEntities.ANGELFISH.create(this.getWorld());
             if (nextEntity != null) {
@@ -173,6 +181,9 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
                     nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                 }
                 nextEntity.setPersistent();
+                nextEntity.setBaseColor(color);
+                nextEntity.setPatternColor(color2);
+                nextEntity.setPattern(pattern);
                 this.playSound(SoundEvents.ENTITY_TROPICAL_FISH_FLOP, 0.15f, 1.0f);
                 serverWorld.spawnEntityAndPassengers(nextEntity);
                 this.discard();

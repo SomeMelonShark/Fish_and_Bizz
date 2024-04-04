@@ -107,7 +107,7 @@ public class NeonTetraEggEntity extends NeonTetraEntity implements GeoEntity {
 
     private void growUp() {
         World world = this.getWorld();
-        int i = random.nextBetweenExclusive(4, 9);
+        int i = random.nextBetweenExclusive(4, 8);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;

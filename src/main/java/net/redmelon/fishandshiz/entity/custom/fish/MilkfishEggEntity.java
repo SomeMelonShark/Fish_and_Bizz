@@ -107,7 +107,7 @@ public class MilkfishEggEntity extends MilkfishEntity implements GeoEntity {
 
     private void growUp() {
         World world = this.getWorld();
-        int i = random.nextBetweenExclusive(5, 10);
+        int i = random.nextBetweenExclusive(5, 9);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;

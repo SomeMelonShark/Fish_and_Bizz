@@ -20,7 +20,10 @@ import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.entity.ModEntities;
+import net.redmelon.fishandshiz.entity.variant.AngelfishColor;
+import net.redmelon.fishandshiz.entity.variant.AngelfishPattern;
 import net.redmelon.fishandshiz.item.ModItems;
+import net.redmelon.fishandshiz.util.ModUtil;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -123,10 +126,23 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
 
 
     private void growUp() {
+        AngelfishColor color;
+        AngelfishColor color2;
+        AngelfishPattern pattern;
         World world = this.getWorld();
-        int i = random.nextBetweenExclusive(2, 8);
+        int i = random.nextBetweenExclusive(2, 6);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
+                int m = random.nextInt(4);
+                if (m != 0) {
+                    color = this.getBaseColor();
+                    color2 = this.getPatternColor();
+                    pattern = this.getPattern();
+                } else {
+                    pattern = random.nextBoolean() ? this.getPattern() : (ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.PATTERNS, random));
+                    color = random.nextBoolean() ? this.getBaseColor() : (ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.BASE_COLORS, random));
+                    color2 = random.nextBoolean() ? this.getPatternColor() : (ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.PATTERN_COLORS, random));
+                }
                 ServerWorld serverWorld = (ServerWorld)world;
                 AngelfishFryEntity nextEntity = ModEntities.ANGELFISH_FRY.create(this.getWorld());
                 if (nextEntity != null) {
@@ -138,6 +154,9 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
                         nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                     }
                     nextEntity.setPersistent();
+                    nextEntity.setBaseColor(color);
+                    nextEntity.setPatternColor(color2);
+                    nextEntity.setPattern(pattern);
                     this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
                     serverWorld.spawnEntityAndPassengers(nextEntity);
                     this.discard();

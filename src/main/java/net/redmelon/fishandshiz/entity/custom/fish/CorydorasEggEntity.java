@@ -155,7 +155,7 @@ public class CorydorasEggEntity extends CorydorasEntity implements GeoEntity {
     private void growUp() {
         CorydorasVariant variant;
         World world = this.getWorld();
-        int i = random.nextBetweenExclusive(3, 6);
+        int i = random.nextBetweenExclusive(3, 5);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 variant = this.getVariant();

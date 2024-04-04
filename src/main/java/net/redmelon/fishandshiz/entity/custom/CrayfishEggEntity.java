@@ -94,7 +94,7 @@ public class CrayfishEggEntity extends CrayfishEntity implements GeoEntity  {
 
     private void growUp() {
         World world = this.getWorld();
-        int i = random.nextBetweenExclusive(6, 9);
+        int i = random.nextBetweenExclusive(5, 7);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;

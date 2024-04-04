@@ -47,10 +47,9 @@ public abstract class BucketTooltipMixin {
             if(this.entityType.equals(ModEntities.ANGELFISH)) {
                 if (nbt.contains("Pattern", NbtElement.STRING_TYPE)) {
                     MutableText text = Text.translatable(AngelfishColor.fromId(nbt.getString("BaseColor")).getTranslationKey());
-                    if (!AngelfishPattern.fromId(nbt.getString("Pattern")).equals(AngelfishPattern.WILD)) {
-                        tooltip.add(Text.translatable(AngelfishPattern.fromId(nbt.getString("Pattern")).getTranslationKey()).formatted(formatting));
-                        if (!nbt.getString("BaseColor").equals(nbt.getString("PatternColor")))
-                            text.append(", ").append(Text.translatable(AngelfishColor.fromId(nbt.getString("PatternColor")).getTranslationKey()));
+                    tooltip.add(Text.translatable(AngelfishPattern.fromId(nbt.getString("Pattern")).getTranslationKey()).formatted(formatting));
+                    if (!nbt.getString("BaseColor").equals(nbt.getString("PatternColor"))) {
+                        text.append(", ").append(Text.translatable(AngelfishColor.fromId(nbt.getString("PatternColor")).getTranslationKey()));
                     }
                     tooltip.add(text.formatted(formatting));
                 }

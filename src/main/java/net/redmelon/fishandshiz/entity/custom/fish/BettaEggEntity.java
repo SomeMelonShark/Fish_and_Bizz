@@ -153,7 +153,7 @@ public class BettaEggEntity extends BettaEntity implements GeoEntity {
     private void growUp() {
         BettaVariant variant;
         World world = this.getWorld();
-        int i = random.nextBetweenExclusive(1, 5);
+        int i = random.nextBetweenExclusive(1, 4);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 variant = this.getVariant();
