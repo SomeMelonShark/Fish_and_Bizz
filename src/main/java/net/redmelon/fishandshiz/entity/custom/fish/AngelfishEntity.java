@@ -258,15 +258,7 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
         AngelfishColor color2;
         AngelfishPattern pattern;
         if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN)) {
-                pattern = (AngelfishPattern.WILD);
-                color = (AngelfishColor.SILVER);
-                color2 = (AngelfishColor.MATTE_BLACK);
-            } else if (registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
-                pattern = (AngelfishPattern.WILD);
-                color = (AngelfishColor.SILVER);
-                color2 = (AngelfishColor.MATTE_BLACK);
-            } else if (registryEntry.matchesKey(BiomeKeys.JUNGLE)) {
+            if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN) | registryEntry.matchesKey(BiomeKeys.JUNGLE) | registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
                 pattern = (AngelfishPattern.WILD);
                 color = (AngelfishColor.SILVER);
                 color2 = (AngelfishColor.MATTE_BLACK);

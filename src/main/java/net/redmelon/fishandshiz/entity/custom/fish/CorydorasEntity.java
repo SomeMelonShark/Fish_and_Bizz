@@ -244,15 +244,7 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
             variant = (CorydorasVariant.SPECIAL);
             this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 2.0f, 1.5f);
         } else if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.RIVER)) {
-                variant = (CorydorasVariant.BRONZE);
-            } else if (registryEntry.isIn(TropicalSpawn.SPAWNS_TROPICAL)) {
-                variant = (CorydorasVariant.BRONZE);
-            } else if (registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
-                variant = (CorydorasVariant.BRONZE);
-            } else if (registryEntry.matchesKey(BiomeKeys.JUNGLE)) {
-                variant = (CorydorasVariant.BRONZE);
-            } else if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN)) {
+            if (registryEntry.matchesKey(BiomeKeys.RIVER) | registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE) | registryEntry.matchesKey(BiomeKeys.JUNGLE) | registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN)) {
                 variant = (CorydorasVariant.BRONZE);
             }
         } else {

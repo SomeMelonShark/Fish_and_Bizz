@@ -144,35 +144,7 @@ public class CorydorasFryEntity extends CorydorasEntity implements GeoEntity {
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
-        RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
-        CorydorasVariant variant;
-
-        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
-            this.setCorydorasVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        }
-
-        if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.RIVER)) {
-                variant = (CorydorasVariant.BRONZE);
-            } else if (registryEntry.isIn(TropicalSpawn.SPAWNS_TROPICAL)) {
-                variant = (CorydorasVariant.BRONZE);
-            } else if (registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
-                variant = (CorydorasVariant.BRONZE);
-            } else if (registryEntry.matchesKey(BiomeKeys.JUNGLE)) {
-                variant = (CorydorasVariant.BRONZE);
-            } else if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN)) {
-                variant = (CorydorasVariant.BRONZE);
-            } else {
-                variant = Util.getRandom(CorydorasVariant.values(), this.random);
-            }
-        } else {
-            variant = Util.getRandom(CorydorasVariant.values(), this.random);
-        }
-
-        setVariant(variant);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-        this.setCorydorasVariant(variant.getId());
         return entityData;
     }
 

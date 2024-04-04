@@ -114,7 +114,6 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
-
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         return entityData;
     }

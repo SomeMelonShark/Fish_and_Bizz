@@ -237,47 +237,7 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
-        BettaVariant variant;
-        int j = random.nextInt(1200);
-
-        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
-            this.setBettaVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        }
-
-        if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE) && j != 0) {
-            this.setBettaVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        } else if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE) && j == 0) {
-            variant = (BettaVariant.SPECIAL);
-            this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.0f, 1.5f);
-        }else if (spawnReason == SpawnReason.CONVERSION) {
-            int i = random.nextInt(7);
-            if (i == 1) {
-                variant = BettaVariant.byId(random.nextInt(7));
-            } else {
-                variant = (BettaVariant.WILD1);
-            }
-        } else {
-            variant = BettaVariant.byId(random.nextInt(7));
-        }
-
-        if (spawnReason == SpawnReason.NATURAL && j == 0){
-            variant = (BettaVariant.SPECIAL);
-            this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 2.0f, 1.5f);
-        } else if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.SWAMP)) {
-                variant = (BettaVariant.WILD1);
-            } else if (registryEntry.matchesKey(BiomeKeys.PLAINS)) {
-                variant = (BettaVariant.WILD2);
-            }
-        } else {
-            variant = BettaVariant.byId(random.nextInt(7));
-        }
-        setVariant(variant);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-        this.setBettaVariant(variant.getId());
         return entityData;
     }
 

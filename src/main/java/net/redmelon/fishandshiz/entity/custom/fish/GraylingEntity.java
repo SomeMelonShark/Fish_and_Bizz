@@ -55,7 +55,7 @@ public class GraylingEntity extends SchoolingBreedEntity implements GeoEntity {
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.grayling.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
-        } else if (!animationState.isMoving()){
+        } else if (this.isReadyToBreed()){
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.grayling.pog", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;

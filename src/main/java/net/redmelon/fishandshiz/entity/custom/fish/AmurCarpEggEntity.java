@@ -129,29 +129,7 @@ public class AmurCarpEggEntity extends AmurCarpEntity implements GeoEntity {
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
-        RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
-        AmurCarpVariant variant;
-
-        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
-            this.setAmurCarpVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        }
-
-        if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.TAIGA)) {
-                variant = (AmurCarpVariant.WILD);
-            } else if (registryEntry.matchesKey(BiomeKeys.FROZEN_RIVER)) {
-                variant = (AmurCarpVariant.WILD);
-            } else {
-                variant = Util.getRandom(AmurCarpVariant.values(), this.random);
-            }
-        } else {
-            variant = Util.getRandom(AmurCarpVariant.values(), this.random);
-        }
-
-        setVariant(variant);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-        this.setAmurCarpVariant(variant.getId());
         return entityData;
     }
 

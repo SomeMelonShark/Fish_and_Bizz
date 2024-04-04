@@ -56,7 +56,6 @@ public record AngelfishPattern(@Nullable Identifier texture) {
     }
 
     public static class Tag {
-
         public static final TagKey<AngelfishPattern> PATTERNS = of("patterns");
 
         private static TagKey<AngelfishPattern> of(String id) {

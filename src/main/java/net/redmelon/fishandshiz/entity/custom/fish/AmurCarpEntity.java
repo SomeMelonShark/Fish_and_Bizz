@@ -265,9 +265,7 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
             variant = (AmurCarpVariant.SPECIAL);
             this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 2.0f, 1.5f);
         } else if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.TAIGA)) {
-                variant = (AmurCarpVariant.WILD);
-            } else if (registryEntry.matchesKey(BiomeKeys.FROZEN_RIVER)) {
+            if (registryEntry.matchesKey(BiomeKeys.TAIGA) | registryEntry.matchesKey(BiomeKeys.FROZEN_RIVER)) {
                 variant = (AmurCarpVariant.WILD);
             }
         } else {
