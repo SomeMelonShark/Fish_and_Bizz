@@ -1,6 +1,5 @@
 # *Plan to add:*  
--Crustacean eggs attached to parent  
--Procedural Angelfish variants  
+-Crustacean eggs attached to parent   
 -Nitrate system  
 -Fish health and hunger system  
 -Difference between salt and fresh water  

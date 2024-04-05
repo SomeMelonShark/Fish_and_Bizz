@@ -17,7 +17,7 @@ public record AngelfishColor(int color) {
 
     public static final AngelfishColor SILVER = create("silver", 0xffeae5);
     public static final AngelfishColor MATTE_BLACK = create("matte_black", 0x241e1e);
-    public static final AngelfishColor MUDDY = create("muddy", 0x8d7b65);
+    public static final AngelfishColor MUDDY = create("muddy", 0xb4956e);
     public static final AngelfishColor BRED = create("bred", 0x592213);
     public static final AngelfishColor BROWN = create("brown", 0x421e00);
     public static final AngelfishColor LIGHT_BLUE = create("light_blue", 0x00aae5);
@@ -25,7 +25,7 @@ public record AngelfishColor(int color) {
     public static final AngelfishColor ORANGE = create("orange", 0xf47500);
     public static final AngelfishColor RERANGE = create("rerange", 0xf43700);
     public static final AngelfishColor DEEP_RED = create("deep_red", 0xf40000);
-    public static final AngelfishColor YELLOW = create("yellow", 0xfde005);
+    public static final AngelfishColor YELLOW = create("yellow", 0xf1c91f);
     public static final AngelfishColor GOLD = create("gold", 0xc58921);
     public static final AngelfishColor MATTE_ORANGE = create("matte_orange", 0x7f3d00);
     public static final AngelfishColor BILE = create("bile", 0x006700);
@@ -69,6 +69,7 @@ public record AngelfishColor(int color) {
 
         public static final TagKey<AngelfishColor> BASE_COLORS = of("base_colors");
         public static final TagKey<AngelfishColor> PATTERN_COLORS = of("pattern_colors");
+        public static final TagKey<AngelfishColor> DETAIL_COLORS = of("detail_colors");
 
         private static TagKey<AngelfishColor> of(String id) {
             return of(new Identifier(FishAndShiz.MOD_ID, id));

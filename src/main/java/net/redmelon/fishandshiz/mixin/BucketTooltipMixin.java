@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.custom.fish.*;
 import net.redmelon.fishandshiz.entity.variant.AngelfishColor;
+import net.redmelon.fishandshiz.entity.variant.AngelfishDetail;
 import net.redmelon.fishandshiz.entity.variant.AngelfishPattern;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -50,6 +51,12 @@ public abstract class BucketTooltipMixin {
                     tooltip.add(Text.translatable(AngelfishPattern.fromId(nbt.getString("Pattern")).getTranslationKey()).formatted(formatting));
                     if (!nbt.getString("BaseColor").equals(nbt.getString("PatternColor"))) {
                         text.append(", ").append(Text.translatable(AngelfishColor.fromId(nbt.getString("PatternColor")).getTranslationKey()));
+                    }
+                    if (!AngelfishDetail.fromId(nbt.getString("Detail")).equals(AngelfishDetail.NONE)) {
+                        tooltip.add(Text.translatable(AngelfishDetail.fromId(nbt.getString("Detail")).getTranslationKey()).formatted(formatting));
+                        if (!nbt.getString("DetailColor").equals(nbt.getString("BaseColor"))) {
+                            text.append(", ").append(Text.translatable(AngelfishColor.fromId(nbt.getString("DetailColor")).getTranslationKey()));
+                        }
                     }
                     tooltip.add(text.formatted(formatting));
                 }

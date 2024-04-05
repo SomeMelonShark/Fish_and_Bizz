@@ -21,6 +21,7 @@ import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.variant.AngelfishColor;
+import net.redmelon.fishandshiz.entity.variant.AngelfishDetail;
 import net.redmelon.fishandshiz.entity.variant.AngelfishPattern;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.util.ModUtil;
@@ -127,7 +128,9 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
     private void growUp() {
         AngelfishColor color;
         AngelfishColor color2;
+        AngelfishColor color3;
         AngelfishPattern pattern;
+        AngelfishDetail detail;
         World world = this.getWorld();
         int i = random.nextBetweenExclusive(2, 6);
         for (int j = 1; j <= i; ++j)
@@ -136,11 +139,15 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
                 if (m != 0) {
                     color = this.getBaseColor();
                     color2 = this.getPatternColor();
+                    color3 = this.getDetailColor();
                     pattern = this.getPattern();
+                    detail = this.getDetail();
                 } else {
                     pattern = random.nextBoolean() ? this.getPattern() : (ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.PATTERNS, random));
+                    detail = random.nextBoolean() ? this.getDetail() : (ModUtil.getRandomTagValue(getWorld(), AngelfishDetail.Tag.DETAILS, random));
                     color = random.nextBoolean() ? this.getBaseColor() : (ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.BASE_COLORS, random));
                     color2 = random.nextBoolean() ? this.getPatternColor() : (ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.PATTERN_COLORS, random));
+                    color3 = random.nextBoolean() ? this.getDetailColor() : (ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.DETAIL_COLORS, random));
                 }
                 ServerWorld serverWorld = (ServerWorld)world;
                 AngelfishFryEntity nextEntity = ModEntities.ANGELFISH_FRY.create(this.getWorld());
@@ -155,7 +162,9 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
                     nextEntity.setPersistent();
                     nextEntity.setBaseColor(color);
                     nextEntity.setPatternColor(color2);
+                    nextEntity.setDetailColor(color3);
                     nextEntity.setPattern(pattern);
+                    nextEntity.setDetail(detail);
                     this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
                     serverWorld.spawnEntityAndPassengers(nextEntity);
                     this.discard();

@@ -44,6 +44,7 @@ public class ProceduralAngelfishRenderer extends GeoEntityRenderer<AngelfishEnti
 
             this.render(poseStack, animatable, bakedModel, animatable.getBaseColor().color(), this.getTextureResource(animatable), bufferSource, packedLight, packedOverlay, partialTick);
             this.render(poseStack, animatable, bakedModel, animatable.getPatternColor().color(), animatable.getPattern().texture(), bufferSource, packedLight, packedOverlay, partialTick);
+            this.render(poseStack, animatable, bakedModel, animatable.getDetailColor().color(), animatable.getDetail().texture(), bufferSource, packedLight, packedOverlay, partialTick);
         }
 
         public RenderLayer getRenderType(Identifier texture) {
