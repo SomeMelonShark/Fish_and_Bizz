@@ -2,6 +2,7 @@
   "values": [
     "fishandshiz:silver",
     "fishandshiz:matte_black",
+    "fishandshiz:earth_black",
     "fishandshiz:muddy",
     "fishandshiz:bred",
     "fishandshiz:brown",
@@ -11,8 +12,11 @@
     "fishandshiz:rerange",
     "fishandshiz:deep_red",
     "fishandshiz:yellow",
+    "fishandshiz:off_yellow",
     "fishandshiz:gold",
+    "fishandshiz:cream",
     "fishandshiz:matte_orange",
+    "fishandshiz:green",
     "fishandshiz:bile",
     "fishandshiz:sickly",
     "fishandshiz:purple"

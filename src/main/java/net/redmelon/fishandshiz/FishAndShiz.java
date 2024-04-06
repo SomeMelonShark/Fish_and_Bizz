@@ -7,9 +7,7 @@ import net.redmelon.fishandshiz.block.entity.ModBlockEntities;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.custom.*;
 import net.redmelon.fishandshiz.entity.custom.fish.*;
-import net.redmelon.fishandshiz.entity.variant.AngelfishColor;
-import net.redmelon.fishandshiz.entity.variant.AngelfishDetail;
-import net.redmelon.fishandshiz.entity.variant.AngelfishPattern;
+import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItemGroup;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.sound.ModSounds;
@@ -37,8 +35,12 @@ public class 	FishAndShiz implements ModInitializer {
 		ModSounds.registerSounds();
 
 		AngelfishPattern.init();
+		AmurCarpPattern.init();
+
+		AmurCarpDetail.init();
 		AngelfishDetail.init();
-		AngelfishColor.init();
+
+		ModEntityColor.init();
 
 		ModVillagers.registerVillagers();
 		ModVillagers.registerTrades();

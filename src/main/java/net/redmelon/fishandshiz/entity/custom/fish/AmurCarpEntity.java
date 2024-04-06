@@ -41,8 +41,10 @@ import net.redmelon.fishandshiz.entity.custom.CrayfishEggEntity;
 import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabEggEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
-import net.redmelon.fishandshiz.entity.variant.AmurCarpVariant;
+import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
+import net.redmelon.fishandshiz.util.ModUtil;
+import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -53,8 +55,12 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import static net.redmelon.fishandshiz.block.ModBlocks.CULTURE_FEED;
 
 public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
-    protected static final TrackedData<Integer> VARIANT =
-            DataTracker.registerData(AmurCarpEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<AmurCarpPattern> PATTERN = DataTracker.registerData(AmurCarpEntity.class, AmurCarpPattern.TRACKED_DATA_HANDLER);
+    private static final TrackedData<AmurCarpDetail> DETAIL = DataTracker.registerData(AmurCarpEntity.class, AmurCarpDetail.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> BASE_COLOR = DataTracker.registerData(AmurCarpEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> PATTERN_COLOR = DataTracker.registerData(AmurCarpEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> DETAIL_COLOR = DataTracker.registerData(AmurCarpEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(AmurCarpEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
@@ -126,18 +132,23 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
     public @Nullable AmurCarpEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
         AmurCarpEntity amurCarpEntity = (AmurCarpEntity) var2;
         AmurCarpEggEntity amurCarpEggEntity = (AmurCarpEggEntity) ModEntities.AMUR_CARP_EGG.create(var1);
-        if (amurCarpEggEntity != null) {
-            int i = random.nextInt(4);
-            AmurCarpVariant variant;
-            if (i < 2) {
-                variant = this.getVariant();
-            } else if (i > 2) {
-                variant = amurCarpEntity.getVariant();
-            } else {
-                variant = (AmurCarpVariant) Util.getRandom(AmurCarpVariant.values(), this.random);
-            }
+        if (amurCarpEntity != null) {
+            ModEntityColor color;
+            ModEntityColor color2;
+            ModEntityColor color3;
+            AmurCarpPattern pattern;
+            AmurCarpDetail detail;
+            color = random.nextBoolean() ? this.getBaseColor() : amurCarpEntity.getBaseColor();
+            color2 = random.nextBoolean() ? this.getPatternColor() : amurCarpEntity.getPatternColor();
+            color3 = random.nextBoolean() ? this.getDetailColor() : amurCarpEntity.getDetailColor();
+            pattern = random.nextBoolean() ? this.getPattern() : amurCarpEntity.getPattern();
+            detail = random.nextBoolean() ? this.getDetail() : amurCarpEntity.getDetail();
 
-            amurCarpEggEntity.setVariant(variant);
+            amurCarpEntity.setBaseColor(color);
+            amurCarpEntity.setPatternColor(color2);
+            amurCarpEntity.setDetailColor(color3);
+            amurCarpEntity.setPattern(pattern);
+            amurCarpEntity.setDetail(detail);
         }
         return amurCarpEggEntity;
     }
@@ -211,6 +222,15 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
         return factory;
     }
 
+    public NbtCompound writeMateData(NbtCompound nbt) {
+        nbt.putString("Pattern", getPattern().getId().toString());
+        nbt.putString("Detail", getDetail().getId().toString());
+        nbt.putString("BaseColor", getBaseColor().getId().toString());
+        nbt.putString("PatternColor", getPatternColor().getId().toString());
+        nbt.putString("DetailColor", getDetailColor().getId().toString());
+        return nbt;
+    }
+
     public static AmurCarpVariant getVariety(int variant) {
         return AmurCarpVariant.byId(variant);
     }
@@ -218,85 +238,133 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Variant", this.getTypeVariant());
+        writeMateData(nbt);
+        nbt.put("MateData", getMateData());
 
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.dataTracker.set(VARIANT, nbt.getInt("Variant"));
+        setPattern(AmurCarpPattern.fromId(nbt.getString("Pattern")));
+        setDetail(AmurCarpDetail.fromId(nbt.getString("Detail")));
+        setBaseColor(ModEntityColor.fromId(nbt.getString("BaseColor")));
+        setPatternColor(ModEntityColor.fromId(nbt.getString("PatternColor")));
+        setDetailColor(ModEntityColor.fromId(nbt.getString("DetailColor")));
+        if(nbt.contains("MateData", NbtElement.COMPOUND_TYPE))
+            setMateData(nbt.getCompound("MateData"));
     }
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(VARIANT, 0);
+        dataTracker.startTracking(PATTERN, AmurCarpPattern.WILD);
+        dataTracker.startTracking(DETAIL, AmurCarpDetail.NONE);
+        dataTracker.startTracking(BASE_COLOR, ModEntityColor.SILVER);
+        dataTracker.startTracking(PATTERN_COLOR, ModEntityColor.SILVER);
+        dataTracker.startTracking(DETAIL_COLOR, ModEntityColor.SILVER);
+        dataTracker.startTracking(MATE_DATA, new NbtCompound());
     }
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
-        AmurCarpVariant variant;
-        int j = random.nextInt(1200);
-
-        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
-            this.setAmurCarpVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        }
-
-        if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE) && j != 0) {
-            this.setAmurCarpVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        } else if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE) && j == 0) {
-            variant = (AmurCarpVariant.SPECIAL);
-            this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.0f, 1.5f);
-        }else if (spawnReason == SpawnReason.CONVERSION) {
-            int i = random.nextInt(7);
-            if (i == 1) {
-                variant = AmurCarpVariant.byId(random.nextInt(5));
+        ModEntityColor color;
+        ModEntityColor color2;
+        ModEntityColor color3;
+        AmurCarpPattern pattern;
+        AmurCarpDetail detail;
+        if (spawnReason == SpawnReason.NATURAL) {
+            if (registryEntry.matchesKey(BiomeKeys.FROZEN_RIVER) | registryEntry.matchesKey(BiomeKeys.TAIGA)) {
+                pattern = (AmurCarpPattern.WILD);
+                detail = (AmurCarpDetail.NONE);
+                color = (ModEntityColor.OFF_YELLOW);
+                color2 = (ModEntityColor.GREEN);
+                color3 = (ModEntityColor.SILVER);
             } else {
-                variant = (AmurCarpVariant.WILD);
+                pattern = (ModUtil.getRandomTagValue(getWorld(), AmurCarpPattern.Tag.PATTERNS, random));
+                detail = (ModUtil.getRandomTagValue(getWorld(), AmurCarpDetail.Tag.DETAILS, random));
+                color = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
+                color2 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
+                color3 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
             }
         } else {
-            variant = AmurCarpVariant.byId(random.nextInt(5));
+            pattern = (ModUtil.getRandomTagValue(getWorld(), AmurCarpPattern.Tag.PATTERNS, random));
+            detail = (ModUtil.getRandomTagValue(getWorld(), AmurCarpDetail.Tag.DETAILS, random));
+            color = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
+            color2 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
+            color3 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
         }
-
-        if (spawnReason == SpawnReason.NATURAL && j == 0){
-            variant = (AmurCarpVariant.SPECIAL);
-            this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 2.0f, 1.5f);
-        } else if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.TAIGA) | registryEntry.matchesKey(BiomeKeys.FROZEN_RIVER)) {
-                variant = (AmurCarpVariant.WILD);
-            }
-        } else {
-            variant = AmurCarpVariant.byId(random.nextInt(5));
-        }
-        setVariant(variant);
+        setPattern(pattern);
+        setDetail(detail);
+        setBaseColor(color);
+        setPatternColor(color2);
+        setDetailColor(color3);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-        this.setAmurCarpVariant(variant.getId());
         return entityData;
+    }
+    public void setBaseColor(ModEntityColor color) {
+        dataTracker.set(BASE_COLOR, color);
+    }
+
+    public ModEntityColor getBaseColor() {
+        return dataTracker.get(BASE_COLOR);
+    }
+
+    public void setPatternColor(ModEntityColor color) {
+        dataTracker.set(PATTERN_COLOR, color);
+    }
+
+    public ModEntityColor getPatternColor() {
+        return dataTracker.get(PATTERN_COLOR);
+    }
+
+    public void setDetailColor(ModEntityColor color) {
+        dataTracker.set(DETAIL_COLOR, color);
+    }
+
+    public ModEntityColor getDetailColor() {
+        return dataTracker.get(DETAIL_COLOR);
+    }
+
+    public void setPattern(AmurCarpPattern pattern) {
+        dataTracker.set(PATTERN, pattern);
+    }
+
+    public AmurCarpPattern getPattern() {
+        return dataTracker.get(PATTERN);
+    }
+
+    public void setDetail(AmurCarpDetail detail) {
+        dataTracker.set(DETAIL, detail);
+    }
+
+    public AmurCarpDetail getDetail() {
+        return dataTracker.get(DETAIL);
+    }
+
+    public void setMateData(NbtCompound mateData) {
+        dataTracker.set(MATE_DATA, mateData);
+    }
+
+    public NbtCompound getMateData() {
+        return dataTracker.get(MATE_DATA);
+    }
+
+    @Override @SuppressWarnings("deprecation")
+    public void copyDataFromNbt(NbtCompound nbt) {
+        Bucketable.copyDataFromNbt(this, nbt);
+        if(nbt.contains("Pattern", NbtElement.STRING_TYPE)) {
+            readCustomDataFromNbt(nbt);
+        }
     }
 
     @Override
     public void copyDataToStack(ItemStack stack) {
         super.copyDataToStack(stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt(BUCKET_VARIANT_TAG_KEY, this.getTypeVariant());
+        writeMateData(nbtCompound);
+        nbtCompound.put("MateData", getMateData());
+        nbtCompound.put(BUCKET_VARIANT_TAG_KEY, this.getMateData());
     }
 
-    public AmurCarpVariant getVariant() {
-        return AmurCarpVariant.byId(this.getTypeVariant() & 255);
-    }
-
-    private int getTypeVariant() {
-        return this.dataTracker.get(VARIANT);
-    }
-
-    protected void setVariant(AmurCarpVariant variant) {
-        this.dataTracker.set(VARIANT, variant.getId() & 255);
-    }
-
-    protected void setAmurCarpVariant(int variant) {
-        this.dataTracker.set(VARIANT, variant);
-    }
 }

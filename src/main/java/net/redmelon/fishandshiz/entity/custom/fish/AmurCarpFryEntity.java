@@ -33,7 +33,7 @@ import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.variant.AmurCarpVariant;
+import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -161,10 +161,18 @@ public class AmurCarpFryEntity extends AmurCarpEntity implements GeoEntity {
         }
     }
     private void growUp() {
-        AmurCarpVariant variant;
+        ModEntityColor color;
+        ModEntityColor color2;
+        ModEntityColor color3;
+        AmurCarpPattern pattern;
+        AmurCarpDetail detail;
         World world = this.getWorld();
         if (world instanceof ServerWorld) {
-            variant = this.getVariant();
+            color = this.getBaseColor();
+            color2 = this.getPatternColor();
+            color3 = this.getDetailColor();
+            pattern = this.getPattern();
+            detail = this.getDetail();
             ServerWorld serverWorld = (ServerWorld)world;
             AmurCarpEntity nextEntity = ModEntities.AMUR_CARP.create(this.getWorld());
             if (nextEntity != null) {
@@ -176,7 +184,11 @@ public class AmurCarpFryEntity extends AmurCarpEntity implements GeoEntity {
                     nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                 }
                 nextEntity.setPersistent();
-                nextEntity.setVariant(variant);
+                nextEntity.setBaseColor(color);
+                nextEntity.setPatternColor(color2);
+                nextEntity.setDetailColor(color3);
+                nextEntity.setPattern(pattern);
+                nextEntity.setDetail(detail);
                 this.playSound(SoundEvents.ENTITY_TROPICAL_FISH_FLOP, 0.15f, 1.0f);
                 serverWorld.spawnEntityAndPassengers(nextEntity);
                 this.discard();

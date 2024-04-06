@@ -28,7 +28,7 @@ import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.variant.AngelfishColor;
+import net.redmelon.fishandshiz.entity.variant.ModEntityColor;
 import net.redmelon.fishandshiz.entity.variant.AngelfishDetail;
 import net.redmelon.fishandshiz.entity.variant.AngelfishPattern;
 import net.redmelon.fishandshiz.item.ModItems;
@@ -163,9 +163,9 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
         }
     }
     private void growUp() {
-        AngelfishColor color;
-        AngelfishColor color2;
-        AngelfishColor color3;
+        ModEntityColor color;
+        ModEntityColor color2;
+        ModEntityColor color3;
         AngelfishPattern pattern;
         AngelfishDetail detail;
         World world = this.getWorld();

@@ -18,7 +18,6 @@ import net.redmelon.fishandshiz.entity.client.fish.renderer.*;
 import net.redmelon.fishandshiz.entity.client.renderer.BasicMiscRenderer;
 import net.redmelon.fishandshiz.entity.client.renderer.BasicSmallMiscRenderer;
 import net.redmelon.fishandshiz.entity.client.renderer.ReplacedSquidRenderer;
-import software.bernie.shadowed.eliotlash.mclib.math.functions.classic.Mod;
 
 public class FishAndShizClient implements ClientModInitializer {
     @Override
@@ -33,7 +32,7 @@ public class FishAndShizClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.CULTURE_FEED, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.WATER, RenderLayer.getCutout());
 
-        EntityRendererRegistry.register(ModEntities.ANGELFISH, ProceduralAngelfishRenderer::new);
+        EntityRendererRegistry.register(ModEntities.ANGELFISH, AngelfishRenderer::new);
         EntityRendererRegistry.register(ModEntities.ANGELFISH_FRY, BasicFryRenderer.create("angelfish"));
         EntityRendererRegistry.register(ModEntities.ANGELFISH_EGG, BasicEggRenderer.create("angelfish", "angelfish"));
         EntityRendererRegistry.register(ModEntities.ARCHERFISH, BasicFishRenderer.create("archerfish"));

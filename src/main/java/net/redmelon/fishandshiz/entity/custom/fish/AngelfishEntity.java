@@ -41,8 +41,7 @@ import net.redmelon.fishandshiz.entity.custom.CrayfishEggEntity;
 import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabEggEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
-import net.redmelon.fishandshiz.entity.variant.AmurCarpVariant;
-import net.redmelon.fishandshiz.entity.variant.AngelfishColor;
+import net.redmelon.fishandshiz.entity.variant.ModEntityColor;
 import net.redmelon.fishandshiz.entity.variant.AngelfishDetail;
 import net.redmelon.fishandshiz.entity.variant.AngelfishPattern;
 import net.redmelon.fishandshiz.item.ModItems;
@@ -58,9 +57,9 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     private static final TrackedData<AngelfishPattern> PATTERN = DataTracker.registerData(AngelfishEntity.class, AngelfishPattern.TRACKED_DATA_HANDLER);
     private static final TrackedData<AngelfishDetail> DETAIL = DataTracker.registerData(AngelfishEntity.class, AngelfishDetail.TRACKED_DATA_HANDLER);
-    private static final TrackedData<AngelfishColor> BASE_COLOR = DataTracker.registerData(AngelfishEntity.class, AngelfishColor.TRACKED_DATA_HANDLER);
-    private static final TrackedData<AngelfishColor> PATTERN_COLOR = DataTracker.registerData(AngelfishEntity.class, AngelfishColor.TRACKED_DATA_HANDLER);
-    private static final TrackedData<AngelfishColor> DETAIL_COLOR = DataTracker.registerData(AngelfishEntity.class, AngelfishColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> BASE_COLOR = DataTracker.registerData(AngelfishEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> PATTERN_COLOR = DataTracker.registerData(AngelfishEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> DETAIL_COLOR = DataTracker.registerData(AngelfishEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
     private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(AngelfishEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
@@ -137,9 +136,9 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
         AngelfishEntity angelfishEntity = (AngelfishEntity) var2;
         AngelfishEggEntity angelfishEggEntity = (AngelfishEggEntity) ModEntities.ANGELFISH_EGG.create(var1);
         if (angelfishEggEntity != null) {
-            AngelfishColor color;
-            AngelfishColor color2;
-            AngelfishColor color3;
+            ModEntityColor color;
+            ModEntityColor color2;
+            ModEntityColor color3;
             AngelfishPattern pattern;
             AngelfishDetail detail;
                 color = random.nextBoolean() ? this.getBaseColor() : angelfishEntity.getBaseColor();
@@ -248,9 +247,9 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
         super.readCustomDataFromNbt(nbt);
         setPattern(AngelfishPattern.fromId(nbt.getString("Pattern")));
         setDetail(AngelfishDetail.fromId(nbt.getString("Detail")));
-        setBaseColor(AngelfishColor.fromId(nbt.getString("BaseColor")));
-        setPatternColor(AngelfishColor.fromId(nbt.getString("PatternColor")));
-        setDetailColor(AngelfishColor.fromId(nbt.getString("DetailColor")));
+        setBaseColor(ModEntityColor.fromId(nbt.getString("BaseColor")));
+        setPatternColor(ModEntityColor.fromId(nbt.getString("PatternColor")));
+        setDetailColor(ModEntityColor.fromId(nbt.getString("DetailColor")));
         if(nbt.contains("MateData", NbtElement.COMPOUND_TYPE))
             setMateData(nbt.getCompound("MateData"));
     }
@@ -259,9 +258,9 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
         super.initDataTracker();
         dataTracker.startTracking(PATTERN, AngelfishPattern.WILD);
         dataTracker.startTracking(DETAIL, AngelfishDetail.NONE);
-        dataTracker.startTracking(BASE_COLOR, AngelfishColor.SILVER);
-        dataTracker.startTracking(PATTERN_COLOR, AngelfishColor.SILVER);
-        dataTracker.startTracking(DETAIL_COLOR, AngelfishColor.SILVER);
+        dataTracker.startTracking(BASE_COLOR, ModEntityColor.SILVER);
+        dataTracker.startTracking(PATTERN_COLOR, ModEntityColor.SILVER);
+        dataTracker.startTracking(DETAIL_COLOR, ModEntityColor.SILVER);
         dataTracker.startTracking(MATE_DATA, new NbtCompound());
     }
 
@@ -269,31 +268,31 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
-        AngelfishColor color;
-        AngelfishColor color2;
-        AngelfishColor color3;
+        ModEntityColor color;
+        ModEntityColor color2;
+        ModEntityColor color3;
         AngelfishPattern pattern;
         AngelfishDetail detail;
         if (spawnReason == SpawnReason.NATURAL) {
             if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN) | registryEntry.matchesKey(BiomeKeys.JUNGLE) | registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
                 pattern = (AngelfishPattern.WILD);
                 detail = (AngelfishDetail.ACCENT);
-                color = (AngelfishColor.SILVER);
-                color2 = (AngelfishColor.MATTE_BLACK);
-                color3 = (AngelfishColor.MUDDY);
+                color = (ModEntityColor.SILVER);
+                color2 = (ModEntityColor.MATTE_BLACK);
+                color3 = (ModEntityColor.MUDDY);
             } else {
                 pattern = (ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.PATTERNS, random));
                 detail = (ModUtil.getRandomTagValue(getWorld(), AngelfishDetail.Tag.DETAILS, random));
-                color = (ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.BASE_COLORS, random));
-                color2 = (ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.PATTERN_COLORS, random));
-                color3 = (ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.DETAIL_COLORS, random));
+                color = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
+                color2 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
+                color3 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
             }
         } else {
             pattern = (ModUtil.getRandomTagValue(getWorld(), AngelfishPattern.Tag.PATTERNS, random));
             detail = (ModUtil.getRandomTagValue(getWorld(), AngelfishDetail.Tag.DETAILS, random));
-            color = (ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.BASE_COLORS, random));
-            color2 = (ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.PATTERN_COLORS, random));
-            color3 = (ModUtil.getRandomTagValue(getWorld(), AngelfishColor.Tag.DETAIL_COLORS, random));
+            color = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
+            color2 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
+            color3 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
         }
         setPattern(pattern);
         setDetail(detail);
@@ -304,27 +303,27 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
         return entityData;
     }
 
-    public void setBaseColor(AngelfishColor color) {
+    public void setBaseColor(ModEntityColor color) {
         dataTracker.set(BASE_COLOR, color);
     }
 
-    public AngelfishColor getBaseColor() {
+    public ModEntityColor getBaseColor() {
         return dataTracker.get(BASE_COLOR);
     }
 
-    public void setPatternColor(AngelfishColor color) {
+    public void setPatternColor(ModEntityColor color) {
         dataTracker.set(PATTERN_COLOR, color);
     }
 
-    public AngelfishColor getPatternColor() {
+    public ModEntityColor getPatternColor() {
         return dataTracker.get(PATTERN_COLOR);
     }
 
-    public void setDetailColor(AngelfishColor color) {
+    public void setDetailColor(ModEntityColor color) {
         dataTracker.set(DETAIL_COLOR, color);
     }
 
-    public AngelfishColor getDetailColor() {
+    public ModEntityColor getDetailColor() {
         return dataTracker.get(DETAIL_COLOR);
     }
 
@@ -359,7 +358,6 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity {
             readCustomDataFromNbt(nbt);
         }
     }
-
 
     @Override
     public void copyDataToStack(ItemStack stack) {

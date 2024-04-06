@@ -35,8 +35,9 @@ import net.redmelon.fishandshiz.entity.custom.CrayfishEggEntity;
 import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabEggEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
-import net.redmelon.fishandshiz.entity.variant.AmurCarpVariant;
+import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
+import net.redmelon.fishandshiz.util.ModUtil;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -139,12 +140,29 @@ public class AmurCarpEggEntity extends AmurCarpEntity implements GeoEntity {
     }
 
     private void growUp() {
-        AmurCarpVariant variant;
+        ModEntityColor color;
+        ModEntityColor color2;
+        ModEntityColor color3;
+        AmurCarpPattern pattern;
+        AmurCarpDetail detail;
         World world = this.getWorld();
         int i = random.nextBetweenExclusive(3, 9);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
-                variant = this.getVariant();
+                int m = random.nextInt(4);
+                if (m != 0) {
+                    color = this.getBaseColor();
+                    color2 = this.getPatternColor();
+                    color3 = this.getDetailColor();
+                    pattern = this.getPattern();
+                    detail = this.getDetail();
+                } else {
+                    pattern = random.nextBoolean() ? this.getPattern() : (ModUtil.getRandomTagValue(getWorld(), AmurCarpPattern.Tag.PATTERNS, random));
+                    detail = random.nextBoolean() ? this.getDetail() : (ModUtil.getRandomTagValue(getWorld(), AmurCarpDetail.Tag.DETAILS, random));
+                    color = random.nextBoolean() ? this.getBaseColor() : (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
+                    color2 = random.nextBoolean() ? this.getPatternColor() : (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
+                    color3 = random.nextBoolean() ? this.getDetailColor() : (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
+                }
                 ServerWorld serverWorld = (ServerWorld)world;
                 AmurCarpFryEntity nextEntity = ModEntities.AMUR_CARP_FRY.create(this.getWorld());
                 if (nextEntity != null) {
@@ -156,7 +174,11 @@ public class AmurCarpEggEntity extends AmurCarpEntity implements GeoEntity {
                         nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                     }
                     nextEntity.setPersistent();
-                    nextEntity.setVariant(variant);
+                    nextEntity.setBaseColor(color);
+                    nextEntity.setPatternColor(color2);
+                    nextEntity.setDetailColor(color3);
+                    nextEntity.setPattern(pattern);
+                    nextEntity.setDetail(detail);
                     this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
                     serverWorld.spawnEntityAndPassengers(nextEntity);
                     this.discard();

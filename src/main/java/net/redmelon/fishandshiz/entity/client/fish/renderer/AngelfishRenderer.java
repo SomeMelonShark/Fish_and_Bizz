@@ -11,8 +11,8 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
-public class ProceduralAngelfishRenderer extends GeoEntityRenderer<AngelfishEntity> {
-    public ProceduralAngelfishRenderer(EntityRendererFactory.Context renderManager) {
+public class AngelfishRenderer extends GeoEntityRenderer<AngelfishEntity> {
+    public AngelfishRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new BasicFishModel<>("angelfish"));
         this.addRenderLayer(new AngelfishLayerRenderer(this));
         this.shadowRadius = 0.2f;
