@@ -45,6 +45,12 @@ public class AngelfishRenderer extends GeoEntityRenderer<AngelfishEntity> {
             this.render(poseStack, animatable, bakedModel, animatable.getBaseColor().color(), this.getTextureResource(animatable), bufferSource, packedLight, packedOverlay, partialTick);
             this.render(poseStack, animatable, bakedModel, animatable.getPatternColor().color(), animatable.getPattern().texture(), bufferSource, packedLight, packedOverlay, partialTick);
             this.render(poseStack, animatable, bakedModel, animatable.getDetailColor().color(), animatable.getDetail().texture(), bufferSource, packedLight, packedOverlay, partialTick);
+
+            if(animatable.isBaby()) {
+                poseStack.scale(0.5f, 0.5f, 0.5f);
+            } else {
+                poseStack.scale(0.8f, 0.8f, 0.8f);
+            }
         }
 
         public RenderLayer getRenderType(Identifier texture) {

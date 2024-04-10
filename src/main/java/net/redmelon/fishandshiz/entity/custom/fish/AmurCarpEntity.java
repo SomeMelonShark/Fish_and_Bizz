@@ -132,23 +132,23 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
     public @Nullable AmurCarpEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
         AmurCarpEntity amurCarpEntity = (AmurCarpEntity) var2;
         AmurCarpEggEntity amurCarpEggEntity = (AmurCarpEggEntity) ModEntities.AMUR_CARP_EGG.create(var1);
-        if (amurCarpEntity != null) {
+        if (amurCarpEggEntity != null) {
             ModEntityColor color;
             ModEntityColor color2;
             ModEntityColor color3;
             AmurCarpPattern pattern;
             AmurCarpDetail detail;
-            color = random.nextBoolean() ? this.getBaseColor() : amurCarpEntity.getBaseColor();
-            color2 = random.nextBoolean() ? this.getPatternColor() : amurCarpEntity.getPatternColor();
-            color3 = random.nextBoolean() ? this.getDetailColor() : amurCarpEntity.getDetailColor();
-            pattern = random.nextBoolean() ? this.getPattern() : amurCarpEntity.getPattern();
-            detail = random.nextBoolean() ? this.getDetail() : amurCarpEntity.getDetail();
+                color = random.nextBoolean() ? this.getBaseColor() : amurCarpEntity.getBaseColor();
+                color2 = random.nextBoolean() ? this.getPatternColor() : amurCarpEntity.getPatternColor();
+                color3 = random.nextBoolean() ? this.getDetailColor() : amurCarpEntity.getDetailColor();
+                pattern = random.nextBoolean() ? this.getPattern() : amurCarpEntity.getPattern();
+                detail = random.nextBoolean() ? this.getDetail() : amurCarpEntity.getDetail();
 
-            amurCarpEntity.setBaseColor(color);
-            amurCarpEntity.setPatternColor(color2);
-            amurCarpEntity.setDetailColor(color3);
-            amurCarpEntity.setPattern(pattern);
-            amurCarpEntity.setDetail(detail);
+            amurCarpEggEntity.setBaseColor(color);
+            amurCarpEggEntity.setPatternColor(color2);
+            amurCarpEggEntity.setDetailColor(color3);
+            amurCarpEggEntity.setPattern(pattern);
+            amurCarpEggEntity.setDetail(detail);
         }
         return amurCarpEggEntity;
     }
@@ -179,7 +179,7 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
     }
 
     private void cultureAge() {
-        this.setBreedingAge((int) (getBreedingAge() * 0.9));
+        this.setBreedingAge((int) (breedingAge * 0.8));
     }
 
     @Override

@@ -133,7 +133,7 @@ public class NeonTetraEntity extends SchoolingBreedEntity implements GeoEntity {
     }
 
     private void cultureAge() {
-        this.setBreedingAge((int) (getBreedingAge() * 0.9));
+        this.setBreedingAge((int) (breedingAge * 0.8));
     }
 
     @Override
