@@ -66,11 +66,11 @@ public class MonteCarloBlock extends MultifaceGrowthBlock implements Waterloggab
     }
 
     public int getAge(BlockState state) {
-        return (Integer)state.get(this.getAgeProperty());
+        return (Integer) state.get(this.getAgeProperty());
     }
 
     public BlockState withAge(int age) {
-        return (BlockState)this.getDefaultState().with(this.getAgeProperty(), age);
+        return (BlockState) this.getDefaultState().with(this.getAgeProperty(), age);
     }
 
     public final boolean isMature(BlockState blockState) {
@@ -118,19 +118,7 @@ public class MonteCarloBlock extends MultifaceGrowthBlock implements Waterloggab
     }
 
     protected BlockState age(BlockState state, Random random) {
-        return (BlockState)state.cycle(AGE);
-    }
-
-    @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        int f = random.nextInt(20);
-        int i = this.getAge(state);
-        if (!MonteCarloBlock.canSurvive(state, world, pos)) {
-            world.setBlockState(pos, Blocks.WATER.getDefaultState());
-        }
-        if (!this.isMature(state) && f == 1) {
-            world.setBlockState(pos, this.withAge(i + 1), Block.NOTIFY_LISTENERS);
-        }
+        return (BlockState) state.cycle(AGE);
     }
 
     @Override
@@ -194,9 +182,9 @@ public class MonteCarloBlock extends MultifaceGrowthBlock implements Waterloggab
 
     @Override
     public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-        this.applyGrowth(world, pos, state);
-        while(canGrow(world, pos, state))
+        while (canGrow(world, pos, state))
             this.grower.grow(state, world, pos, random);
+        this.applyGrowth(world, pos, state);
     }
 
     public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {
