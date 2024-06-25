@@ -25,6 +25,9 @@ public class ModModelProvider extends FabricModelProvider {
 
         blockStateModelGenerator.registerDoubleBlock(ModBlocks.TALL_VALLISNERIA, new Identifier(FishAndShiz.MOD_ID,"block/vallisneria"), new Identifier(FishAndShiz.MOD_ID, "block/tall_vallisneria"));
 
+        blockStateModelGenerator.registerTintableCross(ModBlocks.POTHOS_ROOTS,BlockStateModelGenerator.TintType.NOT_TINTED);
+        blockStateModelGenerator.registerTintableCross(ModBlocks.POTHOS_ROOT_CAP,BlockStateModelGenerator.TintType.NOT_TINTED);
+
         blockStateModelGenerator.registerParentedItemModel(ModItems.CAPYBARA_SPAWN_EGG, ModelIds.getMinecraftNamespacedItem("template_spawn_egg"));
         blockStateModelGenerator.registerParentedItemModel(ModItems.MILKFISH_SPAWN_EGG, ModelIds.getMinecraftNamespacedItem("template_spawn_egg"));
         blockStateModelGenerator.registerParentedItemModel(ModItems.ARCHERFISH_SPAWN_EGG, ModelIds.getMinecraftNamespacedItem("template_spawn_egg"));

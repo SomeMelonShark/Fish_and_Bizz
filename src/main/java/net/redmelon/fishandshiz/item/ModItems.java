@@ -48,6 +48,8 @@ public class ModItems {
             new AliasedBlockItem(ModBlocks.MONTE_CARLO,new FabricItemSettings()));
     public static final Item AMAZON_SWORD = registerItem("amazon_sword",
             new AliasedBlockItem(ModBlocks.AMAZON_SWORD, new FabricItemSettings()));
+    public static final Item POTHOS = registerItem("pothos",
+            new AliasedBlockItem(ModBlocks.POTHOS_PLANT, new FabricItemSettings()));
     public static final Item ANGELFISH_BUCKET = registerItem("angelfish_bucket",
             new EntityBucketItem(ModEntities.ANGELFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item ANGELFISH_FRY_BUCKET = registerItem("angelfish_fry_bucket",
@@ -166,6 +168,7 @@ public class ModItems {
         registerCompostable(FANWORT, 0.3f);
         registerCompostable(VALLISNERIA, 0.3f);
         registerCompostable(MONTE_CARLO, 0.3f);
+        registerCompostable(POTHOS, 0.3f);
         registerCompostable(DRIED_MULM, 1.0f);
 
     }
