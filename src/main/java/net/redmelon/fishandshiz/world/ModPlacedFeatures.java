@@ -22,6 +22,7 @@ public class ModPlacedFeatures {
     public static final RegistryKey<PlacedFeature> PLACED_AMAZON_SWORD = registerKey("placed_amazon_sword");
     public static final RegistryKey<PlacedFeature> PLACED_CULTURE_FEED = registerKey("placed_culture_feed");
     public static final RegistryKey<PlacedFeature> PLACED_VALLISNERIA = registerKey("placed_vallisneria");
+    public static final RegistryKey<PlacedFeature> PLACED_POTHOS = registerKey("placed_pothos");
     public static final RegistryKey<PlacedFeature> LAKE = registerKey("lake");
 
     public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -60,8 +61,12 @@ public class ModPlacedFeatures {
                 SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, BiomePlacementModifier.of());
 
         RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference6 =
+                registryEntryLookup.getOrThrow(ModConfiguredFeatures.POTHOS_KEY);
+        register(context, PLACED_POTHOS, reference6, VegetationPlacedFeatures.modifiers(4));
+
+        RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference7 =
                 registryEntryLookup.getOrThrow(ModConfiguredFeatures.LAKE);
-        register(context, LAKE, reference6,
+        register(context, LAKE, reference7,
                 NoiseBasedCountPlacementModifier.of(80, 80.0, 0.0),
                 SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, BiomePlacementModifier.of());
     }

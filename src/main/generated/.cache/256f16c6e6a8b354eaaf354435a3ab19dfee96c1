@@ -1,5 +1,6 @@
-// 1.20	2024-06-25T20:50:51.7085221	Fish And Bizz/Block Loot Tables
+// 1.20	2024-06-26T17:10:15.1169688	Fish And Bizz/Block Loot Tables
 f1fec996ca3195822dfd9a75d8ef5b70b1138f31 data\fishandshiz\loot_tables\blocks\sea_anemone.json
+38d2952a7d5c60d19075347261f58267a0a4ad82 data\fishandshiz\loot_tables\blocks\pothos_plant.json
 ceaa52940e30e0aa38e2e911a61081fe7e27fce8 data\fishandshiz\loot_tables\blocks\fishmeal_block.json
 4950eb8d76c4361960be12bec410113ab4d53075 data\fishandshiz\loot_tables\blocks\mulm.json
 88a85e79cd96618886ea1d4ed315c0605c74e7e6 data\fishandshiz\loot_tables\blocks\fanwort.json
