@@ -95,8 +95,8 @@ public class AuratusEggEntity extends AuratusEntity implements GeoEntity {
     private void increaseAge(int seconds) {
         this.setStageAge(this.stageAge + seconds * 20);
     }
-    private void setStageAge(int auratusEggAge) {
-        this.stageAge = auratusEggAge;
+    private void setStageAge(int eggAge) {
+        this.stageAge = eggAge;
         if (this.stageAge >= MAX_EGG_AGE) {
             this.growUp();
         }

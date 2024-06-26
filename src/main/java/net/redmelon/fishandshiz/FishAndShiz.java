@@ -88,6 +88,8 @@ public class 	FishAndShiz implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.BETTA, BettaEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.BETTA_FRY, BettaFryEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.BETTA_EGG, BettaEggEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.PLATY, PlatyEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.PLATY_FRY, PlatyFryEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.RED_TAIL_CATFISH, RedTailCatfishEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.SALMON_EGG, SalmonEggEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.SALMON_FRY, SalmonFryEntity.setAttributes());

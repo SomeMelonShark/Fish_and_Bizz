@@ -16,7 +16,7 @@ import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
 public class AmurCarpRenderer extends GeoEntityRenderer<AmurCarpEntity> {
     public AmurCarpRenderer(EntityRendererFactory.Context renderManager) {
-        super(renderManager, new BasicFishModel<>("amur_carp"));
+        super(renderManager, new BasicFishModel<>("amur_carp", "mediumfish"));
         this.addRenderLayer(new AmurCarpLayerRenderer(this));
         this.shadowRadius = 0.4f;
     }

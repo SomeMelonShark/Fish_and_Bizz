@@ -1,4 +1,4 @@
-// 1.20	2024-06-26T17:10:15.1179693	Fish And Bizz/Model Definitions
+// 1.20	2024-06-26T22:28:04.001678	Fish And Bizz/Model Definitions
 1041d05ad8924f97bd079c381072aed11ab4756c assets\fishandshiz\models\item\dried_mulm.json
 33ec4b8c74d56abee11756a630698b8563c1b57b assets\fishandshiz\blockstates\pothos_roots.json
 d8b540cf639cf904e28427347f551be5641b7ed5 assets\fishandshiz\models\item\grayling_fry_bucket.json
@@ -13,6 +13,7 @@ bcca8e6da6649128e4d63195947030a5db89b426 assets\fishandshiz\models\item\clownfis
 d3885a9efaccc2de7244bca274b14a39115f9351 assets\fishandshiz\blockstates\tall_vallisneria.json
 d4f2d5694616d1414149e5a3440941976c5e35d3 assets\fishandshiz\models\item\monte_carlo.json
 b105eaecc7e90b2a2cb31d65179f7347ebc702e6 assets\fishandshiz\models\item\cornbread.json
+cbda5b568d0098d828534ea0401c8301ef5e95a2 assets\fishandshiz\models\item\platy_fry_bucket.json
 ff91b51ff5e594c2b4b4c468e4bcef9ddcc26406 assets\fishandshiz\models\item\corn.json
 a3905248f87adc947ec94270f381fb53b8bbd78c assets\fishandshiz\models\item\milkfish_bucket.json
 fb7eba1b5fc5e1e57984b48da1eae019b132e729 assets\fishandshiz\models\block\pothos_root_cap.json
@@ -23,10 +24,11 @@ f1088db1bc8ac1343a9f9027f8032f797d46558a assets\fishandshiz\models\item\oscar_fr
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\fishandshiz\models\item\mud_crab_spawn_egg.json
 9cb5dee16ee1f0c83656d6048f333fbb6bfafd5b assets\fishandshiz\models\item\milkfish_egg_bucket.json
 5c3d4a2ac199e59581620c85f8813e5cdd0e8394 assets\fishandshiz\models\item\grayling_bucket.json
-63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\fishandshiz\models\item\crayfish_spawn_egg.json
 04ae1cede46074940f2b123c505ef92cd0eb4ad4 assets\fishandshiz\models\item\mud_crab_larva_bucket.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\fishandshiz\models\item\crayfish_spawn_egg.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\fishandshiz\models\item\lion_mane_spawn_egg.json
 61b5ce68c4a25d6ebe2b1e15772c9e5d08127049 assets\fishandshiz\models\item\volcano_snail_bucket.json
+a25163141c36003675352a4a6ec7f7a5c0521268 assets\fishandshiz\models\item\platy_bucket.json
 6229bde7bb6df683dcee06cc77ae0f76f2ca69ac assets\fishandshiz\models\item\mud_crab.json
 01804f620ffad523f73d230bfbaa4175b4dc4b7b assets\fishandshiz\models\item\angelfish_egg_bucket.json
 c8bec21b9fe47e3032970c06757d03643b66d00c assets\fishandshiz\models\item\fanwort.json
@@ -48,8 +50,8 @@ bf95c57bb030dfb738e07100fd4d86abdfeb1a27 assets\fishandshiz\models\item\milkfish
 faa5ab9075c1857fa561091adb8b660778565e0e assets\fishandshiz\models\item\angelfish_fry_bucket.json
 4bf68b419f15241a2e55495b394dcc926c558929 assets\fishandshiz\models\block\fanwort.json
 36ffb81f134ce99d734628350bf1bcdfabbd6c57 assets\fishandshiz\models\item\auratus_bucket.json
-8f0f76e5b8a713408c07f3c3b7ad40fd781c82b4 assets\fishandshiz\models\block\fanwort_plant.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\fishandshiz\models\item\capybara_spawn_egg.json
+8f0f76e5b8a713408c07f3c3b7ad40fd781c82b4 assets\fishandshiz\models\block\fanwort_plant.json
 cdfd61c534e14e3ddeb4c08585f69e276d7c9d25 assets\fishandshiz\models\item\sea_anemone.json
 e1e0e37f94c5b16532887de896760ace55a17a78 assets\fishandshiz\models\item\milkfish_fry_bucket.json
 b91e335c29e51be1dcea07f88f96e85936150ee0 assets\fishandshiz\models\item\crayfish_larva_bucket.json

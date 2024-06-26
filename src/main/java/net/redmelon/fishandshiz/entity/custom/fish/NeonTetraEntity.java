@@ -53,11 +53,11 @@ public class NeonTetraEntity extends SchoolingBreedEntity implements GeoEntity {
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater()) {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.neon_tetra.swim", Animation.LoopType.LOOP));
+                    .then("animation.fry.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.neon_tetra.flop", Animation.LoopType.LOOP));
+                    .then("animation.fry.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
     }

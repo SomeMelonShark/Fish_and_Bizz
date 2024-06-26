@@ -48,11 +48,11 @@ public class OscarEntity extends SchoolingBreedEntity implements GeoEntity {
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater()) {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.oscar.swim", Animation.LoopType.LOOP));
+                    .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.oscar.flop", Animation.LoopType.LOOP));
+                    .then("animation.mediumfish.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
     }

@@ -22,8 +22,8 @@ public class BasicFishRenderer <E extends LivingEntity & GeoAnimatable> extends 
         return ctx -> new BasicFishRenderer<>(ctx, model);
     }
 
-    public static <E extends LivingEntity & GeoAnimatable> EntityRendererFactory<E> create(String name) {
-        return ctx -> new BasicFishRenderer<>(ctx, new BasicFishModel<>(name));
+    public static <E extends LivingEntity & GeoAnimatable> EntityRendererFactory<E> create(String name, String aname) {
+        return ctx -> new BasicFishRenderer<>(ctx, new BasicFishModel<>(name, aname));
     }
 
     @Override

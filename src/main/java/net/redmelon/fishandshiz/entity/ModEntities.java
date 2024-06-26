@@ -156,6 +156,14 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "betta_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     BettaEggEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.1f)).build());
 
+    public static final EntityType<PlatyEntity> PLATY = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "platy"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    PlatyEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.2f)).build());
+
+    public static final EntityType<PlatyFryEntity> PLATY_FRY = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "platy_fry"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    PlatyFryEntity::new).dimensions(EntityDimensions.fixed(PlatyFryEntity.WIDTH, PlatyFryEntity.HEIGHT)).build());
+
     public static final EntityType<RedTailCatfishEntity> RED_TAIL_CATFISH = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "red_tail_catfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     RedTailCatfishEntity::new).dimensions(EntityDimensions.fixed(1.5f, 0.6f)).build());

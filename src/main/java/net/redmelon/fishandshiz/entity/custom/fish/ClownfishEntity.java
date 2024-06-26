@@ -57,11 +57,11 @@ public class ClownfishEntity extends SchoolingBreedEntity implements GeoEntity {
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater()) {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.clownfish.swim", Animation.LoopType.LOOP));
+                    .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.clownfish.flop", Animation.LoopType.LOOP));
+                    .then("animation.mediumfish.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
     }
