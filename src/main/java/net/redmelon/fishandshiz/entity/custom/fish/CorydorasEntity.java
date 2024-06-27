@@ -38,9 +38,6 @@ import net.redmelon.fishandshiz.cclass.cmethods.goals.BottomFeederGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.custom.CrayfishEggEntity;
-import net.redmelon.fishandshiz.entity.custom.MudCrabEggEntity;
-import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
 import net.redmelon.fishandshiz.entity.variant.CorydorasVariant;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.world.biome.ModBiomes;
@@ -102,9 +99,6 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, GraylingEggEntity.class, true));
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, RainbowfishEggEntity.class, true));
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, OscarEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, CrayfishEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, MudCrabEggEntity.class, true));
-
     }
 
     @Override

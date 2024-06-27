@@ -25,7 +25,6 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Util;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -37,22 +36,17 @@ import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.custom.CrayfishEggEntity;
 import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
-import net.redmelon.fishandshiz.entity.custom.MudCrabEggEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
 import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.util.ModUtil;
-import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-
-import static net.redmelon.fishandshiz.block.ModBlocks.CULTURE_FEED;
 
 public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
     private static final TrackedData<AmurCarpPattern> PATTERN = DataTracker.registerData(AmurCarpEntity.class, AmurCarpPattern.TRACKED_DATA_HANDLER);
@@ -113,7 +107,6 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, SalmonFryEntity.class, true));
 
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AmurCarpEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AuratusEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, BettaEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AngelfishEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, ClownfishEggEntity.class, true));
@@ -124,8 +117,6 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, OscarEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, RainbowfishEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, SalmonEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, CrayfishEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, MudCrabEggEntity.class, true));
     }
 
     @Override

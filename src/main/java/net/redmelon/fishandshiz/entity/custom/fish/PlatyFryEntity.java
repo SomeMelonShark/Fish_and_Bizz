@@ -21,6 +21,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
+import net.redmelon.fishandshiz.cclass.LivebearerEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
@@ -40,7 +41,7 @@ public class PlatyFryEntity extends PlatyEntity implements GeoEntity {
     public static float HEIGHT = 0.1f;
     private int stageAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-    public PlatyFryEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
+    public PlatyFryEntity(EntityType<? extends LivebearerEntity> entityType, World world) {
         super(entityType, world);
     }
 

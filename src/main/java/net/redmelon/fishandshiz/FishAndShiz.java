@@ -78,7 +78,6 @@ public class 	FishAndShiz implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.RAINBOWFISH_EGG, RainbowfishEggEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.AURATUS, AuratusEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.AURATUS_FRY, AuratusFryEntity.setAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.AURATUS_EGG, AuratusEggEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.GRAYLING, GraylingEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.GRAYLING_FRY, GraylingFryEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.GRAYLING_EGG, GraylingEggEntity.setAttributes());
@@ -95,10 +94,8 @@ public class 	FishAndShiz implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.SALMON_FRY, SalmonFryEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.MUD_CRAB, MudCrabEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.MUD_CRAB_LARVA, MudCrabLarvaEntity.setAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.MUD_CRAB_EGG, MudCrabEggEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.CRAYFISH, CrayfishEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.CRAYFISH_LARVA, CrayfishLarvaEntity.setAttributes());
-		FabricDefaultAttributeRegistry.register(ModEntities.CRAYFISH_EGG, CrayfishEggEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.LION_MANE_JELLYFISH, ManeJellyfishEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.VOLCANO_SNAIL, VolcanoSnailEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.VOLCANO_SNAIL_EGG, VolcanoSnailEggEntity.setAttributes());

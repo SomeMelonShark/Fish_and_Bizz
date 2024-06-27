@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "fishandshiz:item/auratus_egg_bucket"
-  }
-}

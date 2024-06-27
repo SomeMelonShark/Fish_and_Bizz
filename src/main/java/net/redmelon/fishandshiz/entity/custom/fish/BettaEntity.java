@@ -15,11 +15,9 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -29,17 +27,13 @@ import net.minecraft.util.Util;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeKeys;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.custom.CrayfishEggEntity;
 import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
-import net.redmelon.fishandshiz.entity.custom.MudCrabEggEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
 import net.redmelon.fishandshiz.entity.variant.BettaVariant;
 import net.redmelon.fishandshiz.item.ModItems;
@@ -111,7 +105,6 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, SalmonFryEntity.class, true));
 
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AmurCarpEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AuratusEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AngelfishEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, ClownfishEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, CorydorasEggEntity.class, true));
@@ -121,8 +114,6 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, OscarEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, RainbowfishEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, SalmonEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, CrayfishEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, MudCrabEggEntity.class, true));
     }
 
     @Override

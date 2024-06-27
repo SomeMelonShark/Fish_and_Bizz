@@ -1,10 +1,7 @@
 package net.redmelon.fishandshiz.entity.custom.fish;
 
-import com.google.common.annotations.VisibleForTesting;
-import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.entity.Bucketable;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
@@ -13,38 +10,26 @@ import net.minecraft.entity.ai.goal.SwimAroundGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.TurtleEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
+import net.redmelon.fishandshiz.cclass.LivebearerEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
-import net.redmelon.fishandshiz.cclass.cmethods.CustomCriteria;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.GravidFishMateGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.custom.CrayfishEggEntity;
 import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
-import net.redmelon.fishandshiz.entity.custom.MudCrabEggEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
@@ -54,28 +39,17 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class PlatyEntity extends SchoolingBreedEntity implements GeoEntity {
-    @VisibleForTesting
-    public static int MAX_EGG_AGE = Math.abs(-12000);
+public class PlatyEntity extends LivebearerEntity implements GeoEntity {
     private int stageAge;
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
-    private static final TrackedData<Boolean> HAS_EGG = DataTracker.registerData(PlatyEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-    public PlatyEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
+    public PlatyEntity(EntityType<? extends LivebearerEntity> entityType, World world) {
         super(entityType, world);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
-    }
-
-    public boolean hasEgg() {
-        return this.dataTracker.get(HAS_EGG);
-    }
-
-    void setHasEgg(boolean hasEgg) {
-        this.dataTracker.set(HAS_EGG, hasEgg);
     }
 
     private PlayState genericFlopController(AnimationState animationState) {
@@ -91,28 +65,10 @@ public class PlatyEntity extends SchoolingBreedEntity implements GeoEntity {
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(HAS_EGG, false);
-    }
-
-    @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putBoolean("HasEgg", this.hasEgg());
-    }
-
-    @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        this.setHasEgg(nbt.getBoolean("HasEgg"));
-    }
-
-    @Override
     protected void initGoals() {
         this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25));
         this.goalSelector.add(2, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
-        this.goalSelector.add(3, new GravidMateGoal(this, 1));
+        this.goalSelector.add(3, new GravidFishMateGoal(this, 1));
         this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
         this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
 
@@ -144,8 +100,6 @@ public class PlatyEntity extends SchoolingBreedEntity implements GeoEntity {
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, OscarEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, RainbowfishEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, SalmonEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, CrayfishEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, MudCrabEggEntity.class, true));
     }
 
     @Override
@@ -187,59 +141,8 @@ public class PlatyEntity extends SchoolingBreedEntity implements GeoEntity {
         return stack.getItem() == ModItems.FISH_FOOD;
     }
 
-    public class GravidMateGoal extends BreedAnimalMateGoal {
-        private final PlatyEntity entity;
-        public GravidMateGoal(PlatyEntity animal, double speed) {
-            super(animal, speed);
-            this.entity = animal;
-        }
-
-        @Override
-        public boolean canStart() {
-            return super.canStart() && !this.entity.hasEgg();
-        }
-
-        @Override
-        protected void breed() {
-            ServerPlayerEntity serverPlayerEntity = this.animal.getLovingPlayer();
-            if (serverPlayerEntity == null && this.mate.getLovingPlayer() != null) {
-                serverPlayerEntity = this.mate.getLovingPlayer();
-            }
-            if (serverPlayerEntity != null) {
-                serverPlayerEntity.incrementStat(Stats.ANIMALS_BRED);
-                CustomCriteria.BRED_ANIMALS.trigger(serverPlayerEntity, this.animal, this.mate, null);
-            }
-            this.entity.setHasEgg(true);
-            this.animal.setBreedingAge(6000);
-            this.mate.setBreedingAge(6000);
-            this.animal.resetLoveTicks();
-            this.mate.resetLoveTicks();
-            Random random = this.animal.getRandom();
-            if (this.world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT)) {
-                this.world.spawnEntity(new ExperienceOrbEntity(this.world, this.animal.getX(), this.animal.getY(), this.animal.getZ(), random.nextInt(7) + 1));
-            }
-        }
-
-    }
-
     @Override
-    public void tickMovement() {
-        super.tickMovement();
-        if (!this.getWorld().isClient && this.hasEgg()) {
-            this.setStageAge(this.stageAge + 1);
-            this.playSound(SoundEvents.BLOCK_SLIME_BLOCK_FALL, 0.05f, 0.1f);
-        }
-    }
-
-    private void setStageAge(int eggAge) {
-        this.stageAge = eggAge;
-        if ((this.stageAge >= MAX_EGG_AGE) && this.hasEgg()) {
-            this.birth();
-            this.setHasEgg(false);
-        }
-    }
-
-    private void birth() {
+    protected void birth() {
         World world = this.getWorld();
         int i = random.nextBetweenExclusive(2, 4);
         for (int j = 1; j <= i; ++j)

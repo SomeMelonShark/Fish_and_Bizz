@@ -116,10 +116,6 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "auratus_fry"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     AuratusFryEntity::new).dimensions(EntityDimensions.fixed(AuratusFryEntity.WIDTH, AuratusFryEntity.HEIGHT)).build());
 
-    public static final EntityType<AuratusEggEntity> AURATUS_EGG = Registry.register(Registries.ENTITY_TYPE,
-            new Identifier(FishAndShiz.MOD_ID, "auratus_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
-                    AuratusEggEntity::new).dimensions(EntityDimensions.fixed(0.2f, 0.2f)).build());
-
     public static final EntityType<GraylingEntity> GRAYLING = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "grayling"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     GraylingEntity::new).dimensions(EntityDimensions.fixed(0.9f, 0.3f)).build());
@@ -176,10 +172,6 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "mud_crab_larva"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     MudCrabLarvaEntity::new).dimensions(EntityDimensions.fixed(MudCrabLarvaEntity.WIDTH, MudCrabLarvaEntity.HEIGHT)).build());
 
-    public static final EntityType<MudCrabEggEntity> MUD_CRAB_EGG = Registry.register(Registries.ENTITY_TYPE,
-            new Identifier(FishAndShiz.MOD_ID, "mud_crab_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
-                    MudCrabEggEntity::new).dimensions(EntityDimensions.fixed(0.6f, 0.1f)).build());
-
     public static final EntityType<ManeJellyfishEntity> LION_MANE_JELLYFISH = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "lion_mane_jellyfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
                     ManeJellyfishEntity::new).dimensions(EntityDimensions.fixed(2.0f, 2.0f)).build());
@@ -199,10 +191,6 @@ public class ModEntities {
     public static final EntityType<CrayfishLarvaEntity> CRAYFISH_LARVA = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "crayfish_larva"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
                     CrayfishLarvaEntity::new).dimensions(EntityDimensions.fixed(CrayfishLarvaEntity.WIDTH, CrayfishLarvaEntity.HEIGHT)).build());
-
-    public static final EntityType<CrayfishEggEntity> CRAYFISH_EGG = Registry.register(Registries.ENTITY_TYPE,
-            new Identifier(FishAndShiz.MOD_ID, "crayfish_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
-                    CrayfishEggEntity::new).dimensions(EntityDimensions.fixed(0.2f, 0.1f)).build());
 
     public static final EntityType<CapybaraEntity> CAPYBARA = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "capybara"), FabricEntityTypeBuilder.create(SpawnGroup.AMBIENT,

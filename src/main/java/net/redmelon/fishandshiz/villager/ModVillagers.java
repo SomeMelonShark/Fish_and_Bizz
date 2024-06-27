@@ -358,15 +358,6 @@ public class ModVillagers {
         TradeOfferHelper.registerVillagerOffers(AQUARIST, 4,
                 factories -> {
                     factories.add(((entity, random) -> new TradeOffer(
-                            new ItemStack(ModItems.AURATUS_EGG_BUCKET, 1),
-                            new ItemStack(Items.EMERALD, 6),
-                            6, 4, 0.05f
-                    )));
-                });
-
-        TradeOfferHelper.registerVillagerOffers(AQUARIST, 4,
-                factories -> {
-                    factories.add(((entity, random) -> new TradeOffer(
                             new ItemStack(ModItems.CORYDORAS_BUCKET, 1),
                             new ItemStack(Items.EMERALD, 3),
                             6, 4, 0.05f

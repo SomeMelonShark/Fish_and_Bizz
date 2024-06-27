@@ -141,12 +141,6 @@ public class ModEntitySpawn {
         SpawnRestriction.register(ModEntities.AURATUS, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawn);
 
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SAVANNA, BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.WINDSWEPT_SAVANNA), SpawnGroup.WATER_AMBIENT,
-                ModEntities.AURATUS_EGG, 1, 2, 4);
-
-        SpawnRestriction.register(ModEntities.AURATUS_EGG, SpawnRestriction.Location.IN_WATER,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawn);
-
         // Grayling Spawns
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.FROZEN_RIVER), SpawnGroup.WATER_AMBIENT,
                 ModEntities.GRAYLING, 2, 1, 4);

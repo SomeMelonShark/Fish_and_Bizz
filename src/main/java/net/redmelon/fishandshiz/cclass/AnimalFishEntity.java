@@ -35,6 +35,7 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.redmelon.fishandshiz.cclass.cmethods.CustomCriteria;
+import net.redmelon.fishandshiz.entity.custom.fish.PlatyEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;

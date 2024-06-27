@@ -1,26 +1,39 @@
 package net.redmelon.fishandshiz.entity.custom;
 
+import com.google.common.annotations.VisibleForTesting;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ExperienceOrbEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.recipe.Ingredient;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.stat.Stats;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
+import net.redmelon.fishandshiz.cclass.EggboundEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
+import net.redmelon.fishandshiz.cclass.cmethods.CustomCriteria;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedWaterAnimalMateGoal;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.EggboundMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.LandWanderFarGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.WaterWanderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
@@ -34,10 +47,13 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class CrayfishEntity extends AnimalWaterEntity implements GeoEntity {
+public class CrayfishEntity extends EggboundEntity implements GeoEntity {
+    public static final Ingredient COD = Ingredient.ofItems(Items.COD);
+    private static final TrackedData<Boolean> HAS_EGG = DataTracker.registerData(PlatyEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
-    public CrayfishEntity(EntityType<? extends AnimalWaterEntity> entityType, World world) {
+    public CrayfishEntity(EntityType<? extends EggboundEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -50,7 +66,7 @@ public class CrayfishEntity extends AnimalWaterEntity implements GeoEntity {
 
     protected void initGoals() {
         this.goalSelector.add(1, new EscapeDangerGoal(this, 2.0));
-        this.goalSelector.add(2, new BreedWaterAnimalMateGoal(this, 1.0));
+        this.goalSelector.add(2, new EggboundMateGoal(this, 1.0));
         this.goalSelector.add(3, new WaterWanderGoal(this, 3.5));
         this.goalSelector.add(4, new LandWanderFarGoal(this, 1.0));
         this.goalSelector.add(4, new LookAroundGoal(this));
@@ -75,7 +91,6 @@ public class CrayfishEntity extends AnimalWaterEntity implements GeoEntity {
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, SalmonFryEntity.class, true));
 
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AmurCarpEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AuratusEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, BettaEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AngelfishEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, ClownfishEggEntity.class, true));
@@ -86,8 +101,6 @@ public class CrayfishEntity extends AnimalWaterEntity implements GeoEntity {
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, OscarEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, RainbowfishEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, SalmonEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, CrayfishEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, MudCrabEggEntity.class, true));
     }
 
     @Override
@@ -133,6 +146,29 @@ public class CrayfishEntity extends AnimalWaterEntity implements GeoEntity {
     }
 
     @Override
+    protected void birth() {
+        World world = this.getWorld();
+        int i = random.nextBetweenExclusive(5, 7);
+        for (int j = 1; j <= i; ++j)
+            if (world instanceof ServerWorld) {
+                ServerWorld serverWorld = (ServerWorld)world;
+                CrayfishLarvaEntity nextEntity = ModEntities.CRAYFISH_LARVA.create(this.getWorld());
+                if (nextEntity != null) {
+                    nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                    nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    nextEntity.setAiDisabled(this.isAiDisabled());
+                    if (this.hasCustomName()) {
+                        nextEntity.setCustomName(this.getCustomName());
+                        nextEntity.setCustomNameVisible(this.isCustomNameVisible());
+                    }
+                    nextEntity.setPersistent();
+                    this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
+                    serverWorld.spawnEntityAndPassengers(nextEntity);
+                }
+            }
+    }
+
+    @Override
     protected SoundEvent getDeathSound() {
         return ModSounds.CRAB_DEATH;
     }
@@ -165,6 +201,6 @@ public class CrayfishEntity extends AnimalWaterEntity implements GeoEntity {
 
     @Override
     public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return ModEntities.CRAYFISH_EGG.create(getWorld());
+        return null;
     }
 }

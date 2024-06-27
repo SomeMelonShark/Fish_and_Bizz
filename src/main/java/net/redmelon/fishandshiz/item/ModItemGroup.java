@@ -47,15 +47,12 @@ public class ModItemGroup {
             entries.add(ModItems.SALMON_EGG_BUCKET);
             entries.add(ModItems.MUD_CRAB_BUCKET);
             entries.add(ModItems.MUD_CRAB_LARVA_BUCKET);
-            entries.add(ModItems.MUD_CRAB_EGG_BUCKET);
             entries.add(ModItems.CRAYFISH_BUCKET);
             entries.add(ModItems.CRAYFISH_LARVA_BUCKET);
-            entries.add(ModItems.CRAYFISH_EGG_BUCKET);
             entries.add(ModItems.RAINBOWFISH_BUCKET);
             entries.add(ModItems.RAINBOWFISH_FRY_BUCKET);
             entries.add(ModItems.RAINBOWFISH_EGG_BUCKET);
             entries.add(ModItems.AURATUS_BUCKET);
-            entries.add(ModItems.AURATUS_FRY_BUCKET);
             entries.add(ModItems.AURATUS_FRY_BUCKET);
             entries.add(ModItems.AMUR_CARP_BUCKET);
             entries.add(ModItems.AMUR_CARP_FRY_BUCKET);
