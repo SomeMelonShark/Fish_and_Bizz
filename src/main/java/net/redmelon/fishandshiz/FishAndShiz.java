@@ -36,9 +36,11 @@ public class 	FishAndShiz implements ModInitializer {
 
 		AngelfishPattern.init();
 		AmurCarpPattern.init();
+		BettaPattern.init();
 
 		AmurCarpDetail.init();
 		AngelfishDetail.init();
+		BettaDetail.init();
 
 		ModEntityColor.init();
 

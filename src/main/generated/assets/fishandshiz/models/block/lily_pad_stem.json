@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "fishandshiz:block/lily_pad_stem"
+  }
+}

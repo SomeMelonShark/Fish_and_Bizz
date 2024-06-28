@@ -27,7 +27,7 @@ public class LilyPadRootMixin extends PlantBlock {
             FluidState fluidState = world.getFluidState(pos.down());
             if (fluidState.getFluid() == Fluids.WATER || state.getBlock() instanceof IceBlock) {
                 BlockPos adjacentPos = pos.down();
-                BlockState adjacentBlockState = ModBlocks.POTHOS_ROOT_CAP.getDefaultState();
+                BlockState adjacentBlockState = ModBlocks.LILY_PAD_STEM.getDefaultState();
                 world.setBlockState(adjacentPos, adjacentBlockState, 3);
             }
         }
@@ -41,8 +41,8 @@ public class LilyPadRootMixin extends PlantBlock {
             FluidState fluidState = world.getFluidState(adjacentPos);
             BlockState adjacentBlockState1 = world.getBlockState(adjacentPos);
 
-            if (fluidState.isOf(Fluids.WATER) && !adjacentBlockState1.isOf(ModBlocks.POTHOS_ROOTS)) {
-                BlockState adjacentBlockState2 = ModBlocks.POTHOS_ROOT_CAP.getDefaultState();
+            if (fluidState.isOf(Fluids.WATER) && !adjacentBlockState1.isOf(ModBlocks.LILY_PAD_STEM)) {
+                BlockState adjacentBlockState2 = ModBlocks.LILY_PAD_STEM.getDefaultState();
                 world.setBlockState(adjacentPos, adjacentBlockState2, 3);
             }
         }

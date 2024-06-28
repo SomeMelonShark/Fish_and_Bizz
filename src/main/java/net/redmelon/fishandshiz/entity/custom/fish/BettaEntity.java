@@ -15,9 +15,11 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -27,6 +29,8 @@ import net.minecraft.util.Util;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeKeys;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
@@ -35,8 +39,9 @@ import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
-import net.redmelon.fishandshiz.entity.variant.BettaVariant;
+import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
+import net.redmelon.fishandshiz.util.ModUtil;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -44,9 +49,16 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import static com.ibm.icu.text.PluralRules.Operand.e;
+import static com.ibm.icu.text.PluralRules.Operand.j;
+
 public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
-    protected static final TrackedData<Integer> VARIANT =
-            DataTracker.registerData(BettaEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<BettaPattern> PATTERN = DataTracker.registerData(BettaEntity.class, BettaPattern.TRACKED_DATA_HANDLER);
+    private static final TrackedData<BettaDetail> DETAIL = DataTracker.registerData(BettaEntity.class, BettaDetail.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> BASE_COLOR = DataTracker.registerData(BettaEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> PATTERN_COLOR = DataTracker.registerData(BettaEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> DETAIL_COLOR = DataTracker.registerData(BettaEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(BettaEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
@@ -121,17 +133,22 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
         BettaEntity bettaEntity = (BettaEntity) var2;
         BettaEggEntity bettaEggEntity = (BettaEggEntity) ModEntities.BETTA_EGG.create(var1);
         if (bettaEggEntity != null) {
-            int i = random.nextInt(4);
-            BettaVariant variant;
-            if (i < 2) {
-                variant = this.getVariant();
-            } else if (i > 2) {
-                variant = bettaEntity.getVariant();
-            } else {
-                variant = (BettaVariant) Util.getRandom(BettaVariant.values(), this.random);
-            }
+            ModEntityColor color;
+            ModEntityColor color2;
+            ModEntityColor color3;
+            BettaPattern pattern;
+            BettaDetail detail;
+            color = random.nextBoolean() ? this.getBaseColor() : bettaEntity.getBaseColor();
+            color2 = random.nextBoolean() ? this.getPatternColor() : bettaEntity.getPatternColor();
+            color3 = random.nextBoolean() ? this.getDetailColor() : bettaEntity.getDetailColor();
+            pattern = random.nextBoolean() ? this.getPattern() : bettaEntity.getPattern();
+            detail = random.nextBoolean() ? this.getDetail() : bettaEntity.getDetail();
 
-            bettaEggEntity.setVariant(variant);
+            bettaEggEntity.setBaseColor(color);
+            bettaEggEntity.setPatternColor(color2);
+            bettaEggEntity.setDetailColor(color3);
+            bettaEggEntity.setPattern(pattern);
+            bettaEggEntity.setDetail(detail);
         }
         return bettaEggEntity;
     }
@@ -205,53 +222,150 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
         return factory;
     }
 
-    public static BettaVariant getVariety(int variant) {
-        return BettaVariant.byId(variant);
+    public NbtCompound writeMateData(NbtCompound nbt) {
+        nbt.putString("Pattern", getPattern().getId().toString());
+        nbt.putString("Detail", getDetail().getId().toString());
+        nbt.putString("BaseColor", getBaseColor().getId().toString());
+        nbt.putString("PatternColor", getPatternColor().getId().toString());
+        nbt.putString("DetailColor", getDetailColor().getId().toString());
+        return nbt;
     }
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Variant", this.getTypeVariant());
+        writeMateData(nbt);
+        nbt.put("MateData", getMateData());
+
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.dataTracker.set(VARIANT, nbt.getInt("Variant"));
+        setPattern(BettaPattern.fromId(nbt.getString("Pattern")));
+        setDetail(BettaDetail.fromId(nbt.getString("Detail")));
+        setBaseColor(ModEntityColor.fromId(nbt.getString("BaseColor")));
+        setPatternColor(ModEntityColor.fromId(nbt.getString("PatternColor")));
+        setDetailColor(ModEntityColor.fromId(nbt.getString("DetailColor")));
+        if(nbt.contains("MateData", NbtElement.COMPOUND_TYPE))
+            setMateData(nbt.getCompound("MateData"));
     }
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(VARIANT, 0);
+        dataTracker.startTracking(PATTERN, BettaPattern.WILD1);
+        dataTracker.startTracking(DETAIL, BettaDetail.NONE);
+        dataTracker.startTracking(BASE_COLOR, ModEntityColor.SILVER);
+        dataTracker.startTracking(PATTERN_COLOR, ModEntityColor.SILVER);
+        dataTracker.startTracking(DETAIL_COLOR, ModEntityColor.SILVER);
+        dataTracker.startTracking(MATE_DATA, new NbtCompound());
     }
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
+        ModEntityColor color;
+        ModEntityColor color2;
+        ModEntityColor color3;
+        BettaPattern pattern;
+        BettaDetail detail;
+        if (spawnReason == SpawnReason.NATURAL) {
+            if (registryEntry.matchesKey(BiomeKeys.SWAMP)) {
+                pattern = (BettaPattern.WILD1);
+                detail = (BettaDetail.SPECKLED);
+                color = (ModEntityColor.DARK_GREEN);
+                color2 = (ModEntityColor.FECAL_BROWN);
+                color3 = (ModEntityColor.NEON_GREEN);
+            } else if (registryEntry.matchesKey(BiomeKeys.PLAINS)){
+                pattern = (BettaPattern.WILD2);
+                detail = (BettaDetail.SCALAR);
+                color = (ModEntityColor.GREEN);
+                color2 = (ModEntityColor.RERANGE);
+                color3 = (ModEntityColor.LIGHT_BLUE);
+            }else {
+                pattern = (ModUtil.getRandomTagValue(getWorld(), BettaPattern.Tag.PATTERNS, random));
+                detail = (ModUtil.getRandomTagValue(getWorld(), BettaDetail.Tag.DETAILS, random));
+                color = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
+                color2 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
+                color3 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
+            }
+        } else {
+            pattern = (ModUtil.getRandomTagValue(getWorld(), BettaPattern.Tag.PATTERNS, random));
+            detail = (ModUtil.getRandomTagValue(getWorld(), BettaDetail.Tag.DETAILS, random));
+            color = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
+            color2 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
+            color3 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
+        }
+        setPattern(pattern);
+        setDetail(detail);
+        setBaseColor(color);
+        setPatternColor(color2);
+        setDetailColor(color3);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         return entityData;
+    }
+    public void setBaseColor(ModEntityColor color) {
+        dataTracker.set(BASE_COLOR, color);
+    }
+
+    public ModEntityColor getBaseColor() {
+        return dataTracker.get(BASE_COLOR);
+    }
+
+    public void setPatternColor(ModEntityColor color) {
+        dataTracker.set(PATTERN_COLOR, color);
+    }
+
+    public ModEntityColor getPatternColor() {
+        return dataTracker.get(PATTERN_COLOR);
+    }
+
+    public void setDetailColor(ModEntityColor color) {
+        dataTracker.set(DETAIL_COLOR, color);
+    }
+
+    public ModEntityColor getDetailColor() {
+        return dataTracker.get(DETAIL_COLOR);
+    }
+
+    public void setPattern(BettaPattern pattern) {
+        dataTracker.set(PATTERN, pattern);
+    }
+
+    public BettaPattern getPattern() {
+        return dataTracker.get(PATTERN);
+    }
+
+    public void setDetail(BettaDetail detail) {
+        dataTracker.set(DETAIL, detail);
+    }
+
+    public BettaDetail getDetail() {
+        return dataTracker.get(DETAIL);
+    }
+
+    public void setMateData(NbtCompound mateData) {
+        dataTracker.set(MATE_DATA, mateData);
+    }
+
+    public NbtCompound getMateData() {
+        return dataTracker.get(MATE_DATA);
+    }
+
+    @Override @SuppressWarnings("deprecation")
+    public void copyDataFromNbt(NbtCompound nbt) {
+        Bucketable.copyDataFromNbt(this, nbt);
+        if(nbt.contains("Pattern", NbtElement.STRING_TYPE)) {
+            readCustomDataFromNbt(nbt);
+        }
     }
 
     @Override
     public void copyDataToStack(ItemStack stack) {
         super.copyDataToStack(stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt(BUCKET_VARIANT_TAG_KEY, this.getTypeVariant());
-    }
-
-    public BettaVariant getVariant() {
-        return BettaVariant.byId(this.getTypeVariant() & 255);
-    }
-
-    private int getTypeVariant() {
-        return this.dataTracker.get(VARIANT);
-    }
-
-    protected void setVariant(BettaVariant variant) {
-        this.dataTracker.set(VARIANT, variant.getId() & 255);
-    }
-
-    protected void setBettaVariant(int variant) {
-        this.dataTracker.set(VARIANT, variant);
+        writeMateData(nbtCompound);
+        nbtCompound.put("MateData", getMateData());
+        nbtCompound.put(BUCKET_VARIANT_TAG_KEY, this.getMateData());
     }
 }

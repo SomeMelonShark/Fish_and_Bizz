@@ -148,6 +148,11 @@
   "amur_carp_pattern.fishandshiz.mask": "Mask",
   "amur_carp_pattern.fishandshiz.trail": "Trail",
 
+  "betta_pattern.fishandshiz.wild1": "Swamp Wild",
+  "betta_pattern.fishandshiz.wild2": "Plains Wild",
+  "betta_pattern.fishandshiz.pants": "Pants",
+  "betta_pattern.fishandshiz.veil": "Veil",
+
   "angelfish_detail.fishandshiz.crown": "Crowned",
   "angelfish_detail.fishandshiz.accent": "Accented",
 
@@ -156,14 +161,20 @@
   "amur_carp_detail.fishandshiz.marks": "Marked",
   "amur_carp_detail.fishandshiz.blotches": "Blotched",
 
+  "betta_detail.fishandshiz.speckled": "Speckled",
+  "betta_detail.fishandshiz.scalar": "Scalar",
+  "betta_detail.fishandshiz.decal": "Decal",
+
   "entity_color.fishandshiz.silver": "Silver",
   "entity_color.fishandshiz.matte_black": "Matte Black",
   "entity_color.fishandshiz.earth_black": "Earth Black",
   "entity_color.fishandshiz.muddy": "Muddy",
   "entity_color.fishandshiz.bred": "Brown-Red",
+  "entity_color.fishandshiz.fecal_brown": "Fecal Brown",
   "entity_color.fishandshiz.brown": "Brown",
   "entity_color.fishandshiz.light_blue": "Light Blue",
   "entity_color.fishandshiz.neon_blue": "Neon Blue",
+  "entity_color.fishandshiz.hadal_blue": "Hadal Blue",
   "entity_color.fishandshiz.orange": "Orange",
   "entity_color.fishandshiz.rerange": "Red-Orange",
   "entity_color.fishandshiz.deep_red": "Deep Red",
@@ -172,7 +183,9 @@
   "entity_color.fishandshiz.gold": "Gold",
   "entity_color.fishandshiz.cream": "Cream",
   "entity_color.fishandshiz.matte_orange": "Matte Orange",
+  "entity_color.fishandshiz.neon_green": "Neon Green",
   "entity_color.fishandshiz.green": "Green",
+  "entity_color.fishandshiz.dark_green": "Dark Green",
   "entity_color.fishandshiz.bile": "Bile Green",
   "entity_color.fishandshiz.sickly": "Sickly Green",
   "entity_color.fishandshiz.purple": "Purple",
@@ -187,14 +200,6 @@
   "entity.fishandshiz.amur_carp.type.CREAM3": "Red and Black Cream Type",
   "entity.fishandshiz.amur_carp.type.CREAM4": "Black Cream Type",
   "entity.fishandshiz.amur_carp.type.SPECIAL": "Seaking",
-  "entity.fishandshiz.betta.type.WILD1": "Swamp Wild Type",
-  "entity.fishandshiz.betta.type.WILD2": "Plains Wild Type",
-  "entity.fishandshiz.betta.type.VEIL1": "Red Veil Type",
-  "entity.fishandshiz.betta.type.VEIL2": "Blue Veil Type",
-  "entity.fishandshiz.betta.type.FAN1": "White Fan Type",
-  "entity.fishandshiz.betta.type.FAN2": "Purple Fan Type",
-  "entity.fishandshiz.betta.type.FAN3": "Green Fan Type",
-  "entity.fishandshiz.betta.type.SPECIAL": "Designer",
   "entity.fishandshiz.archerfish.type.NORMAL": "Normal",
   "entity.fishandshiz.archerfish.type.SPECIAL": "Evil!"
 }

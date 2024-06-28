@@ -18,7 +18,7 @@ public class ArcherfishSpitRenderer extends GeoEntityRenderer<ArcherfishSpitEnti
 
     @Override
     public Identifier getTextureLocation(ArcherfishSpitEntity instance) {
-        return new Identifier(FishAndShiz.MOD_ID, "textures/fish/archerfish_spit.png");
+        return new Identifier(FishAndShiz.MOD_ID, "textures/fish/archerfish/archerfish_spit.png");
     }
 
     @Override

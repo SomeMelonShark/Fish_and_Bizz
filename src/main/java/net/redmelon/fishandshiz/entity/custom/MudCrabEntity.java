@@ -44,7 +44,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class MudCrabEntity extends EggboundEntity implements GeoEntity {
-    public static final Ingredient COD = Ingredient.ofItems(Items.COD);
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public MudCrabEntity(EntityType<? extends EggboundEntity> entityType, World world) {

@@ -45,7 +45,7 @@ public record AmurCarpDetail (@Nullable Identifier texture) {
     }
 
     private static AmurCarpDetail create(String name, boolean empty) {
-        AmurCarpDetail detail = new AmurCarpDetail(empty ? null : new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carpde_" + name + ".png"));
+        AmurCarpDetail detail = new AmurCarpDetail(empty ? null : new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carp/amur_carpde_" + name + ".png"));
         DETAILS.put(detail, new Identifier(FishAndShiz.MOD_ID, name));
         return detail;
     }

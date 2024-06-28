@@ -25,7 +25,7 @@ public class BasicFryModel<A extends LivingEntity & GeoAnimatable> extends GeoMo
     public BasicFryModel(String name, @Nullable String head) {
         this(
                 new Identifier(MOD_ID,"geo/" + name + "_fry.geo.json"),
-                new Identifier(MOD_ID, "textures/entity/fish/" + name + "_fry.png"),
+                new Identifier(MOD_ID, "textures/entity/fish/" + name + "/" + name + "_fry.png"),
                 new Identifier(MOD_ID, "animations/fry.animation.json"), head);
 
     }

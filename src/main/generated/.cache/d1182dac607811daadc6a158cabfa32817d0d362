@@ -1,4 +1,4 @@
-// 1.20	2024-06-27T20:38:14.4499197	Fish And Bizz/Model Definitions
+// 1.20	2024-06-27T22:11:11.7148014	Fish And Bizz/Model Definitions
 1041d05ad8924f97bd079c381072aed11ab4756c assets\fishandshiz\models\item\dried_mulm.json
 33ec4b8c74d56abee11756a630698b8563c1b57b assets\fishandshiz\blockstates\pothos_roots.json
 d8b540cf639cf904e28427347f551be5641b7ed5 assets\fishandshiz\models\item\grayling_fry_bucket.json
@@ -29,8 +29,8 @@ f1088db1bc8ac1343a9f9027f8032f797d46558a assets\fishandshiz\models\item\oscar_fr
 61b5ce68c4a25d6ebe2b1e15772c9e5d08127049 assets\fishandshiz\models\item\volcano_snail_bucket.json
 a25163141c36003675352a4a6ec7f7a5c0521268 assets\fishandshiz\models\item\platy_bucket.json
 6229bde7bb6df683dcee06cc77ae0f76f2ca69ac assets\fishandshiz\models\item\mud_crab.json
-c8bec21b9fe47e3032970c06757d03643b66d00c assets\fishandshiz\models\item\fanwort.json
 01804f620ffad523f73d230bfbaa4175b4dc4b7b assets\fishandshiz\models\item\angelfish_egg_bucket.json
+c8bec21b9fe47e3032970c06757d03643b66d00c assets\fishandshiz\models\item\fanwort.json
 8a515660f4def2c7db7c36c0245f61070f2b6322 assets\fishandshiz\models\item\grayling_egg_bucket.json
 3e8b145fb3e6fcb0414532675135325a010c958d assets\fishandshiz\blockstates\pothos_root_cap.json
 2d19081026ec37d117241bb97e03e23af85f16f6 assets\fishandshiz\models\item\neon_tetra_bucket.json
@@ -69,6 +69,7 @@ a3de75ff45d46999325c0290f6ac1fec3af8ff92 assets\fishandshiz\models\item\corydora
 b09894ad6433f7972d2d450b8f19e8432545b478 assets\fishandshiz\models\item\cooked_milkfish.json
 70a08397f10ba012f21e86ef1d103fdbb2e98640 assets\fishandshiz\models\item\crayfish_bucket.json
 a88b87bf59c392b1175fccca2c816e3609c4cfb5 assets\fishandshiz\models\item\rainbowfish_fry_bucket.json
+25bc5d112c59fa34439c0fd182be78f0c07df8a2 assets\fishandshiz\models\block\lily_pad_stem.json
 63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets\fishandshiz\models\item\milkfish_spawn_egg.json
 c79781b6b81fb9ae643380334d4dbad876bc665c assets\fishandshiz\models\item\vallisneria.json
 fc15396ce87ce5226b5ab5018adb17bc55a217b9 assets\fishandshiz\models\item\cooked_mud_crab.json
@@ -78,6 +79,7 @@ cd94a2c9964451d721a998a6bf5d9d2a0c0e9cb5 assets\fishandshiz\models\item\fishmeal
 ff42269420055b1d9f2b744aa2c26328356c6531 assets\fishandshiz\models\item\betta_bucket.json
 85e16a14a335ff730d592129d66930e858c4c741 assets\fishandshiz\blockstates\fanwort_plant.json
 e310c56f754ad5b2ce89bf8affa24ff4e6ef3021 assets\fishandshiz\models\item\amur_carp_fry_bucket.json
+1840e0ce7566e3f4121006d81ab962adcc8cf813 assets\fishandshiz\blockstates\lily_pad_stem.json
 ebd34b24e791c046e5e4793024a068f99647f3f8 assets\fishandshiz\models\item\clownfish_fry_bucket.json
 9a3b314179b615b90d42b0574bd5ac772a180e07 assets\fishandshiz\models\block\fishmeal_block.json
 991a46a8f302e7b306ca19c5dd328a2d316873f2 assets\fishandshiz\models\item\neon_tetra_fry_bucket.json

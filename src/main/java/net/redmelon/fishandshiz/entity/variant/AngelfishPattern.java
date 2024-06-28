@@ -45,7 +45,7 @@ public record AngelfishPattern (@Nullable Identifier texture) {
     }
 
     private static AngelfishPattern create(String name, boolean empty) {
-        AngelfishPattern pattern = new AngelfishPattern(empty ? null : new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishpa_" + name + ".png"));
+        AngelfishPattern pattern = new AngelfishPattern(empty ? null : new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfish/angelfishpa_" + name + ".png"));
         PATTERNS.put(pattern, new Identifier(FishAndShiz.MOD_ID, name));
         return pattern;
     }

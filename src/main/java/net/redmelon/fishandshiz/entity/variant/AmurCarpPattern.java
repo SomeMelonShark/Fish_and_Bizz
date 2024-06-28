@@ -44,7 +44,7 @@ public record AmurCarpPattern (@Nullable Identifier texture) {
     }
 
     private static AmurCarpPattern create(String name, boolean empty) {
-        AmurCarpPattern pattern = new AmurCarpPattern(empty ? null : new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carppa_" + name + ".png"));
+        AmurCarpPattern pattern = new AmurCarpPattern(empty ? null : new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/amur_carp/amur_carppa_" + name + ".png"));
         PATTERNS.put(pattern, new Identifier(FishAndShiz.MOD_ID, name));
         return pattern;
     }

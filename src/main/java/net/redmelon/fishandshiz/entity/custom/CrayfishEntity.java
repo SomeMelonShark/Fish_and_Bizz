@@ -48,9 +48,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class CrayfishEntity extends EggboundEntity implements GeoEntity {
-    public static final Ingredient COD = Ingredient.ofItems(Items.COD);
-    private static final TrackedData<Boolean> HAS_EGG = DataTracker.registerData(PlatyEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
-
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public CrayfishEntity(EntityType<? extends EggboundEntity> entityType, World world) {

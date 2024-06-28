@@ -1,59 +1,71 @@
 package net.redmelon.fishandshiz.entity.client.fish.renderer;
 
 import com.google.common.collect.Maps;
+import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.redmelon.fishandshiz.FishAndShiz;
-import net.redmelon.fishandshiz.entity.client.fish.model.BettaModel;
+import net.redmelon.fishandshiz.entity.client.fish.model.BasicFishModel;
+import net.redmelon.fishandshiz.entity.custom.fish.AmurCarpEntity;
 import net.redmelon.fishandshiz.entity.custom.fish.BettaEntity;
 import net.redmelon.fishandshiz.entity.variant.BettaVariant;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.GeoRenderer;
+import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
 import java.util.Map;
 
 public class BettaRenderer extends GeoEntityRenderer<BettaEntity> {
-    public static final Map<BettaVariant, Identifier> LOCATION_BY_VARIANT =
-            Util.make(Maps.newEnumMap(BettaVariant.class), (variantIdentifierEnumMap) -> {
-                variantIdentifierEnumMap.put(BettaVariant.WILD1,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettaw1.png"));
-                variantIdentifierEnumMap.put(BettaVariant.WILD2,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettaw2.png"));
-                variantIdentifierEnumMap.put(BettaVariant.VEIL1,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettav1.png"));
-                variantIdentifierEnumMap.put(BettaVariant.VEIL2,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettav2.png"));
-                variantIdentifierEnumMap.put(BettaVariant.FAN1,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettaf1.png"));
-                variantIdentifierEnumMap.put(BettaVariant.FAN2,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettaf2.png"));
-                variantIdentifierEnumMap.put(BettaVariant.FAN3,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettaf3.png"));
-                variantIdentifierEnumMap.put(BettaVariant.SPECIAL,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/bettaf4.png"));
-            });
     public BettaRenderer(EntityRendererFactory.Context renderManager) {
-        super(renderManager, new BettaModel());
+        super(renderManager, new BasicFishModel<>("betta", "betta"));
+        this.addRenderLayer(new BettaLayerRenderer(this));
         this.shadowRadius= 0.2f;
     }
 
-    @Override
-    public Identifier getTextureLocation(BettaEntity instance) {
-        return LOCATION_BY_VARIANT.get(instance.getVariant());
-    }
-    @Override
-    public RenderLayer getRenderType(BettaEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource,
-                                     float partialTick) {
-        return super.getRenderType(animatable, texture, bufferSource, partialTick);
-    }
+    static class BettaLayerRenderer extends GeoRenderLayer<BettaEntity> {
 
-    @Override
-    public void render(BettaEntity entity, float entityYaw, float partialTick, MatrixStack poseStack, VertexConsumerProvider bufferSource, int packedLight) {
-        poseStack.scale(1.0f, 1.0f, 1.0f);
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+        public BettaLayerRenderer(GeoRenderer<BettaEntity> entityRendererIn) {
+            super(entityRendererIn);
+        }
+
+        private void render(MatrixStack poseStack, BettaEntity animatable, BakedGeoModel bakedModel, int color, Identifier texture, VertexConsumerProvider bufferSource, int packedLight, int packedOverlay, float partialTick) {
+            if(texture != null) {
+                float r = ((color >> 16) & 0xff) / 255f;
+                float g = ((color >> 8) & 0xff) / 255f;
+                float b = (color & 0xff) / 255f;
+                int overlay = OverlayTexture.getUv(0,
+                        animatable.hurtTime > 0 || animatable.deathTime > 0);
+
+                this.getRenderer().reRender(bakedModel, poseStack, bufferSource, animatable, this.getRenderType(texture), bufferSource.getBuffer(this.getRenderType(texture)), partialTick,
+                        packedLight, overlay, r, g, b, 1f);
+            }
+        }
+
+        @Override
+        public void render(MatrixStack poseStack, BettaEntity animatable, BakedGeoModel bakedModel, RenderLayer renderType,
+                           VertexConsumerProvider bufferSource, VertexConsumer buffer, float partialTick,
+                           int packedLight, int packedOverlay) {
+
+            this.render(poseStack, animatable, bakedModel, animatable.getBaseColor().color(), this.getTextureResource(animatable), bufferSource, packedLight, packedOverlay, partialTick);
+            this.render(poseStack, animatable, bakedModel, animatable.getPatternColor().color(), animatable.getPattern().texture(), bufferSource, packedLight, packedOverlay, partialTick);
+            this.render(poseStack, animatable, bakedModel, animatable.getDetailColor().color(), animatable.getDetail().texture(), bufferSource, packedLight, packedOverlay, partialTick);
+
+            if(animatable.isBaby()) {
+                poseStack.scale(0.5f, 0.5f, 0.5f);
+            } else {
+                poseStack.scale(1.0f, 1.0f, 1.0f);
+            }
+        }
+
+        public RenderLayer getRenderType(Identifier texture) {
+            return RenderLayer.getEntityCutoutNoCull(texture);
+        }
     }
 }

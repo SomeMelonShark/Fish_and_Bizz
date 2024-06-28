@@ -43,7 +43,7 @@ public record AngelfishDetail (@Nullable Identifier texture){
     }
 
     private static AngelfishDetail create(String name, boolean empty) {
-        AngelfishDetail detail = new AngelfishDetail(empty ? null : new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfishde_" + name + ".png"));
+        AngelfishDetail detail = new AngelfishDetail(empty ? null : new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/angelfish/angelfishde_" + name + ".png"));
         DETAILS.put(detail, new Identifier(FishAndShiz.MOD_ID, name));
         return detail;
     }

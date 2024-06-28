@@ -20,13 +20,13 @@ public class CorydorasRenderer extends GeoEntityRenderer<CorydorasEntity> {
     public static final Map<CorydorasVariant, Identifier> LOCATION_BY_VARIANT =
             Util.make(Maps.newEnumMap(CorydorasVariant.class), (variantIdentifierEnumMap) -> {
                 variantIdentifierEnumMap.put(CorydorasVariant.BRONZE,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/corydoras1.png"));
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/corydoras/corydoras1.png"));
                 variantIdentifierEnumMap.put(CorydorasVariant.PANDA,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/corydoras2.png"));
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/corydoras/corydoras2.png"));
                 variantIdentifierEnumMap.put(CorydorasVariant.ALBINO,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/corydoras3.png"));
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/corydoras/corydoras3.png"));
                 variantIdentifierEnumMap.put(CorydorasVariant.SPECIAL,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/corydoras4.png"));
+                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/corydoras/corydoras4.png"));
             });
 
     public CorydorasRenderer(EntityRendererFactory.Context renderManager) {

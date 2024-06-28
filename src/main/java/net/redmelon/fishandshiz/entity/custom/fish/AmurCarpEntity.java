@@ -222,10 +222,6 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity {
         return nbt;
     }
 
-    public static AmurCarpVariant getVariety(int variant) {
-        return AmurCarpVariant.byId(variant);
-    }
-
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);

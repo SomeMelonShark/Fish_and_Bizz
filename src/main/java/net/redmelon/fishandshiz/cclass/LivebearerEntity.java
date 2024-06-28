@@ -2,18 +2,12 @@ package net.redmelon.fishandshiz.cclass;
 
 import com.google.common.annotations.VisibleForTesting;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
-import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.custom.fish.PlatyEntity;
-import net.redmelon.fishandshiz.entity.custom.fish.PlatyFryEntity;
-import org.jetbrains.annotations.Nullable;
 
 public abstract class LivebearerEntity extends SchoolingBreedEntity{
     @VisibleForTesting

@@ -28,7 +28,7 @@ public class BasicFishModel<E extends LivingEntity & GeoAnimatable> extends GeoM
     public BasicFishModel(String name, String aname, @Nullable String root) {
         this(
                 new Identifier(MOD_ID,"geo/" + name + ".geo.json"),
-                new Identifier(MOD_ID, "textures/entity/fish/" + name + ".png"),
+                new Identifier(MOD_ID, "textures/entity/fish/" + name + "/" + name + ".png"),
                 new Identifier(MOD_ID, "animations/" + aname + ".animation.json"), root);
 
     }
