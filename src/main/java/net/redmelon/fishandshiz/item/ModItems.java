@@ -11,6 +11,7 @@ import net.minecraft.util.Identifier;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.block.ModBlocks;
 import net.redmelon.fishandshiz.entity.ModEntities;
+import net.redmelon.fishandshiz.item.custom.ArcherfishGunItem;
 import net.redmelon.fishandshiz.item.custom.CultureFeedBucketItem;
 
 import java.util.LinkedHashMap;
@@ -157,6 +158,8 @@ public class ModItems {
             new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(8).saturationModifier(3f).build())));
     public static final Item SEA_ANEMONE = registerItem("sea_anemone",
             new AliasedBlockItem(ModBlocks.SEA_ANEMONE,new FabricItemSettings()));
+    public static final Item ARCHERFISH_GUN = registerItem("archerfish_gun",
+            new ArcherfishGunItem(new FabricItemSettings()));
 
     public static void init() {
 

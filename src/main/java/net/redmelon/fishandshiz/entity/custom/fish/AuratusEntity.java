@@ -73,6 +73,7 @@ public class AuratusEntity extends LivebearerEntity implements GeoEntity {
         this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
 
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, NeonTetraEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, CorydorasEntity.class, true));
 
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, NeonTetraFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, CrayfishLarvaEntity.class, true));
@@ -99,6 +100,10 @@ public class AuratusEntity extends LivebearerEntity implements GeoEntity {
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, OscarEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, RainbowfishEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, SalmonEggEntity.class, true));
+
+        this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, AngelfishEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, RainbowfishEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, BettaEntity.class, true));
     }
 
     @Override

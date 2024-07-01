@@ -4,6 +4,7 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
@@ -27,7 +28,7 @@ public class ArcherfishSpitEntity extends ProjectileEntity implements GeoAnimata
         super(entityType, world);
     }
 
-    public ArcherfishSpitEntity(World world, ArcherfishEntity owner) {
+    public ArcherfishSpitEntity(World world, LivingEntity owner) {
         this((EntityType<? extends ArcherfishSpitEntity>) ModEntities.ARCHERFISH_SPIT, world);
         this.setOwner(owner);
         this.setPosition(owner.getX() - (double)(owner.getWidth() + 1.0f) * 0.5 * (double) MathHelper.sin(owner.bodyYaw * ((float)Math.PI / 180)), owner.getEyeY() - (double)0.1f, owner.getZ() + (double)(owner.getWidth() + 1.0f) * 0.5 * (double)MathHelper.cos(owner.bodyYaw * ((float)Math.PI / 180)));

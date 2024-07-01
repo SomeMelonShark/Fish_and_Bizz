@@ -69,6 +69,10 @@ public class ModItemGroup {
             entries.add(ModItems.VOLCANO_SNAIL_EGG_BUCKET);
         });
 
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
+            entries.add(ModItems.ARCHERFISH_GUN);
+        });
+
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(entries -> {
             entries.add(ModItems.ARCHERFISH_SPAWN_EGG);
             entries.add(ModItems.CAPYBARA_SPAWN_EGG);
