@@ -1,15 +1,26 @@
 package net.redmelon.fishandshiz.item.custom;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
+import net.minecraft.entity.passive.TropicalFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.entity.custom.fish.ArcherfishSpitEntity;
 import net.redmelon.fishandshiz.item.client.ArcherfishGunItemRenderer;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.RenderProvider;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -18,6 +29,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import software.bernie.geckolib.util.RenderUtils;
 
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -29,11 +41,11 @@ public class ArcherfishGunItem extends StoredRangedWeaponItem implements GeoItem
     }
 
     private PlayState controller(AnimationState animationState) {
-        if (this.isLoaded() && this.loadCount > 3) {
+        if (this.isLoaded() && this.loadCount >= 11) {
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.archerfish_gun.idle_full", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
-        } else if (this.isLoaded() && this.loadCount < 3){
+        } else if (this.isLoaded() && this.loadCount < 11){
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.archerfish_gun.idle_half", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
@@ -46,33 +58,66 @@ public class ArcherfishGunItem extends StoredRangedWeaponItem implements GeoItem
 
     @Override
     public int getRange() {
-        return 15;
+        return 30;
     }
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
-        if (this.isLoaded() && world.isClient) {
-            world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.NEUTRAL, 1f, 1.5f / (world.getRandom().nextFloat() * 0.4f + 0.8f));
-            ArcherfishSpitEntity archerfishSpitEntity = new ArcherfishSpitEntity(world, user);
-            archerfishSpitEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 2f, 1.0f);
-            this.setLoadCount(loadCount + 1);
-            user.setCurrentHand(hand);
-            world.spawnEntity(archerfishSpitEntity);
-            return TypedActionResult.consume(itemStack);
+        int cooldownPeriod = 10;
+
+        NbtCompound tag = itemStack.getOrCreateNbt();
+        long lastUseTime = tag.getLong("LastUseTime");
+        long currentTime = world.getTime();
+
+        if (currentTime - lastUseTime < cooldownPeriod) {
+            return TypedActionResult.fail(itemStack);
         }
+
+        tag.putLong("LastUseTime", currentTime);
+        itemStack.setNbt(tag);
+
+        BlockPos pos = user.getBlockPos();
+        FluidState fluidState = world.getFluidState(pos);
+
+        if (this.isLoaded()) {
+            if (!world.isClient) {
+                ArcherfishSpitEntity archerfishSpitEntity = new ArcherfishSpitEntity(world, user);
+                archerfishSpitEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 3f, 0f);
+                world.spawnEntity(archerfishSpitEntity);
+                this.setLoadCount(loadCount - 1);
+            }
+
+            world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.NEUTRAL, 2f, 1.5f / (world.getRandom().nextFloat() * 0.4f + 0.8f));
+            this.setLoaded(loadCount > 0);
+            user.setCurrentHand(hand);
+
+            return TypedActionResult.consume(itemStack);
+        } else if (fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8 && loadCount == 0) {
+            this.setLoadCount(LOAD_COUNT);
+            this.setLoaded(loadCount > 0);
+            world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.NEUTRAL, 0.5f, 1.5f);
+            return TypedActionResult.success(itemStack);
+        }
+
         return TypedActionResult.fail(itemStack);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        Formatting[] formattings = new Formatting[]{Formatting.BOLD, Formatting.AQUA};
+        String loadCount = "Shots: " + getLoadCount();
+        MutableText mutableText = Text.translatable(loadCount);
+        mutableText.formatted(formattings);
+        tooltip.add(mutableText);
     }
 
     @Override
     public void createRenderer(Consumer<Object> consumer) {
         consumer.accept(new RenderProvider() {
-            private ArcherfishGunItemRenderer renderer;
+            private final ArcherfishGunItemRenderer renderer = new ArcherfishGunItemRenderer();
             @Override
             public BuiltinModelItemRenderer getCustomRenderer() {
-                if (this.renderer != null) {
-                    this.renderer = new ArcherfishGunItemRenderer();
-                }
                 return this.renderer;
             }
         });

@@ -9,7 +9,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 public abstract class StoredRangedWeaponItem extends Item {
-    protected static int LOAD_COUNT = Math.abs(-5);
+    protected static int LOAD_COUNT = 21;
     protected boolean loaded;
     protected int loadCount;
     public StoredRangedWeaponItem(Settings settings) {
@@ -24,7 +24,7 @@ public abstract class StoredRangedWeaponItem extends Item {
     }
 
     public void setLoaded(boolean loaded) {
-        if (loadCount >= LOAD_COUNT) {
+        if (loadCount <= LOAD_COUNT && loadCount > 0) {
             this.loaded = loaded;
         } else{
             this.loaded = false;

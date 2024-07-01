@@ -198,5 +198,5 @@ public class ModEntities {
 
     public static final EntityType<ArcherfishSpitEntity> ARCHERFISH_SPIT = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "archerfish_spit"), FabricEntityTypeBuilder.<ArcherfishSpitEntity>create(SpawnGroup.MISC,
-                    ArcherfishSpitEntity::new).dimensions(EntityDimensions.fixed(10.0f, 10.0f)).build());
+                    ArcherfishSpitEntity::new).dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build());
 }

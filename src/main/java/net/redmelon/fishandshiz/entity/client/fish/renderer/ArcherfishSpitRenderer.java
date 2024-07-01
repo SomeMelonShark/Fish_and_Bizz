@@ -26,10 +26,4 @@ public class ArcherfishSpitRenderer extends GeoEntityRenderer<ArcherfishSpitEnti
                                      float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
     }
-
-    @Override
-    public void render(ArcherfishSpitEntity entity, float entityYaw, float partialTick, MatrixStack poseStack, VertexConsumerProvider bufferSource, int packedLight) {
-        poseStack.scale(0.1f, 0.1f, 0.1f);
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-    }
 }

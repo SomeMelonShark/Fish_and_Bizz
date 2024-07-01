@@ -88,9 +88,9 @@ public class ArcherfishSpitEntity extends ProjectileEntity implements GeoAnimata
         double d = packet.getVelocityX();
         double e = packet.getVelocityY();
         double f = packet.getVelocityZ();
-        for (int i = 0; i < 20; ++i) {
+        for (int i = 0; i < 40; ++i) {
             double g = 0.4 + 0.1 * (double)i;
-            this.getWorld().addParticle(ParticleTypes.BUBBLE, this.getX(), this.getY(), this.getZ(), d * g, e, f * g);
+            this.getWorld().addParticle(ParticleTypes.SPLASH, this.getX(), this.getY(), this.getZ(), d * g, e, f * g);
         }
         this.setVelocity(d, e, f);
     }
