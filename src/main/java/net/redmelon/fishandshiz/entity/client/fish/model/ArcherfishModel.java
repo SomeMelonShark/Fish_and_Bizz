@@ -19,6 +19,6 @@ public class ArcherfishModel extends GeoModel<ArcherfishEntity> {
 
     @Override
     public Identifier getAnimationResource(ArcherfishEntity animatable) {
-        return new Identifier(FishAndShiz.MOD_ID, "animations/archerfish.animation.json");
+        return new Identifier(FishAndShiz.MOD_ID, "animations/mediumfish.animation.json");
     }
 }
