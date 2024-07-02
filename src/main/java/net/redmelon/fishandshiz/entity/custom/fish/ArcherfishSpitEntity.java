@@ -4,7 +4,8 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.mob.BlazeEntity;
+import net.minecraft.entity.mob.EndermanEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
@@ -43,6 +44,8 @@ public class ArcherfishSpitEntity extends ProjectileEntity implements GeoAnimata
     @Override
     public void tick() {
         super.tick();
+        this.spawnParticles();
+
         Vec3d vec3d = this.getVelocity();
         HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
         this.onCollision(hitResult);
@@ -63,14 +66,32 @@ public class ArcherfishSpitEntity extends ProjectileEntity implements GeoAnimata
         this.setPosition(d, e, f);
     }
 
+    private void spawnParticles() {
+        int amount = 10;
+        for (int j = 0; j < amount; ++j) {
+            this.getWorld().addParticle(ParticleTypes.SPLASH, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), 0.0, 0.0, 0.0);
+        }
+        if (this.isTouchingWater()) {
+            for (int o = 0; o < 4; ++o) {
+                this.getWorld().addParticle(ParticleTypes.BUBBLE, this.getParticleX(0.1), this.getRandomBodyY(), this.getParticleZ(0.5), 0.0, 0.0, 0.0);
+            }
+        }
+    }
+
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         Entity entity = this.getOwner();
+        Entity entityHurt = entityHitResult.getEntity();
         if (entity instanceof LivingEntity) {
-            LivingEntity livingEntity = (LivingEntity)entity;
-            entityHitResult.getEntity().damage(this.getDamageSources().mobProjectile(this, livingEntity), 2.0f);
-            this.discard();
+            if (entityHurt instanceof BlazeEntity blazeEntity) {
+                entityHitResult.getEntity().damage(this.getDamageSources().mobProjectile(this, blazeEntity), 20.0f);
+                this.discard();
+            } else {
+                LivingEntity livingEntity = (LivingEntity) entity;
+                entityHitResult.getEntity().damage(this.getDamageSources().mobProjectile(this, livingEntity), 2.0f);
+                this.discard();
+            }
         }
     }
 
@@ -88,10 +109,6 @@ public class ArcherfishSpitEntity extends ProjectileEntity implements GeoAnimata
         double d = packet.getVelocityX();
         double e = packet.getVelocityY();
         double f = packet.getVelocityZ();
-        for (int i = 0; i < 40; ++i) {
-            double g = 0.4 + 0.1 * (double)i;
-            this.getWorld().addParticle(ParticleTypes.SPLASH, this.getX(), this.getY(), this.getZ(), d * g, e, f * g);
-        }
         this.setVelocity(d, e, f);
     }
 

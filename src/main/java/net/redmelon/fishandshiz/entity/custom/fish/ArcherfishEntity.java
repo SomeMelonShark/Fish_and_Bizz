@@ -182,7 +182,7 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
         if (spawnReason == SpawnReason.NATURAL) {
             if (j == 0){
                 variant = BiVariant.SPECIAL;
-                this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.0f, 1.5f);
+                this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.5f, 1.5f);
             } else {
                 variant = BiVariant.NORMAL;
             }

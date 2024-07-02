@@ -159,7 +159,7 @@ public class ModItems {
     public static final Item SEA_ANEMONE = registerItem("sea_anemone",
             new AliasedBlockItem(ModBlocks.SEA_ANEMONE,new FabricItemSettings()));
     public static final Item ARCHERFISH_GUN = registerItem("archerfish_gun",
-            new ArcherfishGunItem(new FabricItemSettings()));
+            new ArcherfishGunItem(new FabricItemSettings().maxCount(1)));
 
     public static void init() {
 

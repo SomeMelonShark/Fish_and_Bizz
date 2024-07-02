@@ -88,15 +88,15 @@ public class ArcherfishGunItem extends StoredRangedWeaponItem implements GeoItem
                 this.setLoadCount(loadCount - 1);
             }
 
-            world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.NEUTRAL, 2f, 1.5f / (world.getRandom().nextFloat() * 0.4f + 0.8f));
+            world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.PLAYERS, 2f, 1.5f / (world.getRandom().nextFloat() * 0.4f + 0.8f));
             this.setLoaded(loadCount > 0);
             user.setCurrentHand(hand);
 
-            return TypedActionResult.consume(itemStack);
+            return TypedActionResult.pass(itemStack);
         } else if (fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8 && loadCount == 0) {
             this.setLoadCount(LOAD_COUNT);
             this.setLoaded(loadCount > 0);
-            world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.NEUTRAL, 0.5f, 1.5f);
+            world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.PLAYERS, 0.5f, 1.5f);
             return TypedActionResult.success(itemStack);
         }
 
