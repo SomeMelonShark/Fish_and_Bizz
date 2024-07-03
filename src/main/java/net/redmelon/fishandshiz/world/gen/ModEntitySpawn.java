@@ -168,6 +168,12 @@ public class ModEntitySpawn {
         SpawnRestriction.register(ModEntities.PLATY, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawn);
 
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.MANGROVE_SWAMP, BiomeKeys.BADLANDS), SpawnGroup.WATER_AMBIENT,
+                ModEntities.PLATY_FRY, 1, 2, 4);
+
+        SpawnRestriction.register(ModEntities.PLATY_FRY, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawn);
+
         //Betta Spawns
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SWAMP, BiomeKeys.PLAINS), SpawnGroup.WATER_AMBIENT,
                 ModEntities.BETTA, 2, 1, 2);
