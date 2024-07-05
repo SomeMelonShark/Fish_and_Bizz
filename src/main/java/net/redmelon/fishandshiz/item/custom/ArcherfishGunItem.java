@@ -1,9 +1,7 @@
 package net.redmelon.fishandshiz.item.custom;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
-import net.minecraft.entity.passive.TropicalFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
@@ -27,13 +25,12 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-import software.bernie.geckolib.util.RenderUtils;
 
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class ArcherfishGunItem extends StoredRangedWeaponItem implements GeoItem {
+public class ArcherfishGunItem extends StoredRangedWeaponItem implements GeoItem{
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
     public ArcherfishGunItem(Settings settings) {
@@ -41,11 +38,11 @@ public class ArcherfishGunItem extends StoredRangedWeaponItem implements GeoItem
     }
 
     private PlayState controller(AnimationState animationState) {
-        if (this.isLoaded() && this.loadCount >= 11) {
+        if (this.loadCount >= 11) {
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.archerfish_gun.idle_full", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
-        } else if (this.isLoaded() && this.loadCount < 11){
+        } else if (this.loadCount < 11 && this.loadCount > 0) {
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.archerfish_gun.idle_half", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
@@ -80,22 +77,22 @@ public class ArcherfishGunItem extends StoredRangedWeaponItem implements GeoItem
         BlockPos pos = user.getBlockPos();
         FluidState fluidState = world.getFluidState(pos);
 
-        if (this.isLoaded()) {
+        if (this.isLoaded(itemStack)) {
             if (!world.isClient) {
                 ArcherfishSpitEntity archerfishSpitEntity = new ArcherfishSpitEntity(world, user);
                 archerfishSpitEntity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 3f, 0f);
                 world.spawnEntity(archerfishSpitEntity);
-                this.setLoadCount(loadCount - 1);
+                this.setLoadCount(itemStack, getLoadCount(itemStack) - 1);
             }
 
             world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.AMBIENT_UNDERWATER_ENTER, SoundCategory.PLAYERS, 2f, 1.5f / (world.getRandom().nextFloat() * 0.4f + 0.8f));
-            this.setLoaded(loadCount > 0);
+            this.setLoaded(itemStack, getLoadCount(itemStack) > 0);
             user.setCurrentHand(hand);
 
             return TypedActionResult.pass(itemStack);
-        } else if (fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8 && loadCount == 0) {
-            this.setLoadCount(LOAD_COUNT);
-            this.setLoaded(loadCount > 0);
+        } else if (fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8 && getLoadCount(itemStack) == 0) {
+            this.setLoadCount(itemStack, LOAD_COUNT);
+            this.setLoaded(itemStack, getLoadCount(itemStack) > 0);
             world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.PLAYERS, 0.5f, 1.5f);
             return TypedActionResult.success(itemStack);
         }
@@ -106,7 +103,7 @@ public class ArcherfishGunItem extends StoredRangedWeaponItem implements GeoItem
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         Formatting[] formattings = new Formatting[]{Formatting.BOLD, Formatting.AQUA};
-        String loadCount = "Shots: " + getLoadCount();
+        String loadCount = "Shots: " + getLoadCount(stack);
         MutableText mutableText = Text.translatable(loadCount);
         mutableText.formatted(formattings);
         tooltip.add(mutableText);

@@ -1,9 +1,8 @@
-# *Plan to add:*  
-- Crustacean eggs attached to parent   
+# *Plan to add:*
 - Nitrate system  
 - Fish health and hunger system  
 - Difference between salt and fresh water  
 - Head fixes  
 - Particle effects for livebearers and brooders  
 - Tropical Fish overhaul  
-- Archerfish Gun  
+- Fix Archerfish Gun display settings  
