@@ -71,12 +71,6 @@ public class ModItems {
             new EntityBucketItem(ModEntities.MILKFISH_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item MILKFISH_EGG_BUCKET = registerItem("milkfish_egg_bucket",
             new EntityBucketItem(ModEntities.MILKFISH_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
-    public static final Item CLOWNFISH_BUCKET = registerItem("clownfish_bucket",
-            new EntityBucketItem(ModEntities.CLOWNFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
-    public static final Item CLOWNFISH_FRY_BUCKET = registerItem("clownfish_fry_bucket",
-            new EntityBucketItem(ModEntities.CLOWNFISH_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
-    public static final Item CLOWNFISH_EGG_BUCKET = registerItem("clownfish_egg_bucket",
-            new EntityBucketItem(ModEntities.CLOWNFISH_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
     public static final Item CORYDORAS_BUCKET = registerItem("corydoras_bucket",
             new EntityBucketItem(ModEntities.CORYDORAS, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item CORYDORAS_FRY_BUCKET = registerItem("corydoras_fry_bucket",

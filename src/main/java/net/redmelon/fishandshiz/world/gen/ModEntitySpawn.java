@@ -114,19 +114,6 @@ public class ModEntitySpawn {
         SpawnRestriction.register(ModEntities.ARCHERFISH, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawn);
 
-        // Clownfish Spawns
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN), SpawnGroup.WATER_AMBIENT,
-                ModEntities.CLOWNFISH, 2, 6, 8);
-
-        SpawnRestriction.register(ModEntities.CLOWNFISH, SpawnRestriction.Location.IN_WATER,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
-
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN), SpawnGroup.WATER_AMBIENT,
-                ModEntities.CLOWNFISH_EGG, 1, 1, 2);
-
-        SpawnRestriction.register(ModEntities.CLOWNFISH_EGG, SpawnRestriction.Location.IN_WATER,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
-
         // Rainbowfish Spawns
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.BAMBOO_JUNGLE), SpawnGroup.WATER_AMBIENT,
                 ModEntities.RAINBOWFISH, 1, 3, 5);

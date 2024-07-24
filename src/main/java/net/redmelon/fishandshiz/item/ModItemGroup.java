@@ -31,9 +31,6 @@ public class ModItemGroup {
             entries.add(ModItems.MILKFISH_BUCKET);
             entries.add(ModItems.MILKFISH_FRY_BUCKET);
             entries.add(ModItems.MILKFISH_EGG_BUCKET);
-            entries.add(ModItems.CLOWNFISH_BUCKET);
-            entries.add(ModItems.CLOWNFISH_FRY_BUCKET);
-            entries.add(ModItems.CLOWNFISH_EGG_BUCKET);
             entries.add(ModItems.NEON_TETRA_BUCKET);
             entries.add(ModItems.NEON_TETRA_FRY_BUCKET);
             entries.add(ModItems.NEON_TETRA_EGG_BUCKET);

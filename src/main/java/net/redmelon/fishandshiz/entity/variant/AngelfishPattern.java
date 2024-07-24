@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public record AngelfishPattern (@Nullable Identifier texture) {
+public record AngelfishPattern (@Nullable Identifier texture) implements GenericTextureProvider{
 
     private static final Map<AngelfishPattern, Identifier> PATTERNS = new LinkedHashMap<>();
     public static final AngelfishPattern WILD = create("wild", false);

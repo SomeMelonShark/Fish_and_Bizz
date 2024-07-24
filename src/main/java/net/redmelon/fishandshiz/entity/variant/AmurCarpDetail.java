@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public record AmurCarpDetail (@Nullable Identifier texture) {
+public record AmurCarpDetail (@Nullable Identifier texture) implements GenericTextureProvider{
 
     private static final Map<AmurCarpDetail, Identifier> DETAILS = new LinkedHashMap<>();
     public static final AmurCarpDetail NONE = create("none", true);

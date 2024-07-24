@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public record BettaDetail (@Nullable Identifier texture) {
+public record BettaDetail (@Nullable Identifier texture) implements GenericTextureProvider{
 
     private static final Map<BettaDetail, Identifier> DETAILS = new LinkedHashMap<>();
     public static final BettaDetail NONE = create("none", true);

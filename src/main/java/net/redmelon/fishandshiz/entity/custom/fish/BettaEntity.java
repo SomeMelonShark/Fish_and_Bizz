@@ -53,7 +53,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import static com.ibm.icu.text.PluralRules.Operand.e;
 import static com.ibm.icu.text.PluralRules.Operand.j;
 
-public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
+public class BettaEntity extends SchoolingBreedEntity implements GeoEntity, VariableFishEntity<BettaPattern, BettaDetail> {
     private static final TrackedData<BettaPattern> PATTERN = DataTracker.registerData(BettaEntity.class, BettaPattern.TRACKED_DATA_HANDLER);
     private static final TrackedData<BettaDetail> DETAIL = DataTracker.registerData(BettaEntity.class, BettaDetail.TRACKED_DATA_HANDLER);
     private static final TrackedData<ModEntityColor> BASE_COLOR = DataTracker.registerData(BettaEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
@@ -111,7 +111,6 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, AmurCarpFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, AngelfishFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, BettaFryEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, ClownfishFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, GraylingFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, MilkfishFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, OscarFryEntity.class, true));
@@ -120,7 +119,6 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
 
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AmurCarpEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AngelfishEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, ClownfishEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, CorydorasEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, GraylingEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, MilkfishEggEntity.class, true));

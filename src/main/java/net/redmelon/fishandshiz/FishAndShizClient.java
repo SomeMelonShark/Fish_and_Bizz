@@ -36,7 +36,7 @@ public class FishAndShizClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.CULTURE_FEED, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(Blocks.WATER, RenderLayer.getCutout());
 
-        EntityRendererRegistry.register(ModEntities.ANGELFISH, AngelfishRenderer::new);
+        EntityRendererRegistry.register(ModEntities.ANGELFISH, BasicVariableFishRenderer.create("angelfish", "angelfish"));
         EntityRendererRegistry.register(ModEntities.ANGELFISH_FRY, BasicFryRenderer.create("angelfish"));
         EntityRendererRegistry.register(ModEntities.ANGELFISH_EGG, BasicEggRenderer.create("angelfish", "angelfish"));
         EntityRendererRegistry.register(ModEntities.ARCHERFISH, ArcherfishRenderer::new);
@@ -46,9 +46,6 @@ public class FishAndShizClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.NEON_TETRA, BasicFishRenderer.create("neon_tetra", "fry"));
         EntityRendererRegistry.register(ModEntities.NEON_TETRA_FRY, BasicFryRenderer.create("neon_tetra"));
         EntityRendererRegistry.register(ModEntities.NEON_TETRA_EGG, BasicEggRenderer.create("neon_tetra", "neon_tetra"));
-        EntityRendererRegistry.register(ModEntities.CLOWNFISH, BasicFishRenderer.create("clownfish", "mediumfish"));
-        EntityRendererRegistry.register(ModEntities.CLOWNFISH_FRY, BasicFryRenderer.create("clownfish"));
-        EntityRendererRegistry.register(ModEntities.CLOWNFISH_EGG, BasicEggRenderer.create("clownfish", "clownfish"));
         EntityRendererRegistry.register(ModEntities.CORYDORAS, CorydorasRenderer::new);
         EntityRendererRegistry.register(ModEntities.CORYDORAS_FRY, BasicFryRenderer.create("corydoras"));
         EntityRendererRegistry.register(ModEntities.CORYDORAS_EGG, BasicEggRenderer.create("corydoras", "corydoras"));
@@ -63,10 +60,10 @@ public class FishAndShizClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.GRAYLING, BasicFishRenderer.create("grayling", "grayling"));
         EntityRendererRegistry.register(ModEntities.GRAYLING_FRY, BasicFryRenderer.create("grayling"));
         EntityRendererRegistry.register(ModEntities.GRAYLING_EGG, BasicEggRenderer.create("salmon", "grayling"));
-        EntityRendererRegistry.register(ModEntities.AMUR_CARP, AmurCarpRenderer::new);
+        EntityRendererRegistry.register(ModEntities.AMUR_CARP, BasicVariableFishRenderer.create("amur_carp", "mediumfish"));
         EntityRendererRegistry.register(ModEntities.AMUR_CARP_FRY, BasicFryRenderer.create("amur_carp"));
         EntityRendererRegistry.register(ModEntities.AMUR_CARP_EGG, BasicEggRenderer.create("salmon", "amur_carp"));
-        EntityRendererRegistry.register(ModEntities.BETTA, BettaRenderer::new);
+        EntityRendererRegistry.register(ModEntities.BETTA, BasicVariableFishRenderer.create("betta", "betta"));
         EntityRendererRegistry.register(ModEntities.BETTA_FRY, BasicFryRenderer.create("betta"));
         EntityRendererRegistry.register(ModEntities.BETTA_EGG, BasicEggRenderer.create("betta", "betta"));
         EntityRendererRegistry.register(ModEntities.PLATY, BasicFishRenderer.create("platy", "fry"));
