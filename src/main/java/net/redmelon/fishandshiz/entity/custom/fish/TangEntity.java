@@ -36,6 +36,7 @@ import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.WaterStopGoal;
+import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
 import net.redmelon.fishandshiz.entity.variant.*;
@@ -124,8 +125,28 @@ public class TangEntity extends SchoolingBreedEntity implements GeoEntity, Varia
     }
 
     @Override
-    public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return null;
+    public @Nullable TangEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+        TangEntity entity = (TangEntity) var2;
+        TangEggEntity eggEntity = (TangEggEntity) ModEntities.TANG_EGG.create(var1);
+        if (eggEntity != null) {
+            ModEntityColor color;
+            ModEntityColor color2;
+            ModEntityColor color3;
+            TangPattern pattern;
+            TangDetail detail;
+            color = random.nextBoolean() ? this.getBaseColor() : entity.getBaseColor();
+            color2 = random.nextBoolean() ? this.getPatternColor() : entity.getPatternColor();
+            color3 = random.nextBoolean() ? this.getDetailColor() : entity.getDetailColor();
+            pattern = random.nextBoolean() ? this.getPattern() : entity.getPattern();
+            detail = random.nextBoolean() ? this.getDetail() : entity.getDetail();
+
+            eggEntity.setBaseColor(color);
+            eggEntity.setPatternColor(color2);
+            eggEntity.setDetailColor(color3);
+            eggEntity.setPattern(pattern);
+            eggEntity.setDetail(detail);
+        }
+        return eggEntity;
     }
 
     @Override
@@ -145,7 +166,7 @@ public class TangEntity extends SchoolingBreedEntity implements GeoEntity, Varia
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.CLOWNFISH_BUCKET);
+        return new ItemStack(ModItems.TANG_BUCKET);
     }
 
     @Override

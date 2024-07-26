@@ -130,27 +130,27 @@ public class ClownfishEntity extends SchoolingBreedEntity implements GeoEntity, 
 
     @Override
     public @Nullable ClownfishEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        ClownfishEntity clownfishEntity = (ClownfishEntity) var2;
-        ClownfishEggEntity clownfishEggEntity = (ClownfishEggEntity) ModEntities.CLOWNFISH_EGG.create(var1);
-        if (clownfishEggEntity != null) {
+        ClownfishEntity entity = (ClownfishEntity) var2;
+        ClownfishEggEntity eggEntity = (ClownfishEggEntity) ModEntities.CLOWNFISH_EGG.create(var1);
+        if (eggEntity != null) {
             ModEntityColor color;
             ModEntityColor color2;
             ModEntityColor color3;
             ClownfishPattern pattern;
             ClownfishDetail detail;
-            color = random.nextBoolean() ? this.getBaseColor() : clownfishEntity.getBaseColor();
-            color2 = random.nextBoolean() ? this.getPatternColor() : clownfishEntity.getPatternColor();
-            color3 = random.nextBoolean() ? this.getDetailColor() : clownfishEntity.getDetailColor();
-            pattern = random.nextBoolean() ? this.getPattern() : clownfishEntity.getPattern();
-            detail = random.nextBoolean() ? this.getDetail() : clownfishEntity.getDetail();
+            color = random.nextBoolean() ? this.getBaseColor() : entity.getBaseColor();
+            color2 = random.nextBoolean() ? this.getPatternColor() : entity.getPatternColor();
+            color3 = random.nextBoolean() ? this.getDetailColor() : entity.getDetailColor();
+            pattern = random.nextBoolean() ? this.getPattern() : entity.getPattern();
+            detail = random.nextBoolean() ? this.getDetail() : entity.getDetail();
 
-            clownfishEggEntity.setBaseColor(color);
-            clownfishEggEntity.setPatternColor(color2);
-            clownfishEggEntity.setDetailColor(color3);
-            clownfishEggEntity.setPattern(pattern);
-            clownfishEggEntity.setDetail(detail);
+            eggEntity.setBaseColor(color);
+            eggEntity.setPatternColor(color2);
+            eggEntity.setDetailColor(color3);
+            eggEntity.setPattern(pattern);
+            eggEntity.setDetail(detail);
         }
-        return clownfishEggEntity;
+        return eggEntity;
     }
 
     @Override

@@ -8,6 +8,7 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
+import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.entity.client.fish.model.BasicFishModel;
 import net.redmelon.fishandshiz.entity.custom.fish.VariableFishEntity;
 import net.redmelon.fishandshiz.entity.variant.GenericTextureProvider;
@@ -19,18 +20,18 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
-public class BasicVariableFishRenderer<E extends LivingEntity & GeoAnimatable & VariableFishEntity<P, D>, P extends GenericTextureProvider, D extends GenericTextureProvider> extends GeoEntityRenderer<E> {
+public class BasicVariableFishRenderer<E extends AnimalFishEntity & GeoAnimatable & VariableFishEntity<P, D>, P extends GenericTextureProvider, D extends GenericTextureProvider> extends GeoEntityRenderer<E> {
     public BasicVariableFishRenderer(EntityRendererFactory.Context renderManager, GeoModel<E> modelProvider) {
         super(renderManager, modelProvider);
         this.addRenderLayer(new VariableFishLayerRenderer<>(this));
         this.shadowRadius = 0.4f;
     }
 
-    public static <E extends LivingEntity & GeoAnimatable & VariableFishEntity<P, D>, P extends GenericTextureProvider, D extends GenericTextureProvider> EntityRendererFactory<E> create(GeoModel<E> model) {
+    public static <E extends AnimalFishEntity & GeoAnimatable & VariableFishEntity<P, D>, P extends GenericTextureProvider, D extends GenericTextureProvider> EntityRendererFactory<E> create(GeoModel<E> model) {
         return ctx -> new BasicVariableFishRenderer<>(ctx, model);
     }
 
-    public static <E extends LivingEntity & GeoAnimatable & VariableFishEntity<P, D>, P extends GenericTextureProvider, D extends GenericTextureProvider> EntityRendererFactory<E> create(String name, String aname) {
+    public static <E extends AnimalFishEntity & GeoAnimatable & VariableFishEntity<P, D>, P extends GenericTextureProvider, D extends GenericTextureProvider> EntityRendererFactory<E> create(String name, String aname) {
         return ctx -> new BasicVariableFishRenderer<>(ctx, new BasicFishModel<>(name, aname));
     }
 
@@ -49,7 +50,7 @@ public class BasicVariableFishRenderer<E extends LivingEntity & GeoAnimatable & 
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 
-    static class VariableFishLayerRenderer<E extends LivingEntity & GeoAnimatable & VariableFishEntity<P, D>, P extends GenericTextureProvider, D extends GenericTextureProvider> extends GeoRenderLayer<E> {
+    static class VariableFishLayerRenderer<E extends AnimalFishEntity & GeoAnimatable & VariableFishEntity<P, D>, P extends GenericTextureProvider, D extends GenericTextureProvider> extends GeoRenderLayer<E> {
 
         public VariableFishLayerRenderer(GeoRenderer<E> entityRendererIn) {
             super(entityRendererIn);

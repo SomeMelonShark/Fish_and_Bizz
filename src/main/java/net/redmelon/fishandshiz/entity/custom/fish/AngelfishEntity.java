@@ -131,27 +131,27 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity, 
 
     @Override
     public @Nullable AngelfishEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        AngelfishEntity angelfishEntity = (AngelfishEntity) var2;
-        AngelfishEggEntity angelfishEggEntity = (AngelfishEggEntity) ModEntities.ANGELFISH_EGG.create(var1);
-        if (angelfishEggEntity != null) {
+        AngelfishEntity entity = (AngelfishEntity) var2;
+        AngelfishEggEntity eggEntity = (AngelfishEggEntity) ModEntities.ANGELFISH_EGG.create(var1);
+        if (eggEntity != null) {
             ModEntityColor color;
             ModEntityColor color2;
             ModEntityColor color3;
             AngelfishPattern pattern;
             AngelfishDetail detail;
-                color = random.nextBoolean() ? this.getBaseColor() : angelfishEntity.getBaseColor();
-                color2 = random.nextBoolean() ? this.getPatternColor() : angelfishEntity.getPatternColor();
-                color3 = random.nextBoolean() ? this.getDetailColor() : angelfishEntity.getDetailColor();
-                pattern = random.nextBoolean() ? this.getPattern() : angelfishEntity.getPattern();
-                detail = random.nextBoolean() ? this.getDetail() : angelfishEntity.getDetail();
+                color = random.nextBoolean() ? this.getBaseColor() : entity.getBaseColor();
+                color2 = random.nextBoolean() ? this.getPatternColor() : entity.getPatternColor();
+                color3 = random.nextBoolean() ? this.getDetailColor() : entity.getDetailColor();
+                pattern = random.nextBoolean() ? this.getPattern() : entity.getPattern();
+                detail = random.nextBoolean() ? this.getDetail() : entity.getDetail();
 
-            angelfishEggEntity.setBaseColor(color);
-            angelfishEggEntity.setPatternColor(color2);
-            angelfishEggEntity.setDetailColor(color3);
-            angelfishEggEntity.setPattern(pattern);
-            angelfishEggEntity.setDetail(detail);
+            eggEntity.setBaseColor(color);
+            eggEntity.setPatternColor(color2);
+            eggEntity.setDetailColor(color3);
+            eggEntity.setPattern(pattern);
+            eggEntity.setDetail(detail);
         }
-        return angelfishEggEntity;
+        return eggEntity;
     }
 
     @Override

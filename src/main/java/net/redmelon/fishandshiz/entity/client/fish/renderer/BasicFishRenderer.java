@@ -6,23 +6,24 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
+import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.entity.client.fish.model.BasicFishModel;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
-public class BasicFishRenderer <E extends LivingEntity & GeoAnimatable> extends GeoEntityRenderer<E> {
+public class BasicFishRenderer <E extends AnimalFishEntity & GeoAnimatable> extends GeoEntityRenderer<E> {
 
     public BasicFishRenderer(EntityRendererFactory.Context ctx, GeoModel<E> modelProvider) {
         super(ctx, modelProvider);
     }
 
-    public static <E extends LivingEntity & GeoAnimatable> EntityRendererFactory<E> create(GeoModel<E> model) {
+    public static <E extends AnimalFishEntity & GeoAnimatable> EntityRendererFactory<E> create(GeoModel<E> model) {
         return ctx -> new BasicFishRenderer<>(ctx, model);
     }
 
-    public static <E extends LivingEntity & GeoAnimatable> EntityRendererFactory<E> create(String name, String aname) {
+    public static <E extends AnimalFishEntity & GeoAnimatable> EntityRendererFactory<E> create(String name, String aname) {
         return ctx -> new BasicFishRenderer<>(ctx, new BasicFishModel<>(name, aname));
     }
 

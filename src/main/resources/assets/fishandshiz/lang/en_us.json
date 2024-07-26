@@ -154,6 +154,21 @@
   "betta_pattern.fishandshiz.pants": "Pants",
   "betta_pattern.fishandshiz.veil": "Veil",
 
+  "clownfish_pattern.fishandshiz.saddle": "Saddle",
+  "clownfish_pattern.fishandshiz.spilled": "Spilled",
+  "clownfish_pattern.fishandshiz.barred": "Barred",
+  "clownfish_pattern.fishandshiz.cheek": "Cheek",
+
+  "goatfish_pattern.fishandshiz.suspenders": "Suspenders",
+  "goatfish_pattern.fishandshiz.split": "Split",
+  "goatfish_pattern.fishandshiz.underbelly": "Underbelly",
+  "goatfish_pattern.fishandshiz.bicolor": "Bicolor",
+
+  "tang_pattern.fishandshiz.gibbous": "Gibbous",
+  "tang_pattern.fishandshiz.ripple": "Ripple",
+  "tang_pattern.fishandshiz.wave": "Wave",
+  "tang_pattern.fishandshiz.backsplash": "Backsplash",
+
   "angelfish_detail.fishandshiz.crown": "Crowned",
   "angelfish_detail.fishandshiz.accent": "Accented",
 
@@ -165,6 +180,16 @@
   "betta_detail.fishandshiz.speckled": "Speckled",
   "betta_detail.fishandshiz.scalar": "Scalar",
   "betta_detail.fishandshiz.decal": "Decal",
+
+  "clownfish_detail.fishandshiz.lobed": "Lobed",
+  "clownfish_detail.fishandshiz.accent": "Accent",
+
+  "goatfish_detail.fishandshiz.staccato": "Staccato",
+  "goatfish_detail.fishandshiz.dribbles": "Dribbles",
+
+  "tang_detail.fishandshiz.mask": "Masked",
+  "tang_detail.fishandshiz.spot": "Spotted",
+  "tang_detail.fishandshiz.moored": "Moored",
 
   "entity_color.fishandshiz.silver": "Silver",
   "entity_color.fishandshiz.matte_black": "Matte Black",
@@ -195,12 +220,6 @@
   "entity.fishandshiz.corydoras.type.PANDA": "Panda Type",
   "entity.fishandshiz.corydoras.type.ALBINO": "Albino Type",
   "entity.fishandshiz.corydoras.type.SPECIAL": "Gold Laser",
-  "entity.fishandshiz.amur_carp.type.WILD": "Wild Type",
-  "entity.fishandshiz.amur_carp.type.CREAM1": "Cream Type",
-  "entity.fishandshiz.amur_carp.type.CREAM2": "Red Cream Type",
-  "entity.fishandshiz.amur_carp.type.CREAM3": "Red and Black Cream Type",
-  "entity.fishandshiz.amur_carp.type.CREAM4": "Black Cream Type",
-  "entity.fishandshiz.amur_carp.type.SPECIAL": "Seaking",
   "entity.fishandshiz.archerfish.type.NORMAL": "Normal",
   "entity.fishandshiz.archerfish.type.SPECIAL": "Evil!"
 }

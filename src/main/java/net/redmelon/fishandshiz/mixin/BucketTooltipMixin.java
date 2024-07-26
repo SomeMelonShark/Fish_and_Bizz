@@ -83,6 +83,54 @@ public abstract class BucketTooltipMixin {
                     tooltip.add(text.formatted(formatting));
                 }
             }
+            if(this.entityType.equals(ModEntities.CLOWNFISH)) {
+                if (nbt.contains("Pattern", NbtElement.STRING_TYPE)) {
+                    MutableText text = Text.translatable(ModEntityColor.fromId(nbt.getString("BaseColor")).getTranslationKey());
+                    tooltip.add(Text.translatable(ClownfishPattern.fromId(nbt.getString("Pattern")).getTranslationKey()).formatted(formatting));
+                    if (!nbt.getString("BaseColor").equals(nbt.getString("PatternColor"))) {
+                        text.append(", ").append(Text.translatable(ModEntityColor.fromId(nbt.getString("PatternColor")).getTranslationKey()));
+                    }
+                    if (!BettaDetail.fromId(nbt.getString("Detail")).equals(BettaDetail.NONE)) {
+                        tooltip.add(Text.translatable(ClownfishDetail.fromId(nbt.getString("Detail")).getTranslationKey()).formatted(formatting));
+                        if (!nbt.getString("DetailColor").equals(nbt.getString("BaseColor"))) {
+                            text.append(", ").append(Text.translatable(ModEntityColor.fromId(nbt.getString("DetailColor")).getTranslationKey()));
+                        }
+                    }
+                    tooltip.add(text.formatted(formatting));
+                }
+            }
+            if(this.entityType.equals(ModEntities.GOATFISH)) {
+                if (nbt.contains("Pattern", NbtElement.STRING_TYPE)) {
+                    MutableText text = Text.translatable(ModEntityColor.fromId(nbt.getString("BaseColor")).getTranslationKey());
+                    tooltip.add(Text.translatable(GoatfishPattern.fromId(nbt.getString("Pattern")).getTranslationKey()).formatted(formatting));
+                    if (!nbt.getString("BaseColor").equals(nbt.getString("PatternColor"))) {
+                        text.append(", ").append(Text.translatable(ModEntityColor.fromId(nbt.getString("PatternColor")).getTranslationKey()));
+                    }
+                    if (!BettaDetail.fromId(nbt.getString("Detail")).equals(BettaDetail.NONE)) {
+                        tooltip.add(Text.translatable(GoatfishDetail.fromId(nbt.getString("Detail")).getTranslationKey()).formatted(formatting));
+                        if (!nbt.getString("DetailColor").equals(nbt.getString("BaseColor"))) {
+                            text.append(", ").append(Text.translatable(ModEntityColor.fromId(nbt.getString("DetailColor")).getTranslationKey()));
+                        }
+                    }
+                    tooltip.add(text.formatted(formatting));
+                }
+            }
+            if(this.entityType.equals(ModEntities.TANG)) {
+                if (nbt.contains("Pattern", NbtElement.STRING_TYPE)) {
+                    MutableText text = Text.translatable(ModEntityColor.fromId(nbt.getString("BaseColor")).getTranslationKey());
+                    tooltip.add(Text.translatable(TangPattern.fromId(nbt.getString("Pattern")).getTranslationKey()).formatted(formatting));
+                    if (!nbt.getString("BaseColor").equals(nbt.getString("PatternColor"))) {
+                        text.append(", ").append(Text.translatable(ModEntityColor.fromId(nbt.getString("PatternColor")).getTranslationKey()));
+                    }
+                    if (!BettaDetail.fromId(nbt.getString("Detail")).equals(BettaDetail.NONE)) {
+                        tooltip.add(Text.translatable(TangDetail.fromId(nbt.getString("Detail")).getTranslationKey()).formatted(formatting));
+                        if (!nbt.getString("DetailColor").equals(nbt.getString("BaseColor"))) {
+                            text.append(", ").append(Text.translatable(ModEntityColor.fromId(nbt.getString("DetailColor")).getTranslationKey()));
+                        }
+                    }
+                    tooltip.add(text.formatted(formatting));
+                }
+            }
             if (this.entityType == ModEntities.CORYDORAS && (nbtCompound = stack.getNbt()) != null && nbtCompound.contains("BucketVariantTag", NbtElement.INT_TYPE)) {
                 int i = nbtCompound.getInt("BucketVariantTag");
                 Formatting[] formattings = new Formatting[]{Formatting.ITALIC, Formatting.GRAY};

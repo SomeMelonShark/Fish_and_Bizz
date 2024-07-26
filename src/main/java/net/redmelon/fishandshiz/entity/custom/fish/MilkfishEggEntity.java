@@ -34,10 +34,6 @@ public class MilkfishEggEntity extends MilkfishEntity implements GeoEntity {
         super(entityType, world);
     }
 
-    public static DefaultAttributeContainer.Builder setAttributes() {
-        return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
-    }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
@@ -130,11 +126,6 @@ public class MilkfishEggEntity extends MilkfishEntity implements GeoEntity {
     @Override
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.MILKFISH_EGG_BUCKET);
-    }
-
-    @Override
-    public @Nullable MilkfishEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return null;
     }
 
     @Override

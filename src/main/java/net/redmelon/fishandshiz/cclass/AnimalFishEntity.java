@@ -51,7 +51,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
     }
 
     public static DefaultAttributeContainer.Builder createFishAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 3.0);
+        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 1.0);
     }
 
     @Override

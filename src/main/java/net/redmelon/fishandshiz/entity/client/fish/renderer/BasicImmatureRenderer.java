@@ -6,25 +6,30 @@ import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
+import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.entity.client.fish.model.BasicEggModel;
-import net.redmelon.fishandshiz.entity.client.fish.model.BasicFishModel;
+import net.redmelon.fishandshiz.entity.client.fish.model.BasicFryModel;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
-public class BasicEggRenderer <A extends LivingEntity & GeoAnimatable> extends GeoEntityRenderer<A> {
+public class BasicImmatureRenderer<A extends AnimalFishEntity & GeoAnimatable> extends GeoEntityRenderer<A> {
 
-    public BasicEggRenderer(EntityRendererFactory.Context ctx, GeoModel<A> modelProvider) {
+    public BasicImmatureRenderer(EntityRendererFactory.Context ctx, GeoModel<A> modelProvider) {
         super(ctx, modelProvider);
     }
 
-    public static <A extends LivingEntity & GeoAnimatable> EntityRendererFactory<A> create(GeoModel<A> model) {
-        return ctx -> new BasicEggRenderer<>(ctx, model);
+    public static <A extends AnimalFishEntity & GeoAnimatable> EntityRendererFactory<A> create(GeoModel<A> model) {
+        return ctx -> new BasicImmatureRenderer<>(ctx, model);
     }
 
-    public static <A extends LivingEntity & GeoAnimatable> EntityRendererFactory<A> create(String gname, String tname) {
-        return ctx -> new BasicEggRenderer<>(ctx, new BasicEggModel<>(gname, tname));
+    public static <A extends AnimalFishEntity & GeoAnimatable> EntityRendererFactory<A> eggCreate(String gname, String tname) {
+        return ctx -> new BasicImmatureRenderer<>(ctx, new BasicEggModel<>(gname, tname));
+    }
+
+    public static <A extends AnimalFishEntity & GeoAnimatable> EntityRendererFactory<A> fryCreate(String gname, String tname) {
+        return ctx -> new BasicImmatureRenderer<>(ctx, new BasicFryModel<>(gname, tname));
     }
 
     @Override
@@ -35,7 +40,11 @@ public class BasicEggRenderer <A extends LivingEntity & GeoAnimatable> extends G
 
     @Override
     public void render(A entity, float entityYaw, float partialTick, MatrixStack poseStack, VertexConsumerProvider bufferSource, int packedLight) {
+        if (entity.isFry()) {
+            poseStack.scale(0.55f, 0.55f, 0.55f);
+        } else {
         poseStack.scale(1.0f, 1.0f, 1.0f);
+        }
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 }

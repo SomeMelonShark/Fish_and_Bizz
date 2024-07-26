@@ -1,13 +1,9 @@
 package net.redmelon.fishandshiz.entity.custom.fish;
 
-import com.google.common.annotations.VisibleForTesting;
 import net.minecraft.entity.Bucketable;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.control.MoveControl;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -17,8 +13,8 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
+import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
@@ -29,9 +25,9 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class ClownfishEggEntity extends ClownfishEntity implements GeoEntity {
+public class TangEggEntity extends TangEntity implements GeoEntity {
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-    public ClownfishEggEntity(EntityType<? extends ClownfishEntity> entityType, World world) {
+    public TangEggEntity(EntityType<? extends TangEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -93,8 +89,8 @@ public class ClownfishEggEntity extends ClownfishEntity implements GeoEntity {
         ModEntityColor color;
         ModEntityColor color2;
         ModEntityColor color3;
-        ClownfishPattern pattern;
-        ClownfishDetail detail;
+        TangPattern pattern;
+        TangDetail detail;
         World world = this.getWorld();
         int i = random.nextBetweenExclusive(3, 7);
         for (int j = 1; j <= i; ++j)
@@ -107,14 +103,14 @@ public class ClownfishEggEntity extends ClownfishEntity implements GeoEntity {
                     pattern = this.getPattern();
                     detail = this.getDetail();
                 } else {
-                    pattern = random.nextBoolean() ? this.getPattern() : (ModUtil.getRandomTagValue(getWorld(), ClownfishPattern.Tag.PATTERNS, random));
-                    detail = random.nextBoolean() ? this.getDetail() : (ModUtil.getRandomTagValue(getWorld(), ClownfishDetail.Tag.DETAILS, random));
+                    pattern = random.nextBoolean() ? this.getPattern() : (ModUtil.getRandomTagValue(getWorld(), TangPattern.Tag.PATTERNS, random));
+                    detail = random.nextBoolean() ? this.getDetail() : (ModUtil.getRandomTagValue(getWorld(), TangDetail.Tag.DETAILS, random));
                     color = random.nextBoolean() ? this.getBaseColor() : (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
                     color2 = random.nextBoolean() ? this.getPatternColor() : (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
                     color3 = random.nextBoolean() ? this.getDetailColor() : (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
                 }
                 ServerWorld serverWorld = (ServerWorld)world;
-                ClownfishFryEntity nextEntity = ModEntities.CLOWNFISH_FRY.create(this.getWorld());
+                TangFryEntity nextEntity = ModEntities.TANG_FRY.create(this.getWorld());
                 if (nextEntity != null) {
                     nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
                     nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
@@ -156,7 +152,7 @@ public class ClownfishEggEntity extends ClownfishEntity implements GeoEntity {
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.CLOWNFISH_EGG_BUCKET);
+        return new ItemStack(ModItems.TANG_EGG_BUCKET);
     }
 
     @Override

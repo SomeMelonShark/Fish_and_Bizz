@@ -36,10 +36,6 @@ public class AmurCarpEggEntity extends AmurCarpEntity implements GeoEntity {
         super(entityType, world);
     }
 
-    public static DefaultAttributeContainer.Builder setAttributes() {
-        return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
-    }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
@@ -164,11 +160,6 @@ public class AmurCarpEggEntity extends AmurCarpEntity implements GeoEntity {
     @Override
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.AMUR_CARP_EGG_BUCKET);
-    }
-
-    @Override
-    public @Nullable AmurCarpEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return null;
     }
 
     @Override

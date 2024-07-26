@@ -40,6 +40,9 @@ public class ModItemGroup {
             entries.add(ModItems.OSCAR_BUCKET);
             entries.add(ModItems.OSCAR_FRY_BUCKET);
             entries.add(ModItems.OSCAR_EGG_BUCKET);
+            entries.add(ModItems.GRAYLING_FRY_BUCKET);
+            entries.add(ModItems.GRAYLING_EGG_BUCKET);
+            entries.add(ModItems.GOATFISH_BUCKET);
             entries.add(ModItems.SALMON_FRY_BUCKET);
             entries.add(ModItems.SALMON_EGG_BUCKET);
             entries.add(ModItems.MUD_CRAB_BUCKET);
@@ -63,8 +66,9 @@ public class ModItemGroup {
             entries.add(ModItems.CLOWNFISH_FRY_BUCKET);
             entries.add(ModItems.CLOWNFISH_EGG_BUCKET);
             entries.add(ModItems.GRAYLING_BUCKET);
-            entries.add(ModItems.GRAYLING_FRY_BUCKET);
-            entries.add(ModItems.GRAYLING_EGG_BUCKET);
+            entries.add(ModItems.TANG_BUCKET);
+            entries.add(ModItems.TANG_FRY_BUCKET);
+            entries.add(ModItems.TANG_EGG_BUCKET);
             entries.add(ModItems.VOLCANO_SNAIL_BUCKET);
             entries.add(ModItems.VOLCANO_SNAIL_EGG_BUCKET);
         });

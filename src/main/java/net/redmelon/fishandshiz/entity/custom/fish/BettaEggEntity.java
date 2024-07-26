@@ -187,11 +187,6 @@ public class BettaEggEntity extends BettaEntity implements GeoEntity {
     }
 
     @Override
-    public @Nullable BettaEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return null;
-    }
-
-    @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
 
     }

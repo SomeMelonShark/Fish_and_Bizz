@@ -6,6 +6,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 
@@ -50,7 +51,12 @@ public abstract class LivebearerEntity extends SchoolingBreedEntity{
         super.tickMovement();
         if (!this.getWorld().isClient && this.hasEgg()) {
             this.setStageAge(this.gestStage + 1);
-            this.playSound(SoundEvents.BLOCK_SLIME_BLOCK_FALL, 0.05f, 0.1f);
+        }
+        if (this.hasEgg()) {
+            double d = this.random.nextGaussian() * 0.02;
+            double e = this.random.nextGaussian() * 0.02;
+            double f = this.random.nextGaussian() * 0.02;
+            this.getWorld().addParticle(ParticleTypes.EGG_CRACK, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
         }
     }
 

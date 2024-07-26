@@ -130,27 +130,27 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity, Vari
 
     @Override
     public @Nullable BettaEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        BettaEntity bettaEntity = (BettaEntity) var2;
-        BettaEggEntity bettaEggEntity = (BettaEggEntity) ModEntities.BETTA_EGG.create(var1);
-        if (bettaEggEntity != null) {
+        BettaEntity entity = (BettaEntity) var2;
+        BettaEggEntity eggEntity = (BettaEggEntity) ModEntities.BETTA_EGG.create(var1);
+        if (eggEntity != null) {
             ModEntityColor color;
             ModEntityColor color2;
             ModEntityColor color3;
             BettaPattern pattern;
             BettaDetail detail;
-            color = random.nextBoolean() ? this.getBaseColor() : bettaEntity.getBaseColor();
-            color2 = random.nextBoolean() ? this.getPatternColor() : bettaEntity.getPatternColor();
-            color3 = random.nextBoolean() ? this.getDetailColor() : bettaEntity.getDetailColor();
-            pattern = random.nextBoolean() ? this.getPattern() : bettaEntity.getPattern();
-            detail = random.nextBoolean() ? this.getDetail() : bettaEntity.getDetail();
+            color = random.nextBoolean() ? this.getBaseColor() : entity.getBaseColor();
+            color2 = random.nextBoolean() ? this.getPatternColor() : entity.getPatternColor();
+            color3 = random.nextBoolean() ? this.getDetailColor() : entity.getDetailColor();
+            pattern = random.nextBoolean() ? this.getPattern() : entity.getPattern();
+            detail = random.nextBoolean() ? this.getDetail() : entity.getDetail();
 
-            bettaEggEntity.setBaseColor(color);
-            bettaEggEntity.setPatternColor(color2);
-            bettaEggEntity.setDetailColor(color3);
-            bettaEggEntity.setPattern(pattern);
-            bettaEggEntity.setDetail(detail);
+            eggEntity.setBaseColor(color);
+            eggEntity.setPatternColor(color2);
+            eggEntity.setDetailColor(color3);
+            eggEntity.setPattern(pattern);
+            eggEntity.setDetail(detail);
         }
-        return bettaEggEntity;
+        return eggEntity;
     }
 
     @Override

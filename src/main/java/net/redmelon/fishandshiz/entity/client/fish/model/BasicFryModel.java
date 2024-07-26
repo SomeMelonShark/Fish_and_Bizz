@@ -22,18 +22,17 @@ public class BasicFryModel<A extends LivingEntity & GeoAnimatable> extends GeoMo
         this.head = head;
     }
 
-    public BasicFryModel(String name, @Nullable String head) {
+    public BasicFryModel(String gname, String tname, @Nullable String head) {
         this(
-                new Identifier(MOD_ID,"geo/" + name + "_fry.geo.json"),
-                new Identifier(MOD_ID, "textures/entity/fish/" + name + "/" + name + "_fry.png"),
+                new Identifier(MOD_ID,"geo/" + gname + "_fry.geo.json"),
+                new Identifier(MOD_ID, "textures/entity/fish/" + tname + "/" + tname + "_fry.png"),
                 new Identifier(MOD_ID, "animations/fry.animation.json"), head);
 
     }
 
-    public BasicFryModel(String name) {
-        this(name, null);
+    public BasicFryModel(String gname, String tname) {
+        this(gname, tname, null);
     }
-
     @Override
     public Identifier getModelResource(A entity) {
         return model;

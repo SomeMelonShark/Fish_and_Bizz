@@ -118,27 +118,27 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
 
     @Override
     public @Nullable AmurCarpEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        AmurCarpEntity amurCarpEntity = (AmurCarpEntity) var2;
-        AmurCarpEggEntity amurCarpEggEntity = (AmurCarpEggEntity) ModEntities.AMUR_CARP_EGG.create(var1);
-        if (amurCarpEggEntity != null) {
+        AmurCarpEntity entity = (AmurCarpEntity) var2;
+        AmurCarpEggEntity eggEntity = (AmurCarpEggEntity) ModEntities.AMUR_CARP_EGG.create(var1);
+        if (eggEntity != null) {
             ModEntityColor color;
             ModEntityColor color2;
             ModEntityColor color3;
             AmurCarpPattern pattern;
             AmurCarpDetail detail;
-                color = random.nextBoolean() ? this.getBaseColor() : amurCarpEntity.getBaseColor();
-                color2 = random.nextBoolean() ? this.getPatternColor() : amurCarpEntity.getPatternColor();
-                color3 = random.nextBoolean() ? this.getDetailColor() : amurCarpEntity.getDetailColor();
-                pattern = random.nextBoolean() ? this.getPattern() : amurCarpEntity.getPattern();
-                detail = random.nextBoolean() ? this.getDetail() : amurCarpEntity.getDetail();
+                color = random.nextBoolean() ? this.getBaseColor() : entity.getBaseColor();
+                color2 = random.nextBoolean() ? this.getPatternColor() : entity.getPatternColor();
+                color3 = random.nextBoolean() ? this.getDetailColor() : entity.getDetailColor();
+                pattern = random.nextBoolean() ? this.getPattern() : entity.getPattern();
+                detail = random.nextBoolean() ? this.getDetail() : entity.getDetail();
 
-            amurCarpEggEntity.setBaseColor(color);
-            amurCarpEggEntity.setPatternColor(color2);
-            amurCarpEggEntity.setDetailColor(color3);
-            amurCarpEggEntity.setPattern(pattern);
-            amurCarpEggEntity.setDetail(detail);
+            eggEntity.setBaseColor(color);
+            eggEntity.setPatternColor(color2);
+            eggEntity.setDetailColor(color3);
+            eggEntity.setPattern(pattern);
+            eggEntity.setDetail(detail);
         }
-        return amurCarpEggEntity;
+        return eggEntity;
     }
 
     @Override

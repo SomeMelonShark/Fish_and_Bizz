@@ -35,11 +35,6 @@ public class SalmonEggEntity extends SchoolingBreedEntity implements GeoEntity {
         super(entityType, world);
     }
 
-    public static DefaultAttributeContainer.Builder setAttributes() {
-        return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
-    }
-
     @Override
     public void tickMovement() {
         super.tickMovement();
