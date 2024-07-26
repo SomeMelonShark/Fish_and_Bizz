@@ -31,25 +31,11 @@ public class GraylingEggEntity extends GraylingEntity implements GeoEntity {
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public GraylingEggEntity(EntityType<? extends GraylingEntity> entityType, World world) {
         super(entityType, world);
-        this.moveControl = new GraylingEggEntity.FishMoveControl(this);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
-    }
-    static class FishMoveControl
-            extends MoveControl {
-        private final AnimalFishEntity fish;
-
-        FishMoveControl(AnimalFishEntity owner) {
-            super(owner);
-            this.fish = owner;
-        }
-
-        @Override
-        public void tick() {//does not move
-        }
     }
 
     @Override

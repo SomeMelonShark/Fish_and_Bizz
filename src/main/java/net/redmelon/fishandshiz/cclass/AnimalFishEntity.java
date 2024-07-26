@@ -229,22 +229,10 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
                 this.getWorld().addParticle(ParticleTypes.HEART, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
             }
         }
-        if (this.isMature()) {
-            double d = this.random.nextGaussian() * 0.02;
-            double e = this.random.nextGaussian() * 0.02;
-            double f = this.random.nextGaussian() * 0.02;
-            this.getWorld().addParticle(ParticleTypes.CRIT, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
-        }
-        if (this.isFry()) {
-            double d = this.random.nextGaussian() * 0.02;
-            double e = this.random.nextGaussian() * 0.02;
-            double f = this.random.nextGaussian() * 0.02;
-            this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
-        }
         if (!this.getWorld().isClient && !this.isMature()) {
             this.setStageAge(this.stageAge + 1);
         }
-        super.movementTick();
+        super.tickMovement();
     }
 
     @Override
@@ -271,7 +259,6 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         if (this.lovingPlayer != null) {
             nbt.putUuid("LoveCause", this.lovingPlayer);
         }
-        super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("FromBucket", this.isFromBucket());
         nbt.putBoolean("IsFry", this.isFry());
         nbt.putBoolean("IsMature", this.isMature());
@@ -287,10 +274,9 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         super.readCustomDataFromNbt(nbt);
         this.loveTicks = nbt.getInt("InLove");
         this.lovingPlayer = nbt.containsUuid("LoveCause") ? nbt.getUuid("LoveCause") : null;
-        super.readCustomDataFromNbt(nbt);
         this.setFromBucket(nbt.getBoolean("FromBucket"));
-        this.setFry(nbt.getBoolean("isFry"));
-        this.setMature(nbt.getBoolean("isMature"));
+        this.setFry(nbt.getBoolean("IsFry"));
+        this.setMature(nbt.getBoolean("IsMature"));
     }
 
     @Override
@@ -304,8 +290,8 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
     public void copyDataToStack(ItemStack stack) {
         NbtCompound nbtCompound = stack.getOrCreateNbt();
         Bucketable.copyDataToStack(this, stack);
-        nbtCompound.putBoolean("isMature", isMature());
-        nbtCompound.putBoolean("isFry", isFry());
+        nbtCompound.putBoolean("IsMature", isMature());
+        nbtCompound.putBoolean("IsFry", isFry());
     }
 
     @Override

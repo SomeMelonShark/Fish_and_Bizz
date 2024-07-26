@@ -146,10 +146,6 @@ public abstract class PassiveWaterEntity extends WaterCreatureEntity {
         }
     }
 
-    public void movementTick() {
-        super.tickMovement();
-    }
-
     protected void onGrowUp() {
     }
 

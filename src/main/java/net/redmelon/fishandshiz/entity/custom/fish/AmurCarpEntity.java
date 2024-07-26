@@ -316,5 +316,4 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
         nbtCompound.put("MateData", getMateData());
         nbtCompound.put(BUCKET_VARIANT_TAG_KEY, this.getMateData());
     }
-
 }
