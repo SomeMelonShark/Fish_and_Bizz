@@ -1,6 +1,7 @@
 package net.redmelon.fishandshiz.entity.custom.fish;
 
 import net.minecraft.entity.Bucketable;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
@@ -19,6 +20,8 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.LivebearerEntity;
@@ -27,6 +30,7 @@ import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -35,11 +39,8 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class PlatyFryEntity extends PlatyEntity implements GeoEntity {
-    @VisibleForTesting
-    public static int MAX_FRY_AGE = Math.abs(-12000);
     public static float WIDTH = 0.3f;
     public static float HEIGHT = 0.1f;
-    private int stageAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public PlatyFryEntity(EntityType<? extends LivebearerEntity> entityType, World world) {
         super(entityType, world);
@@ -69,18 +70,7 @@ public class PlatyFryEntity extends PlatyEntity implements GeoEntity {
         this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
         this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
     }
-    @Override
-    public boolean isBreedingItem(ItemStack stack) {
-        return false;
-    }
 
-    @Override
-    public void tickMovement() {
-        super.tickMovement();
-        if (!this.getWorld().isClient) {
-            this.setStageAge(this.stageAge + 1);
-        }
-    }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
@@ -105,43 +95,22 @@ public class PlatyFryEntity extends PlatyEntity implements GeoEntity {
         }
     }
 
-    public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        ItemStack itemStack = player.getStackInHand(hand);
-        if (this.isFishFood(itemStack)) {
-            this.eatFishFood(player, itemStack);
-            return ActionResult.success(this.getWorld().isClient);
-        } else {
-            return (ActionResult)Bucketable.tryBucket(player, hand, this).orElse(super.interactMob(player, hand));
-        }
-    }
-    private boolean isFishFood(ItemStack stack) {
-        return FISH_FOOD.test(stack);
-    }
-    private void eatFishFood (PlayerEntity player, ItemStack stack) {
-        this.decrementItem(player, stack);
-        this.increaseAge(PassiveWaterEntity.toGrowUpAge(this.getTicksUntilGrowth()));
-        this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
-    }
-    private void decrementItem(PlayerEntity player, ItemStack stack) {
-        if (!player.getAbilities().creativeMode) {
-            stack.decrement(1);
-        }
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
+                                 @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
+        entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        this.setFry(true);
+        this.setMature(false);
+        return entityData;
     }
 
-    private int getStageAge() {
-        return this.stageAge;
-    }
-    private void increaseAge(int seconds) {
-        this.setStageAge(this.stageAge + seconds * 20);
-    }
-    private void setStageAge(int stageAge) {
-        this.stageAge = stageAge;
-        if (this.stageAge >= MAX_FRY_AGE) {
-            this.growUp();
-        }
+    @Override
+    protected int getMaxStageAge() {
+        return 12000;
     }
 
-    private void growUp() {
+    @Override
+    protected void growUp() {
         World world = this.getWorld();
         if (world instanceof ServerWorld) {
             ServerWorld serverWorld = (ServerWorld)world;
@@ -160,10 +129,6 @@ public class PlatyFryEntity extends PlatyEntity implements GeoEntity {
                 this.discard();
             }
         }
-    }
-
-    private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_FRY_AGE - this.stageAge);
     }
 
     @Override

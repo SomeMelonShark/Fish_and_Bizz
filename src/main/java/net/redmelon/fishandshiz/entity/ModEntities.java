@@ -148,6 +148,26 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "platy_fry"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     PlatyFryEntity::new).dimensions(EntityDimensions.fixed(PlatyFryEntity.WIDTH, PlatyFryEntity.HEIGHT)).build());
 
+    public static final EntityType<ClownfishEntity> CLOWNFISH = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "clownfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    ClownfishEntity::new).dimensions(EntityDimensions.fixed(0.4f, 0.3f)).build());
+
+    public static final EntityType<ClownfishFryEntity> CLOWNFISH_FRY = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "clownfish_fry"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    ClownfishFryEntity::new).dimensions(EntityDimensions.fixed(ClownfishFryEntity.WIDTH, ClownfishFryEntity.HEIGHT)).build());
+
+    public static final EntityType<ClownfishEggEntity> CLOWNFISH_EGG = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "clownfish_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    ClownfishEggEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.1f)).build());
+
+    public static final EntityType<TangEntity> TANG = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "tang"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    TangEntity::new).dimensions(EntityDimensions.fixed(0.4f, 0.5f)).build());
+
+    public static final EntityType<GoatfishEntity> GOATFISH = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "goatfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    GoatfishEntity::new).dimensions(EntityDimensions.fixed(0.9f, 0.4f)).build());
+
     public static final EntityType<RedTailCatfishEntity> RED_TAIL_CATFISH = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "red_tail_catfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     RedTailCatfishEntity::new).dimensions(EntityDimensions.fixed(1.5f, 0.6f)).build());

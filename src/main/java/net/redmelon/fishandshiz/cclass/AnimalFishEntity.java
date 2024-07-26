@@ -17,9 +17,9 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -31,19 +31,20 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+import net.minecraft.world.*;
 import net.redmelon.fishandshiz.cclass.cmethods.CustomCriteria;
-import net.redmelon.fishandshiz.entity.custom.fish.PlatyEntity;
+import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
 public abstract class AnimalFishEntity extends PassiveWaterEntity implements Bucketable {
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> IS_FRY = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> IS_MATURE = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final int BREEDING_COOLDOWN = 6000;
     protected int loveTicks;
+    protected int stageAge;
     @Override
     protected float getActiveEyeHeight(EntityPose pose, EntityDimensions dimensions) {
         return dimensions.height * 0.65f;
@@ -67,16 +68,30 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(FROM_BUCKET, false);
+        this.dataTracker.startTracking(IS_FRY, false);
+        this.dataTracker.startTracking(IS_MATURE, false);
     }
 
     @Override
     public boolean isFromBucket() {
         return this.dataTracker.get(FROM_BUCKET);
     }
+    public boolean isFry() {
+        return this.dataTracker.get(IS_FRY);
+    }
+    public boolean isMature() {
+        return this.dataTracker.get(IS_MATURE);
+    }
 
     @Override
     public void setFromBucket(boolean fromBucket) {
         this.dataTracker.set(FROM_BUCKET, fromBucket);
+    }
+    public void setFry(boolean fry) {
+        this.dataTracker.set(IS_FRY, fry);
+    }
+    public void setMature(boolean mature) {
+        this.dataTracker.set(IS_MATURE, mature);
     }
 
     @Override
@@ -102,16 +117,6 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         } else {
             super.travel(movementInput);
         }
-    }
-
-    @Override
-    public void copyDataToStack(ItemStack stack) {
-        Bucketable.copyDataToStack(this, stack);
-    }
-
-    @Override
-    public void copyDataFromNbt(NbtCompound nbt) {
-        Bucketable.copyDataFromNbt(this, nbt);
     }
 
     @Override
@@ -145,26 +150,28 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
 
         @Override
         public void tick() {
-            if (this.fish.isSubmergedIn(FluidTags.WATER)) {
-                this.fish.setVelocity(this.fish.getVelocity().add(0.0, 0.005, 0.0));
-            }
-            if (this.state != MoveControl.State.MOVE_TO || this.fish.getNavigation().isIdle()) {
-                this.fish.setMovementSpeed(0.0f);
-                return;
-            }
-            float f = (float)(this.speed * this.fish.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
-            this.fish.setMovementSpeed(MathHelper.lerp(0.125f, this.fish.getMovementSpeed(), f));
-            double d = this.targetX - this.fish.getX();
-            double e = this.targetY - this.fish.getY();
-            double g = this.targetZ - this.fish.getZ();
-            if (e != 0.0) {
-                double h = Math.sqrt(d * d + e * e + g * g);
-                this.fish.setVelocity(this.fish.getVelocity().add(0.0, (double)this.fish.getMovementSpeed() * (e / h) * 0.1, 0.0));
-            }
-            if (d != 0.0 || g != 0.0) {
-                float i = (float)(MathHelper.atan2(g, d) * 57.2957763671875) - 90.0f;
-                this.fish.setYaw(this.wrapDegrees(this.fish.getYaw(), i, 90.0f));
-                this.fish.bodyYaw = this.fish.getYaw();
+            if (this.fish.isMature() || this.fish.isFry()) {
+                if (this.fish.isSubmergedIn(FluidTags.WATER)) {
+                    this.fish.setVelocity(this.fish.getVelocity().add(0.0, 0.005, 0.0));
+                }
+                if (this.state != MoveControl.State.MOVE_TO || this.fish.getNavigation().isIdle()) {
+                    this.fish.setMovementSpeed(0.0f);
+                    return;
+                }
+                float f = (float)(this.speed * this.fish.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
+                this.fish.setMovementSpeed(MathHelper.lerp(0.125f, this.fish.getMovementSpeed(), f));
+                double d = this.targetX - this.fish.getX();
+                double e = this.targetY - this.fish.getY();
+                double g = this.targetZ - this.fish.getZ();
+                if (e != 0.0) {
+                    double h = Math.sqrt(d * d + e * e + g * g);
+                    this.fish.setVelocity(this.fish.getVelocity().add(0.0, (double)this.fish.getMovementSpeed() * (e / h) * 0.1, 0.0));
+                }
+                if (d != 0.0 || g != 0.0) {
+                    float i = (float)(MathHelper.atan2(g, d) * 57.2957763671875) - 90.0f;
+                    this.fish.setYaw(this.wrapDegrees(this.fish.getYaw(), i, 90.0f));
+                    this.fish.bodyYaw = this.fish.getYaw();
+                }
             }
         }
     }
@@ -191,7 +198,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         super((EntityType<? extends PassiveWaterEntity>) entityType, world);
         this.setPathfindingPenalty(PathNodeType.DANGER_FIRE, 16.0f);
         this.setPathfindingPenalty(PathNodeType.DAMAGE_FIRE, -1.0f);
-        this.moveControl = new AnimalFishEntity.FishMoveControl(this);
+        this.moveControl = new FishMoveControl(this);
     }
 
     @Override
@@ -222,6 +229,21 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
                 this.getWorld().addParticle(ParticleTypes.HEART, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
             }
         }
+        if (this.isMature()) {
+            double d = this.random.nextGaussian() * 0.02;
+            double e = this.random.nextGaussian() * 0.02;
+            double f = this.random.nextGaussian() * 0.02;
+            this.getWorld().addParticle(ParticleTypes.CRIT, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
+        }
+        if (this.isFry()) {
+            double d = this.random.nextGaussian() * 0.02;
+            double e = this.random.nextGaussian() * 0.02;
+            double f = this.random.nextGaussian() * 0.02;
+            this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
+        }
+        if (!this.getWorld().isClient && !this.isMature()) {
+            this.setStageAge(this.stageAge + 1);
+        }
         super.movementTick();
     }
 
@@ -251,6 +273,8 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         }
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("FromBucket", this.isFromBucket());
+        nbt.putBoolean("IsFry", this.isFry());
+        nbt.putBoolean("IsMature", this.isMature());
     }
 
     @Override
@@ -265,6 +289,28 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         this.lovingPlayer = nbt.containsUuid("LoveCause") ? nbt.getUuid("LoveCause") : null;
         super.readCustomDataFromNbt(nbt);
         this.setFromBucket(nbt.getBoolean("FromBucket"));
+        this.setFry(nbt.getBoolean("isFry"));
+        this.setMature(nbt.getBoolean("isMature"));
+    }
+
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        this.setFry(false);
+        this.setMature(true);
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+    }
+
+    @Override
+    public void copyDataToStack(ItemStack stack) {
+        NbtCompound nbtCompound = stack.getOrCreateNbt();
+        Bucketable.copyDataToStack(this, stack);
+        nbtCompound.putBoolean("isMature", isMature());
+        nbtCompound.putBoolean("isFry", isFry());
+    }
+
+    @Override
+    public void copyDataFromNbt(NbtCompound nbt) {
+        Bucketable.copyDataFromNbt(this, nbt);
     }
 
     @Override
@@ -283,7 +329,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
     }
 
     public boolean isBreedingItem(ItemStack stack) {
-        return stack.isOf(Items.WHEAT);
+        return stack.getItem() == ModItems.FISH_FOOD;
     }
 
     @Override
@@ -291,21 +337,76 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         ItemStack itemStack = player.getStackInHand(hand);
         if (this.isBreedingItem(itemStack)) {
             int i = this.getBreedingAge();
-            if (!this.getWorld().isClient && i == 0 && this.canEat()) {
+            if (!this.getWorld().isClient && i == 0 && this.canEat() && this.isMature()) {
                 this.eat(player, hand, itemStack);
                 this.lovePlayer(player);
                 return ActionResult.SUCCESS;
             }
-            if (this.isBaby()) {
-                this.eat(player, hand, itemStack);
-                this.growUp(AnimalFishEntity.toGrowUpAge(-i), true);
+            if (this.isFry()) {
+                this.eatFishFood(player, itemStack);
                 return ActionResult.success(this.getWorld().isClient);
             }
             if (this.getWorld().isClient) {
                 return ActionResult.CONSUME;
             }
         }
+        if (this.isCultureFeed(itemStack) && getBreedingAge() > 0) {
+            if (this.isMature()) {
+                this.eatCultureFeed(player, itemStack);
+                return ActionResult.success(this.getWorld().isClient);
+            }
+
+        }
         return Bucketable.tryBucket(player, hand, this).orElse(super.interactMob(player, hand));
+    }
+
+    private void eatFishFood (PlayerEntity player, ItemStack stack) {
+        this.decrementItem(player, stack);
+        this.increaseAge(PassiveWaterEntity.toGrowUpAge(this.getTicksUntilGrowth()));
+        this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
+    }
+
+    protected int getMaxStageAge() {
+        return Math.abs(0);
+    }
+
+    protected int getStageAge() {
+        return this.stageAge;
+    }
+    protected void increaseAge(int seconds) {
+        this.setStageAge(this.stageAge + seconds * 20);
+    }
+    protected void setStageAge(int stageAge) {
+        this.stageAge = stageAge;
+        if (this.stageAge >= getMaxStageAge()) {
+            this.growUp();
+        }
+    }
+
+    protected void growUp() {
+    }
+
+    private int getTicksUntilGrowth() {
+        return Math.max(0, this.getMaxStageAge() - this.stageAge);
+    }
+
+    private boolean isCultureFeed(ItemStack stack) {
+        return stack.isOf(ModItems.DRIED_CULTURE_FEED);
+    }
+    private void eatCultureFeed (PlayerEntity player, ItemStack stack) {
+        this.decrementItem(player, stack);
+        this.cultureAge();
+        this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
+        this.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.5f);
+    }
+    private void decrementItem(PlayerEntity player, ItemStack stack) {
+        if (!player.getAbilities().creativeMode) {
+            stack.decrement(1);
+        }
+    }
+
+    private void cultureAge() {
+        this.setBreedingAge((int) (breedingAge * 0.8));
     }
 
     protected void eat(PlayerEntity player, Hand hand, ItemStack stack) {

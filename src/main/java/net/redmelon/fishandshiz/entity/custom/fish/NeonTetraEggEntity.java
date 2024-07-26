@@ -2,6 +2,7 @@ package net.redmelon.fishandshiz.entity.custom.fish;
 
 import com.google.common.annotations.VisibleForTesting;
 import net.minecraft.entity.Bucketable;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.control.MoveControl;
@@ -13,6 +14,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
@@ -25,9 +28,6 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class NeonTetraEggEntity extends NeonTetraEntity implements GeoEntity {
-    @VisibleForTesting
-    public static int MAX_EGG_AGE = Math.abs(-6000);
-    private int stageAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public NeonTetraEggEntity(EntityType<? extends NeonTetraEntity> entityType, World world) {
@@ -50,13 +50,6 @@ public class NeonTetraEggEntity extends NeonTetraEntity implements GeoEntity {
 
         @Override
         public void tick() {//does not move
-        }
-    }
-    @Override
-    public void tickMovement() {
-        super.tickMovement();
-        if (!this.getWorld().isClient) {
-            this.setStageAge(this.stageAge + 1);
         }
     }
     @Override
@@ -86,17 +79,13 @@ public class NeonTetraEggEntity extends NeonTetraEntity implements GeoEntity {
             this.setStageAge(nbt.getInt("Age"));
         }
     }
-    private int getStageAge() {
-        return this.stageAge;
-    }
-    private void increaseAge(int seconds) {
-        this.setStageAge(this.stageAge + seconds * 20);
-    }
-    private void setStageAge(int stageAge) {
-        this.stageAge = stageAge;
-        if (this.stageAge >= MAX_EGG_AGE) {
-            this.growUp();
-        }
+
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
+                                 @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
+        entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        this.setMature(false);
+        return entityData;
     }
 
     @Override
@@ -104,8 +93,13 @@ public class NeonTetraEggEntity extends NeonTetraEntity implements GeoEntity {
         return false;
     }
 
+    @Override
+    protected int getMaxStageAge() {
+        return 6000;
+    }
 
-    private void growUp() {
+    @Override
+    protected void growUp() {
         World world = this.getWorld();
         int i = random.nextBetweenExclusive(4, 8);
         for (int j = 1; j <= i; ++j)
@@ -126,10 +120,6 @@ public class NeonTetraEggEntity extends NeonTetraEntity implements GeoEntity {
                     this.discard();
                 }
             }
-    }
-
-    private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_EGG_AGE - this.stageAge);
     }
 
     @Override

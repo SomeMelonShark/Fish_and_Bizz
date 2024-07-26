@@ -40,11 +40,8 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
-    @VisibleForTesting
-    public static int MAX_AGE = Math.abs(-18000);
     public static float WIDTH = 0.4f;
     public static float HEIGHT = 0.3f;
-    protected int stageAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public AngelfishFryEntity(EntityType<? extends AngelfishEntity> entityType, World world) {
@@ -74,18 +71,7 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
         this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
         this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
     }
-    @Override
-    public boolean isBreedingItem(ItemStack stack) {
-        return false;
-    }
 
-    @Override
-    public void tickMovement() {
-        super.tickMovement();
-        if (!this.getWorld().isClient) {
-            this.setStageAge(this.stageAge + 1);
-        }
-    }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
@@ -114,34 +100,13 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
             this.setStageAge(nbt.getInt("Age"));
         }
     }
-    public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        ItemStack itemStack = player.getStackInHand(hand);
-        if (this.isFishFood(itemStack)) {
-            this.eatFishFood(player, itemStack);
-            return ActionResult.success(this.getWorld().isClient);
-        } else {
-            return (ActionResult)Bucketable.tryBucket(player, hand, this).orElse(super.interactMob(player, hand));
-        }
-    }
-    private boolean isFishFood(ItemStack stack) {
-        return AngelfishEntity.FISH_FOOD.test(stack);
-    }
-    private void eatFishFood (PlayerEntity player, ItemStack stack) {
-        this.decrementItem(player, stack);
-        this.increaseAge(PassiveWaterEntity.toGrowUpAge(this.getTicksUntilGrowth()));
-        this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
-    }
-
-    private void decrementItem(PlayerEntity player, ItemStack stack) {
-        if (!player.getAbilities().creativeMode) {
-            stack.decrement(1);
-        }
-    }
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        this.setFry(true);
+        this.setMature(false);
         return entityData;
     }
 
@@ -150,19 +115,13 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
         return null;
     }
 
-    private int getStageAge() {
-        return this.stageAge;
+    @Override
+    protected int getMaxStageAge() {
+        return 18000;
     }
-    private void increaseAge(int seconds) {
-        this.setStageAge(this.stageAge + seconds * 20);
-    }
-    private void setStageAge(int stageAge) {
-        this.stageAge = stageAge;
-        if (this.stageAge >= MAX_AGE) {
-            this.growUp();
-        }
-    }
-    private void growUp() {
+
+    @Override
+    protected void growUp() {
         ModEntityColor color;
         ModEntityColor color2;
         ModEntityColor color3;
@@ -197,11 +156,6 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
             }
         }
     }
-
-    private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_AGE - this.stageAge);
-    }
-
     @Override
     public boolean shouldDropXp() {
         return false;

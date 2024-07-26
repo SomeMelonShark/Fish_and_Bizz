@@ -34,15 +34,7 @@ public class 	FishAndShiz implements ModInitializer {
 		ModBlockEntities.registerAllBlockEntities();
 		ModSounds.registerSounds();
 
-		AngelfishPattern.init();
-		AmurCarpPattern.init();
-		BettaPattern.init();
-
-		AmurCarpDetail.init();
-		AngelfishDetail.init();
-		BettaDetail.init();
-
-		ModEntityColor.init();
+		ModVariants.initializeVariants();
 
 		ModVillagers.registerVillagers();
 		ModVillagers.registerTrades();
@@ -88,6 +80,11 @@ public class 	FishAndShiz implements ModInitializer {
 		FabricDefaultAttributeRegistry.register(ModEntities.BETTA_EGG, BettaEggEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.PLATY, PlatyEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.PLATY_FRY, PlatyFryEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.CLOWNFISH, ClownfishEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.CLOWNFISH_FRY, ClownfishFryEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.CLOWNFISH_EGG, ClownfishEggEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.TANG, TangEntity.setAttributes());
+		FabricDefaultAttributeRegistry.register(ModEntities.GOATFISH, GoatfishEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.RED_TAIL_CATFISH, RedTailCatfishEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.SALMON_EGG, SalmonEggEntity.setAttributes());
 		FabricDefaultAttributeRegistry.register(ModEntities.SALMON_FRY, SalmonFryEntity.setAttributes());

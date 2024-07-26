@@ -115,6 +115,12 @@ public class ModItems {
             new EntityBucketItem(ModEntities.PLATY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item PLATY_FRY_BUCKET = registerItem("platy_fry_bucket",
             new EntityBucketItem(ModEntities.PLATY_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item CLOWNFISH_BUCKET = registerItem("clownfish_bucket",
+            new EntityBucketItem(ModEntities.CLOWNFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item CLOWNFISH_FRY_BUCKET = registerItem("clownfish_fry_bucket",
+            new EntityBucketItem(ModEntities.CLOWNFISH_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item CLOWNFISH_EGG_BUCKET = registerItem("clownfish_egg_bucket",
+            new EntityBucketItem(ModEntities.CLOWNFISH_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
     public static final Item SALMON_FRY_BUCKET = registerItem("salmon_fry_bucket",
             new EntityBucketItem(ModEntities.SALMON_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item SALMON_EGG_BUCKET = registerItem("salmon_egg_bucket",

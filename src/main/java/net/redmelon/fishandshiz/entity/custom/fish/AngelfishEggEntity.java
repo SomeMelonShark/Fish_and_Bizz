@@ -32,38 +32,14 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
-    @VisibleForTesting
-    public static int MAX_EGG_AGE = Math.abs(-12000);
-    protected int stageAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public AngelfishEggEntity(EntityType<? extends AngelfishEntity> entityType, World world) {
         super(entityType, world);
-        this.moveControl = new FishMoveControl(this);
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
-    }
-    static class FishMoveControl
-            extends MoveControl {
-        private final AnimalFishEntity fish;
-
-        FishMoveControl(AnimalFishEntity owner) {
-            super(owner);
-            this.fish = owner;
-        }
-
-        @Override
-        public void tick() {//does not move
-        }
-    }
-    @Override
-    public void tickMovement() {
-        super.tickMovement();
-        if (!this.getWorld().isClient) {
-            this.setStageAge(this.stageAge + 1);
-        }
     }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
@@ -99,33 +75,22 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
             this.setStageAge(nbt.getInt("Age"));
         }
     }
-    private int getStageAge() {
-        return this.stageAge;
-    }
-    private void increaseAge(int seconds) {
-        this.setStageAge(this.stageAge + seconds * 20);
-    }
-    private void setStageAge(int stageAge) {
-        this.stageAge = stageAge;
-        if (this.stageAge >= MAX_EGG_AGE) {
-            this.growUp();
-        }
-    }
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        this.setMature(false);
         return entityData;
     }
 
     @Override
-    public boolean isBreedingItem(ItemStack stack) {
-        return false;
+    protected int getMaxStageAge() {
+        return 12000;
     }
 
-
-    private void growUp() {
+    @Override
+    protected void growUp() {
         ModEntityColor color;
         ModEntityColor color2;
         ModEntityColor color3;
@@ -170,10 +135,6 @@ public class AngelfishEggEntity extends AngelfishEntity implements GeoEntity {
                     this.discard();
                 }
             }
-    }
-
-    private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_EGG_AGE - this.stageAge);
     }
 
     @Override

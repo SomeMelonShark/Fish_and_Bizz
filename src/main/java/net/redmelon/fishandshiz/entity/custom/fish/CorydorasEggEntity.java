@@ -36,10 +36,6 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class CorydorasEggEntity extends CorydorasEntity implements GeoEntity {
-    @VisibleForTesting
-    public static int MAX_EGG_AGE = Math.abs(-12000);
-    private int stageAge;
-
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public CorydorasEggEntity(EntityType<? extends CorydorasEntity> entityType, World world) {
         super(entityType, world);
@@ -61,13 +57,6 @@ public class CorydorasEggEntity extends CorydorasEntity implements GeoEntity {
 
         @Override
         public void tick() {//does not move
-        }
-    }
-    @Override
-    public void tickMovement() {
-        super.tickMovement();
-        if (!this.getWorld().isClient) {
-            this.setStageAge(this.stageAge + 1);
         }
     }
     @Override
@@ -98,23 +87,12 @@ public class CorydorasEggEntity extends CorydorasEntity implements GeoEntity {
             this.setStageAge(nbt.getInt("Age"));
         }
     }
-    private int getStageAge() {
-        return this.stageAge;
-    }
-    private void increaseAge(int seconds) {
-        this.setStageAge(this.stageAge + seconds * 20);
-    }
-    private void setStageAge(int stageAge) {
-        this.stageAge = stageAge;
-        if (this.stageAge >= MAX_EGG_AGE) {
-            this.growUp();
-        }
-    }
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        this.setMature(false);
         return entityData;
     }
 
@@ -123,8 +101,13 @@ public class CorydorasEggEntity extends CorydorasEntity implements GeoEntity {
         return false;
     }
 
+    @Override
+    protected int getMaxStageAge() {
+        return 18000;
+    }
 
-    private void growUp() {
+    @Override
+    protected void growUp() {
         CorydorasVariant variant;
         World world = this.getWorld();
         int i = random.nextBetweenExclusive(3, 5);
@@ -148,10 +131,6 @@ public class CorydorasEggEntity extends CorydorasEntity implements GeoEntity {
                     this.discard();
                 }
             }
-    }
-
-    private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_EGG_AGE - this.stageAge);
     }
 
     @Override

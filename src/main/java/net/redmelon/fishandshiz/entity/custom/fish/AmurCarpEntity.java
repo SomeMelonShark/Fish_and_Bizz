@@ -56,7 +56,6 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
     private static final TrackedData<ModEntityColor> DETAIL_COLOR = DataTracker.registerData(AmurCarpEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
     private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(AmurCarpEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
-    public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public AmurCarpEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
@@ -140,40 +139,6 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
             amurCarpEggEntity.setDetail(detail);
         }
         return amurCarpEggEntity;
-    }
-
-    public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        ItemStack itemStack = player.getStackInHand(hand);
-        if (this.isCultureFeed(itemStack) && getBreedingAge() > 0) {
-            this.eatCultureFeed(player, itemStack);
-            return ActionResult.success(this.getWorld().isClient);
-        } else {
-            return (ActionResult) Bucketable.tryBucket(player, hand, this).orElse(super.interactMob(player, hand));
-        }
-    }
-
-    private boolean isCultureFeed(ItemStack stack) {
-        return stack.isOf(ModItems.DRIED_CULTURE_FEED);
-    }
-    private void eatCultureFeed (PlayerEntity player, ItemStack stack) {
-        this.decrementItem(player, stack);
-        this.cultureAge();
-        this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
-        this.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.5f);
-    }
-    private void decrementItem(PlayerEntity player, ItemStack stack) {
-        if (!player.getAbilities().creativeMode) {
-            stack.decrement(1);
-        }
-    }
-
-    private void cultureAge() {
-        this.setBreedingAge((int) (breedingAge * 0.8));
-    }
-
-    @Override
-    public boolean isBreedingItem(ItemStack stack) {
-        return stack.getItem() == ModItems.FISH_FOOD;
     }
 
     @Override

@@ -11,7 +11,7 @@
 							"vector": [0, 0, 0],
 							"easing": "linear"
 						},
-						"0.15": {
+						"0.125": {
 							"vector": [0, 5, 0],
 							"easing": "linear"
 						},
@@ -19,7 +19,7 @@
 							"vector": [0, 0, 0],
 							"easing": "linear"
 						},
-						"0.4": {
+						"0.375": {
 							"vector": [0, -5, 0],
 							"easing": "linear"
 						},
@@ -35,7 +35,7 @@
 							"vector": [0, 0, 0],
 							"easing": "linear"
 						},
-						"0.15": {
+						"0.125": {
 							"vector": [0, -20, 0],
 							"easing": "linear"
 						},
@@ -43,7 +43,7 @@
 							"vector": [0, 0, 0],
 							"easing": "linear"
 						},
-						"0.4": {
+						"0.375": {
 							"vector": [0, 20, 0],
 							"easing": "linear"
 						},
@@ -59,7 +59,7 @@
 							"vector": [0, 0, 0],
 							"easing": "linear"
 						},
-						"0.15": {
+						"0.125": {
 							"vector": [0, -17.5, 0],
 							"easing": "linear"
 						},
@@ -67,7 +67,7 @@
 							"vector": [0, 0, 0],
 							"easing": "linear"
 						},
-						"0.4": {
+						"0.375": {
 							"vector": [0, 17.5, 0],
 							"easing": "linear"
 						},
@@ -83,7 +83,7 @@
 							"vector": [0, 0, 0],
 							"easing": "linear"
 						},
-						"0.15": {
+						"0.125": {
 							"vector": [0, -17.5, 0],
 							"easing": "linear"
 						},
@@ -91,7 +91,7 @@
 							"vector": [0, 0, 0],
 							"easing": "linear"
 						},
-						"0.4": {
+						"0.375": {
 							"vector": [0, 17.5, 0],
 							"easing": "linear"
 						},
@@ -104,6 +104,7 @@
 			}
 		},
 		"animation.mediumfish.flop": {
+			"loop": true,
 			"animation_length": 0.5,
 			"bones": {
 				"body": {
@@ -118,11 +119,11 @@
 							"vector": [0, 0, 0],
 							"easing": "linear"
 						},
-						"0.15": {
+						"0.1667": {
 							"vector": [0, 47.5, 0],
 							"easing": "linear"
 						},
-						"0.4": {
+						"0.375": {
 							"vector": [0, -47.5, 0],
 							"easing": "linear"
 						},

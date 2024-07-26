@@ -107,40 +107,6 @@ public class MilkfishEntity extends SchoolingBreedEntity implements GeoEntity {
         return ModEntities.MILKFISH_EGG.create(getWorld());
     }
 
-    public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        ItemStack itemStack = player.getStackInHand(hand);
-        if (this.isCultureFeed(itemStack) && getBreedingAge() > 0) {
-            this.eatCultureFeed(player, itemStack);
-            return ActionResult.success(this.getWorld().isClient);
-        } else {
-            return (ActionResult) Bucketable.tryBucket(player, hand, this).orElse(super.interactMob(player, hand));
-        }
-    }
-
-    private boolean isCultureFeed(ItemStack stack) {
-        return stack.isOf(ModItems.DRIED_CULTURE_FEED);
-    }
-    private void eatCultureFeed (PlayerEntity player, ItemStack stack) {
-        this.decrementItem(player, stack);
-        this.cultureAge();
-        this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
-        this.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.5f);
-    }
-    private void decrementItem(PlayerEntity player, ItemStack stack) {
-        if (!player.getAbilities().creativeMode) {
-            stack.decrement(1);
-        }
-    }
-
-    private void cultureAge() {
-        this.setBreedingAge((int) (breedingAge * 0.8));
-    }
-
-    @Override
-    public boolean isBreedingItem(ItemStack stack) {
-        return stack.getItem() == ModItems.FISH_FOOD;
-    }
-
     @Override
     protected SoundEvent getFlopSound() {
         return SoundEvents.ENTITY_COD_FLOP;

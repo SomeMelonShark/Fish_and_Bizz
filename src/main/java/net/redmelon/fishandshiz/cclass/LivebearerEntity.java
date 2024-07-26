@@ -54,7 +54,7 @@ public abstract class LivebearerEntity extends SchoolingBreedEntity{
         }
     }
 
-    private void setStageAge(int eggAge) {
+    protected void setStageAge(int eggAge) {
         this.gestStage = eggAge;
         if ((this.gestStage >= MAX_EGG_AGE) && this.hasEgg()) {
             this.birth();

@@ -35,9 +35,6 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import static com.ibm.icu.text.PluralRules.Operand.j;
 
 public class BettaEggEntity extends BettaEntity implements GeoEntity {
-    @VisibleForTesting
-    public static int MAX_EGG_AGE = Math.abs(-6000);
-    private int stageAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public BettaEggEntity(EntityType<? extends BettaEntity> entityType, World world) {
@@ -70,13 +67,6 @@ public class BettaEggEntity extends BettaEntity implements GeoEntity {
     }
 
     @Override
-    public void tickMovement() {
-        super.tickMovement();
-        if (!this.getWorld().isClient) {
-            this.setStageAge(this.stageAge + 1);
-        }
-    }
-    @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Age", this.stageAge);
@@ -106,23 +96,12 @@ public class BettaEggEntity extends BettaEntity implements GeoEntity {
             this.setStageAge(nbt.getInt("Age"));
         }
     }
-    private int getStageAge() {
-        return this.stageAge;
-    }
-    private void increaseAge(int seconds) {
-        this.setStageAge(this.stageAge + seconds * 20);
-    }
-    private void setStageAge(int stageAge) {
-        this.stageAge = stageAge;
-        if (this.stageAge >= MAX_EGG_AGE) {
-            this.growUp();
-        }
-    }
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        this.setMature(false);
         return entityData;
     }
 
@@ -131,7 +110,13 @@ public class BettaEggEntity extends BettaEntity implements GeoEntity {
         return false;
     }
 
-    private void growUp() {
+    @Override
+    protected int getMaxStageAge() {
+        return 6000;
+    }
+
+    @Override
+    protected void growUp() {
         ModEntityColor color;
         ModEntityColor color2;
         ModEntityColor color3;
@@ -176,10 +161,6 @@ public class BettaEggEntity extends BettaEntity implements GeoEntity {
                     this.discard();
                 }
             }
-    }
-
-    private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_EGG_AGE - this.stageAge);
     }
 
     @Override
