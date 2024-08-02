@@ -92,7 +92,7 @@ public class TangEggEntity extends TangEntity implements GeoEntity {
         TangPattern pattern;
         TangDetail detail;
         World world = this.getWorld();
-        int i = random.nextBetweenExclusive(3, 7);
+        int i = random.nextBetweenExclusive(5, 7);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 int m = random.nextInt(4);

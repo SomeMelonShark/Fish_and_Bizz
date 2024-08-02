@@ -8,6 +8,11 @@ public class ModVariants {
         ClownfishPattern.init();
         TangPattern.init();
         GoatfishPattern.init();
+        DottybackPattern.init();
+        MarineAngelfishPattern.init();
+        ParrotfishPattern.init();
+        ButterflyfishPattern.init();
+        TriggerfishPattern.init();
 
         AmurCarpDetail.init();
         AngelfishDetail.init();
@@ -15,6 +20,11 @@ public class ModVariants {
         ClownfishDetail.init();
         TangDetail.init();
         GoatfishDetail.init();
+        DottybackDetail.init();
+        MarineAngelfishDetail.init();
+        ParrotfishDetail.init();
+        ButterflyfishDetail.init();
+        TriggerfishDetail.init();
 
         ModEntityColor.init();
     }

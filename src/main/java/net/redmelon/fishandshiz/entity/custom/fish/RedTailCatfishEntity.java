@@ -161,6 +161,9 @@ public class RedTailCatfishEntity extends AnimalFishEntity implements AngledMode
         this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, CorydorasEntity.class, true));
         this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, BettaEntity.class, true));
         this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, NeonTetraEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, ClownfishEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, TangEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, DottybackEntity.class, true));
         this.targetSelector.add(5, new ActiveTargetGoal<>((MobEntity)this, DrownedEntity.class, true));
         this.targetSelector.add(5, new ActiveTargetGoal<>((MobEntity)this, GuardianEntity.class, true));
         this.targetSelector.add(5, new ActiveTargetGoal<>((MobEntity)this, ElderGuardianEntity.class, true));

@@ -89,6 +89,10 @@ public class MilkfishEntity extends SchoolingBreedEntity implements GeoEntity {
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, OscarFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, RainbowfishFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, SalmonFryEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, PlatyFryEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, ClownfishFryEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, TangFryEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, DottybackFryEntity.class, true));
 
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AmurCarpEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, BettaEggEntity.class, true));
@@ -100,6 +104,9 @@ public class MilkfishEntity extends SchoolingBreedEntity implements GeoEntity {
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, OscarEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, RainbowfishEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, SalmonEggEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, ClownfishEggEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, TangEggEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, DottybackEggEntity.class, true));
     }
 
     @Override

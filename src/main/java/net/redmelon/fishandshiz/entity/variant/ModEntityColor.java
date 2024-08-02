@@ -26,19 +26,20 @@ public record ModEntityColor(int color) {
     public static final ModEntityColor NEON_BLUE = create("neon_blue", 0x1c61ce);
     public static final ModEntityColor HADAL_BLUE = create("hadal_blue", 0x001845);
     public static final ModEntityColor ORANGE = create("orange", 0xf47500);
+    public static final ModEntityColor MATTE_ORANGE = create("matte_orange", 0x7f3d00);
     public static final ModEntityColor RERANGE = create("rerange", 0xf43700);
     public static final ModEntityColor DEEP_RED = create("deep_red", 0xf40000);
     public static final ModEntityColor YELLOW = create("yellow", 0xf1c91f);
     public static final ModEntityColor OFF_YELLOW = create("off_yellow", 0xeee4a6);
     public static final ModEntityColor GOLD = create("gold", 0xc58921);
     public static final ModEntityColor CREAM = create("cream", 0xdfd5b6);
-    public static final ModEntityColor MATTE_ORANGE = create("matte_orange", 0x7f3d00);
     public static final ModEntityColor NEON_GREEN = create("neon_green", 0x75c022);
     public static final ModEntityColor GREEN = create("green", 0x426b1b);
     public static final ModEntityColor DARK_GREEN = create("dark_green", 0x143303);
     public static final ModEntityColor BILE = create("bile", 0x006700);
     public static final ModEntityColor SICKLY = create("sickly", 0x638672);
     public static final ModEntityColor PURPLE = create("purple", 0xb559a1);
+    public static final ModEntityColor PINK = create("pink", 0xfe69b6);
 
     public static final Registry<ModEntityColor> REGISTRY = FabricRegistryBuilder
             .createDefaulted(ModEntityColor.class, new Identifier(FishAndShiz.MOD_ID, "entity_color"), new Identifier(FishAndShiz.MOD_ID, "silver"))

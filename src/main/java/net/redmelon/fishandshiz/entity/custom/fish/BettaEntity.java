@@ -79,7 +79,7 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity, Vari
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.betta.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
-        } else if (this.isTouchingWater() && !animationState.isMoving()){
+        } else if (this.isTouchingWater() && !animationState.isMoving() && !this.isNavigating()){
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.betta.idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
@@ -95,7 +95,7 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity, Vari
         this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25));
         this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
         this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));
-        this.goalSelector.add(3, new WaterStopGoal(this, 1d, 10));
+        this.goalSelector.add(3, new WaterStopGoal(this, 40, 100));
         this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
         this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
         this.goalSelector.add(6, new MeleeAttackGoal(this, 0.2f, true));
@@ -116,8 +116,13 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity, Vari
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, OscarFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, RainbowfishFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, SalmonFryEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, PlatyFryEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, ClownfishFryEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, TangFryEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, DottybackFryEntity.class, true));
 
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AmurCarpEggEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, BettaEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AngelfishEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, CorydorasEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, GraylingEggEntity.class, true));
@@ -126,6 +131,9 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity, Vari
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, OscarEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, RainbowfishEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, SalmonEggEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, ClownfishEggEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, TangEggEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, DottybackEggEntity.class, true));
     }
 
     @Override

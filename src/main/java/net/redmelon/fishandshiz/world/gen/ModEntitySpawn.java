@@ -182,24 +182,71 @@ public class ModEntitySpawn {
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawn);
 
         // Clownfish Spawns
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN, BiomeKeys.LUKEWARM_OCEAN, BiomeKeys.MANGROVE_SWAMP), SpawnGroup.WATER_AMBIENT,
-                ModEntities.CLOWNFISH, 6, 3, 7);
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN), SpawnGroup.WATER_AMBIENT,
+                ModEntities.CLOWNFISH, 20, 3, 7);
 
         SpawnRestriction.register(ModEntities.CLOWNFISH, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingFishEntity::canSpawn);
 
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN), SpawnGroup.WATER_AMBIENT,
+                ModEntities.CLOWNFISH_EGG, 1, 1, 2);
+
+        SpawnRestriction.register(ModEntities.CLOWNFISH_EGG, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingFishEntity::canSpawn);
+
         // Tang Spawns
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN, BiomeKeys.LUKEWARM_OCEAN, BiomeKeys.MANGROVE_SWAMP), SpawnGroup.WATER_AMBIENT,
-                ModEntities.TANG, 8, 2, 4);
+                ModEntities.TANG, 25, 2, 4);
 
         SpawnRestriction.register(ModEntities.TANG, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingFishEntity::canSpawn);
 
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.MANGROVE_SWAMP), SpawnGroup.WATER_AMBIENT,
+                ModEntities.TANG_FRY, 4, 3, 5);
+
+        SpawnRestriction.register(ModEntities.TANG_FRY, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingFishEntity::canSpawn);
+
         // Goatfish Spawns
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN, BiomeKeys.LUKEWARM_OCEAN, BiomeKeys.MANGROVE_SWAMP), SpawnGroup.WATER_AMBIENT,
-                ModEntities.GOATFISH, 3, 5, 7);
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN, BiomeKeys.LUKEWARM_OCEAN, BiomeKeys.BEACH, BiomeKeys.STONY_SHORE), SpawnGroup.WATER_AMBIENT,
+                ModEntities.GOATFISH, 15, 5, 7);
 
         SpawnRestriction.register(ModEntities.GOATFISH, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingFishEntity::canSpawn);
+
+        // Dottyback Spawns
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN), SpawnGroup.WATER_AMBIENT,
+                ModEntities.DOTTYBACK, 15, 1, 2);
+
+        SpawnRestriction.register(ModEntities.DOTTYBACK, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingFishEntity::canSpawn);
+
+        // Marine Angelfish Spawns
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN), SpawnGroup.WATER_AMBIENT,
+                ModEntities.MARINE_ANGELFISH, 15, 2, 3);
+
+        SpawnRestriction.register(ModEntities.MARINE_ANGELFISH, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingFishEntity::canSpawn);
+
+        // Parrotfish Spawns
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN), SpawnGroup.WATER_AMBIENT,
+                ModEntities.PARROTFISH, 15, 1, 3);
+
+        SpawnRestriction.register(ModEntities.PARROTFISH, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingFishEntity::canSpawn);
+
+        // Butterflyfish Spawns
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN, BiomeKeys.LUKEWARM_OCEAN, BiomeKeys.MANGROVE_SWAMP), SpawnGroup.WATER_AMBIENT,
+                ModEntities.BUTTERFLYFISH, 25, 4, 7);
+
+        SpawnRestriction.register(ModEntities.BUTTERFLYFISH, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingFishEntity::canSpawn);
+
+        // Triggerfish Spawns
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN), SpawnGroup.WATER_AMBIENT,
+                ModEntities.TRIGGERFISH, 10, 1, 3);
+
+        SpawnRestriction.register(ModEntities.TRIGGERFISH, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingFishEntity::canSpawn);
 
         // Red Tail Catfish Spawns

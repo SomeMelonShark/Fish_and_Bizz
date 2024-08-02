@@ -76,6 +76,10 @@ public class OscarEntity extends SchoolingBreedEntity implements GeoEntity {
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, BettaEntity.class, true));
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, CorydorasEntity.class, true));
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, NeonTetraEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, PlatyEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, ClownfishEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, TangEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, DottybackEntity.class, true));
     }
 
     @Override

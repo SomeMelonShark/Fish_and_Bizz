@@ -129,6 +129,20 @@ public class ModItems {
             new EntityBucketItem(ModEntities.TANG_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item TANG_EGG_BUCKET = registerItem("tang_egg_bucket",
             new EntityBucketItem(ModEntities.TANG_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
+    public static final Item DOTTYBACK_BUCKET = registerItem("dottyback_bucket",
+            new EntityBucketItem(ModEntities.DOTTYBACK, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item DOTTYBACK_FRY_BUCKET = registerItem("dottyback_fry_bucket",
+            new EntityBucketItem(ModEntities.DOTTYBACK_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item DOTTYBACK_EGG_BUCKET = registerItem("dottyback_egg_bucket",
+            new EntityBucketItem(ModEntities.DOTTYBACK_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
+    public static final Item MARINE_ANGELFISH_BUCKET = registerItem("marine_angelfish_bucket",
+            new EntityBucketItem(ModEntities.MARINE_ANGELFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item PARROTFISH_BUCKET = registerItem("parrotfish_bucket",
+            new EntityBucketItem(ModEntities.PARROTFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item BUTTERFLYFISH_BUCKET = registerItem("butterflyfish_bucket",
+            new EntityBucketItem(ModEntities.BUTTERFLYFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item TRIGGERFISH_BUCKET = registerItem("triggerfish_bucket",
+            new EntityBucketItem(ModEntities.TRIGGERFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item SALMON_FRY_BUCKET = registerItem("salmon_fry_bucket",
             new EntityBucketItem(ModEntities.SALMON_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item SALMON_EGG_BUCKET = registerItem("salmon_egg_bucket",

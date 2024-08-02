@@ -100,6 +100,8 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, RainbowfishEggEntity.class, true));
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, OscarEggEntity.class, true));
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, ClownfishEggEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, TangEggEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, DottybackEggEntity.class, true));
     }
 
     @Override

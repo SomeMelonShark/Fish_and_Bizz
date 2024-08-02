@@ -69,6 +69,13 @@ public class ModItemGroup {
             entries.add(ModItems.TANG_BUCKET);
             entries.add(ModItems.TANG_FRY_BUCKET);
             entries.add(ModItems.TANG_EGG_BUCKET);
+            entries.add(ModItems.DOTTYBACK_BUCKET);
+            entries.add(ModItems.DOTTYBACK_FRY_BUCKET);
+            entries.add(ModItems.DOTTYBACK_EGG_BUCKET);
+            entries.add(ModItems.MARINE_ANGELFISH_BUCKET);
+            entries.add(ModItems.PARROTFISH_BUCKET);
+            entries.add(ModItems.BUTTERFLYFISH_BUCKET);
+            entries.add(ModItems.TRIGGERFISH_BUCKET);
             entries.add(ModItems.VOLCANO_SNAIL_BUCKET);
             entries.add(ModItems.VOLCANO_SNAIL_EGG_BUCKET);
         });

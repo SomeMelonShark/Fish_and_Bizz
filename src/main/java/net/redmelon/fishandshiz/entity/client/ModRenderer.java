@@ -81,6 +81,13 @@ public class ModRenderer {
         EntityRendererRegistry.register(ModEntities.TANG_FRY, BasicImmatureRenderer.fryCreate("angelfish", "tang"));
         EntityRendererRegistry.register(ModEntities.TANG_EGG, BasicImmatureRenderer.eggCreate("clownfish", "tang"));
         EntityRendererRegistry.register(ModEntities.GOATFISH, BasicVariableFishRenderer.create("goatfish", "bottom_feeder"));
+        EntityRendererRegistry.register(ModEntities.DOTTYBACK, BasicVariableFishRenderer.create("dottyback", "mediumfish"));
+        EntityRendererRegistry.register(ModEntities.DOTTYBACK_FRY, BasicImmatureRenderer.fryCreate("corydoras", "dottyback"));
+        EntityRendererRegistry.register(ModEntities.DOTTYBACK_EGG, BasicImmatureRenderer.eggCreate("neon_tetra", "dottyback"));
+        EntityRendererRegistry.register(ModEntities.MARINE_ANGELFISH, BasicVariableFishRenderer.create("marine_angelfish", "mediumfish"));
+        EntityRendererRegistry.register(ModEntities.PARROTFISH, BasicVariableFishRenderer.create("parrotfish", "mediumfish"));
+        EntityRendererRegistry.register(ModEntities.BUTTERFLYFISH, BasicVariableFishRenderer.create("butterflyfish", "mediumfish"));
+        EntityRendererRegistry.register(ModEntities.TRIGGERFISH, BasicVariableFishRenderer.create("triggerfish", "mediumfish"));
         EntityRendererRegistry.register(ModEntities.SALMON_EGG, BasicImmatureRenderer.eggCreate("salmon", "salmon"));
         EntityRendererRegistry.register(ModEntities.SALMON_FRY, BasicImmatureRenderer.fryCreate("salmon", "salmon"));
         EntityRendererRegistry.register(ModEntities.MUD_CRAB, BasicSmallMiscRenderer.create("mud_crab"));

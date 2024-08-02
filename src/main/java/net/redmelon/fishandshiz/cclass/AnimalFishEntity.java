@@ -112,7 +112,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
             this.move(MovementType.SELF, this.getVelocity());
             this.setVelocity(this.getVelocity().multiply(0.9));
             if (this.getTarget() == null) {
-                this.setVelocity(this.getVelocity().add(0.0, -0.005, 0.0));
+                this.setVelocity(this.getVelocity().add(0.0, 0, 0.0));
             }
         } else {
             super.travel(movementInput);
@@ -152,7 +152,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         public void tick() {
             if (this.fish.isMature() || this.fish.isFry()) {
                 if (this.fish.isSubmergedIn(FluidTags.WATER)) {
-                    this.fish.setVelocity(this.fish.getVelocity().add(0.0, 0.005, 0.0));
+                    this.fish.setVelocity(this.fish.getVelocity().add(0.0, 0, 0.0));
                 }
                 if (this.state != MoveControl.State.MOVE_TO || this.fish.getNavigation().isIdle()) {
                     this.fish.setMovementSpeed(0.0f);

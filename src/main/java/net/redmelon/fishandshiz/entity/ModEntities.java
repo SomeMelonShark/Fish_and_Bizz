@@ -60,7 +60,7 @@ public class ModEntities {
 
     public static final EntityType<NeonTetraEggEntity> NEON_TETRA_EGG = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "neon_tetra_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
-                    NeonTetraEggEntity::new).dimensions(EntityDimensions.fixed(0.1f, 0.1f)).build());
+                    NeonTetraEggEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.1f)).build());
 
     public static final EntityType<CorydorasEntity> CORYDORAS = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "corydoras"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
@@ -178,6 +178,34 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "goatfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     GoatfishEntity::new).dimensions(EntityDimensions.fixed(0.9f, 0.4f)).build());
 
+    public static final EntityType<DottybackEntity> DOTTYBACK = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "dottyback"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    DottybackEntity::new).dimensions(EntityDimensions.fixed(0.5f, 0.3f)).build());
+
+    public static final EntityType<DottybackFryEntity> DOTTYBACK_FRY = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "dottyback_fry"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    DottybackFryEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.2f)).build());
+
+    public static final EntityType<TangEggEntity> DOTTYBACK_EGG = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "dottyback_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    TangEggEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.1f)).build());
+
+    public static final EntityType<MarineAngelfishEntity> MARINE_ANGELFISH = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "marine_angelfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    MarineAngelfishEntity::new).dimensions(EntityDimensions.fixed(0.8f, 0.5f)).build());
+
+    public static final EntityType<ParrotfishEntity> PARROTFISH = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "parrotfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    ParrotfishEntity::new).dimensions(EntityDimensions.fixed(1.1f, 0.4f)).build());
+
+    public static final EntityType<ButterflyfishEntity> BUTTERFLYFISH = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "butterflyfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    ButterflyfishEntity::new).dimensions(EntityDimensions.fixed(0.5f, 0.4f)).build());
+
+    public static final EntityType<TriggerfishEntity> TRIGGERFISH = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "triggerfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    TriggerfishEntity::new).dimensions(EntityDimensions.fixed(0.5f, 0.4f)).build());
+
     public static final EntityType<RedTailCatfishEntity> RED_TAIL_CATFISH = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "red_tail_catfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     RedTailCatfishEntity::new).dimensions(EntityDimensions.fixed(1.5f, 0.6f)).build());
@@ -258,6 +286,13 @@ public class ModEntities {
         FabricDefaultAttributeRegistry.register(ModEntities.TANG_FRY, AnimalFishEntity.createFishAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.TANG_EGG, AnimalFishEntity.createFishAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.GOATFISH, GoatfishEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.DOTTYBACK, DottybackEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.DOTTYBACK_FRY, AnimalFishEntity.createFishAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.DOTTYBACK_EGG, AnimalFishEntity.createFishAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.MARINE_ANGELFISH, MarineAngelfishEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.PARROTFISH, ParrotfishEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.BUTTERFLYFISH, ButterflyfishEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.TRIGGERFISH, TriggerfishEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.RED_TAIL_CATFISH, RedTailCatfishEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.SALMON_EGG, AnimalFishEntity.createFishAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.SALMON_FRY, AnimalFishEntity.createFishAttributes());

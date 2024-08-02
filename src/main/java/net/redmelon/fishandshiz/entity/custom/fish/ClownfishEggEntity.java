@@ -79,11 +79,6 @@ public class ClownfishEggEntity extends ClownfishEntity implements GeoEntity {
     }
 
     @Override
-    public boolean isBreedingItem(ItemStack stack) {
-        return false;
-    }
-
-    @Override
     protected int getMaxStageAge() {
         return 12000;
     }

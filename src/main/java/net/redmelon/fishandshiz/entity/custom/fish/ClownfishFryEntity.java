@@ -103,11 +103,6 @@ public class ClownfishFryEntity extends ClownfishEntity implements GeoEntity {
     }
 
     @Override
-    public @Nullable ClownfishEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return null;
-    }
-
-    @Override
     protected int getMaxStageAge() {
         return 18000;
     }
