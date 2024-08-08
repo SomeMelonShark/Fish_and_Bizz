@@ -16,12 +16,14 @@ public record ModEntityColor(int color) {
     private static final Map<ModEntityColor, Identifier> COLORS = new LinkedHashMap<>();
 
     public static final ModEntityColor SILVER = create("silver", 0xffeae5);
+    public static final ModEntityColor GREY = create("grey", 0x565b5d);
     public static final ModEntityColor MATTE_BLACK = create("matte_black", 0x241e1e);
     public static final ModEntityColor EARTH_BLACK = create("earth_black", 0x1a1111);
     public static final ModEntityColor MUDDY = create("muddy", 0xb4956e);
     public static final ModEntityColor BRED = create("bred", 0x592213);
     public static final ModEntityColor FECAL_BROWN = create("fecal_brown", 0x802b1f);
     public static final ModEntityColor BROWN = create("brown", 0x421e00);
+    public static final ModEntityColor PEACH = create("peach", 0xe5b19f);
     public static final ModEntityColor LIGHT_BLUE = create("light_blue", 0x00aae5);
     public static final ModEntityColor NEON_BLUE = create("neon_blue", 0x1c61ce);
     public static final ModEntityColor HADAL_BLUE = create("hadal_blue", 0x001845);

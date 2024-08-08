@@ -42,10 +42,12 @@ public class BasicVariableFishRenderer<E extends AnimalFishEntity & GeoAnimatabl
 
     @Override
     public void render(E entity, float entityYaw, float partialTick, MatrixStack poseStack, VertexConsumerProvider bufferSource, int packedLight) {
-        if(entity.isBaby()) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
+        if (entity.isBaby()) {
+            poseStack.scale(0.4f, 0.4f, 0.4f);
+        } else if (entity.isMicro()) {
+            poseStack.scale(0.3f, 0.3f, 0.3f);
         } else {
-            poseStack.scale(0.8f, 0.8f, 0.8f);
+            poseStack.scale(0.7f, 0.7f, 0.7f);
         }
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
@@ -74,9 +76,11 @@ public class BasicVariableFishRenderer<E extends AnimalFishEntity & GeoAnimatabl
             this.renderLayer(poseStack, animatable, bakedModel, animatable.getDetailColor().color(), animatable.getDetail().texture(), bufferSource, packedLight, packedOverlay, partialTick);
 
             if (animatable.isBaby()) {
-                poseStack.scale(0.5f, 0.5f, 0.5f);
+                poseStack.scale(0.4f, 0.4f, 0.4f);
+            } else if (animatable.isMicro()) {
+                poseStack.scale(0.3f, 0.3f, 0.3f);
             } else {
-                poseStack.scale(0.8f, 0.8f, 0.8f);
+                poseStack.scale(0.7f, 0.7f, 0.7f);
             }
         }
 

@@ -173,10 +173,21 @@
   "amur_carp_pattern.fishandshiz.mask": "Mask",
   "amur_carp_pattern.fishandshiz.trail": "Trail",
 
-  "betta_pattern.fishandshiz.wild1": "Swamp Wild",
-  "betta_pattern.fishandshiz.wild2": "Plains Wild",
+  "corydoras_pattern.fishandshiz.dorsal": "Dorsal",
+  "corydoras_pattern.fishandshiz.goth": "Goth",
+  "corydoras_pattern.fishandshiz.stern": "Stern",
+  "corydoras_pattern.fishandshiz.eye": "Eye",
+
+  "betta_pattern.fishandshiz.wild1": "Swampy",
+  "betta_pattern.fishandshiz.wild2": "Plain",
   "betta_pattern.fishandshiz.pants": "Pants",
   "betta_pattern.fishandshiz.veil": "Veil",
+
+  "platy_pattern.fishandshiz.finish": "Finish",
+  "platy_pattern.fishandshiz.transverse": "Transverse",
+  "platy_pattern.fishandshiz.lateral": "Lateral",
+  "platy_pattern.fishandshiz.pants": "Pants",
+  "platy_pattern.fishandshiz.helmet": "Helmet",
 
   "clownfish_pattern.fishandshiz.saddle": "Saddle",
   "clownfish_pattern.fishandshiz.spilled": "Spilled",
@@ -225,9 +236,15 @@
   "amur_carp_detail.fishandshiz.marks": "Marked",
   "amur_carp_detail.fishandshiz.blotches": "Blotched",
 
+  "corydoras_detail.fishandshiz.lateral": "Lateral",
+  "corydoras_detail.fishandshiz.spiracle": "Spiracle",
+
   "betta_detail.fishandshiz.speckled": "Speckled",
   "betta_detail.fishandshiz.scalar": "Scalar",
   "betta_detail.fishandshiz.decal": "Decal",
+
+  "platy_detail.fishandshiz.brace": "Brace",
+  "platy_detail.fishandshiz.tail": "Tail",
 
   "clownfish_detail.fishandshiz.lobed": "Lobed",
   "clownfish_detail.fishandshiz.accent": "Accent",
@@ -256,12 +273,14 @@
   "butterflyfish_detail.fishandshiz.beard": "Beard",
 
   "entity_color.fishandshiz.silver": "Silver",
+  "entity_color.fishandshiz.grey": "Grey",
   "entity_color.fishandshiz.matte_black": "Matte Black",
   "entity_color.fishandshiz.earth_black": "Earth Black",
   "entity_color.fishandshiz.muddy": "Muddy",
   "entity_color.fishandshiz.bred": "Brown-Red",
   "entity_color.fishandshiz.fecal_brown": "Fecal Brown",
   "entity_color.fishandshiz.brown": "Brown",
+  "entity_color.fishandshiz.peach": "Peach",
   "entity_color.fishandshiz.light_blue": "Light Blue",
   "entity_color.fishandshiz.neon_blue": "Neon Blue",
   "entity_color.fishandshiz.hadal_blue": "Hadal Blue",
@@ -281,10 +300,6 @@
   "entity_color.fishandshiz.purple": "Purple",
   "entity_color.fishandshiz.pink": "Pink",
 
-  "entity.fishandshiz.corydoras.type.BRONZE": "Bronze Type",
-  "entity.fishandshiz.corydoras.type.PANDA": "Panda Type",
-  "entity.fishandshiz.corydoras.type.ALBINO": "Albino Type",
-  "entity.fishandshiz.corydoras.type.SPECIAL": "Gold Laser",
   "entity.fishandshiz.archerfish.type.NORMAL": "Normal",
   "entity.fishandshiz.archerfish.type.SPECIAL": "Evil!"
 }

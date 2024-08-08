@@ -41,6 +41,7 @@ import java.util.UUID;
 public abstract class AnimalFishEntity extends PassiveWaterEntity implements Bucketable {
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_FRY = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> IS_MICRO = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_MATURE = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final int BREEDING_COOLDOWN = 6000;
     protected int loveTicks;
@@ -69,6 +70,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         super.initDataTracker();
         this.dataTracker.startTracking(FROM_BUCKET, false);
         this.dataTracker.startTracking(IS_FRY, false);
+        this.dataTracker.startTracking(IS_MICRO, false);
         this.dataTracker.startTracking(IS_MATURE, false);
     }
 
@@ -77,6 +79,9 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         return this.dataTracker.get(FROM_BUCKET);
     }
     public boolean isFry() {
+        return this.dataTracker.get(IS_FRY);
+    }
+    public boolean isMicro() {
         return this.dataTracker.get(IS_FRY);
     }
     public boolean isMature() {
@@ -89,6 +94,9 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
     }
     public void setFry(boolean fry) {
         this.dataTracker.set(IS_FRY, fry);
+    }
+    public void setMicro(boolean micro) {
+        this.dataTracker.set(IS_MICRO, micro);
     }
     public void setMature(boolean mature) {
         this.dataTracker.set(IS_MATURE, mature);
@@ -261,6 +269,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         }
         nbt.putBoolean("FromBucket", this.isFromBucket());
         nbt.putBoolean("IsFry", this.isFry());
+        nbt.putBoolean("IsMicro", this.isMicro());
         nbt.putBoolean("IsMature", this.isMature());
     }
 
@@ -276,12 +285,14 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         this.lovingPlayer = nbt.containsUuid("LoveCause") ? nbt.getUuid("LoveCause") : null;
         this.setFromBucket(nbt.getBoolean("FromBucket"));
         this.setFry(nbt.getBoolean("IsFry"));
+        this.setFry(nbt.getBoolean("IsMicro"));
         this.setMature(nbt.getBoolean("IsMature"));
     }
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         this.setFry(false);
+        this.setMicro(false);
         this.setMature(true);
         return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
     }
@@ -292,6 +303,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         Bucketable.copyDataToStack(this, stack);
         nbtCompound.putBoolean("IsMature", isMature());
         nbtCompound.putBoolean("IsFry", isFry());
+        nbtCompound.putBoolean("IsMicro", isMicro());
     }
 
     @Override

@@ -123,7 +123,7 @@ public class CrayfishEntity extends EggboundEntity implements GeoEntity {
     }
 
     private PlayState genericFlopController(AnimationState animationState) {
-        if (animationState.isMoving() && this.isOnGround()) {
+        if (this.isNavigating() && this.isOnGround()) {
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.crayfish.walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
@@ -157,7 +157,7 @@ public class CrayfishEntity extends EggboundEntity implements GeoEntity {
                 CrayfishLarvaEntity nextEntity = ModEntities.CRAYFISH_LARVA.create(this.getWorld());
                 if (nextEntity != null) {
                     nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.BREEDING, null, null);
                     nextEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
                         nextEntity.setCustomName(this.getCustomName());

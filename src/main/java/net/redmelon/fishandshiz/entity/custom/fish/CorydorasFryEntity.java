@@ -7,38 +7,23 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.EscapeDangerGoal;
 import net.minecraft.entity.ai.goal.FleeEntityGoal;
 import net.minecraft.entity.ai.goal.SwimAroundGoal;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Util;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeKeys;
-import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
-import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
-import net.redmelon.fishandshiz.entity.variant.CorydorasVariant;
+import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
-import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.VisibleForTesting;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
@@ -114,10 +99,18 @@ public class CorydorasFryEntity extends CorydorasEntity implements GeoEntity {
 
     @Override
     protected void growUp() {
-        CorydorasVariant variant;
+        ModEntityColor color;
+        ModEntityColor color2;
+        ModEntityColor color3;
+        CorydorasPattern pattern;
+        CorydorasDetail detail;
         World world = this.getWorld();
         if (world instanceof ServerWorld) {
-            variant = this.getVariant();
+            color = this.getBaseColor();
+            color2 = this.getPatternColor();
+            color3 = this.getDetailColor();
+            pattern = this.getPattern();
+            detail = this.getDetail();
             ServerWorld serverWorld = (ServerWorld)world;
             CorydorasEntity nextEntity = ModEntities.CORYDORAS.create(this.getWorld());
             if (nextEntity != null) {
@@ -129,7 +122,11 @@ public class CorydorasFryEntity extends CorydorasEntity implements GeoEntity {
                     nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                 }
                 nextEntity.setPersistent();
-                nextEntity.setVariant(variant);
+                nextEntity.setBaseColor(color);
+                nextEntity.setPatternColor(color2);
+                nextEntity.setDetailColor(color3);
+                nextEntity.setPattern(pattern);
+                nextEntity.setDetail(detail);
                 this.playSound(SoundEvents.ENTITY_TROPICAL_FISH_FLOP, 0.15f, 1.0f);
                 serverWorld.spawnEntityAndPassengers(nextEntity);
                 this.discard();

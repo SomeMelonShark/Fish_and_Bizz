@@ -150,6 +150,7 @@ public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
             }
         }
     }
+
     @Override
     public boolean shouldDropXp() {
         return false;

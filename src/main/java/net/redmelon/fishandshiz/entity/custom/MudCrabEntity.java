@@ -162,7 +162,7 @@ public class MudCrabEntity extends EggboundEntity implements GeoEntity {
                 MudCrabLarvaEntity nextEntity = ModEntities.MUD_CRAB_LARVA.create(this.getWorld());
                 if (nextEntity != null) {
                     nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-                    nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                    nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.BREEDING, null, null);
                     nextEntity.setAiDisabled(this.isAiDisabled());
                     if (this.hasCustomName()) {
                         nextEntity.setCustomName(this.getCustomName());

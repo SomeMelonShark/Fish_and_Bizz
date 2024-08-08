@@ -52,7 +52,7 @@ public class ModRenderer {
         EntityRendererRegistry.register(ModEntities.NEON_TETRA, BasicFishRenderer.create("neon_tetra", "fry"));
         EntityRendererRegistry.register(ModEntities.NEON_TETRA_FRY, BasicImmatureRenderer.fryCreate("neon_tetra", "neon_tetra"));
         EntityRendererRegistry.register(ModEntities.NEON_TETRA_EGG, BasicImmatureRenderer.eggCreate("neon_tetra", "neon_tetra"));
-        EntityRendererRegistry.register(ModEntities.CORYDORAS, CorydorasRenderer::new);
+        EntityRendererRegistry.register(ModEntities.CORYDORAS, BasicVariableFishRenderer.create("corydoras", "corydoras"));
         EntityRendererRegistry.register(ModEntities.CORYDORAS_FRY, BasicImmatureRenderer.fryCreate("corydoras", "corydoras"));
         EntityRendererRegistry.register(ModEntities.CORYDORAS_EGG, BasicImmatureRenderer.eggCreate("corydoras", "corydoras"));
         EntityRendererRegistry.register(ModEntities.OSCAR, BasicFishRenderer.create("oscar", "mediumfish"));
@@ -72,7 +72,7 @@ public class ModRenderer {
         EntityRendererRegistry.register(ModEntities.BETTA, BasicVariableFishRenderer.create("betta", "betta"));
         EntityRendererRegistry.register(ModEntities.BETTA_FRY, BasicImmatureRenderer.fryCreate("betta", "betta"));
         EntityRendererRegistry.register(ModEntities.BETTA_EGG, BasicImmatureRenderer.eggCreate("betta", "betta"));
-        EntityRendererRegistry.register(ModEntities.PLATY, BasicFishRenderer.create("platy", "fry"));
+        EntityRendererRegistry.register(ModEntities.PLATY, BasicVariableFishRenderer.create("platy", "fry"));
         EntityRendererRegistry.register(ModEntities.PLATY_FRY, BasicImmatureRenderer.fryCreate("platy", "platy"));
         EntityRendererRegistry.register(ModEntities.CLOWNFISH, BasicVariableFishRenderer.create("clownfish", "mediumfish"));
         EntityRendererRegistry.register(ModEntities.CLOWNFISH_FRY, BasicImmatureRenderer.fryCreate("platy", "platy"));

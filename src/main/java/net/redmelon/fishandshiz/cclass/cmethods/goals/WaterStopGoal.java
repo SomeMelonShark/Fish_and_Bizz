@@ -35,7 +35,7 @@ public class WaterStopGoal extends Goal {
 
     @Override
     public boolean canStart() {
-        return this.mob.isTouchingWater() && this.nearbyBlockPresent() && this.mob.getRandom().nextInt(100) < 5;
+        return this.mob.isTouchingWater() && this.nearbyBlockPresent() && this.mob.getRandom().nextInt(300) < 5;
     }
 
     @Override
@@ -84,9 +84,15 @@ public class WaterStopGoal extends Goal {
                                 return true;
                             }
                         }
-                        if (blockState.isOf(ModBlocks.FANWORT_PLANT) || blockState.isOf(ModBlocks.AMAZON_SWORD) || blockState.isOf(ModBlocks.VALLISNERIA) || blockState.isOf(ModBlocks.TALL_VALLISNERIA)) {
+                        if (blockState.isOf(ModBlocks.FANWORT_PLANT) || blockState.isOf(ModBlocks.AMAZON_SWORD) || blockState.isOf(ModBlocks.VALLISNERIA) || blockState.isOf(ModBlocks.TALL_VALLISNERIA) || blockState.isOf(Blocks.KELP_PLANT) || blockState.isOf(Blocks.TALL_SEAGRASS)) {
                             blockCount++;
                             if (blockCount >= 2) {
+                                return true;
+                            }
+                        }
+                        if (blockState.isOf(Blocks.BRAIN_CORAL_BLOCK) || blockState.isOf(Blocks.FIRE_CORAL_BLOCK) || blockState.isOf(Blocks.BUBBLE_CORAL_BLOCK) || blockState.isOf(Blocks.HORN_CORAL_BLOCK) || blockState.isOf(Blocks.TUBE_CORAL_BLOCK)) {
+                            blockCount++;
+                            if (blockCount >= 1) {
                                 return true;
                             }
                         }

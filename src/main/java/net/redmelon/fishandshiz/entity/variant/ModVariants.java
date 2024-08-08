@@ -13,6 +13,8 @@ public class ModVariants {
         ParrotfishPattern.init();
         ButterflyfishPattern.init();
         TriggerfishPattern.init();
+        CorydorasPattern.init();
+        PlatyPattern.init();
 
         AmurCarpDetail.init();
         AngelfishDetail.init();
@@ -25,6 +27,8 @@ public class ModVariants {
         ParrotfishDetail.init();
         ButterflyfishDetail.init();
         TriggerfishDetail.init();
+        CorydorasDetail.init();
+        PlatyDetail.init();
 
         ModEntityColor.init();
     }

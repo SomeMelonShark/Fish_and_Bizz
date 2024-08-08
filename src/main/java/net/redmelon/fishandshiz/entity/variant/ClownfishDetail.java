@@ -14,6 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public record ClownfishDetail (@Nullable Identifier texture) implements GenericTextureProvider {
+
     private static final Map<ClownfishDetail, Identifier> DETAILS = new LinkedHashMap<>();
     public static final ClownfishDetail NONE = create("none", true);
     public static final ClownfishDetail LOBED = create("lobed", false);

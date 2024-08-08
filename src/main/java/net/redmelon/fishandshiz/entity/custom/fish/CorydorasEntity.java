@@ -16,15 +16,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Util;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -34,12 +31,13 @@ import net.minecraft.world.biome.BiomeKeys;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.BottomFeederGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.SwimAroundLowGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.variant.CorydorasVariant;
+import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
+import net.redmelon.fishandshiz.util.ModUtil;
 import net.redmelon.fishandshiz.world.biome.ModBiomes;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -48,11 +46,15 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
-    protected static final TrackedData<Integer> VARIANT =
-            DataTracker.registerData(CorydorasEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
+public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity, VariableFishEntity<CorydorasPattern, CorydorasDetail> {
+    private static final TrackedData<CorydorasPattern> PATTERN = DataTracker.registerData(CorydorasEntity.class, CorydorasPattern.TRACKED_DATA_HANDLER);
+    private static final TrackedData<CorydorasDetail> DETAIL = DataTracker.registerData(CorydorasEntity.class, CorydorasDetail.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> BASE_COLOR = DataTracker.registerData(CorydorasEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> PATTERN_COLOR = DataTracker.registerData(CorydorasEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> DETAIL_COLOR = DataTracker.registerData(CorydorasEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(CorydorasEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
+    public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public CorydorasEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
@@ -86,9 +88,8 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
         this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25));
         this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
         this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));
-        this.goalSelector.add(3, new BottomFeederGoal(this, 1d, 10));
         this.goalSelector.add(3, new BreedFollowGroupLeaderGoal(this));
-        this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
+        this.goalSelector.add(4, new SwimAroundLowGoal(this, 1.0, 43, 256));
         this.goalSelector.add(6, new MeleeAttackGoal(this, 0.2f, true));
 
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, CorydorasEggEntity.class, true));
@@ -106,22 +107,27 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
 
     @Override
     public @Nullable CorydorasEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        CorydorasEntity corydorasEntity = (CorydorasEntity) var2;
-        CorydorasEggEntity corydorasEggEntity = (CorydorasEggEntity) ModEntities.CORYDORAS_EGG.create(var1);
-        if (corydorasEggEntity != null) {
-            int i = random.nextInt(4);
-            CorydorasVariant variant;
-            if (i < 2) {
-                variant = this.getVariant();
-            } else if (i > 2) {
-                variant = corydorasEntity.getVariant();
-            } else {
-                variant = (CorydorasVariant) Util.getRandom(CorydorasVariant.values(), this.random);
-            }
+        CorydorasEntity entity = (CorydorasEntity) var2;
+        CorydorasEggEntity eggEntity = (CorydorasEggEntity) ModEntities.CORYDORAS_EGG.create(var1);
+        if (eggEntity != null) {
+            ModEntityColor color;
+            ModEntityColor color2;
+            ModEntityColor color3;
+            CorydorasPattern pattern;
+            CorydorasDetail detail;
+            color = random.nextBoolean() ? this.getBaseColor() : entity.getBaseColor();
+            color2 = random.nextBoolean() ? this.getPatternColor() : entity.getPatternColor();
+            color3 = random.nextBoolean() ? this.getDetailColor() : entity.getDetailColor();
+            pattern = random.nextBoolean() ? this.getPattern() : entity.getPattern();
+            detail = random.nextBoolean() ? this.getDetail() : entity.getDetail();
 
-            corydorasEggEntity.setVariant(variant);
+            eggEntity.setBaseColor(color);
+            eggEntity.setPatternColor(color2);
+            eggEntity.setDetailColor(color3);
+            eggEntity.setPattern(pattern);
+            eggEntity.setDetail(detail);
         }
-        return corydorasEggEntity;
+        return eggEntity;
     }
 
     @Override
@@ -154,96 +160,155 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity {
         controllers.add(new AnimationController(this, "controller", 10, this::genericFlopController));
     }
 
-    public static CorydorasVariant getVariety(int variant) {
-        return CorydorasVariant.byId(variant);
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
+    }
+
+    public NbtCompound writeMateData(NbtCompound nbt) {
+        nbt.putString("Pattern", getPattern().getId().toString());
+        nbt.putString("Detail", getDetail().getId().toString());
+        nbt.putString("BaseColor", getBaseColor().getId().toString());
+        nbt.putString("PatternColor", getPatternColor().getId().toString());
+        nbt.putString("DetailColor", getDetailColor().getId().toString());
+        return nbt;
     }
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Variant", this.getTypeVariant());
+        writeMateData(nbt);
+        nbt.put("MateData", getMateData());
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.dataTracker.set(VARIANT, nbt.getInt("Variant"));
+        setPattern(CorydorasPattern.fromId(nbt.getString("Pattern")));
+        setDetail(CorydorasDetail.fromId(nbt.getString("Detail")));
+        setBaseColor(ModEntityColor.fromId(nbt.getString("BaseColor")));
+        setPatternColor(ModEntityColor.fromId(nbt.getString("PatternColor")));
+        setDetailColor(ModEntityColor.fromId(nbt.getString("DetailColor")));
+        if(nbt.contains("MateData", NbtElement.COMPOUND_TYPE))
+            setMateData(nbt.getCompound("MateData"));
     }
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(VARIANT, 0);
+        dataTracker.startTracking(PATTERN, CorydorasPattern.DORSAL);
+        dataTracker.startTracking(DETAIL, CorydorasDetail.NONE);
+        dataTracker.startTracking(BASE_COLOR, ModEntityColor.SILVER);
+        dataTracker.startTracking(PATTERN_COLOR, ModEntityColor.SILVER);
+        dataTracker.startTracking(DETAIL_COLOR, ModEntityColor.SILVER);
+        dataTracker.startTracking(MATE_DATA, new NbtCompound());
     }
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
-        CorydorasVariant variant;
-        int j = random.nextInt(1200);
-
-        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
-            this.setCorydorasVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        }
-
-        if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE) && j != 0) {
-            this.setCorydorasVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        } else if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE) && j == 0) {
-            variant = (CorydorasVariant.SPECIAL);
-            this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.0f, 1.5f);
-        }else if (spawnReason == SpawnReason.CONVERSION) {
-            int i = random.nextInt(7);
-            if (i == 1) {
-                variant = CorydorasVariant.byId(random.nextInt(3));
+        ModEntityColor color;
+        ModEntityColor color2;
+        ModEntityColor color3;
+        CorydorasPattern pattern;
+        CorydorasDetail detail;
+        if (spawnReason == SpawnReason.NATURAL) {
+            if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN) | registryEntry.matchesKey(BiomeKeys.JUNGLE) | registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
+                pattern = (CorydorasPattern.DORSAL);
+                detail = (CorydorasDetail.LATERAL);
+                color = (ModEntityColor.PEACH);
+                color2 = (ModEntityColor.GREY);
+                color3 = (ModEntityColor.BILE);
             } else {
-                variant = (CorydorasVariant.BRONZE);
+                pattern = (ModUtil.getRandomTagValue(getWorld(), CorydorasPattern.Tag.PATTERNS, random));
+                detail = (ModUtil.getRandomTagValue(getWorld(), CorydorasDetail.Tag.DETAILS, random));
+                color = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
+                color2 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
+                color3 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
             }
         } else {
-            variant = CorydorasVariant.byId(random.nextInt(3));
+            pattern = (ModUtil.getRandomTagValue(getWorld(), CorydorasPattern.Tag.PATTERNS, random));
+            detail = (ModUtil.getRandomTagValue(getWorld(), CorydorasDetail.Tag.DETAILS, random));
+            color = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
+            color2 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
+            color3 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
         }
-
-        if (spawnReason == SpawnReason.NATURAL && j == 0){
-            variant = (CorydorasVariant.SPECIAL);
-            this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 2.0f, 1.5f);
-        } else if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.RIVER) | registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE) | registryEntry.matchesKey(BiomeKeys.JUNGLE) | registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN)) {
-                variant = (CorydorasVariant.BRONZE);
-            }
-        } else {
-            variant = CorydorasVariant.byId(random.nextInt(3));
-        }
-        setVariant(variant);
+        setPattern(pattern);
+        setDetail(detail);
+        setBaseColor(color);
+        setPatternColor(color2);
+        setDetailColor(color3);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-        this.setCorydorasVariant(variant.getId());
+        if (this.isMature()) {
+            this.setMicro(true);
+        } else {
+            this.setMicro(false);
+        }
         return entityData;
+    }
+
+    public void setBaseColor(ModEntityColor color) {
+        dataTracker.set(BASE_COLOR, color);
+    }
+
+    public ModEntityColor getBaseColor() {
+        return dataTracker.get(BASE_COLOR);
+    }
+
+    public void setPatternColor(ModEntityColor color) {
+        dataTracker.set(PATTERN_COLOR, color);
+    }
+
+    public ModEntityColor getPatternColor() {
+        return dataTracker.get(PATTERN_COLOR);
+    }
+
+    public void setDetailColor(ModEntityColor color) {
+        dataTracker.set(DETAIL_COLOR, color);
+    }
+
+    public ModEntityColor getDetailColor() {
+        return dataTracker.get(DETAIL_COLOR);
+    }
+
+    public void setPattern(CorydorasPattern pattern) {
+        dataTracker.set(PATTERN, pattern);
+    }
+
+    public CorydorasPattern getPattern() {
+        return dataTracker.get(PATTERN);
+    }
+
+    public void setDetail(CorydorasDetail detail) {
+        dataTracker.set(DETAIL, detail);
+    }
+
+    public CorydorasDetail getDetail() {
+        return dataTracker.get(DETAIL);
+    }
+
+    public void setMateData(NbtCompound mateData) {
+        dataTracker.set(MATE_DATA, mateData);
+    }
+
+    public NbtCompound getMateData() {
+        return dataTracker.get(MATE_DATA);
+    }
+
+    @Override @SuppressWarnings("deprecation")
+    public void copyDataFromNbt(NbtCompound nbt) {
+        Bucketable.copyDataFromNbt(this, nbt);
+        if(nbt.contains("Pattern", NbtElement.STRING_TYPE)) {
+            readCustomDataFromNbt(nbt);
+        }
     }
 
     @Override
     public void copyDataToStack(ItemStack stack) {
         super.copyDataToStack(stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt(BUCKET_VARIANT_TAG_KEY, this.getTypeVariant());
-    }
-
-    public CorydorasVariant getVariant() {
-        return CorydorasVariant.byId(this.getTypeVariant() & 255);
-    }
-
-    private int getTypeVariant() {
-        return this.dataTracker.get(VARIANT);
-    }
-
-    protected void setVariant(CorydorasVariant variant) {
-        this.dataTracker.set(VARIANT, variant.getId() & 255);
-    }
-
-    protected void setCorydorasVariant(int variant) {
-        this.dataTracker.set(VARIANT, variant);
-    }
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
+        writeMateData(nbtCompound);
+        nbtCompound.put("MateData", getMateData());
+        nbtCompound.put(BUCKET_VARIANT_TAG_KEY, this.getMateData());
     }
 }
