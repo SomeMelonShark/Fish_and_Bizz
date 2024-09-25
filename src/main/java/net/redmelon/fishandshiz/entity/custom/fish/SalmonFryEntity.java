@@ -46,6 +46,16 @@ public class SalmonFryEntity extends SchoolingBreedEntity implements GeoEntity {
         super(entityType, world);
     }
 
+    @Override
+    protected int getNitrogenIncreaseAmount() {
+        if (!isFry() && !isMature()) {
+            return 0;
+        } else if (isFry()) {
+            return 1;
+        }
+        return 4;
+    }
+
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater()) {
             animationState.getController().setAnimation(RawAnimation.begin()

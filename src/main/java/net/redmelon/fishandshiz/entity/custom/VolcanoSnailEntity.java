@@ -43,6 +43,11 @@ public class VolcanoSnailEntity extends AnimalWaterEntity implements GeoEntity {
         super(entityType, world);
     }
 
+    @Override
+    protected int getNitrogenIncreaseAmount() {
+        return 1;
+    }
+
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 2)

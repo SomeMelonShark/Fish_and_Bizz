@@ -50,6 +50,11 @@ public class MudCrabEntity extends EggboundEntity implements GeoEntity {
         super(entityType, world);
     }
 
+    @Override
+    protected int getNitrogenIncreaseAmount() {
+        return 0;
+    }
+
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 8)

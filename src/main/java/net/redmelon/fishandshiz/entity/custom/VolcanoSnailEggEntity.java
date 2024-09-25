@@ -35,6 +35,11 @@ public class VolcanoSnailEggEntity extends VolcanoSnailEntity implements GeoEnti
         super(entityType, world);
     }
 
+    @Override
+    protected int getNitrogenIncreaseAmount() {
+        return 0;
+    }
+
     protected void initGoals() {
 
     }

@@ -156,7 +156,6 @@ public class AmurCarpEggEntity extends AmurCarpEntity implements GeoEntity {
     protected SoundEvent getFlopSound() {
         return SoundEvents.BLOCK_FROGSPAWN_HIT;
     }
-
     @Override
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.AMUR_CARP_EGG_BUCKET);

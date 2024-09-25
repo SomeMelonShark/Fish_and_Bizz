@@ -31,6 +31,7 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
@@ -38,9 +39,11 @@ import net.minecraft.world.*;
 import net.redmelon.fishandshiz.cclass.cmethods.CustomCriteria;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.UUID;
+import java.util.*;
 
 public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bucketable {
+    private static final TrackedData<Integer> NITROGEN_LEVEL = DataTracker.registerData(AnimalWaterEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final int NITROGEN_THRESHOLD = 1200;
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final int BREEDING_COOLDOWN = 6000;
     protected int loveTicks;
@@ -53,6 +56,15 @@ public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bu
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(FROM_BUCKET, false);
+        this.dataTracker.startTracking(NITROGEN_LEVEL, 0);
+    }
+
+    public int getNitrogenLevel() {
+        return this.dataTracker.get(NITROGEN_LEVEL);
+    }
+
+    public void setNitrogenLevel(int level) {
+        this.dataTracker.set(NITROGEN_LEVEL, Math.max(0, level));
     }
 
     @Override
@@ -72,6 +84,8 @@ public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bu
 
     @Override
     public void copyDataToStack(ItemStack stack) {
+        NbtCompound nbtCompound = stack.getOrCreateNbt();
+        nbtCompound.putInt("NitrogenLevel", getNitrogenLevel());
         Bucketable.copyDataToStack(this, stack);
     }
 
@@ -141,7 +155,68 @@ public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bu
                 this.getWorld().addParticle(ParticleTypes.HEART, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
             }
         }
+        if (this.age % 100 == 0) {
+            int decrease = 10;
+            int increase = getNitrogenIncreaseAmount();
+
+            this.setNitrogenLevel(this.getNitrogenLevel() + increase - decrease);
+            this.influenceNearbyEntities();
+
+            checkNitrogenLevelForDamage();
+        }
         super.tickMovement();
+    }
+
+    protected void influenceNearbyEntities() {
+        List<Entity> nearbyEntities = this.getWorld().getEntitiesByClass(Entity.class, this.getBoundingBox().expand(10), entity -> entity != this);
+
+        for (Entity entity : nearbyEntities) {
+            if (areEntitiesInSameWaterBody(this, entity, 100)) {
+                if (entity instanceof AnimalWaterEntity animalWaterEntity) {
+                    animalWaterEntity.setNitrogenLevel(animalWaterEntity.getNitrogenLevel() + getNitrogenIncreaseAmount() / 2);
+                }
+            }
+        }
+    }
+
+    protected abstract int getNitrogenIncreaseAmount();
+
+    private boolean areEntitiesInSameWaterBody(Entity entity1, Entity entity2, int maxDepth) {
+        BlockPos start = entity1.getBlockPos();
+        BlockPos target = entity2.getBlockPos();
+        Set<BlockPos> visited = new HashSet<>();
+        Queue<BlockPos> queue = new LinkedList<>();
+
+        queue.add(start);
+        visited.add(start);
+
+        while (!queue.isEmpty() && maxDepth-- > 0) {
+            BlockPos current = queue.poll();
+
+            if (current.equals(target)) {
+                return true;
+            }
+
+            for (Direction direction : Direction.values()) {
+                BlockPos neighbor = current.offset(direction);
+
+                if (!visited.contains(neighbor) && entity1.getWorld().getFluidState(neighbor).isIn((FluidTags.WATER))) {
+                    queue.add(neighbor);
+                    visited.add(neighbor);
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private void checkNitrogenLevelForDamage() {
+        int nitrogenLevel = this.getNitrogenLevel();
+        if (nitrogenLevel > NITROGEN_THRESHOLD) {
+            int excessNitrogen = nitrogenLevel - NITROGEN_THRESHOLD;
+            float damageAmount = excessNitrogen / 4.0F;
+            this.damage(this.getDamageSources().generic(), damageAmount);
+        }
     }
 
     @Override
@@ -170,6 +245,7 @@ public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bu
         }
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("FromBucket", this.isFromBucket());
+        nbt.putInt("NitrogenLevel", this.getNitrogenLevel());
     }
 
     @Override
@@ -184,6 +260,7 @@ public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bu
         this.lovingPlayer = nbt.containsUuid("LoveCause") ? nbt.getUuid("LoveCause") : null;
         super.readCustomDataFromNbt(nbt);
         this.setFromBucket(nbt.getBoolean("FromBucket"));
+        this.setNitrogenLevel(nbt.getInt("NitrogenLevel"));
     }
 
     public static boolean isValidNaturalSpawn(EntityType<? extends AnimalWaterEntity> type, WorldAccess world, SpawnReason spawnReason, BlockPos pos, Random random) {

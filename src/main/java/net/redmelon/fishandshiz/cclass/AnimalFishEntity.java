@@ -1,5 +1,6 @@
 package net.redmelon.fishandshiz.cclass;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
@@ -10,16 +11,21 @@ import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.ai.pathing.SwimNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.damage.*;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -28,7 +34,9 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.*;
@@ -36,9 +44,11 @@ import net.redmelon.fishandshiz.cclass.cmethods.CustomCriteria;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.UUID;
+import java.util.*;
 
 public abstract class AnimalFishEntity extends PassiveWaterEntity implements Bucketable {
+    private static final TrackedData<Integer> NITROGEN_LEVEL = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final int NITROGEN_THRESHOLD = 1200;
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_FRY = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_MICRO = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -72,6 +82,16 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         this.dataTracker.startTracking(IS_FRY, false);
         this.dataTracker.startTracking(IS_MICRO, false);
         this.dataTracker.startTracking(IS_MATURE, false);
+        this.dataTracker.startTracking(NITROGEN_LEVEL, 0);
+    }
+
+
+    public int getNitrogenLevel() {
+        return this.dataTracker.get(NITROGEN_LEVEL);
+    }
+
+    public void setNitrogenLevel(int level) {
+        this.dataTracker.set(NITROGEN_LEVEL, Math.max(0, level));
     }
 
     @Override
@@ -240,7 +260,76 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         if (!this.getWorld().isClient && !this.isMature()) {
             this.setStageAge(this.stageAge + 1);
         }
+        if (this.age % 100 == 0) {
+            int decrease;
+            int increase = getNitrogenIncreaseAmount();
+
+            if (!isFry() && !isMature()) {
+                decrease = 8;
+            } else if (isFry()) {
+                decrease = 10;
+            } else {
+                decrease = 12;
+            }
+
+            this.setNitrogenLevel(this.getNitrogenLevel() + increase - decrease);
+            this.influenceNearbyEntities();
+
+            checkNitrogenLevelForDamage();
+        }
         super.tickMovement();
+    }
+
+    protected void influenceNearbyEntities() {
+        List<Entity> nearbyEntities = this.getWorld().getEntitiesByClass(Entity.class, this.getBoundingBox().expand(10), entity -> entity != this);
+
+        for (Entity entity : nearbyEntities) {
+            if (areEntitiesInSameWaterBody(this, entity, 100)) {
+                if (entity instanceof AnimalFishEntity animalFishEntity) {
+                    animalFishEntity.setNitrogenLevel(animalFishEntity.getNitrogenLevel() + getNitrogenIncreaseAmount() / 2);
+                }
+            }
+        }
+    }
+
+    protected abstract int getNitrogenIncreaseAmount();
+
+    private boolean areEntitiesInSameWaterBody(Entity entity1, Entity entity2, int maxDepth) {
+        BlockPos start = entity1.getBlockPos();
+        BlockPos target = entity2.getBlockPos();
+        Set<BlockPos> visited = new HashSet<>();
+        Queue<BlockPos> queue = new LinkedList<>();
+
+        queue.add(start);
+        visited.add(start);
+
+        while (!queue.isEmpty() && maxDepth-- > 0) {
+            BlockPos current = queue.poll();
+
+            if (current.equals(target)) {
+                return true;
+            }
+
+            for (Direction direction : Direction.values()) {
+                BlockPos neighbor = current.offset(direction);
+
+                if (!visited.contains(neighbor) && entity1.getWorld().getFluidState(neighbor).isIn((FluidTags.WATER))) {
+                    queue.add(neighbor);
+                    visited.add(neighbor);
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private void checkNitrogenLevelForDamage() {
+        int nitrogenLevel = this.getNitrogenLevel();
+        if (nitrogenLevel > NITROGEN_THRESHOLD) {
+            int excessNitrogen = nitrogenLevel - NITROGEN_THRESHOLD;
+            float damageAmount = excessNitrogen / 4.0F;
+            this.damage(this.getDamageSources().generic(), damageAmount);
+        }
     }
 
     @Override
@@ -271,6 +360,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         nbt.putBoolean("IsFry", this.isFry());
         nbt.putBoolean("IsMicro", this.isMicro());
         nbt.putBoolean("IsMature", this.isMature());
+        nbt.putInt("NitrogenLevel", this.getNitrogenLevel());
     }
 
     @Override
@@ -287,6 +377,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         this.setFry(nbt.getBoolean("IsFry"));
         this.setFry(nbt.getBoolean("IsMicro"));
         this.setMature(nbt.getBoolean("IsMature"));
+        this.setNitrogenLevel(nbt.getInt("NitrogenLevel"));
     }
 
     @Override
@@ -304,6 +395,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
         nbtCompound.putBoolean("IsMature", isMature());
         nbtCompound.putBoolean("IsFry", isFry());
         nbtCompound.putBoolean("IsMicro", isMicro());
+        nbtCompound.putInt("NitrogenLevel", getNitrogenLevel());
     }
 
     @Override
