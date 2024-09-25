@@ -123,7 +123,7 @@ public class CrayfishEntity extends EggboundEntity implements GeoEntity {
     }
 
     private PlayState genericFlopController(AnimationState animationState) {
-        if (this.isNavigating() && this.isOnGround()) {
+        if (animationState.isMoving() && this.isOnGround()) {
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.crayfish.walk", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;

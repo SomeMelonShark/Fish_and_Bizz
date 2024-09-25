@@ -89,7 +89,7 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity, 
         this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
         this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));
         this.goalSelector.add(3, new BreedFollowGroupLeaderGoal(this));
-        this.goalSelector.add(4, new SwimAroundLowGoal(this, 1.0, 43, 256));
+        this.goalSelector.add(4, new SwimAroundLowGoal(this, 1.0, 38, 256));
         this.goalSelector.add(6, new MeleeAttackGoal(this, 0.2f, true));
 
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, CorydorasEggEntity.class, true));

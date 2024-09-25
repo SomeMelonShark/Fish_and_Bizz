@@ -105,7 +105,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
     @Override
     protected void initGoals() {
         super.initGoals();
-        this.goalSelector.add(4, new AnimalFishEntity.SwimToRandomPlaceGoal(this));
+        this.goalSelector.add(4, new SwimToRandomPlaceGoal(this));
     }
 
     @Override
