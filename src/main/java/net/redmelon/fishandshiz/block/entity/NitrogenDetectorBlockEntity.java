@@ -15,7 +15,7 @@ import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
 
 import java.util.List;
 
-public class NitrogenDetectorBlockEntity extends BlockEntity implements BlockEntityTicker {
+public class NitrogenDetectorBlockEntity extends BlockEntity{
     public int nitrogenLevel = 0;
     private boolean unstable = false;
     public NitrogenDetectorBlockEntity(BlockPos pos, BlockState state) {
@@ -40,30 +40,39 @@ public class NitrogenDetectorBlockEntity extends BlockEntity implements BlockEnt
         int searchRadius = 5;
         Box area = new Box(this.pos.add(-searchRadius, -searchRadius, -searchRadius),
                 this.pos.add(searchRadius, searchRadius, searchRadius));
-        assert this.world != null;
+
+        this.nitrogenLevel = 0;
+
         List<Entity> nearbyEntities = this.world.getEntitiesByClass(Entity.class, area, entity -> entity instanceof AnimalFishEntity);
+
+        int totalNitrogen = 0;
+        int entityCount = 0;
 
         for (Entity entity : nearbyEntities) {
             if (entity instanceof AnimalFishEntity animalFishEntity) {
                 int nitrogenInfluence = animalFishEntity.getNitrogenLevel();
-                this.nitrogenLevel += nitrogenInfluence;
+                totalNitrogen += nitrogenInfluence;
+                entityCount++;
             }
-            if (entity instanceof AnimalWaterEntity animalWaterEntity) {
-                int nitrogenInfluence = animalWaterEntity.getNitrogenLevel();
-                this.nitrogenLevel += nitrogenInfluence;
-            }
+        }
+
+        if (entityCount > 0) {
+            this.nitrogenLevel = totalNitrogen / entityCount;
         }
     }
 
-    @Override
-    public void tick(World world, BlockPos pos, BlockState state, BlockEntity blockEntity) {
-        assert this.world != null;
-        if (!this.world.isClient) {
-            influenceFromNearbyEntities();
+    public static void tick(World world, BlockPos pos, BlockState state, NitrogenDetectorBlockEntity blockEntity) {
+        if (!world.isClient) {
+            blockEntity.nitrogenLevel = 0;
 
-            if (this.world.getBlockState(this.pos).getBlock() instanceof NitrogenDetectorBlock) {
-                ((NitrogenDetectorBlock) this.world.getBlockState(this.pos).getBlock())
-                        .reactToNitrogenLevel(this.world, this.pos, this.nitrogenLevel);
+            blockEntity.influenceFromNearbyEntities();
+
+            if (blockEntity.nitrogenLevel < 0) {
+                blockEntity.nitrogenLevel = 0;
+            }
+
+            if (state.getBlock() instanceof NitrogenDetectorBlock) {
+                ((NitrogenDetectorBlock) state.getBlock()).reactToNitrogenLevel(world, pos, blockEntity.nitrogenLevel);
             }
         }
     }
