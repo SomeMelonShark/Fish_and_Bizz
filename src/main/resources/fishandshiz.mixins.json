@@ -5,6 +5,7 @@
   "mixins": [
     "AnemoneMixin",
     "BucketTooltipMixin",
+    "FishNitrogenMixin",
     "LilyPadRootMixin",
     "MultifaceGrowthMixin",
     "SalmonMixin"

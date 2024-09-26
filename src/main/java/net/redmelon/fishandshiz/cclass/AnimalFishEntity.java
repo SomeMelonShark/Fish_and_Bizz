@@ -48,7 +48,7 @@ import java.util.*;
 
 public abstract class AnimalFishEntity extends PassiveWaterEntity implements Bucketable {
     private static final TrackedData<Integer> NITROGEN_LEVEL = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    private static final int NITROGEN_THRESHOLD = 1200;
+    private static final int NITROGEN_THRESHOLD = 100;
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_FRY = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_MICRO = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -239,6 +239,7 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
 
     @Override
     public void tickMovement() {
+        super.tickMovement();
         if (!this.isTouchingWater() && this.isOnGround() && this.verticalCollision) {
             this.setVelocity(this.getVelocity().add((this.random.nextFloat() * 2.0f - 1.0f) * 0.05f, 0.4f, (this.random.nextFloat() * 2.0f - 1.0f) * 0.05f));
             this.setOnGround(false);
@@ -277,7 +278,6 @@ public abstract class AnimalFishEntity extends PassiveWaterEntity implements Buc
 
             checkNitrogenLevelForDamage();
         }
-        super.tickMovement();
     }
 
     protected void influenceNearbyEntities() {

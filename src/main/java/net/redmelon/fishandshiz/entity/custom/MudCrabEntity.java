@@ -52,7 +52,7 @@ public class MudCrabEntity extends EggboundEntity implements GeoEntity {
 
     @Override
     protected int getNitrogenIncreaseAmount() {
-        return 0;
+        return 3;
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
