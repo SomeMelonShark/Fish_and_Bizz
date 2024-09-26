@@ -7,20 +7,21 @@ import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 
 import java.util.List;
 import java.util.function.Predicate;
-
-public class BreedFollowGroupLeaderGoal
-        extends Goal {
+/**Temporary until merging**/
+public class AltBreedFollowGroupLeaderGoal extends Goal {
     private static final int MIN_SEARCH_DELAY = 200;
-    private final SchoolingBreedEntity fish;
+
+    private final AltSchoolingBreedEntity fish;
+
     private int moveDelay;
     private int checkSurroundingDelay;
 
-    public BreedFollowGroupLeaderGoal(SchoolingBreedEntity fish) {
+    public AltBreedFollowGroupLeaderGoal(AltSchoolingBreedEntity fish) {
         this.fish = fish;
         this.checkSurroundingDelay = this.getSurroundingSearchDelay(fish);
     }
 
-    protected int getSurroundingSearchDelay(SchoolingBreedEntity fish) {
+    protected int getSurroundingSearchDelay(AltSchoolingBreedEntity fish) {
         return toGoalTicks(200 + fish.getRandom().nextInt(200) % 20);
     }
 
@@ -37,9 +38,9 @@ public class BreedFollowGroupLeaderGoal
             return false;
         }
         this.checkSurroundingDelay = this.getSurroundingSearchDelay(this.fish);
-        Predicate<SchoolingBreedEntity> predicate = fish -> fish.canHaveMoreFishInGroup() || !fish.hasLeader();
-        List<SchoolingBreedEntity> list = (List<SchoolingBreedEntity>) this.fish.getWorld().getEntitiesByClass(this.fish.getClass(), this.fish.getBoundingBox().expand(8.0, 8.0, 8.0), predicate);
-        SchoolingBreedEntity schoolingBreedEntity = DataFixUtils.orElse(list.stream().filter(SchoolingBreedEntity::canHaveMoreFishInGroup).findAny(), this.fish);
+        Predicate<AltSchoolingBreedEntity> predicate = fish -> fish.canHaveMoreFishInGroup() || !fish.hasLeader();
+        List<AltSchoolingBreedEntity> list = (List<AltSchoolingBreedEntity>) this.fish.getWorld().getEntitiesByClass(this.fish.getClass(), this.fish.getBoundingBox().expand(8.0, 8.0, 8.0), predicate);
+        AltSchoolingBreedEntity schoolingBreedEntity = DataFixUtils.orElse(list.stream().filter(AltSchoolingBreedEntity::canHaveMoreFishInGroup).findAny(), this.fish);
         schoolingBreedEntity.pullInOtherFish(list.stream().filter(fish -> !fish.hasLeader()));
         return this.fish.hasLeader();
     }

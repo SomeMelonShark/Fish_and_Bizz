@@ -68,7 +68,7 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
         } else if (isFry()) {
             return 1;
         }
-        return 5;
+        return 4;
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {

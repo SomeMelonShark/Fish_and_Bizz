@@ -180,6 +180,8 @@ public class ModItems {
             new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(8).saturationModifier(3f).build())));
     public static final Item SEA_ANEMONE = registerItem("sea_anemone",
             new AliasedBlockItem(ModBlocks.SEA_ANEMONE,new FabricItemSettings()));
+    public static final Item NITROGEN_DETECTOR = registerItem("nitrogen_detector",
+            new AliasedBlockItem(ModBlocks.NITROGEN_DETECTOR,new FabricItemSettings()));
     public static final Item ARCHERFISH_GUN = registerItem("archerfish_gun",
             new ArcherfishGunItem(new FabricItemSettings().maxCount(1)));
 

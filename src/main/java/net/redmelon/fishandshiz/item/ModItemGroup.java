@@ -128,5 +128,9 @@ public class ModItemGroup {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> {
             entries.add(ModBlocks.POWERED_PRISMARINE);
         });
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> {
+            entries.add(ModItems.NITROGEN_DETECTOR);
+        });
     }
 }

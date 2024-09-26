@@ -30,7 +30,7 @@ public class FishNitrogenMixin extends WaterCreatureEntity {
     @Unique
     private static final TrackedData<Integer> NITROGEN_LEVEL = DataTracker.registerData(FishEntity.class, TrackedDataHandlerRegistry.INTEGER);
     @Unique
-    private static final int NITROGEN_THRESHOLD = 100;
+    private static final int NITROGEN_THRESHOLD = 1200;
 
     protected FishNitrogenMixin(EntityType<? extends WaterCreatureEntity> entityType, World world) {
         super(entityType, world);

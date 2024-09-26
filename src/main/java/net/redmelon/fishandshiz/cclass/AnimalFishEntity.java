@@ -48,7 +48,7 @@ import java.util.*;
 
 public abstract class AnimalFishEntity extends PassiveWaterEntity implements Bucketable {
     private static final TrackedData<Integer> NITROGEN_LEVEL = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.INTEGER);
-    private static final int NITROGEN_THRESHOLD = 100;
+    private static final int NITROGEN_THRESHOLD = 1200;
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_FRY = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_MICRO = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);

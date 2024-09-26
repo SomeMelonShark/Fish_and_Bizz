@@ -51,6 +51,8 @@ public class ModBlocks {
             new LilyPadStemBlock(FabricBlockSettings.copyOf(Blocks.KELP_PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.WET_GRASS)));
     public static final Block SEA_ANEMONE = Registry.register(Registries.BLOCK, new Identifier(FishAndShiz.MOD_ID, "sea_anemone"),
             new SeaAnemoneBlock(FabricBlockSettings.of().mapColor(MapColor.ORANGE).pistonBehavior(PistonBehavior.DESTROY).noCollision().breakInstantly().nonOpaque().sounds(BlockSoundGroup.WART_BLOCK)));
+    public static final Block NITROGEN_DETECTOR = Registry.register(Registries.BLOCK, new Identifier(FishAndShiz.MOD_ID, "nitrogen_detector"),
+            new NitrogenDetectorBlock(FabricBlockSettings.of().mapColor(MapColor.GRAY).pistonBehavior(PistonBehavior.DESTROY).strength(0.2f).nonOpaque().sounds(BlockSoundGroup.STONE)));
     public static final Block POWERED_PRISMARINE = registerBlock("powered_prismarine",
             new PoweredPrismarineBlock(FabricBlockSettings.of().mapColor(MapColor.LIGHT_BLUE).luminance(createLightLevelFromLitBlockState(15)).strength(0.3F).sounds(BlockSoundGroup.GLASS)));
     public static final Block CULTURE_FEED = registerBlock("culture_feed",
