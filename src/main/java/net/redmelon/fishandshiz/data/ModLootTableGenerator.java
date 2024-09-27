@@ -32,6 +32,9 @@ public class ModLootTableGenerator extends FabricBlockLootTableProvider {
         addDrop(ModBlocks.POTHOS_PLANT, ModItems.POTHOS); {
             this.addDrop(ModBlocks.POTHOS_PLANT, this.drops(ModItems.POTHOS));
         }
+        addDrop(ModBlocks.NITROGEN_DETECTOR, ModItems.NITROGEN_DETECTOR); {
+            this.addDrop(ModBlocks.NITROGEN_DETECTOR, this.drops(ModItems.NITROGEN_DETECTOR));
+        }
 
         addDropWithSilkTouch(ModBlocks.SEA_ANEMONE);
 

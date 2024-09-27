@@ -1,6 +1,7 @@
 package net.redmelon.fishandshiz.block.custom;
 
 import net.minecraft.block.*;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
@@ -16,6 +17,7 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
@@ -30,6 +32,7 @@ import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.feature.RandomPatchFeatureConfig;
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures;
 import net.redmelon.fishandshiz.block.ModBlocks;
+import net.redmelon.fishandshiz.cclass.FishNitrogenAccessor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -93,6 +96,40 @@ public class MonteCarloBlock extends MultifaceGrowthBlock implements Waterloggab
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
         return fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8 ? super.getPlacementState(ctx) : null;
+    }
+
+    public int getNitrogenDecreaseAmount() {
+        return 1;
+    }
+
+    public void influenceNearbyEntities(World world, BlockPos pos) {
+        int searchRadius = 3;
+        Box area = new Box(pos.add(-searchRadius, -searchRadius, -searchRadius),
+                pos.add(searchRadius, searchRadius, searchRadius));
+
+        List<Entity> nearbyEntities = world.getEntitiesByClass(Entity.class, area,
+                entity -> entity instanceof FishNitrogenAccessor);
+
+        for (Entity entity : nearbyEntities) {
+            int nitrogenInfluence = getNitrogenInfluence(entity);
+
+            if (entity instanceof FishNitrogenAccessor nitrogenEntity) {
+                nitrogenEntity.setNitrogenLevel(nitrogenInfluence - getNitrogenDecreaseAmount());
+            }
+        }
+    }
+
+    private static int getNitrogenInfluence(Entity entity) {
+        if (entity instanceof FishNitrogenAccessor nitrogenEntity) {
+            return nitrogenEntity.getNitrogenLevel();
+        }
+        return 0;
+    }
+
+    @Override
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        super.randomTick(state, world, pos, random);
+        influenceNearbyEntities(world, pos);
     }
 
     @Override

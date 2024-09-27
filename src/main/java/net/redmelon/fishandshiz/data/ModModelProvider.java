@@ -2,13 +2,16 @@ package net.redmelon.fishandshiz.data;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.client.ModelIds;
-import net.minecraft.data.client.Models;
+import net.minecraft.block.Block;
+import net.minecraft.block.WallMountedBlock;
+import net.minecraft.block.enums.WallMountLocation;
+import net.minecraft.data.client.*;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.block.ModBlocks;
+import net.redmelon.fishandshiz.block.custom.NitrogenDetectorBlock;
 import net.redmelon.fishandshiz.item.ModItems;
 
 public class ModModelProvider extends FabricModelProvider {

@@ -6,9 +6,13 @@
     "AnemoneMixin",
     "BucketTooltipMixin",
     "FishNitrogenMixin",
+    "KelpNitrogenMixin",
+    "KelpPlantNitrogenMixin",
     "LilyPadRootMixin",
     "MultifaceGrowthMixin",
-    "SalmonMixin"
+    "SalmonMixin",
+    "SeagrassNitrogenMixin",
+    "TallSeagrassNitrogenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

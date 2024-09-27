@@ -1,22 +1,20 @@
 package net.redmelon.fishandshiz.mixin;
 
-import net.minecraft.entity.Bucketable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.passive.FishEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
+import net.redmelon.fishandshiz.cclass.FishNitrogenAccessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,7 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.*;
 
 @Mixin(FishEntity.class)
-public class FishNitrogenMixin extends WaterCreatureEntity {
+public class FishNitrogenMixin extends WaterCreatureEntity implements FishNitrogenAccessor {
     @Unique
     private static final TrackedData<Integer> NITROGEN_LEVEL = DataTracker.registerData(FishEntity.class, TrackedDataHandlerRegistry.INTEGER);
     @Unique
@@ -70,7 +68,7 @@ public class FishNitrogenMixin extends WaterCreatureEntity {
 
         for (Entity entity : nearbyEntities) {
             if (areEntitiesInSameWaterBody(this, entity, 100)) {
-                if (entity instanceof FishEntity) {
+                if (entity instanceof FishEntity || entity instanceof AnimalFishEntity || entity instanceof AnimalWaterEntity) {
                     this.setNitrogenLevel(this.getNitrogenLevel() + getNitrogenIncreaseAmount() / 2);
                 }
             }

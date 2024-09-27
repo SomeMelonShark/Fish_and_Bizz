@@ -76,5 +76,11 @@
     "sounds": [
       "fishandshiz:jellyfish_death"
     ]
+  },
+  "nitrogen_detector_warning": {
+    "subtitle": "sounds.fishandshiz.nitrogen_detector_warning",
+    "sounds": [
+      "fishandshiz:nitrogen_detector_warning"
+    ]
   }
 }

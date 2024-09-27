@@ -16,6 +16,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.FishEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -41,7 +42,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bucketable {
+public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bucketable, FishNitrogenAccessor {
     private static final TrackedData<Integer> NITROGEN_LEVEL = DataTracker.registerData(AnimalWaterEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private static final int NITROGEN_THRESHOLD = 1200;
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -171,8 +172,8 @@ public abstract class AnimalWaterEntity extends PassiveWaterEntity implements Bu
 
         for (Entity entity : nearbyEntities) {
             if (areEntitiesInSameWaterBody(this, entity, 100)) {
-                if (entity instanceof AnimalWaterEntity animalWaterEntity) {
-                    animalWaterEntity.setNitrogenLevel(animalWaterEntity.getNitrogenLevel() + getNitrogenIncreaseAmount() / 2);
+                if (entity instanceof FishEntity || entity instanceof AnimalFishEntity || entity instanceof AnimalWaterEntity) {
+                    this.setNitrogenLevel(this.getNitrogenLevel() + getNitrogenIncreaseAmount() / 2);
                 }
             }
         }

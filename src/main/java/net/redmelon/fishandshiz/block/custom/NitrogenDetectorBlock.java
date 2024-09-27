@@ -4,6 +4,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.enums.WallMountLocation;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
@@ -16,11 +17,14 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
+import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.text.LiteralTextContent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextContent;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.BlockMirror;
+import net.minecraft.util.BlockRotation;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
@@ -29,20 +33,27 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.WorldView;
 import net.redmelon.fishandshiz.block.entity.ModBlockEntities;
 import net.redmelon.fishandshiz.block.entity.NitrogenDetectorBlockEntity;
 import net.redmelon.fishandshiz.block.entity.SeaAnemoneBlockEntity;
+import net.redmelon.fishandshiz.sound.ModSounds;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class NitrogenDetectorBlock extends FacingBlock implements FluidFillable, BlockEntityProvider {
-    protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0);
+public class NitrogenDetectorBlock extends WallMountedBlock implements FluidFillable, BlockEntityProvider {
+    public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
+    protected static final VoxelShape CEILING_SHAPE = Block.createCuboidShape(0.0, 12.0, 0.0, 16.0, 16.0, 16.0);
+    protected static final VoxelShape FLOOR_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 4.0, 16.0);
+    protected static final VoxelShape NORTH_SHAPE = Block.createCuboidShape(0.0, 0.0, 12.0, 16.0, 16.0, 16.0);
+    protected static final VoxelShape SOUTH_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 4.0);
+    protected static final VoxelShape EAST_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 4.0, 16.0, 16.0);
+    protected static final VoxelShape WEST_SHAPE = Block.createCuboidShape(12.0, 0.0, 0.0, 16.0, 16.0, 16.0);
     public static final BooleanProperty UNSTABLE = BooleanProperty.of("unstable");
     public NitrogenDetectorBlock(Settings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(UNSTABLE, false));
-        this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.UP));
+        this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH).with(UNSTABLE, false).with(FACE, WallMountLocation.WALL));
     }
 
     @Nullable
@@ -51,8 +62,33 @@ public class NitrogenDetectorBlock extends FacingBlock implements FluidFillable,
         return new NitrogenDetectorBlockEntity(pos, state);
     }
 
+    @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return SHAPE;
+        Direction direction = state.get(FACING);
+        switch (state.get(FACE)) {
+            case FLOOR: {
+                if (direction.getAxis() == Direction.Axis.X) {
+                    return FLOOR_SHAPE;
+                }
+                return FLOOR_SHAPE;
+            }
+            case WALL: {
+                return switch (direction) {
+                    default -> throw new IncompatibleClassChangeError();
+                    case EAST -> {
+                        yield EAST_SHAPE;
+                    }
+                    case WEST -> {
+                        yield WEST_SHAPE;
+                    }
+                    case SOUTH -> {
+                        yield SOUTH_SHAPE;
+                    }
+                    case NORTH, UP, DOWN -> NORTH_SHAPE;
+                };
+            }
+        }
+        return CEILING_SHAPE;
     }
 
     @Override
@@ -95,14 +131,23 @@ public class NitrogenDetectorBlock extends FacingBlock implements FluidFillable,
         return this.getDefaultState().with(FACING, direction);
     }
 
+    @Override
+    public BlockState rotate(BlockState state, BlockRotation rotation) {
+        return state.with(FACING, rotation.rotate(state.get(FACING)));
+    }
+
+    @Override
+    public BlockState mirror(BlockState state, BlockMirror mirror) {
+        return state.rotate(mirror.getRotation(state.get(FACING)));
+    }
+
     public void reactToNitrogenLevel(World world, BlockPos pos, int nitrogenLevel) {
-        int threshold = 1000;
+        int threshold = 800;
         BlockState state = world.getBlockState(pos);
         boolean isThresholdReached = state.get(UNSTABLE);
 
         if (nitrogenLevel > threshold && !isThresholdReached) {
             world.setBlockState(pos, state.with(UNSTABLE, true), 3);
-            world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.BLOCKS, 1.0f, world.random.nextFloat() * 0.2f + 0.8f);
         } else if (nitrogenLevel <= threshold && isThresholdReached) {
             world.setBlockState(pos, state.with(UNSTABLE, false), 3);
         }
@@ -114,8 +159,7 @@ public class NitrogenDetectorBlock extends FacingBlock implements FluidFillable,
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(UNSTABLE);
-        builder.add(FACING);
+        builder.add(UNSTABLE, FACING, FACE);
     }
 
     public FluidState getFluidState(BlockState state) {

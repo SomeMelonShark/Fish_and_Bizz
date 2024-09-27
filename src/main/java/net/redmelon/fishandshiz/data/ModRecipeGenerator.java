@@ -136,5 +136,15 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
                 .input('C', Items.SEA_LANTERN)
                 .criterion(FabricRecipeProvider.hasItem(Items.SEA_LANTERN), FabricRecipeProvider.conditionsFromItem(Items.SEA_LANTERN))
                 .offerTo(exporter, new Identifier(FabricRecipeProvider.getRecipeName(ModBlocks.POWERED_PRISMARINE)));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, ModItems.NITROGEN_DETECTOR)
+                .pattern("CBD")
+                .pattern("AAA")
+                .input('A', Items.CHISELED_DEEPSLATE)
+                .input('B', Items.GLASS_BOTTLE)
+                .input('C', Items.GLASS_PANE)
+                .input('D', Items.COPPER_INGOT)
+                .criterion(FabricRecipeProvider.hasItem(Items.COPPER_INGOT), FabricRecipeProvider.conditionsFromItem(Items.COPPER_INGOT))
+                .offerTo(exporter, new Identifier(FabricRecipeProvider.getRecipeName(ModItems.NITROGEN_DETECTOR)));
         }
     }
