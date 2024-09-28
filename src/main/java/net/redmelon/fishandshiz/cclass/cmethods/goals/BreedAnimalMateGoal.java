@@ -5,6 +5,7 @@ import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
+import net.redmelon.fishandshiz.cclass.HolometabolousAquaticEntity;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
@@ -13,18 +14,18 @@ import java.util.List;
 public class BreedAnimalMateGoal
         extends Goal {
     private static final TargetPredicate VALID_MATE_PREDICATE = TargetPredicate.createNonAttackable().setBaseMaxDistance(8.0).ignoreVisibility();
-    protected final AnimalFishEntity animal;
-    private final Class<? extends AnimalFishEntity> entityClass;
+    protected final HolometabolousAquaticEntity animal;
+    private final Class<? extends HolometabolousAquaticEntity> entityClass;
     protected final World world;
-    protected @Nullable AnimalFishEntity mate;
+    protected @Nullable HolometabolousAquaticEntity mate;
     private int timer;
     private final double speed;
 
-    public BreedAnimalMateGoal(AnimalFishEntity animal, double speed) {
+    public BreedAnimalMateGoal(HolometabolousAquaticEntity animal, double speed) {
         this(animal, speed, animal.getClass());
     }
 
-    public BreedAnimalMateGoal(AnimalFishEntity animal, double speed, Class<? extends AnimalFishEntity> entityClass) {
+    public BreedAnimalMateGoal(HolometabolousAquaticEntity animal, double speed, Class<? extends HolometabolousAquaticEntity> entityClass) {
         this.animal = animal;
         this.world = animal.getWorld();
         this.entityClass = entityClass;
@@ -63,16 +64,16 @@ public class BreedAnimalMateGoal
     }
 
     @Nullable
-    private AnimalFishEntity findMate() {
-        List<? extends AnimalFishEntity> list = this.world.getTargets(this.entityClass, VALID_MATE_PREDICATE, this.animal, this.animal.getBoundingBox().expand(8.0));
+    private HolometabolousAquaticEntity findMate() {
+        List<? extends HolometabolousAquaticEntity> list = this.world.getTargets(this.entityClass, VALID_MATE_PREDICATE, this.animal, this.animal.getBoundingBox().expand(8.0));
         double d = Double.MAX_VALUE;
-        AnimalFishEntity animalFishEntity = null;
-        for (AnimalFishEntity animalFishEntity2 : list) {
-            if (!this.animal.canBreedWith(animalFishEntity2) || !(this.animal.squaredDistanceTo(animalFishEntity2) < d)) continue;
-            animalFishEntity = animalFishEntity2;
-            d = this.animal.squaredDistanceTo(animalFishEntity2);
+        HolometabolousAquaticEntity aquaticEntity = null;
+        for (HolometabolousAquaticEntity aquaticEntity2 : list) {
+            if (!this.animal.canBreedWith(aquaticEntity2) || !(this.animal.squaredDistanceTo(aquaticEntity2) < d)) continue;
+            aquaticEntity = aquaticEntity2;
+            d = this.animal.squaredDistanceTo(aquaticEntity2);
         }
-        return animalFishEntity;
+        return aquaticEntity;
     }
 
     protected void breed() {

@@ -13,6 +13,7 @@ import net.redmelon.fishandshiz.block.custom.NitrogenDetectorBlock;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
 import net.redmelon.fishandshiz.cclass.FishNitrogenAccessor;
+import net.redmelon.fishandshiz.cclass.HolometabolousAquaticEntity;
 import net.redmelon.fishandshiz.sound.ModSounds;
 
 import java.util.List;
@@ -50,8 +51,7 @@ public class NitrogenDetectorBlockEntity extends BlockEntity{
 
         assert this.world != null;
         List<Entity> nearbyEntities = this.world.getEntitiesByClass(Entity.class, area, entity ->
-                entity instanceof AnimalFishEntity ||
-                        entity instanceof AnimalWaterEntity ||
+                entity instanceof HolometabolousAquaticEntity ||
                         entity instanceof FishEntity);
 
         for (Entity entity : nearbyEntities) {
@@ -69,10 +69,8 @@ public class NitrogenDetectorBlockEntity extends BlockEntity{
     private static int getNitrogenInfluence(Entity entity) {
         int nitrogenInfluence = 0;
 
-        if (entity instanceof AnimalFishEntity animalFishEntity) {
-            nitrogenInfluence = animalFishEntity.getNitrogenLevel();
-        } else if (entity instanceof AnimalWaterEntity animalWaterEntity) {
-            nitrogenInfluence = animalWaterEntity.getNitrogenLevel();
+        if (entity instanceof HolometabolousAquaticEntity aquaticEntity) {
+            nitrogenInfluence = aquaticEntity.getNitrogenLevel();
         } else if (entity instanceof FishEntity fishEntity) {
             nitrogenInfluence = ((FishNitrogenAccessor) fishEntity).getNitrogenLevel();
         }

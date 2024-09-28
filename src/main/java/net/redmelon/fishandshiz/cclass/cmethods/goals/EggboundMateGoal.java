@@ -8,7 +8,7 @@ import net.minecraft.world.GameRules;
 import net.redmelon.fishandshiz.cclass.EggboundEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.CustomCriteria;
 
-public class EggboundMateGoal extends BreedWaterAnimalMateGoal{
+public class EggboundMateGoal extends BreedAnimalMateGoal{
     private final EggboundEntity entity;
     public EggboundMateGoal(EggboundEntity animal, double speed) {
         super(animal, speed);
@@ -28,7 +28,7 @@ public class EggboundMateGoal extends BreedWaterAnimalMateGoal{
         }
         if (serverPlayerEntity != null) {
             serverPlayerEntity.incrementStat(Stats.ANIMALS_BRED);
-            CustomCriteria.BRED_ANIMALS.trigger2(serverPlayerEntity, this.animal, this.mate, null);
+            CustomCriteria.BRED_ANIMALS.trigger(serverPlayerEntity, this.animal, this.mate, null);
         }
         this.entity.setHasEgg(true);
         this.animal.setBreedingAge(6000);

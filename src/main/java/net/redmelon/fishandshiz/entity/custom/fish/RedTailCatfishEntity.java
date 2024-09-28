@@ -155,10 +155,10 @@ public class RedTailCatfishEntity extends AnimalFishEntity implements AngledMode
 
     @Override
     protected void initGoals() {
+        super.initGoals();
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
-        this.goalSelector.add(3, new MeleeAttackGoal(this, 1.2f, true));
-        this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
+        this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
+        this.goalSelector.add(2, new MeleeAttackGoal(this, 1.2f, true));
 
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, AmurCarpEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, MudCrabEntity.class, true));

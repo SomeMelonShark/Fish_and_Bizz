@@ -58,7 +58,7 @@ public class ModRenderer {
         EntityRendererRegistry.register(ModEntities.OSCAR, BasicFishRenderer.create("oscar", "mediumfish"));
         EntityRendererRegistry.register(ModEntities.OSCAR_FRY, BasicImmatureRenderer.fryCreate("oscar", "oscar"));
         EntityRendererRegistry.register(ModEntities.OSCAR_EGG, BasicImmatureRenderer.eggCreate("angelfish", "oscar"));
-        EntityRendererRegistry.register(ModEntities.RAINBOWFISH, BasicFishRenderer.create("rainbowfish", "mediumfish"));
+        EntityRendererRegistry.register(ModEntities.RAINBOWFISH, BasicVariableFishRenderer.create("rainbowfish", "mediumfish"));
         EntityRendererRegistry.register(ModEntities.RAINBOWFISH_FRY, BasicImmatureRenderer.fryCreate("rainbowfish", "rainbowfish"));
         EntityRendererRegistry.register(ModEntities.RAINBOWFISH_EGG, BasicImmatureRenderer.eggCreate("corydoras", "rainbowfish"));
         EntityRendererRegistry.register(ModEntities.AURATUS, BasicFishRenderer.create("auratus", "mediumfish"));

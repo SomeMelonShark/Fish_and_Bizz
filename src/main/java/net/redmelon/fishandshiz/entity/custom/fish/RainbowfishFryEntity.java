@@ -27,6 +27,7 @@ import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
+import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.VisibleForTesting;
@@ -37,8 +38,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class RainbowfishFryEntity extends RainbowfishEntity implements GeoEntity {
-    public static float WIDTH = 0.3f;
-    public static float HEIGHT = 0.2f;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public RainbowfishFryEntity(EntityType<? extends RainbowfishEntity> entityType, World world) {
@@ -105,8 +104,18 @@ public class RainbowfishFryEntity extends RainbowfishEntity implements GeoEntity
 
     @Override
     protected void growUp() {
+        ModEntityColor color;
+        ModEntityColor color2;
+        ModEntityColor color3;
+        RainbowfishPattern pattern;
+        RainbowfishDetail detail;
         World world = this.getWorld();
         if (world instanceof ServerWorld) {
+            color = this.getBaseColor();
+            color2 = this.getPatternColor();
+            color3 = this.getDetailColor();
+            pattern = this.getPattern();
+            detail = this.getDetail();
             ServerWorld serverWorld = (ServerWorld)world;
             RainbowfishEntity nextEntity = ModEntities.RAINBOWFISH.create(this.getWorld());
             if (nextEntity != null) {
@@ -118,6 +127,12 @@ public class RainbowfishFryEntity extends RainbowfishEntity implements GeoEntity
                     nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                 }
                 nextEntity.setPersistent();
+                nextEntity.setBaseColor(color);
+                nextEntity.setPatternColor(color2);
+                nextEntity.setDetailColor(color3);
+                nextEntity.setPattern(pattern);
+                nextEntity.setDetail(detail);
+
                 this.playSound(SoundEvents.ENTITY_TROPICAL_FISH_FLOP, 0.15f, 1.0f);
                 serverWorld.spawnEntityAndPassengers(nextEntity);
                 this.discard();

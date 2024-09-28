@@ -4,10 +4,7 @@ import net.minecraft.entity.Bucketable;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.ActiveTargetGoal;
-import net.minecraft.entity.ai.goal.EscapeDangerGoal;
-import net.minecraft.entity.ai.goal.FleeEntityGoal;
-import net.minecraft.entity.ai.goal.SwimAroundGoal;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
@@ -95,11 +92,12 @@ public class PlatyEntity extends LivebearerEntity implements GeoEntity, Variable
 
     @Override
     protected void initGoals() {
+        super.initGoals();
         this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25));
-        this.goalSelector.add(2, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
-        this.goalSelector.add(3, new GravidFishMateGoal(this, 1));
-        this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
-        this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
+        this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
+        this.goalSelector.add(2, new GravidFishMateGoal(this, 1));
+        this.goalSelector.add(3, new BreedFollowGroupLeaderGoal(this));
+        this.goalSelector.add(6, new MeleeAttackGoal(this, 1.0f, true));
 
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, NeonTetraEntity.class, true));
 

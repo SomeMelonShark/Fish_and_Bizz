@@ -82,11 +82,11 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
 
     @Override
     protected void initGoals() {
+        super.initGoals();
         this.goalSelector.add(0, new EscapeDangerGoal(this, 2));
         this.goalSelector.add(2, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
         this.goalSelector.add(3, new WaterAttackGoal(this, 1.0, 40, 10.0f));
-        this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
-        this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
+        this.goalSelector.add(3, new BreedFollowGroupLeaderGoal(this));
 
         this.targetSelector.add(2, new ActiveTargetGoal<SpiderEntity>((MobEntity)this, SpiderEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<CaveSpiderEntity>((MobEntity)this, CaveSpiderEntity.class, true));

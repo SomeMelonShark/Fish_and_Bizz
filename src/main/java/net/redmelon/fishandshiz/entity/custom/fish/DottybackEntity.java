@@ -87,11 +87,12 @@ public class DottybackEntity extends SchoolingBreedEntity implements GeoEntity, 
 
     @Override
     protected void initGoals() {
+        super.initGoals();
         this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25));
         this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
         this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));
         this.goalSelector.add(3, new WaterStopGoal(this, 1200, 6000));
-        this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
+        this.goalSelector.add(3, new BreedFollowGroupLeaderGoal(this));
         this.goalSelector.add(6, new MeleeAttackGoal(this, 1.0f, true));
 
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, NeonTetraFryEntity.class, true));

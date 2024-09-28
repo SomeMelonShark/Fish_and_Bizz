@@ -15,6 +15,7 @@ public class ModVariants {
         TriggerfishPattern.init();
         CorydorasPattern.init();
         PlatyPattern.init();
+        RainbowfishPattern.init();
 
         AmurCarpDetail.init();
         AngelfishDetail.init();
@@ -29,6 +30,7 @@ public class ModVariants {
         TriggerfishDetail.init();
         CorydorasDetail.init();
         PlatyDetail.init();
+        RainbowfishDetail.init();
 
         ModEntityColor.init();
     }

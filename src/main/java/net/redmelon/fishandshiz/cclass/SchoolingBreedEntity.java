@@ -30,12 +30,6 @@ public abstract class SchoolingBreedEntity extends AnimalFishEntity {
     }
 
     @Override
-    protected void initGoals() {
-        super.initGoals();
-        this.goalSelector.add(5, new BreedFollowGroupLeaderGoal(this));
-    }
-
-    @Override
     public int getLimitPerChunk() {
         return this.getMaxGroupSize();
     }

@@ -3,7 +3,6 @@ package net.redmelon.fishandshiz.cclass.cmethods;
 import com.google.gson.JsonObject;
 import net.minecraft.advancement.criterion.AbstractCriterion;
 import net.minecraft.advancement.criterion.AbstractCriterionConditions;
-import net.minecraft.advancement.criterion.BredAnimalsCriterion;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateSerializer;
@@ -11,8 +10,7 @@ import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
-import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
-import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
+import net.redmelon.fishandshiz.cclass.HolometabolousAquaticEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,17 +31,7 @@ public class BredFishAnimalsCriterion extends AbstractCriterion<BredFishAnimalsC
         return new Conditions(lootContextPredicate, lootContextPredicate2, lootContextPredicate3, lootContextPredicate4);
     }
 
-    public void trigger(ServerPlayerEntity player, AnimalFishEntity parent, AnimalFishEntity partner, @Nullable PassiveWaterEntity child) {
-        LootContext lootContext = EntityPredicate.createAdvancementEntityLootContext(player, parent);
-        LootContext lootContext2 = EntityPredicate.createAdvancementEntityLootContext(player, partner);
-        LootContext lootContext3 = child != null ? EntityPredicate.createAdvancementEntityLootContext(player, child) : null;
-        this.trigger(player, (conditions) -> {
-            return conditions.matches(lootContext, lootContext2, lootContext3);
-        });
-    }
-
-    /**Alternate trigger used for AnimalWaterEntity instead of AnimalFishEntity**/
-    public void trigger2(ServerPlayerEntity player, AnimalWaterEntity parent, AnimalWaterEntity partner, @Nullable PassiveWaterEntity child) {
+    public void trigger(ServerPlayerEntity player, HolometabolousAquaticEntity parent, HolometabolousAquaticEntity partner, @Nullable PassiveWaterEntity child) {
         LootContext lootContext = EntityPredicate.createAdvancementEntityLootContext(player, parent);
         LootContext lootContext2 = EntityPredicate.createAdvancementEntityLootContext(player, partner);
         LootContext lootContext3 = child != null ? EntityPredicate.createAdvancementEntityLootContext(player, child) : null;

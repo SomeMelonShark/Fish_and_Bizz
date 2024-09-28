@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
 import net.redmelon.fishandshiz.cclass.FishNitrogenAccessor;
+import net.redmelon.fishandshiz.cclass.HolometabolousAquaticEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -64,11 +65,11 @@ public class FishNitrogenMixin extends WaterCreatureEntity implements FishNitrog
 
     @Unique
     protected void influenceNearbyEntities() {
-        List<Entity> nearbyEntities = this.getWorld().getEntitiesByClass(Entity.class, this.getBoundingBox().expand(10), entity -> entity != this);
+        List<Entity> nearbyEntities = this.getWorld().getEntitiesByClass(Entity.class, this.getBoundingBox().expand(8), entity -> entity != this);
 
         for (Entity entity : nearbyEntities) {
             if (areEntitiesInSameWaterBody(this, entity, 100)) {
-                if (entity instanceof FishEntity || entity instanceof AnimalFishEntity || entity instanceof AnimalWaterEntity) {
+                if (entity instanceof FishEntity || entity instanceof HolometabolousAquaticEntity) {
                     this.setNitrogenLevel(this.getNitrogenLevel() + getNitrogenIncreaseAmount() / 2);
                 }
             }

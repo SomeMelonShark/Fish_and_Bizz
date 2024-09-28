@@ -46,12 +46,10 @@ public class AmurCarpEggEntity extends AmurCarpEntity implements GeoEntity {
         super.readCustomDataFromNbt(nbt);
         this.setStageAge(nbt.getInt("Age"));
     }
-
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
     }
-
     @Override
     protected void initGoals() {
 

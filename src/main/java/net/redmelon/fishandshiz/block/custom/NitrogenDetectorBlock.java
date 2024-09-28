@@ -128,7 +128,7 @@ public class NitrogenDetectorBlock extends WallMountedBlock implements FluidFill
         if (fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8) {
             return super.getPlacementState(ctx);
         }
-        return this.getDefaultState().with(FACING, direction);
+        return null;
     }
 
     @Override

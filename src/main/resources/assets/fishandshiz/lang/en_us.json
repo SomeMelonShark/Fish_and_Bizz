@@ -163,6 +163,7 @@
   "sounds.fishandshiz.jellyfish_ambient": "Water squelches",
   "sounds.fishandshiz.jellyfish_hurt": "Jellyfish squelches",
   "sounds.fishandshiz.jellyfish_death": "Jellyfish dies",
+  "sounds.fishandshiz.nitrogen_detector_warning": "Nitrogen warning",
 
   "angelfish_pattern.fishandshiz.wild": "Wild",
   "angelfish_pattern.fishandshiz.marble": "Marble",
@@ -229,6 +230,11 @@
   "triggerfish_pattern.fishandshiz.trench": "Trench",
   "triggerfish_pattern.fishandshiz.backdrop": "Backdrop",
 
+  "rainbowfish_pattern.fishandshiz.boesemani": "Boesemani",
+  "rainbowfish_pattern.fishandshiz.banded": "Banded",
+  "rainbowfish_pattern.fishandshiz.annular": "Annular",
+  "rainbowfish_pattern.fishandshiz.underbelly": "Underbelly",
+
   "angelfish_detail.fishandshiz.crown": "Crowned",
   "angelfish_detail.fishandshiz.accent": "Accented",
 
@@ -270,8 +276,11 @@
   "butterflyfish_detail.fishandshiz.eyegash": "Eyegash",
   "butterflyfish_detail.fishandshiz.eyespot": "Eyespot",
 
-  "butterflyfish_detail.fishandshiz.brux": "Brux",
-  "butterflyfish_detail.fishandshiz.beard": "Beard",
+  "triggerfish_detail.fishandshiz.brux": "Brux",
+  "triggerfish_detail.fishandshiz.beard": "Beard",
+
+  "rainbowfish_detail.fishandshiz.breasty": "Breasty",
+  "rainbowfish_detail.fishandshiz.lateral": "Lateral",
 
   "entity_color.fishandshiz.silver": "Silver",
   "entity_color.fishandshiz.grey": "Grey",
