@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:fish_food_from_cooked_mutton"
+        "recipe": "fishandshiz:fish_food_from_cooked_mutton"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:fish_food_from_cooked_mutton"
+      "fishandshiz:fish_food_from_cooked_mutton"
     ]
   },
   "sends_telemetry_event": false

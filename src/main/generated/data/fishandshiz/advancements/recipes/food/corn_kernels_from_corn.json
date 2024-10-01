@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:corn_kernels_from_corn"
+        "recipe": "fishandshiz:corn_kernels_from_corn"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:corn_kernels_from_corn"
+      "fishandshiz:corn_kernels_from_corn"
     ]
   },
   "sends_telemetry_event": false

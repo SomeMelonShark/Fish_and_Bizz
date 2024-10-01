@@ -1,12 +1,12 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_milkfish": {
+    "has_bone_meal": {
       "conditions": {
         "items": [
           {
             "items": [
-              "fishandshiz:milkfish"
+              "minecraft:bone_meal"
             ]
           }
         ]
@@ -15,20 +15,20 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "fishandshiz:cooked_milkfish_from_smelting_milkfish"
+        "recipe": "fishandshiz:fishmeal_from_cooked_milkfish"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_milkfish",
+      "has_bone_meal",
       "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "fishandshiz:cooked_milkfish_from_smelting_milkfish"
+      "fishandshiz:fishmeal_from_cooked_milkfish"
     ]
   },
   "sends_telemetry_event": false
