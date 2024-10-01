@@ -56,7 +56,7 @@ public class OscarEntity extends SchoolingBreedEntity implements GeoEntity {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 12)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 5)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4);
     }
 

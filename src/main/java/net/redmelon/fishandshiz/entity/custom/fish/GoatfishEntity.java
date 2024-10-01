@@ -72,7 +72,7 @@ public class GoatfishEntity extends SchoolingBreedEntity implements GeoEntity, V
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 2)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 3)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2);
     }
     private PlayState genericFlopController(AnimationState animationState) {

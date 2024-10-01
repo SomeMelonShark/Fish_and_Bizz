@@ -65,7 +65,7 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return SchoolingBreedEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 6)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 3)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 20);
     }
     private PlayState genericFlopController(AnimationState animationState) {

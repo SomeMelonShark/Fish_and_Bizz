@@ -45,6 +45,7 @@ public class VolcanoSnailEntity extends AnimalWaterEntity implements GeoEntity {
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 2)
+                .add(EntityAttributes.GENERIC_ARMOR, 1)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.22f);
     }
 

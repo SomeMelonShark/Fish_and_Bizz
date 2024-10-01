@@ -57,7 +57,8 @@ public class MudCrabEntity extends EggboundEntity implements GeoEntity {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 8)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 4)
+                .add(EntityAttributes.GENERIC_ARMOR, 4)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 5)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2f);
     }
