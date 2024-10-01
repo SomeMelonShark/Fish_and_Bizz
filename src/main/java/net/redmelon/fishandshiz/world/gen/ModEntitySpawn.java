@@ -58,7 +58,7 @@ public class ModEntitySpawn {
 
         // Milkfish Spawns
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.OCEAN, BiomeKeys.LUKEWARM_OCEAN), SpawnGroup.WATER_AMBIENT,
-                ModEntities.MILKFISH, 1, 7, 15);
+                ModEntities.MILKFISH, 20, 7, 15);
 
         SpawnRestriction.register(ModEntities.MILKFISH, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
