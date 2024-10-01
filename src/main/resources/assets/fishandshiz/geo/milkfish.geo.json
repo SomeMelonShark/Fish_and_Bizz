@@ -21,7 +21,7 @@
 					]
 				},
 				{
-					"name": "tailfin",
+					"name": "tailFin",
 					"parent": "body",
 					"pivot": [0, 3, 7],
 					"cubes": [
@@ -30,7 +30,7 @@
 					]
 				},
 				{
-					"name": "leftFin",
+					"name": "leftfin",
 					"parent": "body",
 					"pivot": [1, 1, -5],
 					"rotation": [0, 0, 27.5],
@@ -39,7 +39,7 @@
 					]
 				},
 				{
-					"name": "rightFin",
+					"name": "rightfin",
 					"parent": "body",
 					"pivot": [-1, 1, -5],
 					"rotation": [0, 0, -27.5],

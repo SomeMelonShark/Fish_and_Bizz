@@ -1,6 +1,7 @@
 package net.redmelon.fishandshiz.block.custom;
 
 import net.minecraft.block.*;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
@@ -16,6 +17,7 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
@@ -30,6 +32,7 @@ import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.feature.RandomPatchFeatureConfig;
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures;
 import net.redmelon.fishandshiz.block.ModBlocks;
+import net.redmelon.fishandshiz.cclass.FishNitrogenAccessor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -66,11 +69,11 @@ public class MonteCarloBlock extends MultifaceGrowthBlock implements Waterloggab
     }
 
     public int getAge(BlockState state) {
-        return (Integer)state.get(this.getAgeProperty());
+        return (Integer) state.get(this.getAgeProperty());
     }
 
     public BlockState withAge(int age) {
-        return (BlockState)this.getDefaultState().with(this.getAgeProperty(), age);
+        return (BlockState) this.getDefaultState().with(this.getAgeProperty(), age);
     }
 
     public final boolean isMature(BlockState blockState) {
@@ -93,6 +96,40 @@ public class MonteCarloBlock extends MultifaceGrowthBlock implements Waterloggab
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
         return fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8 ? super.getPlacementState(ctx) : null;
+    }
+
+    public int getNitrogenDecreaseAmount() {
+        return 1;
+    }
+
+    public void influenceNearbyEntities(World world, BlockPos pos) {
+        int searchRadius = 3;
+        Box area = new Box(pos.add(-searchRadius, -searchRadius, -searchRadius),
+                pos.add(searchRadius, searchRadius, searchRadius));
+
+        List<Entity> nearbyEntities = world.getEntitiesByClass(Entity.class, area,
+                entity -> entity instanceof FishNitrogenAccessor);
+
+        for (Entity entity : nearbyEntities) {
+            int nitrogenInfluence = getNitrogenInfluence(entity);
+
+            if (entity instanceof FishNitrogenAccessor nitrogenEntity) {
+                nitrogenEntity.setNitrogenLevel(nitrogenInfluence - getNitrogenDecreaseAmount());
+            }
+        }
+    }
+
+    private static int getNitrogenInfluence(Entity entity) {
+        if (entity instanceof FishNitrogenAccessor nitrogenEntity) {
+            return nitrogenEntity.getNitrogenLevel();
+        }
+        return 0;
+    }
+
+    @Override
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        super.randomTick(state, world, pos, random);
+        influenceNearbyEntities(world, pos);
     }
 
     @Override
@@ -118,19 +155,7 @@ public class MonteCarloBlock extends MultifaceGrowthBlock implements Waterloggab
     }
 
     protected BlockState age(BlockState state, Random random) {
-        return (BlockState)state.cycle(AGE);
-    }
-
-    @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        int f = random.nextInt(20);
-        int i = this.getAge(state);
-        if (!MonteCarloBlock.canSurvive(state, world, pos)) {
-            world.setBlockState(pos, Blocks.WATER.getDefaultState());
-        }
-        if (!this.isMature(state) && f == 1) {
-            world.setBlockState(pos, this.withAge(i + 1), Block.NOTIFY_LISTENERS);
-        }
+        return (BlockState) state.cycle(AGE);
     }
 
     @Override
@@ -194,9 +219,9 @@ public class MonteCarloBlock extends MultifaceGrowthBlock implements Waterloggab
 
     @Override
     public void grow(ServerWorld world, Random random, BlockPos pos, BlockState state) {
-        this.applyGrowth(world, pos, state);
-        while(canGrow(world, pos, state))
+        while (canGrow(world, pos, state))
             this.grower.grow(state, world, pos, random);
+        this.applyGrowth(world, pos, state);
     }
 
     public boolean canFillWithFluid(BlockView world, BlockPos pos, BlockState state, Fluid fluid) {

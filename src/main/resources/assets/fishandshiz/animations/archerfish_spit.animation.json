@@ -10,6 +10,25 @@
 					}
 				}
 			}
+		},
+		"animation.archerfish_spit.spit": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {
+				"spit": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5": {
+							"vector": [180, 0, 0]
+						},
+						"1.0": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

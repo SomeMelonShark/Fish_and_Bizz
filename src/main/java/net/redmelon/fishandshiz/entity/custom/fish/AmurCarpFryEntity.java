@@ -33,7 +33,7 @@ import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.variant.AmurCarpVariant;
+import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -43,21 +43,12 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AmurCarpFryEntity extends AmurCarpEntity implements GeoEntity {
-    @VisibleForTesting
-    public static int MAX_FRY_AGE = Math.abs(-24000);
-    public static float WIDTH = 0.4f;
-    public static float HEIGHT = 0.3f;
-    private int stageAge;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public AmurCarpFryEntity(EntityType<? extends AmurCarpEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    public static DefaultAttributeContainer.Builder setAttributes() {
-        return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
-    }
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater()) {
             animationState.getController().setAnimation(RawAnimation.begin()
@@ -77,18 +68,7 @@ public class AmurCarpFryEntity extends AmurCarpEntity implements GeoEntity {
         this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
         this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
     }
-    @Override
-    public boolean isBreedingItem(ItemStack stack) {
-        return false;
-    }
 
-    @Override
-    public void tickMovement() {
-        super.tickMovement();
-        if (!this.getWorld().isClient) {
-            this.setStageAge(this.stageAge + 1);
-        }
-    }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
@@ -117,76 +97,36 @@ public class AmurCarpFryEntity extends AmurCarpEntity implements GeoEntity {
             this.setStageAge(nbt.getInt("Age"));
         }
     }
-    public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        ItemStack itemStack = player.getStackInHand(hand);
-        if (this.isFishFood(itemStack)) {
-            this.eatFishFood(player, itemStack);
-            return ActionResult.success(this.getWorld().isClient);
-        } else {
-            return (ActionResult)Bucketable.tryBucket(player, hand, this).orElse(super.interactMob(player, hand));
-        }
-    }
-    private boolean isFishFood(ItemStack stack) {
-        return AmurCarpEntity.FISH_FOOD.test(stack);
-    }
-    private void eatFishFood (PlayerEntity player, ItemStack stack) {
-        this.decrementItem(player, stack);
-        this.increaseAge(PassiveWaterEntity.toGrowUpAge(this.getTicksUntilGrowth()));
-        this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
-    }
-
-    private void decrementItem(PlayerEntity player, ItemStack stack) {
-        if (!player.getAbilities().creativeMode) {
-            stack.decrement(1);
-        }
-    }
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
-        RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
-        AmurCarpVariant variant;
-
-        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
-            this.setAmurCarpVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        }
-
-        if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.TAIGA)) {
-                variant = (AmurCarpVariant.WILD);
-            } else if (registryEntry.matchesKey(BiomeKeys.FROZEN_RIVER)) {
-                variant = (AmurCarpVariant.WILD);
-            } else {
-                variant = Util.getRandom(AmurCarpVariant.values(), this.random);
-            }
-        } else {
-            variant = Util.getRandom(AmurCarpVariant.values(), this.random);
-        }
-
-        setVariant(variant);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-        this.setAmurCarpVariant(variant.getId());
+        this.setFry(true);
+        this.setMature(false);
         return entityData;
     }
 
-    private int getStageAge() {
-        return this.stageAge;
+    @Override
+    protected int getMaxStageAge() {
+        return 24000;
     }
-    private void increaseAge(int seconds) {
-        this.setStageAge(this.stageAge + seconds * 20);
-    }
-    private void setStageAge(int stageAge) {
-        this.stageAge = stageAge;
-        if (this.stageAge >= MAX_FRY_AGE) {
-            this.growUp();
-        }
-    }
-    private void growUp() {
-        AmurCarpVariant variant;
+
+
+    @Override
+    protected void growUp() {
+        ModEntityColor color;
+        ModEntityColor color2;
+        ModEntityColor color3;
+        AmurCarpPattern pattern;
+        AmurCarpDetail detail;
         World world = this.getWorld();
         if (world instanceof ServerWorld) {
-            variant = this.getVariant();
+            color = this.getBaseColor();
+            color2 = this.getPatternColor();
+            color3 = this.getDetailColor();
+            pattern = this.getPattern();
+            detail = this.getDetail();
             ServerWorld serverWorld = (ServerWorld)world;
             AmurCarpEntity nextEntity = ModEntities.AMUR_CARP.create(this.getWorld());
             if (nextEntity != null) {
@@ -198,16 +138,17 @@ public class AmurCarpFryEntity extends AmurCarpEntity implements GeoEntity {
                     nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                 }
                 nextEntity.setPersistent();
-                nextEntity.setVariant(variant);
+                nextEntity.setBaseColor(color);
+                nextEntity.setPatternColor(color2);
+                nextEntity.setDetailColor(color3);
+                nextEntity.setPattern(pattern);
+                nextEntity.setDetail(detail);
+
                 this.playSound(SoundEvents.ENTITY_TROPICAL_FISH_FLOP, 0.15f, 1.0f);
                 serverWorld.spawnEntityAndPassengers(nextEntity);
                 this.discard();
             }
         }
-    }
-
-    private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_FRY_AGE - this.stageAge);
     }
 
     @Override

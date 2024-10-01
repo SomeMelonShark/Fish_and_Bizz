@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:sushi_from_cod"
+        "recipe": "fishandshiz:sushi_from_cod"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:sushi_from_cod"
+      "fishandshiz:sushi_from_cod"
     ]
   },
   "sends_telemetry_event": false

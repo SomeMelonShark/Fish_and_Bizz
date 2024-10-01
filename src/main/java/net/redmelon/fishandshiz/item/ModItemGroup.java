@@ -31,9 +31,6 @@ public class ModItemGroup {
             entries.add(ModItems.MILKFISH_BUCKET);
             entries.add(ModItems.MILKFISH_FRY_BUCKET);
             entries.add(ModItems.MILKFISH_EGG_BUCKET);
-            entries.add(ModItems.CLOWNFISH_BUCKET);
-            entries.add(ModItems.CLOWNFISH_FRY_BUCKET);
-            entries.add(ModItems.CLOWNFISH_EGG_BUCKET);
             entries.add(ModItems.NEON_TETRA_BUCKET);
             entries.add(ModItems.NEON_TETRA_FRY_BUCKET);
             entries.add(ModItems.NEON_TETRA_EGG_BUCKET);
@@ -43,19 +40,19 @@ public class ModItemGroup {
             entries.add(ModItems.OSCAR_BUCKET);
             entries.add(ModItems.OSCAR_FRY_BUCKET);
             entries.add(ModItems.OSCAR_EGG_BUCKET);
+            entries.add(ModItems.GRAYLING_FRY_BUCKET);
+            entries.add(ModItems.GRAYLING_EGG_BUCKET);
+            entries.add(ModItems.GOATFISH_BUCKET);
             entries.add(ModItems.SALMON_FRY_BUCKET);
             entries.add(ModItems.SALMON_EGG_BUCKET);
             entries.add(ModItems.MUD_CRAB_BUCKET);
             entries.add(ModItems.MUD_CRAB_LARVA_BUCKET);
-            entries.add(ModItems.MUD_CRAB_EGG_BUCKET);
             entries.add(ModItems.CRAYFISH_BUCKET);
             entries.add(ModItems.CRAYFISH_LARVA_BUCKET);
-            entries.add(ModItems.CRAYFISH_EGG_BUCKET);
             entries.add(ModItems.RAINBOWFISH_BUCKET);
             entries.add(ModItems.RAINBOWFISH_FRY_BUCKET);
             entries.add(ModItems.RAINBOWFISH_EGG_BUCKET);
             entries.add(ModItems.AURATUS_BUCKET);
-            entries.add(ModItems.AURATUS_FRY_BUCKET);
             entries.add(ModItems.AURATUS_FRY_BUCKET);
             entries.add(ModItems.AMUR_CARP_BUCKET);
             entries.add(ModItems.AMUR_CARP_FRY_BUCKET);
@@ -63,11 +60,28 @@ public class ModItemGroup {
             entries.add(ModItems.BETTA_BUCKET);
             entries.add(ModItems.BETTA_FRY_BUCKET);
             entries.add(ModItems.BETTA_EGG_BUCKET);
+            entries.add(ModItems.PLATY_BUCKET);
+            entries.add(ModItems.PLATY_FRY_BUCKET);
+            entries.add(ModItems.CLOWNFISH_BUCKET);
+            entries.add(ModItems.CLOWNFISH_FRY_BUCKET);
+            entries.add(ModItems.CLOWNFISH_EGG_BUCKET);
             entries.add(ModItems.GRAYLING_BUCKET);
-            entries.add(ModItems.GRAYLING_FRY_BUCKET);
-            entries.add(ModItems.GRAYLING_EGG_BUCKET);
+            entries.add(ModItems.TANG_BUCKET);
+            entries.add(ModItems.TANG_FRY_BUCKET);
+            entries.add(ModItems.TANG_EGG_BUCKET);
+            entries.add(ModItems.DOTTYBACK_BUCKET);
+            entries.add(ModItems.DOTTYBACK_FRY_BUCKET);
+            entries.add(ModItems.DOTTYBACK_EGG_BUCKET);
+            entries.add(ModItems.MARINE_ANGELFISH_BUCKET);
+            entries.add(ModItems.PARROTFISH_BUCKET);
+            entries.add(ModItems.BUTTERFLYFISH_BUCKET);
+            entries.add(ModItems.TRIGGERFISH_BUCKET);
             entries.add(ModItems.VOLCANO_SNAIL_BUCKET);
             entries.add(ModItems.VOLCANO_SNAIL_EGG_BUCKET);
+        });
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
+            entries.add(ModItems.ARCHERFISH_GUN);
         });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.SPAWN_EGGS).register(entries -> {
@@ -106,12 +120,17 @@ public class ModItemGroup {
             entries.add(ModItems.VALLISNERIA);
             entries.add(ModItems.MONTE_CARLO);
             entries.add(ModItems.AMAZON_SWORD);
+            entries.add(ModItems.POTHOS);
             entries.add(ModItems.CORN_KERNELS);
             entries.add(ModItems.SEA_ANEMONE);
         });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> {
             entries.add(ModBlocks.POWERED_PRISMARINE);
+        });
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> {
+            entries.add(ModItems.NITROGEN_DETECTOR);
         });
     }
 }

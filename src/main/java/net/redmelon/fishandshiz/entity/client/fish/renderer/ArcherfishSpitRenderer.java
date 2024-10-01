@@ -18,18 +18,12 @@ public class ArcherfishSpitRenderer extends GeoEntityRenderer<ArcherfishSpitEnti
 
     @Override
     public Identifier getTextureLocation(ArcherfishSpitEntity instance) {
-        return new Identifier(FishAndShiz.MOD_ID, "textures/fish/archerfish_spit.png");
+        return new Identifier(FishAndShiz.MOD_ID, "textures/fish/archerfish/archerfish_spit.png");
     }
 
     @Override
     public RenderLayer getRenderType(ArcherfishSpitEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource,
                                      float partialTick) {
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
-    }
-
-    @Override
-    public void render(ArcherfishSpitEntity entity, float entityYaw, float partialTick, MatrixStack poseStack, VertexConsumerProvider bufferSource, int packedLight) {
-        poseStack.scale(0.1f, 0.1f, 0.1f);
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 }

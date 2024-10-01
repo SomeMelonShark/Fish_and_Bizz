@@ -25,7 +25,7 @@ public class BasicEggModel<A extends LivingEntity & GeoAnimatable> extends GeoMo
     public BasicEggModel(String gname, String tname, @Nullable String head) {
         this(
                 new Identifier(MOD_ID,"geo/" + gname + "_egg.geo.json"),
-                new Identifier(MOD_ID, "textures/entity/fish/" + tname + "_egg.png"),
+                new Identifier(MOD_ID, "textures/entity/fish/" + tname + "/" + tname + "_egg.png"),
                 new Identifier(MOD_ID, "animations/egg.animation.json"), head);
 
     }

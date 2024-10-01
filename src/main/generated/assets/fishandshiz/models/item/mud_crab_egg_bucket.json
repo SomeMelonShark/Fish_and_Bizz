@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "fishandshiz:item/mud_crab_egg_bucket"
-  }
-}

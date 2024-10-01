@@ -11,6 +11,7 @@ import net.minecraft.util.Identifier;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.block.ModBlocks;
 import net.redmelon.fishandshiz.entity.ModEntities;
+import net.redmelon.fishandshiz.item.custom.ArcherfishGunItem;
 import net.redmelon.fishandshiz.item.custom.CultureFeedBucketItem;
 
 import java.util.LinkedHashMap;
@@ -48,6 +49,8 @@ public class ModItems {
             new AliasedBlockItem(ModBlocks.MONTE_CARLO,new FabricItemSettings()));
     public static final Item AMAZON_SWORD = registerItem("amazon_sword",
             new AliasedBlockItem(ModBlocks.AMAZON_SWORD, new FabricItemSettings()));
+    public static final Item POTHOS = registerItem("pothos",
+            new AliasedBlockItem(ModBlocks.POTHOS_PLANT, new FabricItemSettings()));
     public static final Item ANGELFISH_BUCKET = registerItem("angelfish_bucket",
             new EntityBucketItem(ModEntities.ANGELFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item ANGELFISH_FRY_BUCKET = registerItem("angelfish_fry_bucket",
@@ -68,12 +71,6 @@ public class ModItems {
             new EntityBucketItem(ModEntities.MILKFISH_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item MILKFISH_EGG_BUCKET = registerItem("milkfish_egg_bucket",
             new EntityBucketItem(ModEntities.MILKFISH_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
-    public static final Item CLOWNFISH_BUCKET = registerItem("clownfish_bucket",
-            new EntityBucketItem(ModEntities.CLOWNFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
-    public static final Item CLOWNFISH_FRY_BUCKET = registerItem("clownfish_fry_bucket",
-            new EntityBucketItem(ModEntities.CLOWNFISH_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
-    public static final Item CLOWNFISH_EGG_BUCKET = registerItem("clownfish_egg_bucket",
-            new EntityBucketItem(ModEntities.CLOWNFISH_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
     public static final Item CORYDORAS_BUCKET = registerItem("corydoras_bucket",
             new EntityBucketItem(ModEntities.CORYDORAS, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item CORYDORAS_FRY_BUCKET = registerItem("corydoras_fry_bucket",
@@ -96,8 +93,6 @@ public class ModItems {
             new EntityBucketItem(ModEntities.AURATUS, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item AURATUS_FRY_BUCKET = registerItem("auratus_fry_bucket",
             new EntityBucketItem(ModEntities.AURATUS_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
-    public static final Item AURATUS_EGG_BUCKET = registerItem("auratus_egg_bucket",
-            new EntityBucketItem(ModEntities.AURATUS_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
     public static final Item GRAYLING_BUCKET = registerItem("grayling_bucket",
             new EntityBucketItem(ModEntities.GRAYLING, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item GRAYLING_FRY_BUCKET = registerItem("grayling_fry_bucket",
@@ -116,6 +111,38 @@ public class ModItems {
             new EntityBucketItem(ModEntities.BETTA_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item BETTA_EGG_BUCKET = registerItem("betta_egg_bucket",
             new EntityBucketItem(ModEntities.BETTA_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
+    public static final Item PLATY_BUCKET = registerItem("platy_bucket",
+            new EntityBucketItem(ModEntities.PLATY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item PLATY_FRY_BUCKET = registerItem("platy_fry_bucket",
+            new EntityBucketItem(ModEntities.PLATY_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item CLOWNFISH_BUCKET = registerItem("clownfish_bucket",
+            new EntityBucketItem(ModEntities.CLOWNFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item CLOWNFISH_FRY_BUCKET = registerItem("clownfish_fry_bucket",
+            new EntityBucketItem(ModEntities.CLOWNFISH_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item CLOWNFISH_EGG_BUCKET = registerItem("clownfish_egg_bucket",
+            new EntityBucketItem(ModEntities.CLOWNFISH_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
+    public static final Item GOATFISH_BUCKET = registerItem("goatfish_bucket",
+            new EntityBucketItem(ModEntities.GOATFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item TANG_BUCKET = registerItem("tang_bucket",
+            new EntityBucketItem(ModEntities.TANG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item TANG_FRY_BUCKET = registerItem("tang_fry_bucket",
+            new EntityBucketItem(ModEntities.TANG_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item TANG_EGG_BUCKET = registerItem("tang_egg_bucket",
+            new EntityBucketItem(ModEntities.TANG_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
+    public static final Item DOTTYBACK_BUCKET = registerItem("dottyback_bucket",
+            new EntityBucketItem(ModEntities.DOTTYBACK, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item DOTTYBACK_FRY_BUCKET = registerItem("dottyback_fry_bucket",
+            new EntityBucketItem(ModEntities.DOTTYBACK_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item DOTTYBACK_EGG_BUCKET = registerItem("dottyback_egg_bucket",
+            new EntityBucketItem(ModEntities.DOTTYBACK_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
+    public static final Item MARINE_ANGELFISH_BUCKET = registerItem("marine_angelfish_bucket",
+            new EntityBucketItem(ModEntities.MARINE_ANGELFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item PARROTFISH_BUCKET = registerItem("parrotfish_bucket",
+            new EntityBucketItem(ModEntities.PARROTFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item BUTTERFLYFISH_BUCKET = registerItem("butterflyfish_bucket",
+            new EntityBucketItem(ModEntities.BUTTERFLYFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item TRIGGERFISH_BUCKET = registerItem("triggerfish_bucket",
+            new EntityBucketItem(ModEntities.TRIGGERFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item SALMON_FRY_BUCKET = registerItem("salmon_fry_bucket",
             new EntityBucketItem(ModEntities.SALMON_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item SALMON_EGG_BUCKET = registerItem("salmon_egg_bucket",
@@ -124,14 +151,10 @@ public class ModItems {
             new EntityBucketItem(ModEntities.MUD_CRAB, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_POWDER_SNOW, new FabricItemSettings().maxCount(1)));
     public static final Item MUD_CRAB_LARVA_BUCKET = registerItem("mud_crab_larva_bucket",
             new EntityBucketItem(ModEntities.MUD_CRAB_LARVA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
-    public static final Item MUD_CRAB_EGG_BUCKET = registerItem("mud_crab_egg_bucket",
-            new EntityBucketItem(ModEntities.MUD_CRAB_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
     public static final Item CRAYFISH_BUCKET = registerItem("crayfish_bucket",
             new EntityBucketItem(ModEntities.CRAYFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_POWDER_SNOW, new FabricItemSettings().maxCount(1)));
     public static final Item CRAYFISH_LARVA_BUCKET = registerItem("crayfish_larva_bucket",
             new EntityBucketItem(ModEntities.CRAYFISH_LARVA, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
-    public static final Item CRAYFISH_EGG_BUCKET = registerItem("crayfish_egg_bucket",
-            new EntityBucketItem(ModEntities.CRAYFISH_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
     public static final Item VOLCANO_SNAIL_BUCKET = registerItem("volcano_snail_bucket",
             new EntityBucketItem(ModEntities.VOLCANO_SNAIL, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY, new FabricItemSettings().maxCount(1)));
     public static final Item VOLCANO_SNAIL_EGG_BUCKET = registerItem("volcano_snail_egg_bucket",
@@ -157,6 +180,10 @@ public class ModItems {
             new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(8).saturationModifier(3f).build())));
     public static final Item SEA_ANEMONE = registerItem("sea_anemone",
             new AliasedBlockItem(ModBlocks.SEA_ANEMONE,new FabricItemSettings()));
+    public static final Item NITROGEN_DETECTOR = registerItem("nitrogen_detector",
+            new AliasedBlockItem(ModBlocks.NITROGEN_DETECTOR,new FabricItemSettings()));
+    public static final Item ARCHERFISH_GUN = registerItem("archerfish_gun",
+            new ArcherfishGunItem(new FabricItemSettings().maxCount(1)));
 
     public static void init() {
 
@@ -166,6 +193,7 @@ public class ModItems {
         registerCompostable(FANWORT, 0.3f);
         registerCompostable(VALLISNERIA, 0.3f);
         registerCompostable(MONTE_CARLO, 0.3f);
+        registerCompostable(POTHOS, 0.3f);
         registerCompostable(DRIED_MULM, 1.0f);
 
     }

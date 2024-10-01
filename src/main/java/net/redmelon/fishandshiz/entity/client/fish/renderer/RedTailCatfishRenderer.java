@@ -15,7 +15,7 @@ import net.redmelon.fishandshiz.entity.client.fish.model.RedTailCatfishModel;
 import net.redmelon.fishandshiz.entity.custom.fish.RedTailCatfishEntity;
 
 public class RedTailCatfishRenderer extends MobEntityRenderer<RedTailCatfishEntity, RedTailCatfishModel<RedTailCatfishEntity>> {
-    private static final Identifier TEXTURE = new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/red_tail_catfish.png");
+    private static final Identifier TEXTURE = new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/red_tail_catfish/red_tail_catfish.png");
     public RedTailCatfishRenderer(EntityRendererFactory.Context context) {
         super(context, new RedTailCatfishModel<>(context.getPart(ModModelLayers.RED_TAIL_CATFISH)), 1.5f);
     }

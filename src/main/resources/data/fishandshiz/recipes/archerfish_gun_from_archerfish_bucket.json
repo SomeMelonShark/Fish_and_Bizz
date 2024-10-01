@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ABC"
+  ],
+  "key": {
+    "A": {
+      "item": "fishandshiz:archerfish_bucket",
+      "nbt": "{BucketVariantTag:1}"
+    },
+    "B": {
+      "item": "minecraft:dispenser"
+    },
+    "C": {
+      "item": "minecraft:glass"
+    }
+  },
+  "result": {
+    "item": "fishandshiz:archerfish_gun",
+    "count": 1
+  }
+}

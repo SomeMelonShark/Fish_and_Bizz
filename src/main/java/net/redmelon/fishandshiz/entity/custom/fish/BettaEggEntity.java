@@ -23,18 +23,18 @@ import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.FloatGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.variant.BettaVariant;
+import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
+import net.redmelon.fishandshiz.util.ModUtil;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import static com.ibm.icu.text.PluralRules.Operand.j;
+
 public class BettaEggEntity extends BettaEntity implements GeoEntity {
-    @VisibleForTesting
-    public static int MAX_EGG_AGE = Math.abs(-6000);
-    private int stageAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public BettaEggEntity(EntityType<? extends BettaEntity> entityType, World world) {
@@ -67,13 +67,6 @@ public class BettaEggEntity extends BettaEntity implements GeoEntity {
     }
 
     @Override
-    public void tickMovement() {
-        super.tickMovement();
-        if (!this.getWorld().isClient) {
-            this.setStageAge(this.stageAge + 1);
-        }
-    }
-    @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Age", this.stageAge);
@@ -103,45 +96,12 @@ public class BettaEggEntity extends BettaEntity implements GeoEntity {
             this.setStageAge(nbt.getInt("Age"));
         }
     }
-    private int getStageAge() {
-        return this.stageAge;
-    }
-    private void increaseAge(int seconds) {
-        this.setStageAge(this.stageAge + seconds * 20);
-    }
-    private void setStageAge(int stageAge) {
-        this.stageAge = stageAge;
-        if (this.stageAge >= MAX_EGG_AGE) {
-            this.growUp();
-        }
-    }
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
-        RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
-        BettaVariant variant;
-
-        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
-            this.setBettaVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        }
-
-        if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.SWAMP)) {
-                variant = (BettaVariant.WILD1);
-            } else if (registryEntry.matchesKey(BiomeKeys.PLAINS)) {
-                variant = (BettaVariant.WILD2);
-            } else {
-                variant = Util.getRandom(BettaVariant.values(), this.random);
-            }
-        } else {
-            variant = Util.getRandom(BettaVariant.values(), this.random);
-        }
-
-        setVariant(variant);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-        this.setBettaVariant(variant.getId());
+        this.setMature(false);
         return entityData;
     }
 
@@ -150,13 +110,36 @@ public class BettaEggEntity extends BettaEntity implements GeoEntity {
         return false;
     }
 
-    private void growUp() {
-        BettaVariant variant;
+    @Override
+    protected int getMaxStageAge() {
+        return 6000;
+    }
+
+    @Override
+    protected void growUp() {
+        ModEntityColor color;
+        ModEntityColor color2;
+        ModEntityColor color3;
+        BettaPattern pattern;
+        BettaDetail detail;
         World world = this.getWorld();
-        int i = random.nextBetweenExclusive(1, 5);
+        int i = random.nextBetweenExclusive(1, 4);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
-                variant = this.getVariant();
+                int m = random.nextInt(4);
+                if (m != 0) {
+                    color = this.getBaseColor();
+                    color2 = this.getPatternColor();
+                    color3 = this.getDetailColor();
+                    pattern = this.getPattern();
+                    detail = this.getDetail();
+                } else {
+                    pattern = random.nextBoolean() ? this.getPattern() : (ModUtil.getRandomTagValue(getWorld(), BettaPattern.Tag.PATTERNS, random));
+                    detail = random.nextBoolean() ? this.getDetail() : (ModUtil.getRandomTagValue(getWorld(), BettaDetail.Tag.DETAILS, random));
+                    color = random.nextBoolean() ? this.getBaseColor() : (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
+                    color2 = random.nextBoolean() ? this.getPatternColor() : (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
+                    color3 = random.nextBoolean() ? this.getDetailColor() : (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
+                }
                 ServerWorld serverWorld = (ServerWorld)world;
                 BettaFryEntity nextEntity = ModEntities.BETTA_FRY.create(this.getWorld());
                 if (nextEntity != null) {
@@ -168,16 +151,16 @@ public class BettaEggEntity extends BettaEntity implements GeoEntity {
                         nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                     }
                     nextEntity.setPersistent();
-                    nextEntity.setVariant(variant);
+                    nextEntity.setBaseColor(color);
+                    nextEntity.setPatternColor(color2);
+                    nextEntity.setDetailColor(color3);
+                    nextEntity.setPattern(pattern);
+                    nextEntity.setDetail(detail);
                     this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
                     serverWorld.spawnEntityAndPassengers(nextEntity);
                     this.discard();
                 }
             }
-    }
-
-    private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_EGG_AGE - this.stageAge);
     }
 
     @Override
@@ -201,11 +184,6 @@ public class BettaEggEntity extends BettaEntity implements GeoEntity {
     @Override
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.BETTA_EGG_BUCKET);
-    }
-
-    @Override
-    public @Nullable BettaEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return null;
     }
 
     @Override

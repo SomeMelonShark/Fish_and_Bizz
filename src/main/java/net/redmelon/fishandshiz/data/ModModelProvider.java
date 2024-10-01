@@ -2,13 +2,16 @@ package net.redmelon.fishandshiz.data;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
-import net.minecraft.data.client.BlockStateModelGenerator;
-import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.client.ModelIds;
-import net.minecraft.data.client.Models;
+import net.minecraft.block.Block;
+import net.minecraft.block.WallMountedBlock;
+import net.minecraft.block.enums.WallMountLocation;
+import net.minecraft.data.client.*;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Direction;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.block.ModBlocks;
+import net.redmelon.fishandshiz.block.custom.NitrogenDetectorBlock;
 import net.redmelon.fishandshiz.item.ModItems;
 
 public class ModModelProvider extends FabricModelProvider {
@@ -24,6 +27,11 @@ public class ModModelProvider extends FabricModelProvider {
                 BlockStateModelGenerator.TintType.NOT_TINTED);
 
         blockStateModelGenerator.registerDoubleBlock(ModBlocks.TALL_VALLISNERIA, new Identifier(FishAndShiz.MOD_ID,"block/vallisneria"), new Identifier(FishAndShiz.MOD_ID, "block/tall_vallisneria"));
+
+        blockStateModelGenerator.registerTintableCross(ModBlocks.POTHOS_ROOTS,BlockStateModelGenerator.TintType.NOT_TINTED);
+        blockStateModelGenerator.registerTintableCross(ModBlocks.POTHOS_ROOT_CAP,BlockStateModelGenerator.TintType.NOT_TINTED);
+
+        blockStateModelGenerator.registerTintableCross(ModBlocks.LILY_PAD_STEM,BlockStateModelGenerator.TintType.NOT_TINTED);
 
         blockStateModelGenerator.registerParentedItemModel(ModItems.CAPYBARA_SPAWN_EGG, ModelIds.getMinecraftNamespacedItem("template_spawn_egg"));
         blockStateModelGenerator.registerParentedItemModel(ModItems.MILKFISH_SPAWN_EGG, ModelIds.getMinecraftNamespacedItem("template_spawn_egg"));
@@ -47,6 +55,7 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.VALLISNERIA, Models.GENERATED);
         itemModelGenerator.register(ModItems.MONTE_CARLO, Models.GENERATED);
         itemModelGenerator.register(ModItems.AMAZON_SWORD, Models.GENERATED);
+        itemModelGenerator.register(ModItems.POTHOS, Models.GENERATED);
         itemModelGenerator.register(ModItems.ANGELFISH_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.ANGELFISH_FRY_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.ANGELFISH_EGG_BUCKET, Models.GENERATED);
@@ -57,9 +66,6 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.MILKFISH_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.MILKFISH_FRY_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.MILKFISH_EGG_BUCKET, Models.GENERATED);
-        itemModelGenerator.register(ModItems.CLOWNFISH_BUCKET, Models.GENERATED);
-        itemModelGenerator.register(ModItems.CLOWNFISH_FRY_BUCKET, Models.GENERATED);
-        itemModelGenerator.register(ModItems.CLOWNFISH_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.CORYDORAS_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.CORYDORAS_FRY_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.CORYDORAS_EGG_BUCKET, Models.GENERATED);
@@ -71,7 +77,6 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.RAINBOWFISH_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.AURATUS_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.AURATUS_FRY_BUCKET, Models.GENERATED);
-        itemModelGenerator.register(ModItems.AURATUS_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.GRAYLING_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.GRAYLING_FRY_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.GRAYLING_EGG_BUCKET, Models.GENERATED);
@@ -81,14 +86,28 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.BETTA_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.BETTA_FRY_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.BETTA_EGG_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.PLATY_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.PLATY_FRY_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.CLOWNFISH_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.CLOWNFISH_FRY_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.CLOWNFISH_EGG_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.GOATFISH_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.TANG_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.TANG_FRY_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.TANG_EGG_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.DOTTYBACK_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.DOTTYBACK_FRY_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.DOTTYBACK_EGG_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.MARINE_ANGELFISH_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.PARROTFISH_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.BUTTERFLYFISH_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.TRIGGERFISH_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.SALMON_FRY_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.SALMON_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.MUD_CRAB_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.MUD_CRAB_LARVA_BUCKET, Models.GENERATED);
-        itemModelGenerator.register(ModItems.MUD_CRAB_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.CRAYFISH_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.CRAYFISH_LARVA_BUCKET, Models.GENERATED);
-        itemModelGenerator.register(ModItems.CRAYFISH_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.VOLCANO_SNAIL_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.VOLCANO_SNAIL_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.MILKFISH, Models.GENERATED);

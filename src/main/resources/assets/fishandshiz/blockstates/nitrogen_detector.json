@@ -1,0 +1,89 @@
+{
+  "variants": {
+    "facing=north,face=floor,unstable=false": { "model": "fishandshiz:block/nitrogen_detector_stable" },
+    "facing=south,face=floor,unstable=false": { "model": "fishandshiz:block/nitrogen_detector_stable",
+      "y": 180
+    },
+    "facing=east,face=floor,unstable=false": { "model": "fishandshiz:block/nitrogen_detector_stable",
+      "y": 90
+    },
+    "facing=west,face=floor,unstable=false": { "model": "fishandshiz:block/nitrogen_detector_stable",
+      "y": 270
+    },
+
+    "facing=north,face=wall,unstable=false": { "model": "fishandshiz:block/nitrogen_detector_stable",
+      "x": 90
+    },
+    "facing=south,face=wall,unstable=false": { "model": "fishandshiz:block/nitrogen_detector_stable",
+      "x": 90,
+      "y": 180
+    },
+    "facing=east,face=wall,unstable=false": { "model": "fishandshiz:block/nitrogen_detector_stable",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west,face=wall,unstable=false": { "model": "fishandshiz:block/nitrogen_detector_stable",
+      "x": 90,
+      "y": 270
+    },
+
+    "facing=north,face=ceiling,unstable=false": { "model": "fishandshiz:block/nitrogen_detector_stable",
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,face=ceiling,unstable=false": { "model": "fishandshiz:block/nitrogen_detector_stable",
+      "x": 180
+    },
+    "facing=east,face=ceiling,unstable=false": { "model": "fishandshiz:block/nitrogen_detector_stable",
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,face=ceiling,unstable=false": { "model": "fishandshiz:block/nitrogen_detector_stable",
+      "x": 180,
+      "y": 90
+    },
+
+    "facing=north,face=floor,unstable=true": { "model": "fishandshiz:block/nitrogen_detector_unstable" },
+    "facing=south,face=floor,unstable=true": { "model": "fishandshiz:block/nitrogen_detector_unstable",
+      "y": 180
+    },
+    "facing=east,face=floor,unstable=true": { "model": "fishandshiz:block/nitrogen_detector_unstable",
+      "y": 90
+    },
+    "facing=west,face=floor,unstable=true": { "model": "fishandshiz:block/nitrogen_detector_unstable",
+      "y": 270
+    },
+
+    "facing=north,face=wall,unstable=true": { "model": "fishandshiz:block/nitrogen_detector_unstable",
+      "x": 90
+    },
+    "facing=south,face=wall,unstable=true": { "model": "fishandshiz:block/nitrogen_detector_unstable",
+      "x": 90,
+      "y": 180
+    },
+    "facing=east,face=wall,unstable=true": { "model": "fishandshiz:block/nitrogen_detector_unstable",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west,face=wall,unstable=true": { "model": "fishandshiz:block/nitrogen_detector_unstable",
+      "x": 90,
+      "y": 270
+    },
+
+    "facing=north,face=ceiling,unstable=true": { "model": "fishandshiz:block/nitrogen_detector_unstable",
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,face=ceiling,unstable=true": { "model": "fishandshiz:block/nitrogen_detector_unstable",
+      "x": 180
+    },
+    "facing=east,face=ceiling,unstable=true": { "model": "fishandshiz:block/nitrogen_detector_unstable",
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,face=ceiling,unstable=true": { "model": "fishandshiz:block/nitrogen_detector_unstable",
+      "x": 180,
+      "y": 90
+    }
+  }
+}

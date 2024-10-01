@@ -1,7 +1,9 @@
 package net.redmelon.fishandshiz.entity.custom.fish;
 
 import net.minecraft.entity.Bucketable;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -10,6 +12,7 @@ import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.world.ServerWorld;
@@ -17,6 +20,8 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
@@ -39,30 +44,40 @@ public class OscarEntity extends SchoolingBreedEntity implements GeoEntity {
         super(entityType, world);
     }
 
+    @Override
+    protected int getNitrogenIncreaseAmount() {
+        if (!isFry() && !isMature()) {
+            return 0;
+        } else if (isFry()) {
+            return 1;
+        }
+        return 4;
+    }
+
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 12)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 5)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4);
     }
 
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater()) {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.oscar.swim", Animation.LoopType.LOOP));
+                    .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.oscar.flop", Animation.LoopType.LOOP));
+                    .then("animation.mediumfish.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
     }
 
     @Override
     protected void initGoals() {
+        super.initGoals();
         this.goalSelector.add(0, new EscapeDangerGoal(this, 2));
-        this.goalSelector.add(2, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
-        this.goalSelector.add(3, new BreedAnimalMateGoal(this, 1));
-        this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
+        this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
+        this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));
         this.goalSelector.add(6, new MeleeAttackGoal(this, 1.2f, true));
 
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, AngelfishEntity.class, true));
@@ -71,40 +86,15 @@ public class OscarEntity extends SchoolingBreedEntity implements GeoEntity {
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, BettaEntity.class, true));
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, CorydorasEntity.class, true));
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, NeonTetraEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, PlatyEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, ClownfishEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, TangEntity.class, true));
+        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, DottybackEntity.class, true));
     }
 
     @Override
     public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
         return ModEntities.OSCAR_EGG.create(getWorld());
-    }
-
-    public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        ItemStack itemStack = player.getStackInHand(hand);
-        if (this.isCultureFeed(itemStack) && getBreedingAge() > 0) {
-            this.eatCultureFeed(player, itemStack);
-            return ActionResult.success(this.getWorld().isClient);
-        } else {
-            return (ActionResult) Bucketable.tryBucket(player, hand, this).orElse(super.interactMob(player, hand));
-        }
-    }
-
-    private boolean isCultureFeed(ItemStack stack) {
-        return stack.isOf(ModItems.DRIED_CULTURE_FEED);
-    }
-    private void eatCultureFeed (PlayerEntity player, ItemStack stack) {
-        this.decrementItem(player, stack);
-        this.cultureAge();
-        this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
-        this.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.5f);
-    }
-    private void decrementItem(PlayerEntity player, ItemStack stack) {
-        if (!player.getAbilities().creativeMode) {
-            stack.decrement(1);
-        }
-    }
-
-    private void cultureAge() {
-        this.setBreedingAge((int) (getBreedingAge() * 0.9));
     }
 
     @Override

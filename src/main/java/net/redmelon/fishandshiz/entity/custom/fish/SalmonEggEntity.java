@@ -2,6 +2,7 @@ package net.redmelon.fishandshiz.entity.custom.fish;
 
 import com.google.common.annotations.VisibleForTesting;
 import net.minecraft.entity.Bucketable;
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.control.MoveControl;
@@ -13,6 +14,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
@@ -26,32 +29,20 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class SalmonEggEntity extends SchoolingBreedEntity implements GeoEntity {
-    @VisibleForTesting
-    public static int MAX_EGG_AGE = Math.abs(-18000);
-    private int stageAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public SalmonEggEntity(EntityType<? extends SalmonEggEntity> entityType, World world) {
         super(entityType, world);
-        this.moveControl = new SalmonEggEntity.FishMoveControl(this);
     }
 
-    public static DefaultAttributeContainer.Builder setAttributes() {
-        return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
-    }
-    static class FishMoveControl
-            extends MoveControl {
-        private final AnimalFishEntity fish;
-
-        FishMoveControl(AnimalFishEntity owner) {
-            super(owner);
-            this.fish = owner;
+    @Override
+    protected int getNitrogenIncreaseAmount() {
+        if (!isFry() && !isMature()) {
+            return 0;
+        } else if (isFry()) {
+            return 1;
         }
-
-        @Override
-        public void tick() {//does not move
-        }
+        return 4;
     }
 
     @Override
@@ -89,17 +80,13 @@ public class SalmonEggEntity extends SchoolingBreedEntity implements GeoEntity {
             this.setStageAge(nbt.getInt("Age"));
         }
     }
-    private int getStageAge() {
-        return this.stageAge;
-    }
-    private void increaseAge(int seconds) {
-        this.setStageAge(this.stageAge + seconds * 20);
-    }
-    private void setStageAge(int stageAge) {
-        this.stageAge = stageAge;
-        if (this.stageAge >= MAX_EGG_AGE) {
-            this.growUp();
-        }
+
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
+                                 @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
+        entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        this.setMature(false);
+        return entityData;
     }
 
     @Override
@@ -107,8 +94,13 @@ public class SalmonEggEntity extends SchoolingBreedEntity implements GeoEntity {
         return false;
     }
 
+    @Override
+    protected int getMaxStageAge() {
+        return 18000;
+    }
 
-    private void growUp() {
+    @Override
+    protected void growUp() {
         World world = this.getWorld();
         int i = random.nextBetweenExclusive(10, 15);
         for (int j = 1; j <= i; ++j)
@@ -129,10 +121,6 @@ public class SalmonEggEntity extends SchoolingBreedEntity implements GeoEntity {
                     this.discard();
                 }
             }
-    }
-
-    private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_EGG_AGE - this.stageAge);
     }
 
     @Override

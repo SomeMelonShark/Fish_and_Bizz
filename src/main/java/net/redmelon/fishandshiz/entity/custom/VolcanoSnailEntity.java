@@ -9,24 +9,19 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
-import net.minecraft.world.biome.Biome;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedWaterAnimalMateGoal;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.WaterWanderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.sound.ModSounds;
 import org.jetbrains.annotations.Nullable;
@@ -35,7 +30,6 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-import software.bernie.shadowed.eliotlash.mclib.math.functions.classic.Mod;
 
 public class VolcanoSnailEntity extends AnimalWaterEntity implements GeoEntity {
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
@@ -43,14 +37,20 @@ public class VolcanoSnailEntity extends AnimalWaterEntity implements GeoEntity {
         super(entityType, world);
     }
 
+    @Override
+    protected int getNitrogenIncreaseAmount() {
+        return 1;
+    }
+
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 2)
+                .add(EntityAttributes.GENERIC_ARMOR, 1)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.22f);
     }
 
     protected void initGoals() {
-        this.goalSelector.add(2, new BreedWaterAnimalMateGoal(this, 1.0));
+        this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1.0));
         this.goalSelector.add(3, new WaterWanderGoal(this, 1.0));
     }
 

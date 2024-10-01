@@ -20,6 +20,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
+import net.redmelon.fishandshiz.cclass.AltSchoolingBreedEntity;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.AltBreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.VisibleForTesting;
@@ -29,15 +31,20 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class MudCrabLarvaEntity extends SchoolingFishEntity implements GeoEntity {
+public class MudCrabLarvaEntity extends AltSchoolingBreedEntity implements GeoEntity {
     @VisibleForTesting
     public static int MAX_LARVA_AGE = Math.abs(-18000);
     public static float WIDTH = 0.4f;
     public static float HEIGHT = 0.4f;
     private int larvaAge;
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    public MudCrabLarvaEntity(EntityType<? extends SchoolingFishEntity> entityType, World world) {
+    public MudCrabLarvaEntity(EntityType<? extends AltSchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    protected int getNitrogenIncreaseAmount() {
+        return 1;
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -73,7 +80,7 @@ public class MudCrabLarvaEntity extends SchoolingFishEntity implements GeoEntity
         this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25));
         this.goalSelector.add(2, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
         this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
-        this.goalSelector.add(4, new FollowGroupLeaderGoal(this));
+        this.goalSelector.add(4, new AltBreedFollowGroupLeaderGoal(this));
     }
 
     @Override

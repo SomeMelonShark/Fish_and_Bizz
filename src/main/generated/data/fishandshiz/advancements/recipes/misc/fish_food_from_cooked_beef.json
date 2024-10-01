@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:fish_food_from_cooked_beef"
+        "recipe": "fishandshiz:fish_food_from_cooked_beef"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:fish_food_from_cooked_beef"
+      "fishandshiz:fish_food_from_cooked_beef"
     ]
   },
   "sends_telemetry_event": false

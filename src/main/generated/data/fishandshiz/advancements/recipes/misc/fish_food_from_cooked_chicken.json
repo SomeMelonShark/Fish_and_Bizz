@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:fish_food_from_cooked_chicken"
+        "recipe": "fishandshiz:fish_food_from_cooked_chicken"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:fish_food_from_cooked_chicken"
+      "fishandshiz:fish_food_from_cooked_chicken"
     ]
   },
   "sends_telemetry_event": false

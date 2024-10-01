@@ -10,11 +10,17 @@ import net.redmelon.fishandshiz.block.ModBlocks;
 
 public class ModBlockEntities {
     public static BlockEntityType<SeaAnemoneBlockEntity> SEA_ANEMONE_ENTITY;
+    public static BlockEntityType<NitrogenDetectorBlockEntity> NITROGEN_DETECTOR_ENTITY;
 
     public static void registerAllBlockEntities() {
         SEA_ANEMONE_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,
                 new Identifier(FishAndShiz.MOD_ID, "sea_anemone"),
                 FabricBlockEntityTypeBuilder.create(SeaAnemoneBlockEntity::new,
                         ModBlocks.SEA_ANEMONE).build());
+
+        NITROGEN_DETECTOR_ENTITY = Registry.register(Registries.BLOCK_ENTITY_TYPE,
+                new Identifier(FishAndShiz.MOD_ID, "nitrogen_detector"),
+                FabricBlockEntityTypeBuilder.create(NitrogenDetectorBlockEntity::new,
+                        ModBlocks.NITROGEN_DETECTOR).build());
     }
 }

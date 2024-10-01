@@ -36,16 +36,13 @@ import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.WaterStopGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.custom.CrayfishEggEntity;
 import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
-import net.redmelon.fishandshiz.entity.custom.MudCrabEggEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
-import net.redmelon.fishandshiz.entity.tags.TropicalSpawn;
-import net.redmelon.fishandshiz.entity.variant.AngelfishVariant;
-import net.redmelon.fishandshiz.entity.variant.BettaVariant;
+import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
-import net.redmelon.fishandshiz.world.biome.ModBiomes;
+import net.redmelon.fishandshiz.util.ModUtil;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -53,15 +50,32 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
-    protected static final TrackedData<Integer> VARIANT =
-            DataTracker.registerData(BettaEntity.class, TrackedDataHandlerRegistry.INTEGER);
+import static com.ibm.icu.text.PluralRules.Operand.e;
+import static com.ibm.icu.text.PluralRules.Operand.j;
+
+public class BettaEntity extends SchoolingBreedEntity implements GeoEntity, VariableFishEntity<BettaPattern, BettaDetail> {
+    private static final TrackedData<BettaPattern> PATTERN = DataTracker.registerData(BettaEntity.class, BettaPattern.TRACKED_DATA_HANDLER);
+    private static final TrackedData<BettaDetail> DETAIL = DataTracker.registerData(BettaEntity.class, BettaDetail.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> BASE_COLOR = DataTracker.registerData(BettaEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> PATTERN_COLOR = DataTracker.registerData(BettaEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> DETAIL_COLOR = DataTracker.registerData(BettaEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(BettaEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public BettaEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    protected int getNitrogenIncreaseAmount() {
+        if (!isFry() && !isMature()) {
+            return 0;
+        } else if (isFry()) {
+            return 1;
+        }
+        return 2;
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
@@ -75,7 +89,7 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.betta.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
-        } else if (this.isTouchingWater() && !animationState.isMoving()){
+        } else if (this.isTouchingWater() && !animationState.isMoving() && !this.isNavigating()){
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.betta.idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
@@ -88,11 +102,11 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
 
     @Override
     protected void initGoals() {
+        super.initGoals();
         this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25));
-        this.goalSelector.add(2, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
-        this.goalSelector.add(3, new BreedAnimalMateGoal(this, 1));
-        this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
-        this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
+        this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
+        this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));
+        this.goalSelector.add(3, new WaterStopGoal(this, 40, 100));
         this.goalSelector.add(6, new MeleeAttackGoal(this, 0.2f, true));
 
         this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, NeonTetraEntity.class, true));
@@ -106,17 +120,19 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, AmurCarpFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, AngelfishFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, BettaFryEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, ClownfishFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, GraylingFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, MilkfishFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, OscarFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, RainbowfishFryEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, SalmonFryEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, PlatyFryEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, ClownfishFryEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, TangFryEntity.class, true));
+        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, DottybackFryEntity.class, true));
 
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AmurCarpEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AuratusEggEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, BettaEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AngelfishEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, ClownfishEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, CorydorasEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, GraylingEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, MilkfishEggEntity.class, true));
@@ -124,62 +140,34 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, OscarEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, RainbowfishEggEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, SalmonEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, CrayfishEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, MudCrabEggEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, ClownfishEggEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, TangEggEntity.class, true));
+        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, DottybackEggEntity.class, true));
     }
 
     @Override
     public @Nullable BettaEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        BettaEntity bettaEntity = (BettaEntity) var2;
-        BettaEggEntity bettaEggEntity = (BettaEggEntity) ModEntities.BETTA_EGG.create(var1);
-        if (bettaEggEntity != null) {
-            int i = random.nextInt(4);
-            BettaVariant variant;
-            if (i < 2) {
-                variant = this.getVariant();
-            } else if (i > 2) {
-                variant = bettaEntity.getVariant();
-            } else {
-                variant = (BettaVariant) Util.getRandom(BettaVariant.values(), this.random);
-            }
+        BettaEntity entity = (BettaEntity) var2;
+        BettaEggEntity eggEntity = (BettaEggEntity) ModEntities.BETTA_EGG.create(var1);
+        if (eggEntity != null) {
+            ModEntityColor color;
+            ModEntityColor color2;
+            ModEntityColor color3;
+            BettaPattern pattern;
+            BettaDetail detail;
+            color = random.nextBoolean() ? this.getBaseColor() : entity.getBaseColor();
+            color2 = random.nextBoolean() ? this.getPatternColor() : entity.getPatternColor();
+            color3 = random.nextBoolean() ? this.getDetailColor() : entity.getDetailColor();
+            pattern = random.nextBoolean() ? this.getPattern() : entity.getPattern();
+            detail = random.nextBoolean() ? this.getDetail() : entity.getDetail();
 
-            bettaEggEntity.setVariant(variant);
+            eggEntity.setBaseColor(color);
+            eggEntity.setPatternColor(color2);
+            eggEntity.setDetailColor(color3);
+            eggEntity.setPattern(pattern);
+            eggEntity.setDetail(detail);
         }
-        return bettaEggEntity;
-    }
-
-    public ActionResult interactMob(PlayerEntity player, Hand hand) {
-        ItemStack itemStack = player.getStackInHand(hand);
-        if (this.isCultureFeed(itemStack) && getBreedingAge() > 0) {
-            this.eatCultureFeed(player, itemStack);
-            return ActionResult.success(this.getWorld().isClient);
-        } else {
-            return (ActionResult) Bucketable.tryBucket(player, hand, this).orElse(super.interactMob(player, hand));
-        }
-    }
-
-    private boolean isCultureFeed(ItemStack stack) {
-        return stack.isOf(ModItems.DRIED_CULTURE_FEED);
-    }
-    private void eatCultureFeed (PlayerEntity player, ItemStack stack) {
-        this.decrementItem(player, stack);
-        this.cultureAge();
-        this.getWorld().addParticle(ParticleTypes.HAPPY_VILLAGER, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), 0.0, 0.0, 0.0);
-        this.playSound(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f, 1.5f);
-    }
-    private void decrementItem(PlayerEntity player, ItemStack stack) {
-        if (!player.getAbilities().creativeMode) {
-            stack.decrement(1);
-        }
-    }
-
-    private void cultureAge() {
-        this.setBreedingAge((int) (getBreedingAge() * 0.9));
-    }
-
-    @Override
-    public boolean isBreedingItem(ItemStack stack) {
-        return stack.getItem() == ModItems.FISH_FOOD;
+        return eggEntity;
     }
 
     @Override
@@ -217,93 +205,150 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity {
         return factory;
     }
 
-    public static BettaVariant getVariety(int variant) {
-        return BettaVariant.byId(variant);
+    public NbtCompound writeMateData(NbtCompound nbt) {
+        nbt.putString("Pattern", getPattern().getId().toString());
+        nbt.putString("Detail", getDetail().getId().toString());
+        nbt.putString("BaseColor", getBaseColor().getId().toString());
+        nbt.putString("PatternColor", getPatternColor().getId().toString());
+        nbt.putString("DetailColor", getDetailColor().getId().toString());
+        return nbt;
     }
 
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("Variant", this.getTypeVariant());
+        writeMateData(nbt);
+        nbt.put("MateData", getMateData());
+
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.dataTracker.set(VARIANT, nbt.getInt("Variant"));
+        setPattern(BettaPattern.fromId(nbt.getString("Pattern")));
+        setDetail(BettaDetail.fromId(nbt.getString("Detail")));
+        setBaseColor(ModEntityColor.fromId(nbt.getString("BaseColor")));
+        setPatternColor(ModEntityColor.fromId(nbt.getString("PatternColor")));
+        setDetailColor(ModEntityColor.fromId(nbt.getString("DetailColor")));
+        if(nbt.contains("MateData", NbtElement.COMPOUND_TYPE))
+            setMateData(nbt.getCompound("MateData"));
     }
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        this.dataTracker.startTracking(VARIANT, 0);
+        dataTracker.startTracking(PATTERN, BettaPattern.WILD1);
+        dataTracker.startTracking(DETAIL, BettaDetail.NONE);
+        dataTracker.startTracking(BASE_COLOR, ModEntityColor.SILVER);
+        dataTracker.startTracking(PATTERN_COLOR, ModEntityColor.SILVER);
+        dataTracker.startTracking(DETAIL_COLOR, ModEntityColor.SILVER);
+        dataTracker.startTracking(MATE_DATA, new NbtCompound());
     }
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
-        BettaVariant variant;
-        int j = random.nextInt(1200);
-
-        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
-            this.setBettaVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        }
-
-        if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE) && j != 0) {
-            this.setBettaVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        } else if (spawnReason == SpawnReason.CONVERSION && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE) && j == 0) {
-            variant = (BettaVariant.SPECIAL);
-            this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.0f, 1.5f);
-        }else if (spawnReason == SpawnReason.CONVERSION) {
-            int i = random.nextInt(7);
-            if (i == 1) {
-                variant = BettaVariant.byId(random.nextInt(7));
-            } else {
-                variant = (BettaVariant.WILD1);
-            }
-        } else {
-            variant = BettaVariant.byId(random.nextInt(7));
-        }
-
-        if (spawnReason == SpawnReason.NATURAL && j == 0){
-            variant = (BettaVariant.SPECIAL);
-            this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 2.0f, 1.5f);
-        } else if (spawnReason == SpawnReason.NATURAL) {
+        ModEntityColor color;
+        ModEntityColor color2;
+        ModEntityColor color3;
+        BettaPattern pattern;
+        BettaDetail detail;
+        if (spawnReason == SpawnReason.NATURAL) {
             if (registryEntry.matchesKey(BiomeKeys.SWAMP)) {
-                variant = (BettaVariant.WILD1);
-            } else if (registryEntry.matchesKey(BiomeKeys.PLAINS)) {
-                variant = (BettaVariant.WILD2);
+                pattern = (BettaPattern.WILD1);
+                detail = (BettaDetail.SPECKLED);
+                color = (ModEntityColor.DARK_GREEN);
+                color2 = (ModEntityColor.FECAL_BROWN);
+                color3 = (ModEntityColor.NEON_GREEN);
+            } else if (registryEntry.matchesKey(BiomeKeys.PLAINS)){
+                pattern = (BettaPattern.WILD2);
+                detail = (BettaDetail.SCALAR);
+                color = (ModEntityColor.GREEN);
+                color2 = (ModEntityColor.RERANGE);
+                color3 = (ModEntityColor.LIGHT_BLUE);
+            }else {
+                pattern = (ModUtil.getRandomTagValue(getWorld(), BettaPattern.Tag.PATTERNS, random));
+                detail = (ModUtil.getRandomTagValue(getWorld(), BettaDetail.Tag.DETAILS, random));
+                color = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
+                color2 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
+                color3 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
             }
         } else {
-            variant = BettaVariant.byId(random.nextInt(7));
+            pattern = (ModUtil.getRandomTagValue(getWorld(), BettaPattern.Tag.PATTERNS, random));
+            detail = (ModUtil.getRandomTagValue(getWorld(), BettaDetail.Tag.DETAILS, random));
+            color = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
+            color2 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
+            color3 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
         }
-        setVariant(variant);
+        setPattern(pattern);
+        setDetail(detail);
+        setBaseColor(color);
+        setPatternColor(color2);
+        setDetailColor(color3);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-        this.setBettaVariant(variant.getId());
         return entityData;
+    }
+    public void setBaseColor(ModEntityColor color) {
+        dataTracker.set(BASE_COLOR, color);
+    }
+
+    public ModEntityColor getBaseColor() {
+        return dataTracker.get(BASE_COLOR);
+    }
+
+    public void setPatternColor(ModEntityColor color) {
+        dataTracker.set(PATTERN_COLOR, color);
+    }
+
+    public ModEntityColor getPatternColor() {
+        return dataTracker.get(PATTERN_COLOR);
+    }
+
+    public void setDetailColor(ModEntityColor color) {
+        dataTracker.set(DETAIL_COLOR, color);
+    }
+
+    public ModEntityColor getDetailColor() {
+        return dataTracker.get(DETAIL_COLOR);
+    }
+
+    public void setPattern(BettaPattern pattern) {
+        dataTracker.set(PATTERN, pattern);
+    }
+
+    public BettaPattern getPattern() {
+        return dataTracker.get(PATTERN);
+    }
+
+    public void setDetail(BettaDetail detail) {
+        dataTracker.set(DETAIL, detail);
+    }
+
+    public BettaDetail getDetail() {
+        return dataTracker.get(DETAIL);
+    }
+
+    public void setMateData(NbtCompound mateData) {
+        dataTracker.set(MATE_DATA, mateData);
+    }
+
+    public NbtCompound getMateData() {
+        return dataTracker.get(MATE_DATA);
+    }
+
+    @Override @SuppressWarnings("deprecation")
+    public void copyDataFromNbt(NbtCompound nbt) {
+        Bucketable.copyDataFromNbt(this, nbt);
+        if(nbt.contains("Pattern", NbtElement.STRING_TYPE)) {
+            readCustomDataFromNbt(nbt);
+        }
     }
 
     @Override
     public void copyDataToStack(ItemStack stack) {
         super.copyDataToStack(stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
-        nbtCompound.putInt(BUCKET_VARIANT_TAG_KEY, this.getTypeVariant());
-    }
-
-    public BettaVariant getVariant() {
-        return BettaVariant.byId(this.getTypeVariant() & 255);
-    }
-
-    private int getTypeVariant() {
-        return this.dataTracker.get(VARIANT);
-    }
-
-    protected void setVariant(BettaVariant variant) {
-        this.dataTracker.set(VARIANT, variant.getId() & 255);
-    }
-
-    protected void setBettaVariant(int variant) {
-        this.dataTracker.set(VARIANT, variant);
+        writeMateData(nbtCompound);
+        nbtCompound.put("MateData", getMateData());
+        nbtCompound.put(BUCKET_VARIANT_TAG_KEY, this.getMateData());
     }
 }

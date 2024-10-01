@@ -53,30 +53,40 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
         super(entityType, world);
     }
 
+    @Override
+    protected int getNitrogenIncreaseAmount() {
+        if (!isFry() && !isMature()) {
+            return 0;
+        } else if (isFry()) {
+            return 1;
+        }
+        return 3;
+    }
+
     public static DefaultAttributeContainer.Builder setAttributes() {
         return SchoolingBreedEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 6)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 3)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 20);
     }
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater()) {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.archerfish.swim", Animation.LoopType.LOOP));
+                    .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else {
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.archerfish.flop", Animation.LoopType.LOOP));
+                    .then("animation.mediumfish.flop", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
     }
 
     @Override
     protected void initGoals() {
+        super.initGoals();
         this.goalSelector.add(0, new EscapeDangerGoal(this, 2));
         this.goalSelector.add(2, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
         this.goalSelector.add(3, new WaterAttackGoal(this, 1.0, 40, 10.0f));
-        this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
-        this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
+        this.goalSelector.add(3, new BreedFollowGroupLeaderGoal(this));
 
         this.targetSelector.add(2, new ActiveTargetGoal<SpiderEntity>((MobEntity)this, SpiderEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<CaveSpiderEntity>((MobEntity)this, CaveSpiderEntity.class, true));
@@ -182,7 +192,7 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
         if (spawnReason == SpawnReason.NATURAL) {
             if (j == 0){
                 variant = BiVariant.SPECIAL;
-                this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.0f, 1.5f);
+                this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.5f, 1.5f);
             } else {
                 variant = BiVariant.NORMAL;
             }

@@ -16,6 +16,7 @@ public class ModConfiguredFeatures {
     public static final RegistryKey<ConfiguredFeature<?, ?>> VALLISNERIA_KEY = registerKey("vallisneria");
     public static final RegistryKey<ConfiguredFeature<?, ?>> MONTE_CARLO_KEY = registerKey("monte_carlo");
     public static final RegistryKey<ConfiguredFeature<?, ?>> AMAZON_SWORD_KEY = registerKey("amazon_sword");
+    public static final RegistryKey<ConfiguredFeature<?, ?>> POTHOS_KEY = registerKey("pothos");
     public static final RegistryKey<ConfiguredFeature<?, ?>> CULTURE_FEED_KEY = registerKey("culture_feed");
     public static final RegistryKey<ConfiguredFeature<?, ?>> LAKE = registerKey("lake");
 
@@ -23,6 +24,9 @@ public class ModConfiguredFeatures {
         ConfiguredFeatures.register(context, FANWORT_KEY, ModFeatures.FANWORT);
         ConfiguredFeatures.register(context, MONTE_CARLO_KEY, ModFeatures.MONTE_CARLO);
         ConfiguredFeatures.register(context, AMAZON_SWORD_KEY, ModFeatures.AMAZON_SWORD);
+        ConfiguredFeatures.register(context, POTHOS_KEY, Feature.RANDOM_PATCH,
+                new RandomPatchFeatureConfig(10, 7, 3, PlacedFeatures.createEntry(Feature.SIMPLE_BLOCK,
+                        new SimpleBlockFeatureConfig(BlockStateProvider.of(ModBlocks.POTHOS_PLANT)))));
         ConfiguredFeatures.register(context, CULTURE_FEED_KEY, ModFeatures.CULTURE_FEED);
         ConfiguredFeatures.register(context, VALLISNERIA_KEY, ModFeatures.VALLISNERIA, new ProbabilityConfig(0.8F));
         register(context, LAKE, Feature.LAKE,

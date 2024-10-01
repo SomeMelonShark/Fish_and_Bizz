@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:sponge"
+        "recipe": "fishandshiz:sponge"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:sponge"
+      "fishandshiz:sponge"
     ]
   },
   "sends_telemetry_event": false

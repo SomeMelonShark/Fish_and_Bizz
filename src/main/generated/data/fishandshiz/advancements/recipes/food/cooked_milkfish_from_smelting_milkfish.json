@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:cooked_milkfish_from_smelting_milkfish"
+        "recipe": "fishandshiz:cooked_milkfish_from_smelting_milkfish"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:cooked_milkfish_from_smelting_milkfish"
+      "fishandshiz:cooked_milkfish_from_smelting_milkfish"
     ]
   },
   "sends_telemetry_event": false

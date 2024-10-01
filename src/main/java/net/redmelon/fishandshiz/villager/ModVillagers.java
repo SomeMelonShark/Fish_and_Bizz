@@ -250,15 +250,6 @@ public class ModVillagers {
         TradeOfferHelper.registerVillagerOffers(AQUARIST, 3,
                 factories -> {
                     factories.add(((entity, random) -> new TradeOffer(
-                            new ItemStack(Items.EMERALD, 8),
-                            new ItemStack(ModItems.CLOWNFISH_BUCKET, 1),
-                            4, 3, 0.05f
-                    )));
-                });
-
-        TradeOfferHelper.registerVillagerOffers(AQUARIST, 3,
-                factories -> {
-                    factories.add(((entity, random) -> new TradeOffer(
                             new ItemStack(Items.EMERALD, 10),
                             new ItemStack(ModItems.ARCHERFISH_BUCKET, 1),
                             3, 4, 0.05f
@@ -358,15 +349,6 @@ public class ModVillagers {
         TradeOfferHelper.registerVillagerOffers(AQUARIST, 4,
                 factories -> {
                     factories.add(((entity, random) -> new TradeOffer(
-                            new ItemStack(ModItems.AURATUS_EGG_BUCKET, 1),
-                            new ItemStack(Items.EMERALD, 6),
-                            6, 4, 0.05f
-                    )));
-                });
-
-        TradeOfferHelper.registerVillagerOffers(AQUARIST, 4,
-                factories -> {
-                    factories.add(((entity, random) -> new TradeOffer(
                             new ItemStack(ModItems.CORYDORAS_BUCKET, 1),
                             new ItemStack(Items.EMERALD, 3),
                             6, 4, 0.05f
@@ -414,33 +396,6 @@ public class ModVillagers {
                     factories.add(((entity, random) -> new TradeOffer(
                             new ItemStack(ModItems.RAINBOWFISH_EGG_BUCKET, 1),
                             new ItemStack(Items.EMERALD, 5),
-                            6, 4, 0.05f
-                    )));
-                });
-
-        TradeOfferHelper.registerVillagerOffers(AQUARIST, 4,
-                factories -> {
-                    factories.add(((entity, random) -> new TradeOffer(
-                            new ItemStack(ModItems.CLOWNFISH_BUCKET, 1),
-                            new ItemStack(Items.EMERALD, 6),
-                            6, 4, 0.05f
-                    )));
-                });
-
-        TradeOfferHelper.registerVillagerOffers(AQUARIST, 4,
-                factories -> {
-                    factories.add(((entity, random) -> new TradeOffer(
-                            new ItemStack(ModItems.CLOWNFISH_FRY_BUCKET, 1),
-                            new ItemStack(Items.EMERALD, 5),
-                            6, 4, 0.05f
-                    )));
-                });
-
-        TradeOfferHelper.registerVillagerOffers(AQUARIST, 4,
-                factories -> {
-                    factories.add(((entity, random) -> new TradeOffer(
-                            new ItemStack(ModItems.CLOWNFISH_EGG_BUCKET, 1),
-                            new ItemStack(Items.EMERALD, 7),
                             6, 4, 0.05f
                     )));
                 });

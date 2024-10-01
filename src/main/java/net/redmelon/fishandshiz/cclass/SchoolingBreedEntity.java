@@ -6,7 +6,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundEvent;
@@ -28,12 +27,6 @@ public abstract class SchoolingBreedEntity extends AnimalFishEntity {
 
     public SchoolingBreedEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
-    }
-
-    @Override
-    protected void initGoals() {
-        super.initGoals();
-        this.goalSelector.add(5, new BreedFollowGroupLeaderGoal(this));
     }
 
     @Override
@@ -123,10 +116,17 @@ public abstract class SchoolingBreedEntity extends AnimalFishEntity {
         }
     }
 
-    public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
+    public static boolean canSpawnHigh(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
         RegistryEntry<Biome> registryEntry = world.getBiome(pos);
         int i = world.getSeaLevel();
-        int j = i - 2;
+        int j = i - 4;
         return pos.getY() >= j && pos.getY() <= i + 90 && world.getFluidState(pos.down()).isIn(FluidTags.WATER) && world.getBlockState(pos.up()).isOf(Blocks.WATER);
+    }
+
+    public static boolean canSpawnLow(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
+        RegistryEntry<Biome> registryEntry = world.getBiome(pos);
+        int i = world.getSeaLevel();
+        int j = i - 30;
+        return pos.getY() >= j && pos.getY() <= i - 8 && world.getFluidState(pos.down()).isIn(FluidTags.WATER) && world.getBlockState(pos.up()).isOf(Blocks.WATER);
     }
 }

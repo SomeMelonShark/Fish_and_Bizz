@@ -48,6 +48,16 @@ public class RedTailCatfishEntity extends AnimalFishEntity implements AngledMode
         this.lookControl = new YawAdjustingLookControl(this, 10);
     }
 
+    @Override
+    protected int getNitrogenIncreaseAmount() {
+        if (!isFry() && !isMature()) {
+            return 0;
+        } else if (isFry()) {
+            return 1;
+        }
+        return 5;
+    }
+
     public class FishMoveControl
             extends MoveControl {
         private static final float field_40123 = 10.0f;
@@ -145,10 +155,10 @@ public class RedTailCatfishEntity extends AnimalFishEntity implements AngledMode
 
     @Override
     protected void initGoals() {
+        super.initGoals();
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
-        this.goalSelector.add(2, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
-        this.goalSelector.add(3, new MeleeAttackGoal(this, 1.2f, true));
-        this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
+        this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
+        this.goalSelector.add(2, new MeleeAttackGoal(this, 1.2f, true));
 
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, AmurCarpEntity.class, true));
         this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, MudCrabEntity.class, true));
@@ -159,9 +169,11 @@ public class RedTailCatfishEntity extends AnimalFishEntity implements AngledMode
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, RainbowfishEntity.class, true));
         this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, CrayfishEntity.class, true));
         this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, CorydorasEntity.class, true));
-        this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, ClownfishEntity.class, true));
         this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, BettaEntity.class, true));
         this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, NeonTetraEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, ClownfishEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, TangEntity.class, true));
+        this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, DottybackEntity.class, true));
         this.targetSelector.add(5, new ActiveTargetGoal<>((MobEntity)this, DrownedEntity.class, true));
         this.targetSelector.add(5, new ActiveTargetGoal<>((MobEntity)this, GuardianEntity.class, true));
         this.targetSelector.add(5, new ActiveTargetGoal<>((MobEntity)this, ElderGuardianEntity.class, true));

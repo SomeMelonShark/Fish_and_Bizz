@@ -2,6 +2,7 @@ package net.redmelon.fishandshiz.cclass.cmethods.goals;
 
 import com.mojang.datafixers.DataFixUtils;
 import net.minecraft.entity.ai.goal.Goal;
+import net.redmelon.fishandshiz.cclass.AltSchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 
 import java.util.List;

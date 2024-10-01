@@ -6,37 +6,23 @@ import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.control.MoveControl;
-import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Util;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeKeys;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.custom.CrayfishEggEntity;
-import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
-import net.redmelon.fishandshiz.entity.custom.MudCrabEggEntity;
-import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
-import net.redmelon.fishandshiz.entity.variant.AmurCarpVariant;
+import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
+import net.redmelon.fishandshiz.util.ModUtil;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -44,40 +30,12 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AmurCarpEggEntity extends AmurCarpEntity implements GeoEntity {
-    @VisibleForTesting
-    public static int MAX_EGG_AGE = Math.abs(-18000);
-    private int stageAge;
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public AmurCarpEggEntity(EntityType<? extends AmurCarpEntity> entityType, World world) {
         super(entityType, world);
-        this.moveControl = new AmurCarpEggEntity.FishMoveControl(this);
     }
 
-    public static DefaultAttributeContainer.Builder setAttributes() {
-        return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
-    }
-    static class FishMoveControl
-            extends MoveControl {
-        private final AnimalFishEntity fish;
-
-        FishMoveControl(AnimalFishEntity owner) {
-            super(owner);
-            this.fish = owner;
-        }
-
-        @Override
-        public void tick() {//does not move
-        }
-    }
-    @Override
-    public void tickMovement() {
-        super.tickMovement();
-        if (!this.getWorld().isClient) {
-            this.setStageAge(this.stageAge + 1);
-        }
-    }
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
@@ -88,12 +46,10 @@ public class AmurCarpEggEntity extends AmurCarpEntity implements GeoEntity {
         super.readCustomDataFromNbt(nbt);
         this.setStageAge(nbt.getInt("Age"));
     }
-
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
     }
-
     @Override
     protected void initGoals() {
 
@@ -113,45 +69,12 @@ public class AmurCarpEggEntity extends AmurCarpEntity implements GeoEntity {
             this.setStageAge(nbt.getInt("Age"));
         }
     }
-    private int getStageAge() {
-        return this.stageAge;
-    }
-    private void increaseAge(int seconds) {
-        this.setStageAge(this.stageAge + seconds * 20);
-    }
-    private void setStageAge(int stageAge) {
-        this.stageAge = stageAge;
-        if (this.stageAge >= MAX_EGG_AGE) {
-            this.growUp();
-        }
-    }
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
-        RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
-        AmurCarpVariant variant;
-
-        if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
-            this.setAmurCarpVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
-            return entityData;
-        }
-
-        if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.TAIGA)) {
-                variant = (AmurCarpVariant.WILD);
-            } else if (registryEntry.matchesKey(BiomeKeys.FROZEN_RIVER)) {
-                variant = (AmurCarpVariant.WILD);
-            } else {
-                variant = Util.getRandom(AmurCarpVariant.values(), this.random);
-            }
-        } else {
-            variant = Util.getRandom(AmurCarpVariant.values(), this.random);
-        }
-
-        setVariant(variant);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-        this.setAmurCarpVariant(variant.getId());
+        this.setMature(false);
         return entityData;
     }
 
@@ -160,13 +83,37 @@ public class AmurCarpEggEntity extends AmurCarpEntity implements GeoEntity {
         return false;
     }
 
-    private void growUp() {
-        AmurCarpVariant variant;
+    @Override
+    protected int getMaxStageAge() {
+        return 18000;
+    }
+
+
+    @Override
+    protected void growUp() {
+        ModEntityColor color;
+        ModEntityColor color2;
+        ModEntityColor color3;
+        AmurCarpPattern pattern;
+        AmurCarpDetail detail;
         World world = this.getWorld();
         int i = random.nextBetweenExclusive(3, 9);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
-                variant = this.getVariant();
+                int m = random.nextInt(4);
+                if (m != 0) {
+                    color = this.getBaseColor();
+                    color2 = this.getPatternColor();
+                    color3 = this.getDetailColor();
+                    pattern = this.getPattern();
+                    detail = this.getDetail();
+                } else {
+                    pattern = random.nextBoolean() ? this.getPattern() : (ModUtil.getRandomTagValue(getWorld(), AmurCarpPattern.Tag.PATTERNS, random));
+                    detail = random.nextBoolean() ? this.getDetail() : (ModUtil.getRandomTagValue(getWorld(), AmurCarpDetail.Tag.DETAILS, random));
+                    color = random.nextBoolean() ? this.getBaseColor() : (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
+                    color2 = random.nextBoolean() ? this.getPatternColor() : (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
+                    color3 = random.nextBoolean() ? this.getDetailColor() : (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
+                }
                 ServerWorld serverWorld = (ServerWorld)world;
                 AmurCarpFryEntity nextEntity = ModEntities.AMUR_CARP_FRY.create(this.getWorld());
                 if (nextEntity != null) {
@@ -178,16 +125,16 @@ public class AmurCarpEggEntity extends AmurCarpEntity implements GeoEntity {
                         nextEntity.setCustomNameVisible(this.isCustomNameVisible());
                     }
                     nextEntity.setPersistent();
-                    nextEntity.setVariant(variant);
+                    nextEntity.setBaseColor(color);
+                    nextEntity.setPatternColor(color2);
+                    nextEntity.setDetailColor(color3);
+                    nextEntity.setPattern(pattern);
+                    nextEntity.setDetail(detail);
                     this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
                     serverWorld.spawnEntityAndPassengers(nextEntity);
                     this.discard();
                 }
             }
-    }
-
-    private int getTicksUntilGrowth() {
-        return Math.max(0, MAX_EGG_AGE - this.stageAge);
     }
 
     @Override
@@ -207,15 +154,9 @@ public class AmurCarpEggEntity extends AmurCarpEntity implements GeoEntity {
     protected SoundEvent getFlopSound() {
         return SoundEvents.BLOCK_FROGSPAWN_HIT;
     }
-
     @Override
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.AMUR_CARP_EGG_BUCKET);
-    }
-
-    @Override
-    public @Nullable AmurCarpEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return null;
     }
 
     @Override

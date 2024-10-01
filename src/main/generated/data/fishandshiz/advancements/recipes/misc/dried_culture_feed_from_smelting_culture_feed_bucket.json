@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:dried_culture_feed_from_smelting_culture_feed_bucket"
+        "recipe": "fishandshiz:dried_culture_feed_from_smelting_culture_feed_bucket"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:dried_culture_feed_from_smelting_culture_feed_bucket"
+      "fishandshiz:dried_culture_feed_from_smelting_culture_feed_bucket"
     ]
   },
   "sends_telemetry_event": false

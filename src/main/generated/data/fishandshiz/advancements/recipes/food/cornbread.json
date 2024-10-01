@@ -15,7 +15,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:cornbread"
+        "recipe": "fishandshiz:cornbread"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -28,7 +28,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:cornbread"
+      "fishandshiz:cornbread"
     ]
   },
   "sends_telemetry_event": false
