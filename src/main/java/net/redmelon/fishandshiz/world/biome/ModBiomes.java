@@ -14,7 +14,10 @@ import net.minecraft.world.biome.BiomeEffects;
 import net.minecraft.world.biome.GenerationSettings;
 import net.minecraft.world.biome.SpawnSettings;
 import net.minecraft.world.gen.GenerationStep;
+import net.minecraft.world.gen.carver.ConfiguredCarvers;
 import net.minecraft.world.gen.feature.DefaultBiomeFeatures;
+import net.minecraft.world.gen.feature.PlacedFeature;
+import net.minecraft.world.gen.feature.PlacedFeatures;
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.entity.ModEntities;
@@ -38,6 +41,7 @@ public class ModBiomes {
     }
 
     public static Biome jungleBasin(Registerable<Biome> context) {
+
         SpawnSettings.Builder spawnBuilder = new SpawnSettings.Builder();
 
         DefaultBiomeFeatures.addFarmAnimals(spawnBuilder);
@@ -50,9 +54,10 @@ public class ModBiomes {
         globalOverworldGeneration(biomeBuilder);
         DefaultBiomeFeatures.addDefaultOres(biomeBuilder);
         DefaultBiomeFeatures.addDefaultDisks(biomeBuilder);
-        DefaultBiomeFeatures.addJungleTrees(biomeBuilder);
 
         biomeBuilder.feature(GenerationStep.Feature.LAKES, ModPlacedFeatures.LAKE);
+
+        DefaultBiomeFeatures.addJungleTrees(biomeBuilder);
         DefaultBiomeFeatures.addExtraDefaultFlowers(biomeBuilder);
         DefaultBiomeFeatures.addJungleGrass(biomeBuilder);
         DefaultBiomeFeatures.addLargeFerns(biomeBuilder);
