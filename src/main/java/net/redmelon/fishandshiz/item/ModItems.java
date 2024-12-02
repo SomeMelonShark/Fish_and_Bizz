@@ -51,6 +51,8 @@ public class ModItems {
             new AliasedBlockItem(ModBlocks.AMAZON_SWORD, new FabricItemSettings()));
     public static final Item POTHOS = registerItem("pothos",
             new AliasedBlockItem(ModBlocks.POTHOS_PLANT, new FabricItemSettings()));
+    public static final Item ANUBIAS = registerItem("anubias",
+            new AliasedBlockItem(ModBlocks.ANUBIAS, new FabricItemSettings()));
     public static final Item ANGELFISH_BUCKET = registerItem("angelfish_bucket",
             new EntityBucketItem(ModEntities.ANGELFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item ANGELFISH_FRY_BUCKET = registerItem("angelfish_fry_bucket",

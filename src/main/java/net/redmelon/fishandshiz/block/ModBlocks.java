@@ -47,6 +47,8 @@ public class ModBlocks {
             new PothosRootBlock(FabricBlockSettings.copyOf(Blocks.KELP).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.WET_GRASS)));
     public static final Block POTHOS_ROOTS = registerBlockWithoutItem("pothos_roots",
             new PothosRootBlock.PothosRootsBlock(FabricBlockSettings.copyOf(Blocks.KELP_PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.WET_GRASS)));
+    public static final Block ANUBIAS = Registry.register(Registries.BLOCK, new Identifier(FishAndShiz.MOD_ID, "anubias"),
+            new AnubiasBlock(FabricBlockSettings.of().mapColor(MapColor.GREEN).pistonBehavior(PistonBehavior.DESTROY).noCollision().breakInstantly().nonOpaque().sounds(BlockSoundGroup.WET_GRASS)));
     public static final Block LILY_PAD_STEM = registerBlockWithoutItem("lily_pad_stem",
             new LilyPadStemBlock(FabricBlockSettings.copyOf(Blocks.KELP_PLANT).noCollision().breakInstantly().sounds(BlockSoundGroup.WET_GRASS)));
     public static final Block SEA_ANEMONE = Registry.register(Registries.BLOCK, new Identifier(FishAndShiz.MOD_ID, "sea_anemone"),

@@ -121,6 +121,7 @@ public class ModItemGroup {
             entries.add(ModItems.MONTE_CARLO);
             entries.add(ModItems.AMAZON_SWORD);
             entries.add(ModItems.POTHOS);
+            entries.add(ModBlocks.ANUBIAS);
             entries.add(ModItems.CORN_KERNELS);
             entries.add(ModItems.SEA_ANEMONE);
         });
