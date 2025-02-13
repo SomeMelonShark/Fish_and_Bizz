@@ -83,7 +83,7 @@ public class ButterflyfishEntity extends SchoolingBreedEntity implements GeoEnti
             return PlayState.CONTINUE;
         } else if (this.isTouchingWater() && !animationState.isMoving()){
             animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mediumfish.idle", Animation.LoopType.LOOP));
+                    .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         } else {
             animationState.getController().setAnimation(RawAnimation.begin()

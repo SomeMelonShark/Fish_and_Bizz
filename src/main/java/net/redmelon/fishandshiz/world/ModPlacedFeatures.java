@@ -7,10 +7,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.feature.*;
-import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;
-import net.minecraft.world.gen.placementmodifier.NoiseBasedCountPlacementModifier;
-import net.minecraft.world.gen.placementmodifier.PlacementModifier;
-import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
+import net.minecraft.world.gen.placementmodifier.*;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.block.ModBlocks;
 
@@ -23,6 +20,7 @@ public class ModPlacedFeatures {
     public static final RegistryKey<PlacedFeature> PLACED_CULTURE_FEED = registerKey("placed_culture_feed");
     public static final RegistryKey<PlacedFeature> PLACED_VALLISNERIA = registerKey("placed_vallisneria");
     public static final RegistryKey<PlacedFeature> PLACED_POTHOS = registerKey("placed_pothos");
+    public static final RegistryKey<PlacedFeature> PLACED_ANUBIAS = registerKey("placed_anubias");
     public static final RegistryKey<PlacedFeature> LAKE = registerKey("lake");
 
     public static void bootstrap(Registerable<PlacedFeature> context) {
@@ -54,19 +52,25 @@ public class ModPlacedFeatures {
                 NoiseBasedCountPlacementModifier.of(80, 80.0, 0.0),
                 SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, BiomePlacementModifier.of());
 
-        RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference5 =
+        RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference6 =
                 registryEntryLookup.getOrThrow(ModConfiguredFeatures.VALLISNERIA_KEY);
-        register(context, PLACED_VALLISNERIA, reference5,
+        register(context, PLACED_VALLISNERIA, reference6,
                 NoiseBasedCountPlacementModifier.of(80, 80.0, 0.0),
                 SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, BiomePlacementModifier.of());
 
-        RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference6 =
-                registryEntryLookup.getOrThrow(ModConfiguredFeatures.POTHOS_KEY);
-        register(context, PLACED_POTHOS, reference6, VegetationPlacedFeatures.modifiers(4));
-
         RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference7 =
+                registryEntryLookup.getOrThrow(ModConfiguredFeatures.ANUBIAS_KEY);
+        register(context, PLACED_ANUBIAS, reference7,
+                NoiseBasedCountPlacementModifier.of(80, 80.0, 0.0),
+                SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, BiomePlacementModifier.of());
+
+        RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference8 =
+                registryEntryLookup.getOrThrow(ModConfiguredFeatures.POTHOS_KEY);
+        register(context, PLACED_POTHOS, reference8, VegetationPlacedFeatures.modifiers(4));
+
+        RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference9 =
                 registryEntryLookup.getOrThrow(ModConfiguredFeatures.LAKE);
-        register(context, LAKE, reference7,
+        register(context, LAKE, reference9,
                 NoiseBasedCountPlacementModifier.of(80, 80.0, 0.0),
                 SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, BiomePlacementModifier.of());
     }
