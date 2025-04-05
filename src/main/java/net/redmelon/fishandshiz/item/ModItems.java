@@ -184,6 +184,8 @@ public class ModItems {
             new AliasedBlockItem(ModBlocks.SEA_ANEMONE,new FabricItemSettings()));
     public static final Item NITROGEN_DETECTOR = registerItem("nitrogen_detector",
             new AliasedBlockItem(ModBlocks.NITROGEN_DETECTOR,new FabricItemSettings()));
+    public static final Item FILTER = registerItem("filter",
+            new AliasedBlockItem(ModBlocks.FILTER,new FabricItemSettings()));
     public static final Item ARCHERFISH_GUN = registerItem("archerfish_gun",
             new ArcherfishGunItem(new FabricItemSettings().maxCount(1)));
 

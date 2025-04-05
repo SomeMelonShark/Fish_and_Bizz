@@ -132,6 +132,7 @@ public class ModItemGroup {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.FUNCTIONAL).register(entries -> {
             entries.add(ModItems.NITROGEN_DETECTOR);
+            entries.add(ModBlocks.FILTER);
         });
     }
 }

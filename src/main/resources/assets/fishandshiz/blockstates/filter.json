@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "nitrogen_level=0": { "model": "fishandshiz:block/filter_block_level0" },
+    "nitrogen_level=1": { "model": "fishandshiz:block/filter_block_level1" },
+    "nitrogen_level=2": { "model": "fishandshiz:block/filter_block_level2" },
+    "nitrogen_level=3": { "model": "fishandshiz:block/filter_block_level3" }
+  }
+}

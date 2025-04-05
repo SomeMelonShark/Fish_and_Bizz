@@ -35,10 +35,12 @@ public class ModPlacedFeatures {
                 SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, BiomePlacementModifier.of());
 
         RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference2 =
-                registryEntryLookup.getOrThrow(ModConfiguredFeatures.MONTE_CARLO_KEY);
+                context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.MONTE_CARLO_KEY);
         register(context, PLACED_MONTE_CARLO, reference2,
-                NoiseBasedCountPlacementModifier.of(80, 80.0, 0.0),
-                SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, BiomePlacementModifier.of());
+                RarityFilterPlacementModifier.of(4),
+                SquarePlacementModifier.of(),
+                PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP,
+                BiomePlacementModifier.of());
 
         RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference3 =
                 registryEntryLookup.getOrThrow(ModConfiguredFeatures.AMAZON_SWORD_KEY);
@@ -59,10 +61,12 @@ public class ModPlacedFeatures {
                 SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, BiomePlacementModifier.of());
 
         RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference7 =
-                registryEntryLookup.getOrThrow(ModConfiguredFeatures.ANUBIAS_KEY);
+                context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE).getOrThrow(ModConfiguredFeatures.ANUBIAS_KEY);
         register(context, PLACED_ANUBIAS, reference7,
-                NoiseBasedCountPlacementModifier.of(80, 80.0, 0.0),
-                SquarePlacementModifier.of(), PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP, BiomePlacementModifier.of());
+                RarityFilterPlacementModifier.of(4),
+                SquarePlacementModifier.of(),
+                PlacedFeatures.OCEAN_FLOOR_WG_HEIGHTMAP,
+                BiomePlacementModifier.of());
 
         RegistryEntry.Reference<ConfiguredFeature<?, ?>> reference8 =
                 registryEntryLookup.getOrThrow(ModConfiguredFeatures.POTHOS_KEY);

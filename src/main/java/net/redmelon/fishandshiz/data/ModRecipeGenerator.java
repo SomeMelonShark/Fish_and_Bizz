@@ -155,7 +155,21 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
                 .input('D', Items.COPPER_INGOT)
                 .criterion(FabricRecipeProvider.hasItem(Items.COPPER_INGOT), FabricRecipeProvider.conditionsFromItem(Items.COPPER_INGOT))
                 .offerTo(exporter, new Identifier(FishAndShiz.MOD_ID, FabricRecipeProvider.getRecipeName(ModItems.NITROGEN_DETECTOR)));
+
+        ShapedRecipeJsonBuilder.create(RecipeCategory.REDSTONE, ModBlocks.FILTER)
+                .pattern("ABA")
+                .pattern("ECE")
+                .pattern("ADA")
+                .input('A', Items.COBBLED_DEEPSLATE)
+                .input('B', Items.HOPPER)
+                .input('C', Items.COAL_BLOCK)
+                .input('D', Items.WATER_BUCKET)
+                .input('E', Items.GLASS_PANE)
+                .criterion(FabricRecipeProvider.hasItem(Items.WATER_BUCKET), FabricRecipeProvider.conditionsFromItem(Items.WATER_BUCKET))
+                .offerTo(exporter, new Identifier(FishAndShiz.MOD_ID, FabricRecipeProvider.getRecipeName(ModBlocks.FILTER)));
         }
+
+
 
     public static void offerReversibleCompactingRecipes(Consumer<RecipeJsonProvider> exporter, RecipeCategory reverseCategory, ItemConvertible baseItem, RecipeCategory compactingCategory, ItemConvertible compactItem) {
         RecipeProvider.offerReversibleCompactingRecipes(exporter, reverseCategory, baseItem, compactingCategory, compactItem, getRecipeName(compactItem), null, getRecipeName(baseItem), null);
