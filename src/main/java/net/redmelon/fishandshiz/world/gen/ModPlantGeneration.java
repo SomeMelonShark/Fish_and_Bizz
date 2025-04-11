@@ -25,7 +25,7 @@ public class ModPlantGeneration {
         BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.SPARSE_JUNGLE, BiomeKeys.JUNGLE, BiomeKeys.SWAMP),
                 GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.PLACED_POTHOS);
 
-        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.SAVANNA_PLATEAU, BiomeKeys.SAVANNA, BiomeKeys.WINDSWEPT_SAVANNA),
+        BiomeModifications.addFeature(BiomeSelectors.includeByKey(BiomeKeys.DARK_FOREST),
                 GenerationStep.Feature.VEGETAL_DECORATION, ModPlacedFeatures.PLACED_ANUBIAS);
     }
 }

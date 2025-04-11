@@ -143,7 +143,7 @@ public class ModEntitySpawn {
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
 
         // Amur Carp Spawns
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.FROZEN_RIVER, BiomeKeys.TAIGA), SpawnGroup.WATER_AMBIENT,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.FROZEN_RIVER, BiomeKeys.TAIGA, BiomeKeys.CHERRY_GROVE), SpawnGroup.WATER_AMBIENT,
                 ModEntities.AMUR_CARP, 1, 2, 5);
 
         SpawnRestriction.register(ModEntities.AMUR_CARP, SpawnRestriction.Location.IN_WATER,

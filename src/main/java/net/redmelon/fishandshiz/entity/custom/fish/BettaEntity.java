@@ -19,12 +19,14 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -247,13 +249,14 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity, Vari
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
+        Identifier biomeId = registryEntry.getKey().map(RegistryKey::getValue).orElse(null);
         ModEntityColor color;
         ModEntityColor color2;
         ModEntityColor color3;
         BettaPattern pattern;
         BettaDetail detail;
         if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.SWAMP)) {
+            if (registryEntry.matchesKey(BiomeKeys.SWAMP) | (biomeId != null && biomeId.getNamespace().equals("terrestria") && biomeId.getPath().equals("cypress_swamp"))) {
                 pattern = (BettaPattern.WILD1);
                 detail = (BettaDetail.SPECKLED);
                 color = (ModEntityColor.DARK_GREEN);

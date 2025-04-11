@@ -19,12 +19,14 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -235,13 +237,14 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
+        Identifier biomeId = registryEntry.getKey().map(RegistryKey::getValue).orElse(null);
         ModEntityColor color;
         ModEntityColor color2;
         ModEntityColor color3;
         AmurCarpPattern pattern;
         AmurCarpDetail detail;
         if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.FROZEN_RIVER) | registryEntry.matchesKey(BiomeKeys.TAIGA)) {
+            if (registryEntry.matchesKey(BiomeKeys.FROZEN_RIVER) | registryEntry.matchesKey(BiomeKeys.TAIGA) | (biomeId != null && biomeId.getNamespace().equals("terrestria") && biomeId.getPath().equals("japanese_maple_forest"))) {
                 pattern = (AmurCarpPattern.WILD);
                 detail = (AmurCarpDetail.NONE);
                 color = (ModEntityColor.OFF_YELLOW);
