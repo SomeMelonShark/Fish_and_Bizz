@@ -1,8 +1,175 @@
 {
   "variants": {
-    "nitrogen_level=0": { "model": "fishandshiz:block/filter_block_level0" },
-    "nitrogen_level=1": { "model": "fishandshiz:block/filter_block_level1" },
-    "nitrogen_level=2": { "model": "fishandshiz:block/filter_block_level2" },
-    "nitrogen_level=3": { "model": "fishandshiz:block/filter_block_level3" }
+    "facing=north,nitrogen_level=0,face=floor": { "model": "fishandshiz:block/filter_block_level0" },
+    "facing=south,nitrogen_level=0,face=floor": { "model": "fishandshiz:block/filter_block_level0",
+      "y": 180
+    },
+    "facing=east,nitrogen_level=0,face=floor": { "model": "fishandshiz:block/filter_block_level0",
+      "y": 90
+    },
+    "facing=west,nitrogen_level=0,face=floor": { "model": "fishandshiz:block/filter_block_level0",
+      "y": 270
+    },
+
+    "facing=north,nitrogen_level=0,face=wall": { "model": "fishandshiz:block/filter_block_level0",
+      "x": 90
+    },
+    "facing=south,nitrogen_level=0,face=wall": { "model": "fishandshiz:block/filter_block_level0",
+      "x": 90,
+      "y": 180
+    },
+    "facing=east,nitrogen_level=0,face=wall": { "model": "fishandshiz:block/filter_block_level0",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west,nitrogen_level=0,face=wall": { "model": "fishandshiz:block/filter_block_level0",
+      "x": 90,
+      "y": 270
+    },
+
+    "facing=north,nitrogen_level=0,face=ceiling": { "model": "fishandshiz:block/filter_block_level0",
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,nitrogen_level=0,face=ceiling": { "model": "fishandshiz:block/filter_block_level0",
+      "x": 180
+    },
+    "facing=east,nitrogen_level=0,face=ceiling": { "model": "fishandshiz:block/filter_block_level0",
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,nitrogen_level=0,face=ceiling": { "model": "fishandshiz:block/filter_block_level0",
+      "x": 180,
+      "y": 90
+    },
+
+    "facing=north,nitrogen_level=1,face=floor": { "model": "fishandshiz:block/filter_block_level1" },
+    "facing=south,nitrogen_level=1,face=floor": { "model": "fishandshiz:block/filter_block_level1",
+      "y": 180
+    },
+    "facing=east,nitrogen_level=1,face=floor": { "model": "fishandshiz:block/filter_block_level1",
+      "y": 90
+    },
+    "facing=west,nitrogen_level=1,face=floor": { "model": "fishandshiz:block/filter_block_level1",
+      "y": 270
+    },
+
+    "facing=north,nitrogen_level=1,face=wall": { "model": "fishandshiz:block/filter_block_level1",
+      "x": 90
+    },
+    "facing=south,nitrogen_level=1,face=wall": { "model": "fishandshiz:block/filter_block_level1",
+      "x": 90,
+      "y": 180
+    },
+    "facing=east,nitrogen_level=1,face=wall": { "model": "fishandshiz:block/filter_block_level1",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west,nitrogen_level=1,face=wall": { "model": "fishandshiz:block/filter_block_level1",
+      "x": 90,
+      "y": 270
+    },
+
+    "facing=north,nitrogen_level=1,face=ceiling": { "model": "fishandshiz:block/filter_block_level1",
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,nitrogen_level=1,face=ceiling": { "model": "fishandshiz:block/filter_block_level1",
+      "x": 180
+    },
+    "facing=east,nitrogen_level=1,face=ceiling": { "model": "fishandshiz:block/filter_block_level1",
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,nitrogen_level=1,face=ceiling": { "model": "fishandshiz:block/filter_block_level1",
+      "x": 180,
+      "y": 90
+    },
+
+    "facing=north,nitrogen_level=2,face=floor": { "model": "fishandshiz:block/filter_block_level2" },
+    "facing=south,nitrogen_level=2,face=floor": { "model": "fishandshiz:block/filter_block_level2",
+      "y": 180
+    },
+    "facing=east,nitrogen_level=2,face=floor": { "model": "fishandshiz:block/filter_block_level2",
+      "y": 90
+    },
+    "facing=west,nitrogen_level=2,face=floor": { "model": "fishandshiz:block/filter_block_level2",
+      "y": 270
+    },
+
+    "facing=north,nitrogen_level=2,face=wall": { "model": "fishandshiz:block/filter_block_level2",
+      "x": 90
+    },
+    "facing=south,nitrogen_level=2,face=wall": { "model": "fishandshiz:block/filter_block_level2",
+      "x": 90,
+      "y": 180
+    },
+    "facing=east,nitrogen_level=2,face=wall": { "model": "fishandshiz:block/filter_block_level2",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west,nitrogen_level=2,face=wall": { "model": "fishandshiz:block/filter_block_level2",
+      "x": 90,
+      "y": 270
+    },
+
+    "facing=north,nitrogen_level=2,face=ceiling": { "model": "fishandshiz:block/filter_block_level2",
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,nitrogen_level=2,face=ceiling": { "model": "fishandshiz:block/filter_block_level2",
+      "x": 180
+    },
+    "facing=east,nitrogen_level=2,face=ceiling": { "model": "fishandshiz:block/filter_block_level2",
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,nitrogen_level=2,face=ceiling": { "model": "fishandshiz:block/filter_block_level2",
+      "x": 180,
+      "y": 90
+    },
+
+    "facing=north,nitrogen_level=3,face=floor": { "model": "fishandshiz:block/filter_block_level3" },
+    "facing=south,nitrogen_level=3,face=floor": { "model": "fishandshiz:block/filter_block_level3",
+      "y": 180
+    },
+    "facing=east,nitrogen_level=3,face=floor": { "model": "fishandshiz:block/filter_block_level3",
+      "y": 90
+    },
+    "facing=west,nitrogen_level=3,face=floor": { "model": "fishandshiz:block/filter_block_level3",
+      "y": 270
+    },
+
+    "facing=north,nitrogen_level=3,face=wall": { "model": "fishandshiz:block/filter_block_level3",
+      "x": 90
+    },
+    "facing=south,nitrogen_level=3,face=wall": { "model": "fishandshiz:block/filter_block_level3",
+      "x": 90,
+      "y": 180
+    },
+    "facing=east,nitrogen_level=3,face=wall": { "model": "fishandshiz:block/filter_block_level3",
+      "x": 90,
+      "y": 90
+    },
+    "facing=west,nitrogen_level=3,face=wall": { "model": "fishandshiz:block/filter_block_level3",
+      "x": 90,
+      "y": 270
+    },
+
+    "facing=north,nitrogen_level=3,face=ceiling": { "model": "fishandshiz:block/filter_block_level3",
+      "x": 180,
+      "y": 180
+    },
+    "facing=south,nitrogen_level=3,face=ceiling": { "model": "fishandshiz:block/filter_block_level3",
+      "x": 180
+    },
+    "facing=east,nitrogen_level=3,face=ceiling": { "model": "fishandshiz:block/filter_block_level3",
+      "x": 180,
+      "y": 270
+    },
+    "facing=west,nitrogen_level=3,face=ceiling": { "model": "fishandshiz:block/filter_block_level3",
+      "x": 180,
+      "y": 90
+    }
   }
 }

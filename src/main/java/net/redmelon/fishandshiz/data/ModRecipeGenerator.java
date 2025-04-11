@@ -162,7 +162,7 @@ public class ModRecipeGenerator extends FabricRecipeProvider {
                 .pattern("ADA")
                 .input('A', Items.COBBLED_DEEPSLATE)
                 .input('B', Items.HOPPER)
-                .input('C', Items.COAL_BLOCK)
+                .input('C', Items.SPONGE)
                 .input('D', Items.WATER_BUCKET)
                 .input('E', Items.GLASS_PANE)
                 .criterion(FabricRecipeProvider.hasItem(Items.WATER_BUCKET), FabricRecipeProvider.conditionsFromItem(Items.WATER_BUCKET))

@@ -56,7 +56,7 @@ public class ModBlocks {
     public static final Block NITROGEN_DETECTOR = Registry.register(Registries.BLOCK, new Identifier(FishAndShiz.MOD_ID, "nitrogen_detector"),
             new NitrogenDetectorBlock(FabricBlockSettings.of().mapColor(MapColor.GRAY).pistonBehavior(PistonBehavior.DESTROY).strength(0.2f).nonOpaque().sounds(BlockSoundGroup.STONE)));
     public static final Block FILTER = Registry.register(Registries.BLOCK, new Identifier(FishAndShiz.MOD_ID, "filter"),
-            new FilterBlock(FabricBlockSettings.of().mapColor(MapColor.DARK_AQUA).pistonBehavior(PistonBehavior.NORMAL).strength(1.0f).sounds(BlockSoundGroup.STONE)));
+            new FilterBlock(FabricBlockSettings.of().mapColor(MapColor.DARK_AQUA).pistonBehavior(PistonBehavior.NORMAL).ticksRandomly().strength(1.0f).sounds(BlockSoundGroup.STONE)));
     public static final Block POWERED_PRISMARINE = registerBlock("powered_prismarine",
             new PoweredPrismarineBlock(FabricBlockSettings.of().mapColor(MapColor.LIGHT_BLUE).luminance(createLightLevelFromLitBlockState(15)).strength(0.3F).sounds(BlockSoundGroup.GLASS)));
     public static final Block CULTURE_FEED = registerBlock("culture_feed",

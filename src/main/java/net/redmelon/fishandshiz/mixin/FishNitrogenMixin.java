@@ -12,8 +12,6 @@ import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
-import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
-import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
 import net.redmelon.fishandshiz.cclass.FishNitrogenAccessor;
 import net.redmelon.fishandshiz.cclass.HolometabolousAquaticEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -68,7 +66,7 @@ public class FishNitrogenMixin extends WaterCreatureEntity implements FishNitrog
         List<Entity> nearbyEntities = this.getWorld().getEntitiesByClass(Entity.class, this.getBoundingBox().expand(8), entity -> entity != this);
 
         for (Entity entity : nearbyEntities) {
-            if (areEntitiesInSameWaterBody(this, entity, 100)) {
+            if (floodFill(this, entity, 251, 4)) {
                 if (entity instanceof FishEntity || entity instanceof HolometabolousAquaticEntity) {
                     this.setNitrogenLevel(this.getNitrogenLevel() + getNitrogenIncreaseAmount() / 2);
                 }
@@ -82,7 +80,7 @@ public class FishNitrogenMixin extends WaterCreatureEntity implements FishNitrog
     }
 
     @Unique
-    private boolean areEntitiesInSameWaterBody(Entity entity1, Entity entity2, int maxDepth) {
+    private boolean floodFill(Entity entity1, Entity entity2, int maxDepth, int maxRange) {
         BlockPos start = entity1.getBlockPos();
         BlockPos target = entity2.getBlockPos();
         Set<BlockPos> visited = new HashSet<>();
@@ -100,6 +98,8 @@ public class FishNitrogenMixin extends WaterCreatureEntity implements FishNitrog
 
             for (Direction direction : Direction.values()) {
                 BlockPos neighbor = current.offset(direction);
+
+                if (!start.isWithinDistance(neighbor, maxRange)) continue;
 
                 if (!visited.contains(neighbor) && entity1.getWorld().getFluidState(neighbor).isIn((FluidTags.WATER))) {
                     queue.add(neighbor);

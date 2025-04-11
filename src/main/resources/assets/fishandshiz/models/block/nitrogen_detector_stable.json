@@ -3,7 +3,7 @@
 	"textures": {
 		"0": "fishandshiz:block/nitrogen_detector_base",
 		"1": "fishandshiz:block/nitrogen_detector_tube",
-		"2": "fishandshiz:block/nitrogen_detector_vial1",
+		"2": "fishandshiz:block/nitrogen_detector_vial2",
 		"particle": "fishandshiz:block/nitrogen_detector_base"
 	},
 	"elements": [
@@ -48,5 +48,35 @@
 				"down": {"uv": [12, 4, 8, 8], "texture": "#2"}
 			}
 		}
-	]
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [70, 45, 0],
+			"translation": [0, 3.25, 3],
+			"scale": [0.35, 0.35, 0.35]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [70, 45, 0],
+			"translation": [0, 3.25, 3],
+			"scale": [0.35, 0.35, 0.35]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 135, 0],
+			"translation": [0, 4.25, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 135, 0],
+			"translation": [0, 4.25, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"ground": {
+			"scale": [0.35, 0.35, 0.35]
+		},
+		"gui": {
+			"rotation": [25, -52, 0],
+			"translation": [0, 3, 0],
+			"scale": [0.7, 0.7, 0.7]
+		}
+	}
 }

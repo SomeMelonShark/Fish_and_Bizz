@@ -6,14 +6,16 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.redmelon.fishandshiz.block.custom.FilterBlock;
 import net.redmelon.fishandshiz.block.custom.NitrogenDetectorBlock;
 import net.redmelon.fishandshiz.sound.ModSounds;
 
 public class FilterBlockEntity extends BlockEntity {
     private int soundCooldown = 0;
+    private int soundTimer = 0;
     private int nitrogenStored = 0;
-    public static final int MAX_NITROGEN = 6000;
+    public static final int MAX_NITROGEN = 100000;
 
     public FilterBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.FILTER_ENTITY, pos, state);
@@ -21,6 +23,10 @@ public class FilterBlockEntity extends BlockEntity {
 
     public int getNitrogenStored() {
         return nitrogenStored;
+    }
+    public void setNitrogenStored(int amount) {
+        this.nitrogenStored = MathHelper.clamp(amount, 0, MAX_NITROGEN);
+        markDirty();
     }
 
     public void addNitrogen(int amount) {
@@ -49,15 +55,21 @@ public class FilterBlockEntity extends BlockEntity {
 
     public void tick() {
         if (world == null || world.isClient) return;
+        impellerSound();
 
         BlockState state = getCachedState();
         if (!(state.getBlock() instanceof FilterBlock)) return;
+        warningSound();
 
-        int nitrogenLevel = state.get(FilterBlock.NITROGEN_LEVEL);
+        if (state.getBlock() instanceof FilterBlock) {
+            ((FilterBlock) state.getBlock()).influenceNearbyEntities(world, pos, getCachedState());
+        }
+    }
 
-        if (nitrogenLevel == 3) {
+    private void warningSound(){
+        if (isFull()) {
             if (soundCooldown <= 0) {
-                world.playSound(null, pos, ModSounds.NITROGEN_DETECTOR_WARNING, SoundCategory.BLOCKS, 0.6f, 0.5f);
+                world.playSound(null, pos, ModSounds.FILTER_FULL, SoundCategory.BLOCKS, 0.6f, 0.5f);
                 soundCooldown = 100;
             } else {
                 soundCooldown--;
@@ -65,9 +77,14 @@ public class FilterBlockEntity extends BlockEntity {
         } else {
             soundCooldown = 0;
         }
+    }
 
-        if (state.getBlock() instanceof FilterBlock) {
-            ((FilterBlock) state.getBlock()).influenceNearbyEntities(world, pos, getCachedState());
+    private void impellerSound(){
+        if (soundTimer <= 0) {
+            world.playSound(null, pos, ModSounds.FILTER_AMBIENT, SoundCategory.BLOCKS, 0.1f, 2.0f);
+            soundTimer = 70;
+        } else {
+            soundTimer--;
         }
     }
 }

@@ -21,6 +21,8 @@ public class ModSounds {
     public static final SoundEvent JELLYFISH_HURT = registerSoundEvents("jellyfish_hurt");
     public static final SoundEvent JELLYFISH_DEATH = registerSoundEvents("jellyfish_death");
     public static final SoundEvent NITROGEN_DETECTOR_WARNING = registerSoundEvents("nitrogen_detector_warning");
+    public static final SoundEvent FILTER_AMBIENT = registerSoundEvents("filter_ambient");
+    public static final SoundEvent FILTER_FULL = registerSoundEvents("filter_full");
 
     private static SoundEvent registerSoundEvents(String name) {
         Identifier id = new Identifier(FishAndShiz.MOD_ID, name);

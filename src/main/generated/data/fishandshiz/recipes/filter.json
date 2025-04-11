@@ -9,7 +9,7 @@
       "item": "minecraft:hopper"
     },
     "C": {
-      "item": "minecraft:coal_block"
+      "item": "minecraft:sponge"
     },
     "D": {
       "item": "minecraft:water_bucket"
@@ -24,7 +24,7 @@
     "ADA"
   ],
   "result": {
-    "item": "minecraft:air"
+    "item": "fishandshiz:filter"
   },
   "show_notification": true
 }

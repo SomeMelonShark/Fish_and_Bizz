@@ -135,7 +135,7 @@ public abstract class HolometabolousAquaticEntity extends PassiveWaterEntity imp
         List<Entity> nearbyEntities = this.getWorld().getEntitiesByClass(Entity.class, this.getBoundingBox().expand(8), entity -> entity != this);
 
         for (Entity entity : nearbyEntities) {
-            if (areEntitiesInSameWaterBody(this, entity, 100)) {
+            if (floodFill(this, entity, 251, 5)) {
                 if (entity instanceof FishEntity || entity instanceof HolometabolousAquaticEntity) {
                     this.setNitrogenLevel(this.getNitrogenLevel() + getNitrogenIncreaseAmount() / 2);
                 }
@@ -145,7 +145,7 @@ public abstract class HolometabolousAquaticEntity extends PassiveWaterEntity imp
 
     protected abstract int getNitrogenIncreaseAmount();
 
-    private boolean areEntitiesInSameWaterBody(Entity entity1, Entity entity2, int maxDepth) {
+    private boolean floodFill(Entity entity1, Entity entity2, int maxDepth, int maxRange) {
         BlockPos start = entity1.getBlockPos();
         BlockPos target = entity2.getBlockPos();
         Set<BlockPos> visited = new HashSet<>();
@@ -163,6 +163,8 @@ public abstract class HolometabolousAquaticEntity extends PassiveWaterEntity imp
 
             for (Direction direction : Direction.values()) {
                 BlockPos neighbor = current.offset(direction);
+
+                if (!start.isWithinDistance(neighbor, maxRange)) continue;
 
                 if (!visited.contains(neighbor) && entity1.getWorld().getFluidState(neighbor).isIn((FluidTags.WATER))) {
                     queue.add(neighbor);

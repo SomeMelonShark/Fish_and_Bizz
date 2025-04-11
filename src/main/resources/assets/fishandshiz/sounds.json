@@ -82,5 +82,17 @@
     "sounds": [
       "fishandshiz:nitrogen_detector_warning"
     ]
+  },
+  "filter_ambient": {
+    "subtitle": "sounds.fishandshiz.filter_ambient",
+    "sounds": [
+      "fishandshiz:filter_ambient"
+    ]
+  },
+  "filter_full": {
+    "subtitle": "sounds.fishandshiz.filter_full",
+    "sounds": [
+      "fishandshiz:filter_full"
+    ]
   }
 }
