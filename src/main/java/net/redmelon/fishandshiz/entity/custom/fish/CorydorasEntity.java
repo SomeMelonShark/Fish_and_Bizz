@@ -223,7 +223,7 @@ public class CorydorasEntity extends SchoolingBreedEntity implements GeoEntity, 
         CorydorasPattern pattern;
         CorydorasDetail detail;
         if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(ModBiomes.JUNGLE_BASIN) | registryEntry.matchesKey(BiomeKeys.JUNGLE) | registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
+            if (registryEntry.matchesKey(BiomeKeys.JUNGLE) | registryEntry.matchesKey(BiomeKeys.SPARSE_JUNGLE)) {
                 pattern = (CorydorasPattern.DORSAL);
                 detail = (CorydorasDetail.LATERAL);
                 color = (ModEntityColor.PEACH);

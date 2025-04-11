@@ -19,38 +19,38 @@ public class ModEntitySpawn {
     public static void addEntitySpawn() {
 
         // Angelfish Spawns
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, ModBiomes.JUNGLE_BASIN), SpawnGroup.WATER_AMBIENT,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE), SpawnGroup.WATER_AMBIENT,
                 ModEntities.ANGELFISH, 20, 2, 4);
 
         SpawnRestriction.register(ModEntities.ANGELFISH, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawnHigh);
 
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, ModBiomes.JUNGLE_BASIN), SpawnGroup.WATER_AMBIENT,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE), SpawnGroup.WATER_AMBIENT,
                 ModEntities.ANGELFISH_FRY, 1, 4, 6);
 
         SpawnRestriction.register(ModEntities.ANGELFISH_FRY, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawnHigh);
 
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, ModBiomes.JUNGLE_BASIN), SpawnGroup.WATER_AMBIENT,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE), SpawnGroup.WATER_AMBIENT,
                 ModEntities.ANGELFISH_EGG, 1, 1, 3);
 
         SpawnRestriction.register(ModEntities.ANGELFISH_EGG, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawnHigh);
 
         // Neon Tetra Spawns
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, ModBiomes.JUNGLE_BASIN), SpawnGroup.WATER_AMBIENT,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE), SpawnGroup.WATER_AMBIENT,
                 ModEntities.NEON_TETRA, 60, 5, 9);
 
         SpawnRestriction.register(ModEntities.NEON_TETRA, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawnHigh);
 
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, ModBiomes.JUNGLE_BASIN), SpawnGroup.WATER_AMBIENT,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE), SpawnGroup.WATER_AMBIENT,
                 ModEntities.NEON_TETRA_FRY, 1, 7, 9);
 
         SpawnRestriction.register(ModEntities.NEON_TETRA_FRY, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawnHigh);
 
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, ModBiomes.JUNGLE_BASIN), SpawnGroup.WATER_AMBIENT,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE), SpawnGroup.WATER_AMBIENT,
                 ModEntities.NEON_TETRA_EGG, 1, 1, 2);
 
         SpawnRestriction.register(ModEntities.NEON_TETRA_EGG, SpawnRestriction.Location.IN_WATER,
@@ -76,13 +76,13 @@ public class ModEntitySpawn {
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
 
         // Corydoras Spawns
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, ModBiomes.JUNGLE_BASIN), SpawnGroup.WATER_AMBIENT,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE), SpawnGroup.WATER_AMBIENT,
                 ModEntities.CORYDORAS, 30, 4, 8);
 
         SpawnRestriction.register(ModEntities.CORYDORAS, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawnHigh);
 
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, ModBiomes.JUNGLE_BASIN), SpawnGroup.WATER_AMBIENT,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE), SpawnGroup.WATER_AMBIENT,
                 ModEntities.CORYDORAS_EGG, 1, 1, 2);
 
         SpawnRestriction.register(ModEntities.CORYDORAS_EGG, SpawnRestriction.Location.IN_WATER,
@@ -102,7 +102,7 @@ public class ModEntitySpawn {
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, WaterCreatureEntity::canSpawn);
 
         // Oscar Spawns
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(ModBiomes.JUNGLE_BASIN), SpawnGroup.WATER_CREATURE,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE), SpawnGroup.WATER_CREATURE,
                 ModEntities.OSCAR, 30, 1, 2);
 
         SpawnRestriction.register(ModEntities.OSCAR, SpawnRestriction.Location.IN_WATER,
@@ -250,7 +250,7 @@ public class ModEntitySpawn {
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawnLow);
 
         // Red Tail Catfish Spawns
-        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(ModBiomes.JUNGLE_BASIN), SpawnGroup.WATER_CREATURE,
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE), SpawnGroup.WATER_CREATURE,
                 ModEntities.RED_TAIL_CATFISH, 10, 1, 1);
 
         SpawnRestriction.register(ModEntities.RED_TAIL_CATFISH, SpawnRestriction.Location.IN_WATER,

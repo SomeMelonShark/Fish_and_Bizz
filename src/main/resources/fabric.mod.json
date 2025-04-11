@@ -23,9 +23,6 @@
 		],
 		"fabric-datagen": [
 			"net.redmelon.fishandshiz.FishAndShizDataGenerator"
-		],
-		"terrablender": [
-			"net.redmelon.fishandshiz.world.biome.ModTerrablenderAPI"
 		]
 
 	},
