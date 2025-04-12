@@ -18,10 +18,12 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -218,13 +220,14 @@ public class ButterflyfishEntity extends SchoolingBreedEntity implements GeoEnti
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         int i = random.nextInt(4);
         RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
+        Identifier biomeId = registryEntry.getKey().map(RegistryKey::getValue).orElse(null);
         ModEntityColor color;
         ModEntityColor color2;
         ModEntityColor color3;
         ButterflyfishPattern pattern;
         ButterflyfishDetail detail;
         if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.WARM_OCEAN) | registryEntry.matchesKey(BiomeKeys.LUKEWARM_OCEAN) | registryEntry.matchesKey(BiomeKeys.MANGROVE_SWAMP)) {
+            if (registryEntry.matchesKey(BiomeKeys.WARM_OCEAN) | registryEntry.matchesKey(BiomeKeys.LUKEWARM_OCEAN) | registryEntry.matchesKey(BiomeKeys.MANGROVE_SWAMP) | (biomeId != null && biomeId.getNamespace().equals("terrestria") && biomeId.getPath().equals("volcanic_island"))) {
                 if (i == 0) {
                     pattern = (ButterflyfishPattern.BANDS);
                     detail = (ButterflyfishDetail.EYEGASH);

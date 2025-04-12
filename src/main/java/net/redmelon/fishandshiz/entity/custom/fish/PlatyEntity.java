@@ -19,12 +19,14 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.recipe.Ingredient;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -263,26 +265,27 @@ public class PlatyEntity extends LivebearerEntity implements GeoEntity, Variable
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         RegistryEntry<Biome> registryEntry = world.getBiome(this.getBlockPos());
+        Identifier biomeId = registryEntry.getKey().map(RegistryKey::getValue).orElse(null);
         ModEntityColor color;
         ModEntityColor color2;
         ModEntityColor color3;
         PlatyPattern pattern;
         PlatyDetail detail;
         if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.SWAMP)) {
+            if (registryEntry.matchesKey(BiomeKeys.MANGROVE_SWAMP)) {
                 pattern = (PlatyPattern.TRANSVERSE);
                 detail = (PlatyDetail.BRACE);
                 color = (ModEntityColor.SICKLY);
                 color2 = (ModEntityColor.GREEN);
                 color3 = (ModEntityColor.EARTH_BLACK);
 
-            } else if (registryEntry.matchesKey(BiomeKeys.PLAINS)){
+            } else if (registryEntry.matchesKey(BiomeKeys.BADLANDS) | (biomeId != null && biomeId.getNamespace().equals("terrestria") && biomeId.getPath().equals("canyon"))){
                 pattern = (PlatyPattern.FINISH);
                 detail = (PlatyDetail.NONE);
                 color = (ModEntityColor.GREY);
                 color2 = (ModEntityColor.SILVER);
                 color3 = (ModEntityColor.SILVER);
-            }else {
+            } else {
                 pattern = (ModUtil.getRandomTagValue(getWorld(), PlatyPattern.Tag.PATTERNS, random));
                 detail = (ModUtil.getRandomTagValue(getWorld(), PlatyDetail.Tag.DETAILS, random));
                 color = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
