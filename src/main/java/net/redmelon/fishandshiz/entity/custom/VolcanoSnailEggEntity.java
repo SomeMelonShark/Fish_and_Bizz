@@ -16,6 +16,8 @@ import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
+import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.custom.fish.NeonTetraEggEntity;
 import net.redmelon.fishandshiz.item.ModItems;
@@ -25,7 +27,7 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class VolcanoSnailEggEntity extends VolcanoSnailEntity implements GeoEntity {
+public class VolcanoSnailEggEntity extends VolcanoSnailEntity implements GeoEntity, EntitySize {
     @VisibleForTesting
     public static int MAX_EGG_AGE = Math.abs(-12000);
     private int eggAge;
@@ -33,6 +35,11 @@ public class VolcanoSnailEggEntity extends VolcanoSnailEntity implements GeoEnti
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public VolcanoSnailEggEntity(EntityType<? extends AnimalWaterEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    public SizeCategory getSizeCategory() {
+        return SizeCategory.EGG;
     }
 
     @Override

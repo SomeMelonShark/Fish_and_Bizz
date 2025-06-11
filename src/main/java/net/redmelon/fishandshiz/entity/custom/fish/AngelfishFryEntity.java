@@ -26,6 +26,8 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
+import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.variant.ModEntityColor;
@@ -33,17 +35,23 @@ import net.redmelon.fishandshiz.entity.variant.AngelfishDetail;
 import net.redmelon.fishandshiz.entity.variant.AngelfishPattern;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
+import org.w3c.dom.Entity;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity {
+public class AngelfishFryEntity extends AngelfishEntity implements GeoEntity, EntitySize {
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public AngelfishFryEntity(EntityType<? extends AngelfishEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    public SizeCategory getSizeCategory() {
+        return SizeCategory.FRY;
     }
 
     private PlayState genericFlopController(AnimationState animationState) {

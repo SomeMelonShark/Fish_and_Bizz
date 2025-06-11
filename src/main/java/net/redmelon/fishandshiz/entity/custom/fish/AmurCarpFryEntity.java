@@ -31,6 +31,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
+import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.variant.*;
@@ -42,11 +44,20 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class AmurCarpFryEntity extends AmurCarpEntity implements GeoEntity {
+public class AmurCarpFryEntity extends AmurCarpEntity implements GeoEntity, EntitySize {
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public AmurCarpFryEntity(EntityType<? extends AmurCarpEntity> entityType, World world) {
         super(entityType, world);
+        if (!(this instanceof EntitySize)) {
+            System.out.println(this.getName().getString() + " does NOT implement EntitySize");
+        } else {
+            System.out.println(this.getName().getString() + " implements EntitySize");
+        }
+    }
+    @Override
+    public SizeCategory getSizeCategory() {
+        return SizeCategory.FRY;
     }
 
     private PlayState genericFlopController(AnimationState animationState) {

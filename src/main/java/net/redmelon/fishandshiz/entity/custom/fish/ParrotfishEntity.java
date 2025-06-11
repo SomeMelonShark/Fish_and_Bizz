@@ -31,9 +31,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
+import net.redmelon.fishandshiz.cclass.HolometabolousAquaticEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
+import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.SizedTargetGoal;
 import net.redmelon.fishandshiz.entity.custom.CrayfishEntity;
 import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
@@ -53,7 +57,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.EnumSet;
 import java.util.function.Predicate;
 
-public class ParrotfishEntity extends SchoolingBreedEntity implements GeoEntity, VariableFishEntity<ParrotfishPattern, ParrotfishDetail> {
+public class ParrotfishEntity extends SchoolingBreedEntity implements GeoEntity, VariableFishEntity<ParrotfishPattern, ParrotfishDetail>, EntitySize {
     private static final TrackedData<ParrotfishPattern> PATTERN = DataTracker.registerData(ParrotfishEntity.class, ParrotfishPattern.TRACKED_DATA_HANDLER);
     private static final TrackedData<ParrotfishDetail> DETAIL = DataTracker.registerData(ParrotfishEntity.class, ParrotfishDetail.TRACKED_DATA_HANDLER);
     private static final TrackedData<ModEntityColor> BASE_COLOR = DataTracker.registerData(ParrotfishEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
@@ -69,6 +73,11 @@ public class ParrotfishEntity extends SchoolingBreedEntity implements GeoEntity,
 
     public ParrotfishEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    public SizeCategory getSizeCategory() {
+        return SizeCategory.LARGE;
     }
 
     @Override
@@ -121,39 +130,8 @@ public class ParrotfishEntity extends SchoolingBreedEntity implements GeoEntity,
         this.goalSelector.add(3, new CoralSandingGoal(this, 1.0, this::isTargetBlock, new ItemStack(Items.SAND), 100, 3600));
         this.goalSelector.add(6, new MeleeAttackGoal(this, 1.0f, true));
 
-        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, CrayfishEntity.class, true));
-        this.targetSelector.add(1, new ActiveTargetGoal<>((MobEntity)this, CreeperEntity.class, true));
+        this.targetSelector.add(1, new SizedTargetGoal<>(this, LivingEntity.class, true, SizeCategory.LARGE, 4, 5));
 
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, NeonTetraFryEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, AuratusFryEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, CrayfishLarvaEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, MudCrabLarvaEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, CorydorasFryEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, AmurCarpFryEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, BettaFryEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, GraylingFryEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, MilkfishFryEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, OscarFryEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, RainbowfishFryEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, SalmonFryEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, PlatyFryEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, ClownfishFryEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, TangFryEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, DottybackFryEntity.class, true));
-
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AmurCarpEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, BettaEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AngelfishEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, CorydorasEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, GraylingEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, MilkfishEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, NeonTetraEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, OscarEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, RainbowfishEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, SalmonEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, ClownfishEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, TangEggEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, DottybackEggEntity.class, true));
     }
 
     private boolean isTargetBlock(BlockPos pos) {

@@ -21,6 +21,8 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeKeys;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
+import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.FloatGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.variant.*;
@@ -34,11 +36,16 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import static com.ibm.icu.text.PluralRules.Operand.j;
 
-public class BettaEggEntity extends BettaEntity implements GeoEntity {
+public class BettaEggEntity extends BettaEntity implements GeoEntity, EntitySize {
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public BettaEggEntity(EntityType<? extends BettaEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    public SizeCategory getSizeCategory() {
+        return SizeCategory.EGG;
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {

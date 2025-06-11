@@ -14,6 +14,8 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
+import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
@@ -24,11 +26,16 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class DottybackEggEntity extends DottybackEntity implements GeoEntity {
+public class DottybackEggEntity extends DottybackEntity implements GeoEntity, EntitySize {
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public DottybackEggEntity(EntityType<? extends DottybackEntity> entityType, World world) {
         super(entityType, world);
     }
+    @Override
+    public SizeCategory getSizeCategory() {
+        return SizeCategory.EGG;
+    }
+
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);

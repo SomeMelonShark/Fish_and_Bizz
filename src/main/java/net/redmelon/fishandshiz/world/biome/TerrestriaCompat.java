@@ -55,6 +55,12 @@ public class TerrestriaCompat {
                     ModEntities.AURATUS,
                     5, 2, 4
             );
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey(OASIS),
+                    SpawnGroup.WATER_CREATURE,
+                    ModEntities.KILLIFISH,
+                    4, 1, 3
+            );
 
             // Sakura Forest
             BiomeModifications.addSpawn(

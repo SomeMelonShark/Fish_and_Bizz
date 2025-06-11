@@ -33,6 +33,8 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
+import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.variant.BiVariant;
 import net.redmelon.fishandshiz.item.ModItems;
@@ -45,12 +47,17 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 
-public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity, RangedAttackMob {
+public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity, RangedAttackMob, EntitySize {
     protected static final TrackedData<Integer> VARIANT = DataTracker.registerData(ArcherfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public ArcherfishEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    public SizeCategory getSizeCategory() {
+        return SizeCategory.MEDIUM;
     }
 
     @Override

@@ -27,12 +27,15 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.redmelon.fishandshiz.cclass.cmethods.CustomCriteria;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
+import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+import java.util.function.Predicate;
 
-public abstract class HolometabolousAquaticEntity extends PassiveWaterEntity implements Bucketable, FishNitrogenAccessor {
+public abstract class HolometabolousAquaticEntity extends PassiveWaterEntity implements Bucketable, FishNitrogenAccessor, EntitySize {
     private static final TrackedData<Integer> NITROGEN_LEVEL = DataTracker.registerData(HolometabolousAquaticEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private static final int NITROGEN_THRESHOLD = 1200;
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(HolometabolousAquaticEntity.class, TrackedDataHandlerRegistry.BOOLEAN);

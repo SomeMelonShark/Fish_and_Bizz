@@ -38,11 +38,12 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import net.redmelon.fishandshiz.cclass.cmethods.CustomCriteria;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public abstract class AnimalWaterEntity extends HolometabolousAquaticEntity {
+public abstract class AnimalWaterEntity extends HolometabolousAquaticEntity implements EntitySize {
     protected AnimalWaterEntity(EntityType<? extends HolometabolousAquaticEntity> entityType, World world) {
         super(entityType, world);
     }

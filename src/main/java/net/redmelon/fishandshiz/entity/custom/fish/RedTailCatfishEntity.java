@@ -26,7 +26,10 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
+import net.redmelon.fishandshiz.cclass.HolometabolousAquaticEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
+import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.entity.custom.CrayfishEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabEntity;
 import org.jetbrains.annotations.Nullable;
@@ -40,12 +43,17 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Map;
 
-public class RedTailCatfishEntity extends AnimalFishEntity implements AngledModelEntity {
+public class RedTailCatfishEntity extends AnimalFishEntity implements AngledModelEntity, EntitySize {
     private final Map<String, Vector3f> modelAngles = Maps.newHashMap();
     public RedTailCatfishEntity(EntityType<? extends RedTailCatfishEntity> entityType, World world) {
         super(entityType, world);
         this.moveControl = new FishMoveControl(this, 85, 10, 0.06f, 0.1f, true);
         this.lookControl = new YawAdjustingLookControl(this, 10);
+    }
+
+    @Override
+    public SizeCategory getSizeCategory() {
+        return SizeCategory.VERY_LARGE;
     }
 
     @Override
@@ -160,20 +168,6 @@ public class RedTailCatfishEntity extends AnimalFishEntity implements AngledMode
         this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
         this.goalSelector.add(2, new MeleeAttackGoal(this, 1.2f, true));
 
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, AmurCarpEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, MudCrabEntity.class, true));
-        this.targetSelector.add(2, new ActiveTargetGoal<>((MobEntity)this, ArcherfishEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AngelfishEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, AuratusEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, TropicalFishEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, RainbowfishEntity.class, true));
-        this.targetSelector.add(3, new ActiveTargetGoal<>((MobEntity)this, CrayfishEntity.class, true));
-        this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, CorydorasEntity.class, true));
-        this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, BettaEntity.class, true));
-        this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, NeonTetraEntity.class, true));
-        this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, ClownfishEntity.class, true));
-        this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, TangEntity.class, true));
-        this.targetSelector.add(4, new ActiveTargetGoal<>((MobEntity)this, DottybackEntity.class, true));
         this.targetSelector.add(5, new ActiveTargetGoal<>((MobEntity)this, DrownedEntity.class, true));
         this.targetSelector.add(5, new ActiveTargetGoal<>((MobEntity)this, GuardianEntity.class, true));
         this.targetSelector.add(5, new ActiveTargetGoal<>((MobEntity)this, ElderGuardianEntity.class, true));

@@ -115,6 +115,8 @@ public class ModItems {
             new EntityBucketItem(ModEntities.BETTA_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_TADPOLE, new FabricItemSettings().maxCount(1)));
     public static final Item PLATY_BUCKET = registerItem("platy_bucket",
             new EntityBucketItem(ModEntities.PLATY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item KILLIFISH_BUCKET = registerItem("killifish_bucket",
+            new EntityBucketItem(ModEntities.KILLIFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item PLATY_FRY_BUCKET = registerItem("platy_fry_bucket",
             new EntityBucketItem(ModEntities.PLATY_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item CLOWNFISH_BUCKET = registerItem("clownfish_bucket",

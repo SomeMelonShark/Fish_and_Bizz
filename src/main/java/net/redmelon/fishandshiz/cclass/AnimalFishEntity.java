@@ -42,16 +42,19 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.*;
 import net.redmelon.fishandshiz.cclass.cmethods.CustomCriteria;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public abstract class AnimalFishEntity extends HolometabolousAquaticEntity {
+public abstract class AnimalFishEntity extends HolometabolousAquaticEntity implements EntitySize {
     private static final TrackedData<Boolean> IS_FRY = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_MICRO = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_MATURE = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected int stageAge;
+    private boolean stuck = false;
+    private BlockPos stuckTo = null;
 
     protected AnimalFishEntity(EntityType<? extends HolometabolousAquaticEntity> entityType, World world) {
         super(entityType, world);
@@ -219,6 +222,47 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity {
 
             checkNitrogenLevelForDamage();
         }
+        if (!this.isMature() && !this.isFry()) {
+            if (this.isTouchingWater()) {
+                this.setVelocity(this.getVelocity().x * (this.random.nextFloat() * 0.5f - 0.25f), -0.02, this.getVelocity().z * (this.random.nextFloat() * 0.5f - 0.25f));
+            }
+            if (!this.stuck) {
+                tryStick();
+            } else {
+                BlockState stuckState = getWorld().getBlockState(stuckTo.down());
+                if (stuckState.isAir() || stuckState.getFluidState().isStill() || !stuckState.isSolidBlock(getWorld(), stuckTo.down())) {
+                    this.stuck = false;
+                    this.setNoGravity(false);
+                    this.setVelocity(0, -0.05, 0);
+                } else {
+                    this.setVelocity(Vec3d.ZERO);
+                    this.setNoGravity(true);
+                    this.setPosition(
+                            stuckTo.getX() + 0.5,
+                            stuckTo.getY(),
+                            stuckTo.getZ() + 0.5
+                    );
+                }
+            }
+        }
+    }
+
+    private void tryStick() {
+        BlockPos touchingPos = this.getBlockPos().down();
+        BlockState touchingState = this.getWorld().getBlockState(touchingPos);
+
+        if (touchingState.isSolidBlock(getWorld(), touchingPos) && !touchingState.getFluidState().isStill()) {
+            this.stuck = true;
+            this.stuckTo = touchingPos.up();
+
+            this.setNoGravity(true);
+            this.setVelocity(Vec3d.ZERO);
+            this.setPosition(
+                    stuckTo.getX() + 0.5,
+                    stuckTo.getY(),
+                    stuckTo.getZ() + 0.5
+            );
+        }
     }
 
     @Override
@@ -227,6 +271,10 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity {
         nbt.putBoolean("IsFry", this.isFry());
         nbt.putBoolean("IsMicro", this.isMicro());
         nbt.putBoolean("IsMature", this.isMature());
+        nbt.putBoolean("Stuck", stuck);
+        if (stuckTo != null) {
+            nbt.putLong("StuckTo", stuckTo.asLong());
+        }
     }
 
     @Override
@@ -235,6 +283,10 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity {
         this.setFry(nbt.getBoolean("IsFry"));
         this.setFry(nbt.getBoolean("IsMicro"));
         this.setMature(nbt.getBoolean("IsMature"));
+        this.stuck = nbt.getBoolean("Stuck");
+        if (nbt.contains("StuckTo")) {
+            this.stuckTo = BlockPos.fromLong(nbt.getLong("StuckTo"));
+        }
     }
 
     @Override

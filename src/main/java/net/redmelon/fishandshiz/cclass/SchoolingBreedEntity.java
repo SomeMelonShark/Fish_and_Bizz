@@ -14,13 +14,14 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.Biome;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.stream.Stream;
 
-public abstract class SchoolingBreedEntity extends AnimalFishEntity {
+public abstract class SchoolingBreedEntity extends AnimalFishEntity implements EntitySize {
     @Nullable
     private SchoolingBreedEntity leader;
     private int groupSize = 1;

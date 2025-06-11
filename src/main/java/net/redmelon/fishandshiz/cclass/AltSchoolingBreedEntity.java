@@ -5,6 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.World;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.AltBreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import org.jetbrains.annotations.Nullable;
@@ -14,7 +15,7 @@ import java.util.stream.Stream;
 
 /**Just a temporary solution for AnimalWaterEntities that need schooling behavior,
  * until AnimalFishEntity can be merged with AnimalWaterEntity**/
-public abstract class AltSchoolingBreedEntity extends AnimalWaterEntity {
+public abstract class AltSchoolingBreedEntity extends AnimalWaterEntity implements EntitySize {
     @Nullable
     private AltSchoolingBreedEntity leader;
     private int groupSize = 1;

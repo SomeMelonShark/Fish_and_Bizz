@@ -35,6 +35,7 @@ public class BasicImmatureRenderer<A extends AnimalFishEntity & GeoAnimatable> e
     @Override
     public RenderLayer getRenderType(A animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource,
                                      float partialTick) {
+        RenderLayer.getEntityTranslucent(texture);
         return super.getRenderType(animatable, texture, bufferSource, partialTick);
     }
 

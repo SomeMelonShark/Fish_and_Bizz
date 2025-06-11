@@ -19,6 +19,8 @@ import net.minecraft.world.WorldAccess;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
+import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.WaterWanderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
@@ -31,10 +33,15 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class VolcanoSnailEntity extends AnimalWaterEntity implements GeoEntity {
+public class VolcanoSnailEntity extends AnimalWaterEntity implements GeoEntity, EntitySize {
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public VolcanoSnailEntity(EntityType<? extends AnimalWaterEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    public SizeCategory getSizeCategory() {
+        return SizeCategory.MEDIUM;
     }
 
     @Override

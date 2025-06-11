@@ -1,5 +1,6 @@
 package net.redmelon.fishandshiz.world.biome;
 
+/**Not using this anymore**/
 //public class ModTerrablenderAPI implements TerraBlenderApi {
 //    @Override
 //    public void onTerraBlenderInitialized() {

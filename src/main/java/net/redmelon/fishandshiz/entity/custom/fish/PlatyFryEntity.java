@@ -27,6 +27,8 @@ import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.LivebearerEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
+import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
@@ -38,12 +40,17 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class PlatyFryEntity extends PlatyEntity implements GeoEntity {
+public class PlatyFryEntity extends PlatyEntity implements GeoEntity, EntitySize {
     public static float WIDTH = 0.3f;
     public static float HEIGHT = 0.1f;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public PlatyFryEntity(EntityType<? extends LivebearerEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    public SizeCategory getSizeCategory() {
+        return SizeCategory.FRY;
     }
 
     private PlayState genericFlopController(AnimationState animationState) {

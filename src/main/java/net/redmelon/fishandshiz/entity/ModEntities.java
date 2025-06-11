@@ -150,6 +150,14 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "platy_fry"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     PlatyFryEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.2f)).build());
 
+    public static final EntityType<KillifishEntity> KILLIFISH = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "killifish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    KillifishEntity::new).dimensions(EntityDimensions.fixed(0.4f, 0.2f)).build());
+
+    public static final EntityType<KillifishFryEntity> KILLIFISH_FRY = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "killifish_fry"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    KillifishFryEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.2f)).build());
+
     public static final EntityType<ClownfishEntity> CLOWNFISH = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "clownfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     ClownfishEntity::new).dimensions(EntityDimensions.fixed(0.4f, 0.3f)).build());
@@ -279,6 +287,8 @@ public class ModEntities {
         FabricDefaultAttributeRegistry.register(ModEntities.BETTA_EGG, BettaEggEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.PLATY, PlatyEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.PLATY_FRY, AnimalFishEntity.createFishAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.KILLIFISH, KillifishEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.KILLIFISH_FRY, AnimalFishEntity.createFishAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.CLOWNFISH, ClownfishEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.CLOWNFISH_FRY, AnimalFishEntity.createFishAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.CLOWNFISH_EGG, AnimalFishEntity.createFishAttributes());

@@ -21,6 +21,8 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AltSchoolingBreedEntity;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
+import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.AltBreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
@@ -31,7 +33,7 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class CrayfishLarvaEntity extends AltSchoolingBreedEntity implements GeoEntity {
+public class CrayfishLarvaEntity extends AltSchoolingBreedEntity implements GeoEntity, EntitySize {
     @VisibleForTesting
     public static int MAX_LARVA_AGE = Math.abs(-18000);
     public static float WIDTH = 0.3f;
@@ -40,6 +42,11 @@ public class CrayfishLarvaEntity extends AltSchoolingBreedEntity implements GeoE
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public CrayfishLarvaEntity(EntityType<? extends AltSchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    public SizeCategory getSizeCategory() {
+        return SizeCategory.FRY;
     }
 
     @Override

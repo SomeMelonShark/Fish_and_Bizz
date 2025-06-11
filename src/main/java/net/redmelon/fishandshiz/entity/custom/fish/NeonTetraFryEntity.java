@@ -25,6 +25,8 @@ import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
+import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.item.ModItems;
@@ -36,13 +38,18 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class NeonTetraFryEntity extends NeonTetraEntity implements GeoEntity {
+public class NeonTetraFryEntity extends NeonTetraEntity implements GeoEntity, EntitySize {
     public static float WIDTH = 0.25f;
     public static float HEIGHT = 0.2f;
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public NeonTetraFryEntity(EntityType<? extends NeonTetraEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    @Override
+    public SizeCategory getSizeCategory() {
+        return SizeCategory.FRY;
     }
 
     private PlayState genericFlopController(AnimationState animationState) {
