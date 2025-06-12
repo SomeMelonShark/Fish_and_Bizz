@@ -165,7 +165,7 @@ public class KillifishFryEntity extends KillifishEntity implements GeoEntity, En
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.BETTA_FRY_BUCKET);
+        return new ItemStack(ModItems.KILLIFISH_FRY_BUCKET);
     }
 
     @Override

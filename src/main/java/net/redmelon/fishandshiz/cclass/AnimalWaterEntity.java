@@ -42,7 +42,7 @@ import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-
+/**A simpler version of the mod's aquatic mobs which has less logic for life stages and feeding**/
 public abstract class AnimalWaterEntity extends HolometabolousAquaticEntity implements EntitySize {
     protected AnimalWaterEntity(EntityType<? extends HolometabolousAquaticEntity> entityType, World world) {
         super(entityType, world);

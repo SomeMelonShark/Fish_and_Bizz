@@ -1,6 +1,5 @@
 package net.redmelon.fishandshiz.entity.custom;
 
-import com.google.common.annotations.VisibleForTesting;
 import net.minecraft.entity.Bucketable;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
@@ -17,7 +16,6 @@ import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
-import net.redmelon.fishandshiz.cclass.AnimalWaterEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
 import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
@@ -30,10 +28,9 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class VolcanoSnailEggEntity extends AnimalFishEntity implements GeoEntity, EntitySize {
-
+public class RamshornSnailEggEntity extends AnimalFishEntity implements GeoEntity, EntitySize {
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-    public VolcanoSnailEggEntity(EntityType<? extends AnimalFishEntity> entityType, World world) {
+    public RamshornSnailEggEntity(EntityType<? extends AnimalFishEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -96,11 +93,11 @@ public class VolcanoSnailEggEntity extends AnimalFishEntity implements GeoEntity
     @Override
     protected void growUp() {
         World world = this.getWorld();
-        int i = random.nextBetweenExclusive(10, 17);
+        int i = random.nextBetweenExclusive(8, 14);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
                 ServerWorld serverWorld = (ServerWorld)world;
-                VolcanoSnailEntity nextEntity = ModEntities.VOLCANO_SNAIL.create(this.getWorld());
+                RamshornSnailEntity nextEntity = ModEntities.RAMSHORN_SNAIL.create(this.getWorld());
                 if (nextEntity != null) {
                     nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
                     nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);

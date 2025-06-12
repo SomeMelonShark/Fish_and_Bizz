@@ -70,27 +70,15 @@ public class MudCrabEntity extends EggboundEntity implements GeoEntity, EntitySi
 
     protected void initGoals() {
         this.goalSelector.add(1, new EscapeDangerGoal(this, 2.0));
+        this.goalSelector.add(1, new EscapeSuffocationGoal(this, 1.0, 10));
         this.goalSelector.add(2, new EggboundMateGoal(this, 1.0));
-        this.goalSelector.add(3, new WaterWanderGoal(this, 3.5));
+        this.goalSelector.add(3, new WaterWanderGoal(this, 7));
         this.goalSelector.add(4, new LandWanderFarGoal(this, 1.0));
         this.goalSelector.add(4, new LookAroundGoal(this));
         this.goalSelector.add(6, new MeleeAttackGoal(this, 1.0f, true));
         this.goalSelector.add(6, new LookAtEntityGoal(this, MudCrabEntity.class, 6.0f));
 
         this.targetSelector.add(1, new SizedTargetGoal<>(this, LivingEntity.class, true, SizeCategory.LARGE, 1, 5));
-    }
-
-    @Override
-    protected void tickWaterBreathingAir(int air) {
-        if (this.isAlive() && !this.isInsideWaterOrBubbleColumn()) {
-            this.setAir(air - 1);
-            if (this.getAir() == -20) {
-                this.setAir(0);
-            }
-        } else {
-            this.setAir(300);
-        }
-
     }
 
     protected SoundEvent getFlopSound() {
@@ -178,6 +166,7 @@ public class MudCrabEntity extends EggboundEntity implements GeoEntity, EntitySi
         if (spawnReason == SpawnReason.NATURAL && i == 0) {
             this.setBaby(true);
         }
+        this.setAirResistant(true);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         return entityData;
     }

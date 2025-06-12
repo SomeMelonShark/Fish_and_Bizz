@@ -11,6 +11,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.entity.ModEntities;
+import net.redmelon.fishandshiz.entity.custom.RamshornSnailEntity;
 import net.redmelon.fishandshiz.entity.custom.fish.*;
 import net.redmelon.fishandshiz.entity.variant.*;
 import org.jetbrains.annotations.Nullable;
@@ -108,6 +109,22 @@ public abstract class BucketTooltipMixin {
                     }
                     if (!PlatyDetail.fromId(nbt.getString("Detail")).equals(PlatyDetail.NONE)) {
                         tooltip.add(Text.translatable(PlatyDetail.fromId(nbt.getString("Detail")).getTranslationKey()).formatted(formatting));
+                        if (!nbt.getString("DetailColor").equals(nbt.getString("BaseColor"))) {
+                            text.append(", ").append(Text.translatable(ModEntityColor.fromId(nbt.getString("DetailColor")).getTranslationKey()));
+                        }
+                    }
+                    tooltip.add(text.formatted(formatting));
+                }
+            }
+            if(this.entityType.equals(ModEntities.KILLIFISH)) {
+                if (nbt.contains("Pattern", NbtElement.STRING_TYPE)) {
+                    MutableText text = Text.translatable(ModEntityColor.fromId(nbt.getString("BaseColor")).getTranslationKey());
+                    tooltip.add(Text.translatable(KillifishPattern.fromId(nbt.getString("Pattern")).getTranslationKey()).formatted(formatting));
+                    if (!nbt.getString("BaseColor").equals(nbt.getString("PatternColor"))) {
+                        text.append(", ").append(Text.translatable(ModEntityColor.fromId(nbt.getString("PatternColor")).getTranslationKey()));
+                    }
+                    if (!KillifishDetail.fromId(nbt.getString("Detail")).equals(KillifishDetail.NONE)) {
+                        tooltip.add(Text.translatable(KillifishDetail.fromId(nbt.getString("Detail")).getTranslationKey()).formatted(formatting));
                         if (!nbt.getString("DetailColor").equals(nbt.getString("BaseColor"))) {
                             text.append(", ").append(Text.translatable(ModEntityColor.fromId(nbt.getString("DetailColor")).getTranslationKey()));
                         }
@@ -263,6 +280,14 @@ public abstract class BucketTooltipMixin {
                 int i = nbtCompound.getInt("BucketVariantTag");
                 Formatting[] formattings = new Formatting[]{Formatting.ITALIC, Formatting.GRAY};
                 String string = "entity.fishandshiz.archerfish.type." + ArcherfishEntity.getVariety(i);
+                MutableText mutableText = Text.translatable(string);
+                mutableText.formatted(formattings);
+                tooltip.add(mutableText);
+            }
+            if (this.entityType == ModEntities.RAMSHORN_SNAIL && (nbtCompound = stack.getNbt()) != null && nbtCompound.contains("BucketVariantTag", NbtElement.INT_TYPE)) {
+                int i = nbtCompound.getInt("BucketVariantTag");
+                Formatting[] formattings = new Formatting[]{Formatting.ITALIC, Formatting.GRAY};
+                String string = "entity.fishandshiz.ramshorn_snail.type." + RamshornSnailEntity.getVariety(i);
                 MutableText mutableText = Text.translatable(string);
                 mutableText.formatted(formattings);
                 tooltip.add(mutableText);

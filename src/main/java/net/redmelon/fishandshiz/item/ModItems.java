@@ -117,6 +117,10 @@ public class ModItems {
             new EntityBucketItem(ModEntities.PLATY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item KILLIFISH_BUCKET = registerItem("killifish_bucket",
             new EntityBucketItem(ModEntities.KILLIFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item KILLIFISH_FRY_BUCKET = registerItem("killifish_fry_bucket",
+            new EntityBucketItem(ModEntities.KILLIFISH_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item KILLIFISH_EGG_BUCKET = registerItem("killifish_egg_bucket",
+            new EntityBucketItem(ModEntities.KILLIFISH_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item PLATY_FRY_BUCKET = registerItem("platy_fry_bucket",
             new EntityBucketItem(ModEntities.PLATY_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item CLOWNFISH_BUCKET = registerItem("clownfish_bucket",
@@ -163,6 +167,10 @@ public class ModItems {
             new EntityBucketItem(ModEntities.VOLCANO_SNAIL, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY, new FabricItemSettings().maxCount(1)));
     public static final Item VOLCANO_SNAIL_EGG_BUCKET = registerItem("volcano_snail_egg_bucket",
             new EntityBucketItem(ModEntities.VOLCANO_SNAIL_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY, new FabricItemSettings().maxCount(1)));
+    public static final Item RAMSHORN_SNAIL_BUCKET = registerItem("ramshorn_snail_bucket",
+            new EntityBucketItem(ModEntities.RAMSHORN_SNAIL, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY, new FabricItemSettings().maxCount(1)));
+    public static final Item RAMSHORN_SNAIL_EGG_BUCKET = registerItem("ramshorn_snail_egg_bucket",
+            new EntityBucketItem(ModEntities.RAMSHORN_SNAIL_EGG, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY, new FabricItemSettings().maxCount(1)));
     public static final Item CULTURE_FEED_BUCKET = registerItem("culture_feed_bucket",
             new CultureFeedBucketItem(ModBlocks.CULTURE_FEED, SoundEvents.ITEM_BUCKET_EMPTY, new FabricItemSettings().maxCount(1)));
     public static final Item DRIED_CULTURE_FEED = registerItem("dried_culture_feed", new Item(new FabricItemSettings()));

@@ -158,6 +158,10 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "killifish_fry"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     KillifishFryEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.2f)).build());
 
+    public static final EntityType<KillifishEggEntity> KILLIFISH_EGG = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "killifish_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    KillifishEggEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.1f)).build());
+
     public static final EntityType<ClownfishEntity> CLOWNFISH = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "clownfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     ClownfishEntity::new).dimensions(EntityDimensions.fixed(0.4f, 0.3f)).build());
@@ -238,6 +242,14 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "volcano_snail_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
                     VolcanoSnailEggEntity::new).dimensions(EntityDimensions.fixed(0.2f, 0.4f)).build());
 
+    public static final EntityType<RamshornSnailEntity> RAMSHORN_SNAIL = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "ramshorn_snail"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
+                    RamshornSnailEntity::new).dimensions(EntityDimensions.fixed(0.3f, 0.2f)).build());
+
+    public static final EntityType<RamshornSnailEggEntity> RAMSHORN_SNAIL_EGG = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "ramshorn_snail_egg"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
+                    RamshornSnailEggEntity::new).dimensions(EntityDimensions.fixed(0.2f, 0.4f)).build());
+
     public static final EntityType<CrayfishEntity> CRAYFISH = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "crayfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_CREATURE,
                     CrayfishEntity::new).dimensions(EntityDimensions.fixed(0.2f, 0.1f)).build());
@@ -289,6 +301,7 @@ public class ModEntities {
         FabricDefaultAttributeRegistry.register(ModEntities.PLATY_FRY, AnimalFishEntity.createFishAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.KILLIFISH, KillifishEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.KILLIFISH_FRY, AnimalFishEntity.createFishAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.KILLIFISH_EGG, KillifishEggEntity.createFishAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.CLOWNFISH, ClownfishEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.CLOWNFISH_FRY, AnimalFishEntity.createFishAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.CLOWNFISH_EGG, AnimalFishEntity.createFishAttributes());
@@ -313,6 +326,8 @@ public class ModEntities {
         FabricDefaultAttributeRegistry.register(ModEntities.LION_MANE_JELLYFISH, ManeJellyfishEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.VOLCANO_SNAIL, VolcanoSnailEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.VOLCANO_SNAIL_EGG, VolcanoSnailEggEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.RAMSHORN_SNAIL, RamshornSnailEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.RAMSHORN_SNAIL_EGG, RamshornSnailEggEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.CAPYBARA, CapybaraEntity.setAttributes());
     }
 }

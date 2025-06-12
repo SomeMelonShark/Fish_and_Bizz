@@ -37,9 +37,7 @@ import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.SizedTargetGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.variant.KillifishDetail;
-import net.redmelon.fishandshiz.entity.variant.KillifishPattern;
-import net.redmelon.fishandshiz.entity.variant.ModEntityColor;
+import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.util.ModUtil;
 import org.jetbrains.annotations.Nullable;
@@ -108,8 +106,28 @@ public class KillifishEntity extends SchoolingBreedEntity implements GeoEntity, 
     }
 
     @Override
-    public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return null;
+    public @Nullable KillifishEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+        KillifishEntity entity = (KillifishEntity) var2;
+        KillifishEggEntity eggEntity = (KillifishEggEntity) ModEntities.KILLIFISH_EGG.create(var1);
+        if (eggEntity != null) {
+            ModEntityColor color;
+            ModEntityColor color2;
+            ModEntityColor color3;
+            KillifishPattern pattern;
+            KillifishDetail detail;
+            color = random.nextBoolean() ? this.getBaseColor() : entity.getBaseColor();
+            color2 = random.nextBoolean() ? this.getPatternColor() : entity.getPatternColor();
+            color3 = random.nextBoolean() ? this.getDetailColor() : entity.getDetailColor();
+            pattern = random.nextBoolean() ? this.getPattern() : entity.getPattern();
+            detail = random.nextBoolean() ? this.getDetail() : entity.getDetail();
+
+            eggEntity.setBaseColor(color);
+            eggEntity.setPatternColor(color2);
+            eggEntity.setDetailColor(color3);
+            eggEntity.setPattern(pattern);
+            eggEntity.setDetail(detail);
+        }
+        return eggEntity;
     }
 
     @Override
@@ -129,7 +147,7 @@ public class KillifishEntity extends SchoolingBreedEntity implements GeoEntity, 
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.BETTA_BUCKET);
+        return new ItemStack(ModItems.KILLIFISH_BUCKET);
     }
 
     @Override

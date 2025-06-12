@@ -23,9 +23,7 @@ import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldView;
+import net.minecraft.world.*;
 import net.redmelon.fishandshiz.cclass.cmethods.CustomCriteria;
 import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
 import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
@@ -37,6 +35,7 @@ import java.util.function.Predicate;
 
 public abstract class HolometabolousAquaticEntity extends PassiveWaterEntity implements Bucketable, FishNitrogenAccessor, EntitySize {
     private static final TrackedData<Integer> NITROGEN_LEVEL = DataTracker.registerData(HolometabolousAquaticEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Boolean> AIR_RESISTANT = DataTracker.registerData(HolometabolousAquaticEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final int NITROGEN_THRESHOLD = 1200;
     private static final TrackedData<Boolean> FROM_BUCKET = DataTracker.registerData(HolometabolousAquaticEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected static final int BREEDING_COOLDOWN = 6000;
@@ -50,6 +49,7 @@ public abstract class HolometabolousAquaticEntity extends PassiveWaterEntity imp
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(FROM_BUCKET, false);
+        this.dataTracker.startTracking(AIR_RESISTANT, false);
         this.dataTracker.startTracking(NITROGEN_LEVEL, 0);
     }
 
@@ -71,9 +71,25 @@ public abstract class HolometabolousAquaticEntity extends PassiveWaterEntity imp
         this.dataTracker.set(FROM_BUCKET, fromBucket);
     }
 
+    public boolean isAirResistant() {
+        return this.dataTracker.get(AIR_RESISTANT);
+    }
+
+    public void setAirResistant(boolean airResistant) {
+        this.dataTracker.set(AIR_RESISTANT, airResistant);
+    }
+
     @Override
     protected void initGoals() {
         super.initGoals();
+    }
+
+    @Nullable
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        if (this.isAirResistant()) {
+            this.setAir(2400);
+        }
+        return entityData;
     }
 
     @Override
@@ -104,6 +120,21 @@ public abstract class HolometabolousAquaticEntity extends PassiveWaterEntity imp
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
+    }
+
+    @Override
+    protected void tickWaterBreathingAir(int air) {
+        if (this.isAlive() && !this.isInsideWaterOrBubbleColumn() && this.isAirResistant()) {
+            this.setAir(air - 1);
+            if (this.getAir() == -60) {
+                this.setAir(0);
+                this.damage(this.getDamageSources().drown(), 1.0F);
+            }
+        } else if (this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.isAirResistant()) {
+            this.setAir(2400);
+        } else {
+            super.tickWaterBreathingAir(air);
+        }
     }
 
     static class FishMoveControl
@@ -214,6 +245,7 @@ public abstract class HolometabolousAquaticEntity extends PassiveWaterEntity imp
         }
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("FromBucket", this.isFromBucket());
+        nbt.putBoolean("AirResistant", this.isAirResistant());
         nbt.putInt("NitrogenLevel", this.getNitrogenLevel());
     }
 
@@ -228,6 +260,7 @@ public abstract class HolometabolousAquaticEntity extends PassiveWaterEntity imp
         this.loveTicks = nbt.getInt("InLove");
         this.lovingPlayer = nbt.containsUuid("LoveCause") ? nbt.getUuid("LoveCause") : null;
         this.setFromBucket(nbt.getBoolean("FromBucket"));
+        this.setAirResistant(nbt.getBoolean("AirResistant"));
         this.setNitrogenLevel(nbt.getInt("NitrogenLevel"));
     }
 

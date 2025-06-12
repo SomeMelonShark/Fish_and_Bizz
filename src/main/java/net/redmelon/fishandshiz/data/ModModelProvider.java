@@ -90,6 +90,8 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.PLATY_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.PLATY_FRY_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.KILLIFISH_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.KILLIFISH_FRY_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.KILLIFISH_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.CLOWNFISH_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.CLOWNFISH_FRY_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.CLOWNFISH_EGG_BUCKET, Models.GENERATED);
@@ -112,6 +114,8 @@ public class ModModelProvider extends FabricModelProvider {
         itemModelGenerator.register(ModItems.CRAYFISH_LARVA_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.VOLCANO_SNAIL_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.VOLCANO_SNAIL_EGG_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.RAMSHORN_SNAIL_BUCKET, Models.GENERATED);
+        itemModelGenerator.register(ModItems.RAMSHORN_SNAIL_EGG_BUCKET, Models.GENERATED);
         itemModelGenerator.register(ModItems.MILKFISH, Models.GENERATED);
         itemModelGenerator.register(ModItems.COOKED_MILKFISH, Models.GENERATED);
         itemModelGenerator.register(ModItems.MUD_CRAB, Models.GENERATED);

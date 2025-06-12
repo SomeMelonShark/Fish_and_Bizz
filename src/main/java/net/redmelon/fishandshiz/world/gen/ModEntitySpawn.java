@@ -181,6 +181,19 @@ public class ModEntitySpawn {
         SpawnRestriction.register(ModEntities.BETTA_EGG, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawnHigh);
 
+        //Killifish Spawns
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WOODED_BADLANDS, BiomeKeys.PLAINS, BiomeKeys.DARK_FOREST), SpawnGroup.WATER_AMBIENT,
+                ModEntities.KILLIFISH, 4, 1, 3);
+
+        SpawnRestriction.register(ModEntities.KILLIFISH, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawnHigh);
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WOODED_BADLANDS, BiomeKeys.PLAINS, BiomeKeys.DARK_FOREST), SpawnGroup.WATER_AMBIENT,
+                ModEntities.KILLIFISH_EGG, 1, 1, 2);
+
+        SpawnRestriction.register(ModEntities.KILLIFISH_EGG, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawnHigh);
+
         // Clownfish Spawns
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN), SpawnGroup.WATER_AMBIENT,
                 ModEntities.CLOWNFISH, 20, 3, 7);
@@ -291,5 +304,11 @@ public class ModEntitySpawn {
         SpawnRestriction.register(ModEntities.VOLCANO_SNAIL, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, VolcanoSnailEntity::canSpawn);
 
+        // Ramshorn Snail Spawns
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE, BiomeKeys.SPARSE_JUNGLE, BiomeKeys.SWAMP, BiomeKeys.RIVER, BiomeKeys.LUSH_CAVES), SpawnGroup.WATER_AMBIENT,
+                ModEntities.RAMSHORN_SNAIL, 5, 2, 4);
+
+        SpawnRestriction.register(ModEntities.RAMSHORN_SNAIL, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawnHigh);
     }
 }

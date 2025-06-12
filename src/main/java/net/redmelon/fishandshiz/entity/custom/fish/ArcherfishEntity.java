@@ -13,18 +13,12 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.thrown.PotionEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtil;
-import net.minecraft.potion.Potions;
 import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
@@ -44,8 +38,6 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-
-import java.util.List;
 
 public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity, RangedAttackMob, EntitySize {
     protected static final TrackedData<Integer> VARIANT = DataTracker.registerData(ArcherfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -143,7 +135,7 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.setArcherfishVariant(nbt.getInt("Variant"));
+        this.setVariant(nbt.getInt("Variant"));
     }
 
     @Override
@@ -168,7 +160,7 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
         this.dataTracker.set(VARIANT, variant.getId() & 255);
     }
 
-    protected void setArcherfishVariant(int variant) {
+    protected void setVariant(int variant) {
         this.dataTracker.set(VARIANT, variant);
     }
     @Override
@@ -190,7 +182,7 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
         int i = random.nextInt(3);
         int j = random.nextInt(600);
         if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
-            this.setArcherfishVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
+            this.setVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
             return entityData;
         }
         if (spawnReason == SpawnReason.NATURAL && i == 0) {
@@ -208,7 +200,7 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
         }
         setVariant(variant);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-        this.setArcherfishVariant(variant.getId());
+        this.setVariant(variant.getId());
         return entityData;
     }
 

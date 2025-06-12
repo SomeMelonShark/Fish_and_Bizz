@@ -45,6 +45,9 @@
   "item.fishandshiz.betta_egg_bucket": "Bucket of Betta Eggs",
   "item.fishandshiz.platy_bucket": "Bucket of Platy",
   "item.fishandshiz.platy_fry_bucket": "Bucket of Platy Fry",
+  "item.fishandshiz.killifish_bucket": "Bucket of Killifish",
+  "item.fishandshiz.killifish_fry_bucket": "Bucket of Killifish Fry",
+  "item.fishandshiz.killifish_egg_bucket": "Bucket of Killifish Eggs",
   "item.fishandshiz.clownfish_bucket": "Bucket of Clownfish",
   "item.fishandshiz.clownfish_fry_bucket": "Bucket of Clownfish Fry",
   "item.fishandshiz.clownfish_egg_bucket": "Bucket of Clownfish Eggs",
@@ -68,6 +71,8 @@
   "item.fishandshiz.crayfish_egg_bucket": "Bucket of Crayfish Eggs",
   "item.fishandshiz.volcano_snail_bucket": "Bucket of Volcano Snail",
   "item.fishandshiz.volcano_snail_egg_bucket": "Bucket of Volcano Snail Eggs",
+  "item.fishandshiz.ramshorn_snail_bucket": "Bucket of Ramshorn Snail",
+  "item.fishandshiz.ramshorn_snail_egg_bucket": "Bucket of Ramshorn Snail Eggs",
   "item.fishandshiz.milkfish": "Raw Milkfish",
   "item.fishandshiz.cooked_milkfish": "Cooked Milkfish",
   "item.fishandshiz.mud_crab": "Raw Mud Crab",
@@ -125,6 +130,8 @@
   "entity.fishandshiz.lion_mane_jellyfish": "Lion's Mane Jellyfish",
   "entity.fishandshiz.volcano_snail": "Volcano Snail",
   "entity.fishandshiz.volcano_snail_egg": "Volcano Snail Eggs",
+  "entity.fishandshiz.ramshorn_snail": "Ramshorn Snail",
+  "entity.fishandshiz.ramshorn_snail_egg": "Ramshorn Snail Eggs",
   "entity.fishandshiz.amur_carp": "Amur Carp",
   "entity.fishandshiz.amur_carp_fry": "Amur Carp Fry",
   "entity.fishandshiz.amur_carp_egg": "Amur Carp Eggs",
@@ -136,6 +143,9 @@
   "entity.fishandshiz.clownfish_egg": "Clownfish Eggs",
   "entity.fishandshiz.platy": "Platy",
   "entity.fishandshiz.platy_fry": "Platy Fry",
+  "entity.fishandshiz.killifish": "Killifish",
+  "entity.fishandshiz.killifish_fry": "Killifish Fry",
+  "entity.fishandshiz.killifish_egg": "Killifish Eggs",
   "entity.fishandshiz.goatfish": "Goatfish",
   "entity.fishandshiz.tang": "Tang",
   "entity.fishandshiz.tang_fry": "Tang Fry",
@@ -238,6 +248,12 @@
   "rainbowfish_pattern.fishandshiz.annular": "Annular",
   "rainbowfish_pattern.fishandshiz.underbelly": "Underbelly",
 
+  "killifish_pattern.fishandshiz.gunty": "Gunty",
+  "killifish_pattern.fishandshiz.lyre": "Lyre",
+  "killifish_pattern.fishandshiz.clown": "Clown",
+  "killifish_pattern.fishandshiz.long": "Long",
+  "killifish_pattern.fishandshiz.hat": "Hat",
+
   "angelfish_detail.fishandshiz.crown": "Crowned",
   "angelfish_detail.fishandshiz.accent": "Accented",
 
@@ -285,6 +301,11 @@
   "rainbowfish_detail.fishandshiz.breasty": "Breasty",
   "rainbowfish_detail.fishandshiz.lateral": "Lateral",
 
+  "killifish_detail.fishandshiz.flare": "Flare",
+  "killifish_detail.fishandshiz.afterburn": "Afterburn",
+  "killifish_detail.fishandshiz.wake": "Wake",
+  "killifish_detail.fishandshiz.starry": "Starry",
+
   "entity_color.fishandshiz.silver": "Silver",
   "entity_color.fishandshiz.grey": "Grey",
   "entity_color.fishandshiz.matte_black": "Matte Black",
@@ -314,5 +335,8 @@
   "entity_color.fishandshiz.pink": "Pink",
 
   "entity.fishandshiz.archerfish.type.NORMAL": "Normal",
-  "entity.fishandshiz.archerfish.type.SPECIAL": "Evil!"
+  "entity.fishandshiz.archerfish.type.SPECIAL": "Evil!",
+
+  "entity.fishandshiz.ramshorn_snail.type.NORMAL": "Cream",
+  "entity.fishandshiz.ramshorn_snail.type.SPECIAL": "Melanated"
 }

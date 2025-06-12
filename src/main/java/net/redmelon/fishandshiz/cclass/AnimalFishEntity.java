@@ -103,6 +103,19 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     }
 
     @Override
+    protected void tickWaterBreathingAir(int air) {
+        if (this.isAlive() && !this.isInsideWaterOrBubbleColumn() && !this.isMature() && !this.isFry()) {
+            this.setAir(air - 5);
+            if (this.getAir() == -20) {
+                this.setAir(0);
+                this.damage(this.getDamageSources().drown(), 1.0F);
+            }
+        } else {
+            super.tickWaterBreathingAir(air);
+        }
+    }
+
+    @Override
     protected void initGoals() {
         super.initGoals();
         this.goalSelector.add(4, new SwimToRandomPlaceGoal(this));

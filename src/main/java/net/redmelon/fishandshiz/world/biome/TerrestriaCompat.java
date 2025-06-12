@@ -47,6 +47,18 @@ public class TerrestriaCompat {
                     ModEntities.CRAYFISH,
                     1, 1, 2
             );
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey(CYPRESS_SWAMP),
+                    SpawnGroup.WATER_CREATURE,
+                    ModEntities.RAMSHORN_SNAIL,
+                    3, 2, 4
+            );
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey(CYPRESS_SWAMP),
+                    SpawnGroup.WATER_CREATURE,
+                    ModEntities.RAMSHORN_SNAIL,
+                    1, 1, 1
+            );
 
             // Oasis
             BiomeModifications.addSpawn(
@@ -59,6 +71,12 @@ public class TerrestriaCompat {
                     BiomeSelectors.includeByKey(OASIS),
                     SpawnGroup.WATER_CREATURE,
                     ModEntities.KILLIFISH,
+                    4, 1, 3
+            );
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey(OASIS),
+                    SpawnGroup.WATER_CREATURE,
+                    ModEntities.KILLIFISH_EGG,
                     4, 1, 3
             );
 
@@ -106,6 +124,18 @@ public class TerrestriaCompat {
                     BiomeSelectors.includeByKey(HEMLOCK_RAINFOREST),
                     GenerationStep.Feature.VEGETAL_DECORATION,
                     ModPlacedFeatures.PLACED_ANUBIAS
+            );
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey(CANYON),
+                    SpawnGroup.WATER_CREATURE,
+                    ModEntities.RAMSHORN_SNAIL,
+                    2, 2, 4
+            );
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey(CANYON),
+                    SpawnGroup.WATER_CREATURE,
+                    ModEntities.RAMSHORN_SNAIL_EGG,
+                    1, 1, 1
             );
 
             // Canyon

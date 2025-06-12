@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "fishandshiz:item/killifish_fry_bucket"
+  }
+}

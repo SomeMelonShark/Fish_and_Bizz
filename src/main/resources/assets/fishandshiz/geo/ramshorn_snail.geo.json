@@ -1,0 +1,58 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.ramshorn_snail",
+				"texture_width": 16,
+				"texture_height": 16,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 1.5,
+				"visible_bounds_offset": [0, 0.25, 0]
+			},
+			"bones": [
+				{
+					"name": "body",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-1, 0, -1], "size": [2, 1, 2], "uv": [8, 5]}
+					]
+				},
+				{
+					"name": "shell",
+					"parent": "body",
+					"pivot": [0, 1, 0],
+					"cubes": [
+						{"origin": [0, 3, -1], "size": [1, 1, 4], "uv": [0, 0]},
+						{"origin": [-1, 1, -1], "size": [2, 2, 2], "uv": [0, 5]},
+						{"origin": [0, 1, 1], "size": [1, 2, 2], "uv": [0, 9]}
+					]
+				},
+				{
+					"name": "foot",
+					"parent": "body",
+					"pivot": [0, 0, 1],
+					"cubes": [
+						{"origin": [-1, 0, 1], "size": [2, 1, 2], "uv": [8, 8]}
+					]
+				},
+				{
+					"name": "leftTentacle",
+					"parent": "body",
+					"pivot": [1, 1, -1],
+					"cubes": [
+						{"origin": [1, 1, -1], "size": [2, 0, 1], "uv": [10, 0]}
+					]
+				},
+				{
+					"name": "rightTentacle",
+					"parent": "body",
+					"pivot": [-1, 1, -1],
+					"cubes": [
+						{"origin": [-3, 1, -1], "size": [2, 0, 1], "uv": [10, 1]}
+					]
+				}
+			]
+		}
+	]
+}

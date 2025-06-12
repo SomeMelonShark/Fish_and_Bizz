@@ -1,5 +1,6 @@
 package net.redmelon.fishandshiz.entity.custom;
 
+import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
@@ -10,19 +11,19 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.AnimalFishEntity;
 import net.redmelon.fishandshiz.cclass.EggboundEntity;
 import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
 import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.EggboundMateGoal;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.LandWanderFarGoal;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.SizedTargetGoal;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.WaterWanderGoal;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.*;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.custom.fish.*;
 import net.redmelon.fishandshiz.item.ModItems;
@@ -43,7 +44,7 @@ public class CrayfishEntity extends EggboundEntity implements GeoEntity, EntityS
 
     @Override
     public SizeCategory getSizeCategory() {
-        return SizeCategory.SMALL;
+        return SizeCategory.LARGE;
     }
 
     @Override
@@ -61,26 +62,22 @@ public class CrayfishEntity extends EggboundEntity implements GeoEntity, EntityS
 
     protected void initGoals() {
         this.goalSelector.add(1, new EscapeDangerGoal(this, 2.0));
+        this.goalSelector.add(1, new EscapeSuffocationGoal(this, 1.0, 10));
         this.goalSelector.add(2, new EggboundMateGoal(this, 1.0));
-        this.goalSelector.add(3, new WaterWanderGoal(this, 3.5));
+        this.goalSelector.add(3, new WaterWanderGoal(this, 7));
         this.goalSelector.add(4, new LandWanderFarGoal(this, 1.0));
         this.goalSelector.add(4, new LookAroundGoal(this));
         this.goalSelector.add(6, new MeleeAttackGoal(this, 1.0f, true));
 
-        this.targetSelector.add(1, new SizedTargetGoal<>(this, LivingEntity.class, true, SizeCategory.SMALL, 1, 3));
+        this.targetSelector.add(1, new SizedTargetGoal<>(this, LivingEntity.class, true, SizeCategory.MEDIUM, 1, 3));
     }
 
     @Override
-    protected void tickWaterBreathingAir(int air) {
-        if (this.isAlive() && !this.isInsideWaterOrBubbleColumn()) {
-            this.setAir(air - 1);
-            if (this.getAir() == -20) {
-                this.setAir(0);
-            }
-        } else {
-            this.setAir(300);
-        }
-
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
+                                 @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        this.setAirResistant(true);
+        entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return entityData;
     }
 
     protected SoundEvent getFlopSound() {

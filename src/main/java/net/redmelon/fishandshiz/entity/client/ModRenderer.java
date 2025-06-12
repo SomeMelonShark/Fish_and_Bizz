@@ -15,6 +15,7 @@ import net.redmelon.fishandshiz.entity.client.fish.model.RedTailCatfishModel;
 import net.redmelon.fishandshiz.entity.client.fish.renderer.*;
 import net.redmelon.fishandshiz.entity.client.renderer.BasicMiscRenderer;
 import net.redmelon.fishandshiz.entity.client.renderer.BasicSmallMiscRenderer;
+import net.redmelon.fishandshiz.entity.client.renderer.RamshornSnailRenderer;
 import net.redmelon.fishandshiz.entity.client.renderer.ReplacedSquidRenderer;
 
 public class ModRenderer {
@@ -77,6 +78,7 @@ public class ModRenderer {
         EntityRendererRegistry.register(ModEntities.PLATY_FRY, BasicImmatureRenderer.fryCreate("platy", "platy"));
         EntityRendererRegistry.register(ModEntities.KILLIFISH, BasicVariableFishRenderer.create("killifish", "mediumfish"));
         EntityRendererRegistry.register(ModEntities.KILLIFISH_FRY, BasicImmatureRenderer.fryCreate("killifish", "killifish"));
+        EntityRendererRegistry.register(ModEntities.KILLIFISH_EGG, BasicImmatureRenderer.eggCreate("betta", "killifish"));
         EntityRendererRegistry.register(ModEntities.CLOWNFISH, BasicVariableFishRenderer.create("clownfish", "mediumfish"));
         EntityRendererRegistry.register(ModEntities.CLOWNFISH_FRY, BasicImmatureRenderer.fryCreate("platy", "platy"));
         EntityRendererRegistry.register(ModEntities.CLOWNFISH_EGG, BasicImmatureRenderer.eggCreate("clownfish", "clownfish"));
@@ -101,6 +103,7 @@ public class ModRenderer {
         EntityRendererRegistry.register(ModEntities.LION_MANE_JELLYFISH, BasicMiscRenderer.create("lion_mane"));
         EntityRendererRegistry.register(ModEntities.VOLCANO_SNAIL, BasicSmallMiscRenderer.create("volcano_snail"));
         EntityRendererRegistry.register(ModEntities.VOLCANO_SNAIL_EGG, BasicSmallMiscRenderer.create("volcano_snail_egg"));
+        EntityRendererRegistry.register(ModEntities.RAMSHORN_SNAIL, RamshornSnailRenderer::new);
         EntityRendererRegistry.register(ModEntities.CAPYBARA, BasicMiscRenderer.create("capybara"));
         EntityRendererRegistry.register(ModEntities.ARCHERFISH_SPIT, ArcherfishSpitRenderer::new);
 

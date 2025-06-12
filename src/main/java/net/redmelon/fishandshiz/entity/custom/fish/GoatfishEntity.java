@@ -133,7 +133,7 @@ public class GoatfishEntity extends SchoolingBreedEntity implements GeoEntity, V
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.CLOWNFISH_BUCKET);
+        return new ItemStack(ModItems.GOATFISH_BUCKET);
     }
 
     @Override

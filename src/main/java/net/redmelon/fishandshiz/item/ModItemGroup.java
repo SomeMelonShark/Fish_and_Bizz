@@ -63,6 +63,8 @@ public class ModItemGroup {
             entries.add(ModItems.PLATY_BUCKET);
             entries.add(ModItems.PLATY_FRY_BUCKET);
             entries.add(ModItems.KILLIFISH_BUCKET);
+            entries.add(ModItems.KILLIFISH_FRY_BUCKET);
+            entries.add(ModItems.KILLIFISH_EGG_BUCKET);
             entries.add(ModItems.CLOWNFISH_BUCKET);
             entries.add(ModItems.CLOWNFISH_FRY_BUCKET);
             entries.add(ModItems.CLOWNFISH_EGG_BUCKET);
@@ -79,6 +81,8 @@ public class ModItemGroup {
             entries.add(ModItems.TRIGGERFISH_BUCKET);
             entries.add(ModItems.VOLCANO_SNAIL_BUCKET);
             entries.add(ModItems.VOLCANO_SNAIL_EGG_BUCKET);
+            entries.add(ModItems.RAMSHORN_SNAIL_BUCKET);
+            entries.add(ModItems.RAMSHORN_SNAIL_EGG_BUCKET);
         });
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
