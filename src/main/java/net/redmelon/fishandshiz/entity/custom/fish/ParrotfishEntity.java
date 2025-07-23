@@ -37,6 +37,7 @@ import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
 import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.ShortRangeAttackGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.SizedTargetGoal;
 import net.redmelon.fishandshiz.entity.custom.CrayfishEntity;
 import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
@@ -128,7 +129,7 @@ public class ParrotfishEntity extends SchoolingBreedEntity implements GeoEntity,
         this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
         this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));
         this.goalSelector.add(3, new CoralSandingGoal(this, 1.0, this::isTargetBlock, new ItemStack(Items.SAND), 100, 3600));
-        this.goalSelector.add(6, new MeleeAttackGoal(this, 1.0f, true));
+        this.goalSelector.add(6, new ShortRangeAttackGoal(this, 1.0f, true, 1.0f));
 
         this.targetSelector.add(1, new SizedTargetGoal<>(this, LivingEntity.class, true, SizeCategory.LARGE, 4, 5));
 

@@ -30,10 +30,7 @@ import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
 import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.SizedTargetGoal;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.SwimAroundLowGoal;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.*;
 import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.util.ModUtil;
@@ -105,7 +102,7 @@ public class GoatfishEntity extends SchoolingBreedEntity implements GeoEntity, V
         this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));
         this.goalSelector.add(3, new BreedFollowGroupLeaderGoal(this));
         this.goalSelector.add(4, new SwimAroundLowGoal(this, 1.0, -7, 256));
-        this.goalSelector.add(6, new MeleeAttackGoal(this, 0.2f, true));
+        this.goalSelector.add(6, new ShortRangeAttackGoal(this, 1.0f, true, 1.0f));
 
         this.targetSelector.add(1, new SizedTargetGoal<>(this, LivingEntity.class, true, SizeCategory.LARGE, 2, 5));
 

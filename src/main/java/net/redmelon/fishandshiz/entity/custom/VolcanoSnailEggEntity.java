@@ -92,6 +92,10 @@ public class VolcanoSnailEggEntity extends AnimalFishEntity implements GeoEntity
     public boolean isBreedingItem(ItemStack stack) {
         return false;
     }
+    @Override
+    protected int getMaxStageAge() {
+        return 8000;
+    }
 
     @Override
     protected void growUp() {

@@ -37,10 +37,7 @@ import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
 import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.DiscriminateSizedTargetGoal;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.WaterStopGoal;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.*;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
@@ -117,7 +114,7 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity, Vari
         this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
         this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));
         this.goalSelector.add(3, new WaterStopGoal(this, 40, 100));
-        this.goalSelector.add(6, new MeleeAttackGoal(this, 0.2f, true));
+        this.goalSelector.add(6, new ShortRangeAttackGoal(this, 1.0f, true, 1.0f));
 
         this.targetSelector.add(0, new ActiveTargetGoal<>((MobEntity)this, BettaEntity.class, true));
         this.targetSelector.add(1, new DiscriminateSizedTargetGoal<>(this, LivingEntity.class, true, SizeCategory.SMALL, 2, 3,

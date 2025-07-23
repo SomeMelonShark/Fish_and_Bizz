@@ -104,6 +104,7 @@ public class ModRenderer {
         EntityRendererRegistry.register(ModEntities.VOLCANO_SNAIL, BasicSmallMiscRenderer.create("volcano_snail"));
         EntityRendererRegistry.register(ModEntities.VOLCANO_SNAIL_EGG, BasicSmallMiscRenderer.create("volcano_snail_egg"));
         EntityRendererRegistry.register(ModEntities.RAMSHORN_SNAIL, RamshornSnailRenderer::new);
+        EntityRendererRegistry.register(ModEntities.RAMSHORN_SNAIL_EGG, BasicSmallMiscRenderer.create("ramshorn_snail_egg"));
         EntityRendererRegistry.register(ModEntities.CAPYBARA, BasicMiscRenderer.create("capybara"));
         EntityRendererRegistry.register(ModEntities.ARCHERFISH_SPIT, ArcherfishSpitRenderer::new);
 

@@ -110,7 +110,7 @@ public class ClownfishEntity extends SchoolingBreedEntity implements GeoEntity, 
         this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));
         this.goalSelector.add(3, new AnemoneGroupGoal(this, 1d, 20));
         this.goalSelector.add(3, new BreedFollowGroupLeaderGoal(this));
-        this.goalSelector.add(6, new MeleeAttackGoal(this, 1.0f, true));
+        this.goalSelector.add(6, new ShortRangeAttackGoal(this, 1.0f, true, 1.0f));
 
         this.targetSelector.add(1, new DiscriminateSizedTargetGoal<>(this, LivingEntity.class, true, SizeCategory.SMALL, 2, 4,
                 (target) -> !(target.getType() == ModEntities.CLOWNFISH_EGG ||

@@ -16,6 +16,7 @@ import net.redmelon.fishandshiz.entity.custom.fish.RedTailCatfishEntity;
 public class RedTailCatfishModel<T extends RedTailCatfishEntity> extends SinglePartEntityModel<T> {
 	private final ModelPart root;
 	private final ModelPart body;
+	private final ModelPart jaw;
 	private final ModelPart tailFin;
 	private final ModelPart tailFin2;
 	private final ModelPart leftWhiskers;
@@ -24,6 +25,7 @@ public class RedTailCatfishModel<T extends RedTailCatfishEntity> extends SingleP
 	public RedTailCatfishModel(ModelPart root) {
 		this.root = root.getChild("root");
 		this.body = root.getChild("root").getChild("body");
+		this.jaw = root.getChild("root").getChild("body").getChild("jaw");
 		this.tailFin = root.getChild("root").getChild("body").getChild("tailFin");
 		this.tailFin2 = root.getChild("root").getChild("body").getChild("tailFin").getChild("tailFin2");
 		this.leftWhiskers = root.getChild("root").getChild("body").getChild("leftWhiskers");
@@ -67,21 +69,26 @@ public class RedTailCatfishModel<T extends RedTailCatfishEntity> extends SingleP
 	@Override
 	public void setAngles(RedTailCatfishEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
 		this.getPart().traverse().forEach(ModelPart::resetTransform);
-		if (entity.isAttacking()) {
-			this.animateMovement(ModAnimations.RED_TAIL_CATFISH_BITE, limbAngle, limbDistance, 2f, 2f);
-		}
 		float f = 1.0f;
+		if (entity.isAttacking()) {
+			this.body.yaw += f * 0.2f;
+			this.tailFin.yaw = -0.5f * f;
+			this.tailFin2.yaw = 0.5f * f;
+			this.jaw.yScale = 1.3f * f;
+		}
 		if (!entity.isTouchingWater()) {
 			f = 1.5f;
 		}
-		this.leftWhiskers.yaw = f * 0.8f * MathHelper.sin(0.2f * animationProgress);
-		this.rightWhiskers.yaw = -f * 0.8f * MathHelper.sin(0.2f * animationProgress);
+		this.leftWhiskers.yaw = f * 0.2f * MathHelper.sin(0.1f * animationProgress) - 1.4f;
+		this.rightWhiskers.yaw = -f * 0.2f * MathHelper.sin(0.1f * animationProgress) + 1.4f;
 		this.body.pitch = headPitch * ((float)Math.PI / 180);
 		this.body.yaw = headYaw * ((float)Math.PI / 180);
 		if (entity.getVelocity().horizontalLengthSquared() > 1.0E-7) {
+			this.leftWhiskers.yaw = f * 0.4f * MathHelper.cos(0.6f * animationProgress) - 2.3f;
+			this.rightWhiskers.yaw = -f * 0.4f * MathHelper.cos(0.6f * animationProgress) + 2.3f;
 			this.body.yaw += -0.05f - 0.05f * MathHelper.cos(animationProgress * 0.3f);
-			this.tailFin.yaw = -0.2f * MathHelper.cos(animationProgress * 0.5f);
-			this.tailFin2.yaw = -0.25f * MathHelper.cos(animationProgress * 0.5f);
+			this.tailFin.yaw = -0.2f * MathHelper.cos(animationProgress * 0.3f);
+			this.tailFin2.yaw = -0.25f * MathHelper.cos(animationProgress * 0.3f);
 		}
 	}
 	@Override

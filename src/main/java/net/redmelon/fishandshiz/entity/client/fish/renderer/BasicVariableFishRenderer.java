@@ -46,6 +46,8 @@ public class BasicVariableFishRenderer<E extends AnimalFishEntity & GeoAnimatabl
             poseStack.scale(0.4f, 0.4f, 0.4f);
         } else if (entity.isMicro()) {
             poseStack.scale(0.3f, 0.3f, 0.3f);
+        } else if (entity.isMacro()) {
+            poseStack.scale(1.0f, 1.0f, 1.0f);
         } else {
             poseStack.scale(0.7f, 0.7f, 0.7f);
         }

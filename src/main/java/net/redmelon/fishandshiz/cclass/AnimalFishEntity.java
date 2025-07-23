@@ -43,6 +43,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.*;
 import net.redmelon.fishandshiz.cclass.cmethods.CustomCriteria;
 import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
+import net.redmelon.fishandshiz.entity.custom.fish.RedTailCatfishEntity;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,6 +52,7 @@ import java.util.*;
 public abstract class AnimalFishEntity extends HolometabolousAquaticEntity implements EntitySize {
     private static final TrackedData<Boolean> IS_FRY = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_MICRO = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    private static final TrackedData<Boolean> IS_MACRO = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_MATURE = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     protected int stageAge;
     private boolean stuck = false;
@@ -62,7 +64,8 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     }
 
     public static DefaultAttributeContainer.Builder createFishAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 1.0);
+        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 1.0)
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.15f);
     }
 
     @Override
@@ -80,6 +83,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
         super.initDataTracker();
         this.dataTracker.startTracking(IS_FRY, false);
         this.dataTracker.startTracking(IS_MICRO, false);
+        this.dataTracker.startTracking(IS_MACRO, false);
         this.dataTracker.startTracking(IS_MATURE, false);
     }
 
@@ -87,7 +91,10 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
         return this.dataTracker.get(IS_FRY);
     }
     public boolean isMicro() {
-        return this.dataTracker.get(IS_FRY);
+        return this.dataTracker.get(IS_MICRO);
+    }
+    public boolean isMacro() {
+        return this.dataTracker.get(IS_MACRO);
     }
     public boolean isMature() {
         return this.dataTracker.get(IS_MATURE);
@@ -97,6 +104,9 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     }
     public void setMicro(boolean micro) {
         this.dataTracker.set(IS_MICRO, micro);
+    }
+    public void setMacro(boolean macro) {
+        this.dataTracker.set(IS_MACRO, macro);
     }
     public void setMature(boolean mature) {
         this.dataTracker.set(IS_MATURE, mature);
@@ -176,6 +186,86 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
                     this.fish.bodyYaw = this.fish.getYaw();
                 }
             }
+        }
+    }
+
+    // Only seems to work for the original Red Tail Catfish but not others
+    public class CoolMoveControl
+            extends MoveControl {
+        private static final float field_40123 = 10.0f;
+        private static final float field_40124 = 60.0f;
+        private final int pitchChange;
+        private final int yawChange;
+        private final float speedInWater;
+        private final float speedInAir;
+        private final boolean buoyant;
+
+        public CoolMoveControl(AnimalFishEntity entity, int pitchChange, int yawChange, float speedInWater, float speedInAir, boolean buoyant) {
+            super(entity);
+            this.pitchChange = pitchChange;
+            this.yawChange = yawChange;
+            this.speedInWater = speedInWater;
+            this.speedInAir = speedInAir;
+            this.buoyant = buoyant;
+        }
+
+        @Override
+        public void tick() {
+            double f;
+            double e;
+            if (this.buoyant && this.entity.isTouchingWater()) {
+                this.entity.setVelocity(this.entity.getVelocity().add(0.0, 0.005, 0.0));
+            }
+            if (this.state != MoveControl.State.MOVE_TO || this.entity.getNavigation().isIdle()) {
+                this.entity.setMovementSpeed(0.0f);
+                this.entity.setSidewaysSpeed(0.0f);
+                this.entity.setUpwardSpeed(0.0f);
+                this.entity.setForwardSpeed(0.0f);
+                return;
+            }
+            double d = this.targetX - this.entity.getX();
+            double g = d * d + (e = this.targetY - this.entity.getY()) * e + (f = this.targetZ - this.entity.getZ()) * f;
+            if (g < 2.500000277905201E-7) {
+                this.entity.setForwardSpeed(0.0f);
+                return;
+            }
+            float h = (float)(MathHelper.atan2(f, d) * 57.2957763671875) - 90.0f;
+            this.entity.setYaw(this.wrapDegrees(this.entity.getYaw(), h, this.yawChange));
+            this.entity.bodyYaw = this.entity.getYaw();
+            this.entity.headYaw = this.entity.getYaw();
+            float i = (float)(this.speed * this.entity.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
+            if (this.entity.isTouchingWater()) {
+                float k;
+                this.entity.setMovementSpeed(i * this.speedInWater);
+                double j = Math.sqrt(d * d + f * f);
+                if (Math.abs(e) > (double)1.0E-5f || Math.abs(j) > (double)1.0E-5f) {
+                    k = -((float)(MathHelper.atan2(e, j) * 57.2957763671875));
+                    k = MathHelper.clamp(MathHelper.wrapDegrees(k), (float)(-this.pitchChange), (float)this.pitchChange);
+                    this.entity.setPitch(this.wrapDegrees(this.entity.getPitch(), k, 5.0f));
+                }
+                float pitchRadians = this.entity.getPitch() * ((float)Math.PI / 180);
+                float yawRadians = this.entity.getYaw() * ((float)Math.PI / 180);
+
+                float speed = i;
+
+                double dx = -MathHelper.sin(yawRadians) * MathHelper.cos(pitchRadians);
+                double dy = -MathHelper.sin(pitchRadians);
+                double dz = MathHelper.cos(yawRadians) * MathHelper.cos(pitchRadians);
+
+                Vec3d movementVec = new Vec3d(dx, dy, dz).normalize().multiply(speed);
+
+                this.entity.setVelocity(movementVec);
+                this.entity.forwardSpeed = (float) movementVec.horizontalLength();
+                this.entity.upwardSpeed = (float) movementVec.y;
+            } else {
+                float m = Math.abs(MathHelper.wrapDegrees(this.entity.getYaw() - h));
+                float n = CoolMoveControl.method_45335(m);
+                this.entity.setMovementSpeed(i * this.speedInAir * n);
+            }
+        }
+
+        private static float method_45335(float f) {
+            return 1.0f - MathHelper.clamp((f - 10.0f) / 50.0f, 0.0f, 1.0f);
         }
     }
 
@@ -283,6 +373,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("IsFry", this.isFry());
         nbt.putBoolean("IsMicro", this.isMicro());
+        nbt.putBoolean("IsMacro", this.isMacro());
         nbt.putBoolean("IsMature", this.isMature());
         nbt.putBoolean("Stuck", stuck);
         if (stuckTo != null) {
@@ -294,7 +385,8 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.setFry(nbt.getBoolean("IsFry"));
-        this.setFry(nbt.getBoolean("IsMicro"));
+        this.setMicro(nbt.getBoolean("IsMicro"));
+        this.setMacro(nbt.getBoolean("IsMacro"));
         this.setMature(nbt.getBoolean("IsMature"));
         this.stuck = nbt.getBoolean("Stuck");
         if (nbt.contains("StuckTo")) {
@@ -317,6 +409,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
         nbtCompound.putBoolean("IsMature", isMature());
         nbtCompound.putBoolean("IsFry", isFry());
         nbtCompound.putBoolean("IsMicro", isMicro());
+        nbtCompound.putBoolean("IsMacro", isMacro());
     }
 
     @Override

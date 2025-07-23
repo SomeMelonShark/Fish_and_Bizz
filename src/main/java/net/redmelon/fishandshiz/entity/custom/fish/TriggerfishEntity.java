@@ -33,6 +33,7 @@ import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
 import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.ShortRangeAttackGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.SizedTargetGoal;
 import net.redmelon.fishandshiz.entity.custom.CrayfishEntity;
 import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
@@ -107,7 +108,7 @@ public class TriggerfishEntity extends SchoolingBreedEntity implements GeoEntity
         this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25));
         this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
         this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));
-        this.goalSelector.add(6, new MeleeAttackGoal(this, 1.0f, true));
+        this.goalSelector.add(6, new ShortRangeAttackGoal(this, 3.0f, true, 1.0f));
 
         this.targetSelector.add(0, new ActiveTargetGoal<>((MobEntity)this, PlayerEntity.class, true));
         this.targetSelector.add(1, new SizedTargetGoal<>(this, LivingEntity.class, true, SizeCategory.MEDIUM, 2, 4));
@@ -236,6 +237,7 @@ public class TriggerfishEntity extends SchoolingBreedEntity implements GeoEntity
         setBaseColor(color);
         setPatternColor(color2);
         setDetailColor(color3);
+        this.setMacro(this.isMature());
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         return entityData;
     }

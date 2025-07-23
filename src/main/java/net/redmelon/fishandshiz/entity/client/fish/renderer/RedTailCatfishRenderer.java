@@ -28,9 +28,9 @@ public class RedTailCatfishRenderer extends MobEntityRenderer<RedTailCatfishEnti
     @Override
     public void render(RedTailCatfishEntity entity, float entityYaw, float partialTick, MatrixStack poseStack, VertexConsumerProvider bufferSource, int packedLight) {
         if(entity.isBaby()) {
-            poseStack.scale(0.4f, 0.4f, 0.4f);
+            poseStack.scale(0.3f, 0.3f, 0.3f);
         } else {
-            poseStack.scale(0.6f, 0.6f, 0.6f);
+            poseStack.scale(0.5f, 0.5f, 0.5f);
         }
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
