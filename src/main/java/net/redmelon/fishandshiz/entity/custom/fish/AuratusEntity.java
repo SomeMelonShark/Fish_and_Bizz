@@ -41,7 +41,6 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AuratusEntity extends LivebearerEntity implements GeoEntity, EntitySize {
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public AuratusEntity(EntityType<? extends LivebearerEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -64,18 +63,6 @@ public class AuratusEntity extends LivebearerEntity implements GeoEntity, Entity
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 3);
-    }
-
-    private PlayState genericFlopController(AnimationState animationState) {
-        if (this.isTouchingWater()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        } else {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mediumfish.flop", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
     }
 
     @Override
@@ -145,20 +132,9 @@ public class AuratusEntity extends LivebearerEntity implements GeoEntity, Entity
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
-
-    }
-
-    @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         return entityData;
-    }
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
     }
 }

@@ -44,7 +44,6 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class MilkfishEntity extends SchoolingBreedEntity implements GeoEntity, EntitySize {
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public MilkfishEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -68,18 +67,6 @@ public class MilkfishEntity extends SchoolingBreedEntity implements GeoEntity, E
         return AnimalFishEntity.createFishAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 3)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3);
-    }
-
-    private PlayState genericFlopController(AnimationState animationState) {
-        if (this.isTouchingWater()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        } else {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mediumfish.flop", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
     }
 
     @Override
@@ -125,11 +112,6 @@ public class MilkfishEntity extends SchoolingBreedEntity implements GeoEntity, E
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
-    }
-
-    @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         int i = random.nextInt(2);
@@ -138,10 +120,5 @@ public class MilkfishEntity extends SchoolingBreedEntity implements GeoEntity, E
         }
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         return entityData;
-    }
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
     }
 }

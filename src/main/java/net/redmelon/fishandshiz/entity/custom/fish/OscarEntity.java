@@ -42,7 +42,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class OscarEntity extends SchoolingBreedEntity implements GeoEntity, EntitySize {
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public OscarEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -68,25 +67,13 @@ public class OscarEntity extends SchoolingBreedEntity implements GeoEntity, Enti
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4);
     }
 
-    private PlayState genericFlopController(AnimationState animationState) {
-        if (this.isTouchingWater()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        } else {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mediumfish.flop", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
-    }
-
     @Override
     protected void initGoals() {
         super.initGoals();
         this.goalSelector.add(0, new EscapeDangerGoal(this, 2));
         this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
         this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));
-        this.goalSelector.add(6, new ShortRangeAttackGoal(this, 1.0f, true, 1.0f));
+        this.goalSelector.add(6, new ShortRangeAttackGoal(this, 3.0f, true, 1.0f));
 
         this.targetSelector.add(1, new SizedTargetGoal<>(this, LivingEntity.class, true, SizeCategory.LARGE, 2, 5));
     }
@@ -124,15 +111,5 @@ public class OscarEntity extends SchoolingBreedEntity implements GeoEntity, Enti
     @Override
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.OSCAR_BUCKET);
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
-    }
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
     }
 }

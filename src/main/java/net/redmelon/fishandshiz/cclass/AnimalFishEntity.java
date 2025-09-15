@@ -46,10 +46,17 @@ import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
 import net.redmelon.fishandshiz.entity.custom.fish.RedTailCatfishEntity;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.*;
 
-public abstract class AnimalFishEntity extends HolometabolousAquaticEntity implements EntitySize {
+public abstract class AnimalFishEntity extends HolometabolousAquaticEntity implements GeoEntity, EntitySize {
+    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     private static final TrackedData<Boolean> IS_FRY = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_MICRO = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_MACRO = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -65,7 +72,38 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
 
     public static DefaultAttributeContainer.Builder createFishAttributes() {
         return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 1.0)
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.15f);
+                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.35f);
+    }
+
+    private PlayState genericFlopController(AnimationState animationState) {
+        if (this.isTouchingWater()) {
+            if (this.isFry()) {
+                animationState.getController().setAnimation(RawAnimation.begin()
+                        .then("animation.fry.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            }
+            if (this.getTarget() != null || this.isAttacking()) {
+                animationState.getController().setAnimationSpeed(3.0f).setAnimation(RawAnimation.begin()
+                        .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            } else if (!animationState.isMoving()) {
+                animationState.getController().setAnimationSpeed(0.3f).setAnimation(RawAnimation.begin()
+                        .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            } else {
+            animationState.getController().setAnimationSpeed(1.0f).setAnimation(RawAnimation.begin()
+                    .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+            }
+        } else if (this.isFry() && !this.isTouchingWater()) {
+            animationState.getController().setAnimation(RawAnimation.begin()
+                    .then("animation.fry.flop", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        } else {
+            animationState.getController().setAnimation(RawAnimation.begin()
+                    .then("animation.mediumfish.flop", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
     }
 
     @Override
@@ -165,7 +203,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
         public void tick() {
             if (this.fish.isMature() || this.fish.isFry()) {
                 if (this.fish.isSubmergedIn(FluidTags.WATER)) {
-                    this.fish.setVelocity(this.fish.getVelocity().add(0.0, 0, 0.0));
+                    this.fish.setVelocity(this.fish.getVelocity().add(0.0, 0.0, 0.0));
                 }
                 if (this.state != MoveControl.State.MOVE_TO || this.fish.getNavigation().isIdle()) {
                     this.fish.setMovementSpeed(0.0f);
@@ -176,10 +214,21 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
                 double d = this.targetX - this.fish.getX();
                 double e = this.targetY - this.fish.getY();
                 double g = this.targetZ - this.fish.getZ();
-                if (e != 0.0) {
-                    double h = Math.sqrt(d * d + e * e + g * g);
-                    this.fish.setVelocity(this.fish.getVelocity().add(0.0, (double)this.fish.getMovementSpeed() * (e / h) * 0.1, 0.0));
+                double h = Math.sqrt(d * d + e * e + g * g);
+                if (h > 1.0E-6) {
+                    d /= h;
+                    e /= h;
+                    g /= h;
+
+                    this.fish.setVelocity(
+                            this.fish.getVelocity().add(
+                                    d * this.fish.getMovementSpeed() * 0.05,
+                                    e * this.fish.getMovementSpeed() * 0.1,
+                                    g * this.fish.getMovementSpeed() * 0.05
+                            )
+                    );
                 }
+
                 if (d != 0.0 || g != 0.0) {
                     float i = (float)(MathHelper.atan2(g, d) * 57.2957763671875) - 90.0f;
                     this.fish.setYaw(this.wrapDegrees(this.fish.getYaw(), i, 90.0f));
@@ -491,5 +540,15 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
 
     public boolean canEat() {
         return this.loveTicks <= 0;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
     }
 }

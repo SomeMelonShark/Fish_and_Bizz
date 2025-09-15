@@ -86,9 +86,15 @@ public class PlatyEntity extends LivebearerEntity implements GeoEntity, Variable
 
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.fry.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
+            if (this.getTarget() != null || this.isAttacking()) {
+                animationState.getController().setAnimationSpeed(3.0f).setAnimation(RawAnimation.begin()
+                        .then("animation.fry.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            } else {
+                animationState.getController().setAnimationSpeed(1.0f).setAnimation(RawAnimation.begin()
+                        .then("animation.fry.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            }
         } else {
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.fry.flop", Animation.LoopType.LOOP));

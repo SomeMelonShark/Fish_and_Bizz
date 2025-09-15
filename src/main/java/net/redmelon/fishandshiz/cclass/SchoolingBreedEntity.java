@@ -5,12 +5,17 @@ import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.WaterCreatureEntity;
+import net.minecraft.entity.passive.FishEntity;
+import net.minecraft.entity.passive.SchoolingFishEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.biome.Biome;
@@ -76,13 +81,15 @@ public abstract class SchoolingBreedEntity extends AnimalFishEntity implements E
         return this.hasOtherFishInGroup() && this.groupSize < this.getMaxGroupSize();
     }
 
-    @Override
     public void tick() {
-        List<?> list;
         super.tick();
-        if (this.hasOtherFishInGroup() && this.getWorld().random.nextInt(200) == 1 && (list = this.getWorld().getNonSpectatingEntities(this.getClass(), this.getBoundingBox().expand(8.0, 8.0, 8.0))).size() <= 1) {
-            this.groupSize = 1;
+        if (this.hasOtherFishInGroup() && this.getWorld().random.nextInt(200) == 1) {
+            List<? extends AnimalFishEntity> list = this.getWorld().getNonSpectatingEntities(this.getClass(), this.getBoundingBox().expand(8.0, 8.0, 8.0));
+            if (list.size() <= 1) {
+                this.groupSize = 1;
+            }
         }
+
     }
 
     public boolean hasOtherFishInGroup() {
@@ -99,13 +106,30 @@ public abstract class SchoolingBreedEntity extends AnimalFishEntity implements E
         }
     }
 
-    public void pullInOtherFish(Stream<? extends SchoolingBreedEntity> fish2) {
-        fish2.limit(this.getMaxGroupSize() - this.groupSize).filter(fish -> fish != this).forEach(fish -> fish.joinGroupOf(this));
+    public void pullInOtherFish(Stream<? extends SchoolingBreedEntity> fish) {
+        fish.limit((long)(this.getMaxGroupSize() - this.groupSize)).filter((fishx) -> {
+            return fishx != this;
+        }).forEach((fishx) -> {
+            fishx.joinGroupOf(this);
+        });
     }
+
 
     @Override
     public ItemStack getBucketItem() {
         return null;
+    }
+
+    @Nullable
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        super.initialize(world, difficulty, spawnReason, (EntityData)entityData, entityNbt);
+        if (entityData == null) {
+            entityData = new BreedFishData(this);
+        } else {
+            this.joinGroupOf(((BreedFishData)entityData).leader);
+        }
+
+        return (EntityData)entityData;
     }
 
     public static class BreedFishData

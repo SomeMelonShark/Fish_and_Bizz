@@ -58,7 +58,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.EnumSet;
 import java.util.function.Predicate;
 
-public class ParrotfishEntity extends SchoolingBreedEntity implements GeoEntity, VariableFishEntity<ParrotfishPattern, ParrotfishDetail>, EntitySize {
+public class ParrotfishEntity extends AnimalFishEntity implements GeoEntity, VariableFishEntity<ParrotfishPattern, ParrotfishDetail>, EntitySize {
     private static final TrackedData<ParrotfishPattern> PATTERN = DataTracker.registerData(ParrotfishEntity.class, ParrotfishPattern.TRACKED_DATA_HANDLER);
     private static final TrackedData<ParrotfishDetail> DETAIL = DataTracker.registerData(ParrotfishEntity.class, ParrotfishDetail.TRACKED_DATA_HANDLER);
     private static final TrackedData<ModEntityColor> BASE_COLOR = DataTracker.registerData(ParrotfishEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
@@ -72,7 +72,7 @@ public class ParrotfishEntity extends SchoolingBreedEntity implements GeoEntity,
 
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
-    public ParrotfishEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
+    public ParrotfishEntity(EntityType<? extends AnimalFishEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -100,9 +100,15 @@ public class ParrotfishEntity extends SchoolingBreedEntity implements GeoEntity,
 
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater() && animationState.isMoving()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
+            if (this.getTarget() != null || this.isAttacking()) {
+                animationState.getController().setAnimationSpeed(3.0f).setAnimation(RawAnimation.begin()
+                        .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            } else {
+                animationState.getController().setAnimationSpeed(1.0f).setAnimation(RawAnimation.begin()
+                        .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            }
         } else if (this.isTouchingWater() && !animationState.isMoving() && !this.isNavigating()){
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.mediumfish.eating", Animation.LoopType.LOOP));

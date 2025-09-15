@@ -53,27 +53,26 @@ public class ArcherfishSpitEntity extends ProjectileEntity implements GeoAnimata
         double e = this.getY() + vec3d.y;
         double f = this.getZ() + vec3d.z;
         this.updateRotation();
-        float g = 0.99f;
-        float h = 0.06f;
-        if (this.getWorld().getStatesInBox(this.getBoundingBox()).noneMatch(AbstractBlock.AbstractBlockState::isAir)) {
-            this.discard();
-            return;
-        }
         this.setVelocity(vec3d.multiply(0.99f));
         if (!this.hasNoGravity()) {
-            this.setVelocity(this.getVelocity().add(0.0, -0.06f, 0.0));
+            if (this.isTouchingWater()) {
+                this.setVelocity(this.getVelocity().add(0.0, -0.01f, 0.0));
+            } else {
+                this.setVelocity(this.getVelocity().add(0.0, -0.06f, 0.0));
+            }
         }
         this.setPosition(d, e, f);
     }
 
     private void spawnParticles() {
         int amount = 10;
-        for (int j = 0; j < amount; ++j) {
-            this.getWorld().addParticle(ParticleTypes.SPLASH, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), 0.0, 0.0, 0.0);
-        }
         if (this.isTouchingWater()) {
             for (int o = 0; o < 4; ++o) {
-                this.getWorld().addParticle(ParticleTypes.BUBBLE, this.getParticleX(0.1), this.getRandomBodyY(), this.getParticleZ(0.5), 0.0, 0.0, 0.0);
+                this.getWorld().addImportantParticle(ParticleTypes.BUBBLE, this.getParticleX(0.1), this.getRandomBodyY(), this.getParticleZ(0.5), 0.0, 0.0, 0.0);
+            }
+        } else {
+            for (int j = 0; j < amount; ++j) {
+                this.getWorld().addImportantParticle(ParticleTypes.SPLASH, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), 0.0, 0.0, 0.0);
             }
         }
     }

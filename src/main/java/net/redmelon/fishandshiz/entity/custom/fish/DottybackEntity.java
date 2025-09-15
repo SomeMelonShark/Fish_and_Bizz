@@ -51,7 +51,6 @@ public class DottybackEntity extends SchoolingBreedEntity implements GeoEntity, 
     private static final TrackedData<ModEntityColor> DETAIL_COLOR = DataTracker.registerData(DottybackEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
     private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(DottybackEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public DottybackEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
@@ -76,17 +75,6 @@ public class DottybackEntity extends SchoolingBreedEntity implements GeoEntity, 
         return AnimalFishEntity.createFishAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 2)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1);
-    }
-    private PlayState genericFlopController(AnimationState animationState) {
-        if (this.isTouchingWater()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        } else {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mediumfish.flop", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
     }
 
     @Override
@@ -131,16 +119,6 @@ public class DottybackEntity extends SchoolingBreedEntity implements GeoEntity, 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_TROPICAL_FISH_HURT;
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
-    }
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
     }
 
     public NbtCompound writeMateData(NbtCompound nbt) {

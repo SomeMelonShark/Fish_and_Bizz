@@ -22,6 +22,8 @@ import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
@@ -42,7 +44,6 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity, RangedAttackMob, EntitySize {
     protected static final TrackedData<Integer> VARIANT = DataTracker.registerData(ArcherfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public ArcherfishEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -66,17 +67,6 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
         return SchoolingBreedEntity.createFishAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 3)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 20);
-    }
-    private PlayState genericFlopController(AnimationState animationState) {
-        if (this.isTouchingWater()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        } else {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mediumfish.flop", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
     }
 
     @Override
@@ -171,11 +161,6 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
     }
 
     @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
-    }
-
-    @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         BiVariant variant;
@@ -205,19 +190,14 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
     }
 
     @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
-    }
-
-    @Override
     public void attack(LivingEntity target, float pullProgress) {
         ArcherfishSpitEntity archerfishSpitEntity = new ArcherfishSpitEntity(this.getWorld(),this);
-        double d = target.getX() - this.getX();
-        double e = target.getBodyY(0.3333333333333333) - archerfishSpitEntity.getY();
-        double f = target.getZ() - this.getZ();
-        double g = Math.sqrt(d * d + f * f);
-        archerfishSpitEntity.setVelocity(d, e + g * (double)0.2f, f, 1.6f, 14 - this.getWorld().getDifficulty().getId() * 4);
-        this.playSound(SoundEvents.AMBIENT_UNDERWATER_ENTER, 0.6f, 2.0f / (this.getRandom().nextFloat() * 0.4f + 0.8f));
+        Vec3d direction = target.getEyePos().subtract(this.getPos());
+        float velocity = 1.6f;
+        float inaccuracy = 1 - this.getWorld().getDifficulty().getId() * 4;
+        archerfishSpitEntity.setVelocity(direction.x, direction.y, direction.z, velocity, inaccuracy);
+        this.playSound(SoundEvents.AMBIENT_UNDERWATER_ENTER, 0.6f,
+                2.0f / (this.getRandom().nextFloat() * 0.4f + 0.8f));
         this.getWorld().spawnEntity(archerfishSpitEntity);
     }
 
@@ -254,6 +234,29 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
         public void stop() {
             super.stop();
             this.archerfishEntity.setAttacking(false);
+        }
+
+        @Override
+        public void tick() {
+            super.tick();
+            if (this.archerfishEntity.getTarget() == null) return;
+
+            LivingEntity target = this.archerfishEntity.getTarget();
+
+            BlockPos surfacePos = this.archerfishEntity.getBlockPos();
+            while (this.archerfishEntity.getWorld().getBlockState(surfacePos.up()).getFluidState().isStill()) {
+                surfacePos = surfacePos.up();
+            }
+            double targetY = surfacePos.getY() - 0.5;
+
+            this.archerfishEntity.getMoveControl().moveTo(
+                    this.archerfishEntity.getX(),
+                    targetY,
+                    this.archerfishEntity.getZ(),
+                    1.0
+            );
+
+            this.archerfishEntity.getLookControl().lookAt(target, 30.0f, 30.0f);
         }
     }
 }

@@ -5,7 +5,10 @@ import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.potion.PotionUtil;
+import net.minecraft.potion.Potions;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -14,6 +17,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.redmelon.fishandshiz.entity.custom.fish.ArcherfishSpitEntity;
@@ -90,11 +94,36 @@ public class ArcherfishGunItem extends StoredRangedWeaponItem implements GeoItem
             user.setCurrentHand(hand);
 
             return TypedActionResult.pass(itemStack);
-        } else if (fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8 && getLoadCount(itemStack) == 0) {
-            this.setLoadCount(itemStack, LOAD_COUNT);
-            this.setLoaded(itemStack, getLoadCount(itemStack) > 0);
-            world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.PLAYERS, 0.5f, 1.5f);
-            return TypedActionResult.success(itemStack);
+        } else if (getLoadCount(itemStack) == 0) {
+            if (fluidState.isIn(FluidTags.WATER) && fluidState.getLevel() == 8){
+                this.setLoadCount(itemStack, LOAD_COUNT);
+                this.setLoaded(itemStack, getLoadCount(itemStack) > 0);
+                world.playSound(null, user.getX(), user.getY(), user.getZ(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.PLAYERS, 0.5f, 1.5f);
+                return TypedActionResult.success(itemStack);
+            }
+            for (int i = 0; i < user.getInventory().size(); i++) {
+                ItemStack stack = user.getInventory().getStack(i);
+
+                if (stack.getItem() == Items.POTION &&
+                        PotionUtil.getPotion(stack) == Potions.WATER) {
+
+                    stack.decrement(1);
+
+                    ItemStack empty = new ItemStack(Items.GLASS_BOTTLE);
+                    if (!user.getInventory().insertStack(empty)) {
+                        user.dropItem(empty, false);
+                    }
+
+                    this.setLoadCount(itemStack, LOAD_COUNT);
+                    this.setLoaded(itemStack, true);
+
+                    world.playSound(null, user.getX(), user.getY(), user.getZ(),
+                            SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.PLAYERS,
+                            0.5f, 1.5f);
+
+                    return TypedActionResult.success(itemStack);
+                }
+            }
         }
 
         return TypedActionResult.fail(itemStack);
@@ -107,6 +136,16 @@ public class ArcherfishGunItem extends StoredRangedWeaponItem implements GeoItem
         MutableText mutableText = Text.translatable(loadCount);
         mutableText.formatted(formattings);
         tooltip.add(mutableText);
+    }
+
+    @Override
+    public UseAction getUseAction(ItemStack stack) {
+        return UseAction.BOW;
+    }
+
+    @Override
+    public int getMaxUseTime(ItemStack stack) {
+        return 10;
     }
 
     @Override

@@ -93,9 +93,15 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity, Vari
     }
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater() && animationState.isMoving()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.betta.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
+            if (this.getTarget() != null || this.isAttacking()) {
+                animationState.getController().setAnimationSpeed(3.0f).setAnimation(RawAnimation.begin()
+                        .then("animation.betta.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            } else {
+                animationState.getController().setAnimationSpeed(1.0f).setAnimation(RawAnimation.begin()
+                        .then("animation.betta.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            }
         } else if (this.isTouchingWater() && !animationState.isMoving() && !this.isNavigating()){
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.betta.idle", Animation.LoopType.LOOP));

@@ -39,9 +39,7 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class GraylingFryEntity extends GraylingEntity implements GeoEntity, EntitySize {
-    public static float WIDTH = 0.4f;
-    public static float HEIGHT = 0.2f;
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
+
     public GraylingFryEntity(EntityType<? extends GraylingEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -49,18 +47,6 @@ public class GraylingFryEntity extends GraylingEntity implements GeoEntity, Enti
     @Override
     public SizeCategory getSizeCategory() {
         return SizeCategory.FRY;
-    }
-
-    private PlayState genericFlopController(AnimationState animationState) {
-        if (this.isTouchingWater()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.fry.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        } else {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.fry.flop", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
     }
 
     @Override
@@ -76,17 +62,20 @@ public class GraylingFryEntity extends GraylingEntity implements GeoEntity, Enti
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Age", this.stageAge);
     }
+
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.setStageAge(nbt.getInt("Age"));
     }
+
     @Override
     public void copyDataToStack(ItemStack stack) {
         Bucketable.copyDataToStack(this, stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
         nbtCompound.putInt("Age", this.getStageAge());
     }
+
     @Override
     public void copyDataFromNbt(NbtCompound nbt) {
         Bucketable.copyDataFromNbt(this, nbt);
@@ -97,7 +86,7 @@ public class GraylingFryEntity extends GraylingEntity implements GeoEntity, Enti
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
-                                 @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
+                                 @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         this.setFry(true);
         this.setMature(false);
@@ -113,7 +102,7 @@ public class GraylingFryEntity extends GraylingEntity implements GeoEntity, Enti
     protected void growUp() {
         World world = this.getWorld();
         if (world instanceof ServerWorld) {
-            ServerWorld serverWorld = (ServerWorld)world;
+            ServerWorld serverWorld = (ServerWorld) world;
             GraylingEntity nextEntity = ModEntities.GRAYLING.create(this.getWorld());
             if (nextEntity != null) {
                 nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
@@ -159,16 +148,5 @@ public class GraylingFryEntity extends GraylingEntity implements GeoEntity, Enti
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_COD_HURT;
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
-    }
-
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return this.factory;
     }
 }

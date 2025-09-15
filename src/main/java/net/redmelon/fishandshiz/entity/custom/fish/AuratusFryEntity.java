@@ -39,7 +39,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class AuratusFryEntity extends AuratusEntity implements GeoEntity, EntitySize {
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public AuratusFryEntity(EntityType<? extends AuratusEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -47,18 +46,6 @@ public class AuratusFryEntity extends AuratusEntity implements GeoEntity, Entity
     @Override
     public SizeCategory getSizeCategory() {
         return SizeCategory.FRY;
-    }
-
-    private PlayState genericFlopController(AnimationState animationState) {
-        if (this.isTouchingWater()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.fry.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        } else {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.fry.flop", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
     }
 
     @Override
@@ -157,16 +144,5 @@ public class AuratusFryEntity extends AuratusEntity implements GeoEntity, Entity
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_COD_HURT;
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
-    }
-
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return this.factory;
     }
 }

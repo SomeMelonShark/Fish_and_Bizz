@@ -40,10 +40,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class SalmonFryEntity extends SchoolingBreedEntity implements GeoEntity, EntitySize {
-    public static float WIDTH = 0.5f;
-    public static float HEIGHT = 0.3f;
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-
     public SalmonFryEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -61,18 +57,6 @@ public class SalmonFryEntity extends SchoolingBreedEntity implements GeoEntity, 
             return 1;
         }
         return 4;
-    }
-
-    private PlayState genericFlopController(AnimationState animationState) {
-        if (this.isTouchingWater()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.fry.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        } else {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.fry.flop", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
     }
 
     @Override
@@ -189,16 +173,5 @@ public class SalmonFryEntity extends SchoolingBreedEntity implements GeoEntity, 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_SALMON_HURT;
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
-    }
-
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return this.factory;
     }
 }

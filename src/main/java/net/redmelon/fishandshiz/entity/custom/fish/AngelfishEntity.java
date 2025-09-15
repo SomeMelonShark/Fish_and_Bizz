@@ -87,11 +87,18 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity, 
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 2)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2);
     }
+
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater() && animationState.isMoving()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.angelfish.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
+            if (this.getTarget() != null || this.isAttacking()) {
+                animationState.getController().setAnimationSpeed(3.0f).setAnimation(RawAnimation.begin()
+                        .then("animation.angelfish.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            } else {
+                animationState.getController().setAnimationSpeed(1.0f).setAnimation(RawAnimation.begin()
+                        .then("animation.angelfish.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            }
         } else if (this.isTouchingWater() && !animationState.isMoving() && !this.isNavigating()){
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.angelfish.idle", Animation.LoopType.LOOP));

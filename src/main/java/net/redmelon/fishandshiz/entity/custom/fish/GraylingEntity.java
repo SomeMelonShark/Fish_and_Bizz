@@ -72,9 +72,15 @@ public class GraylingEntity extends SchoolingBreedEntity implements GeoEntity, E
 
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.grayling.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
+            if (this.getTarget() != null || this.isAttacking()) {
+                animationState.getController().setAnimationSpeed(3.0f).setAnimation(RawAnimation.begin()
+                        .then("animation.grayling.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            } else {
+                animationState.getController().setAnimationSpeed(1.0f).setAnimation(RawAnimation.begin()
+                        .then("animation.grayling.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            }
         } else if (this.isReadyToBreed()){
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.grayling.pog", Animation.LoopType.LOOP));

@@ -35,7 +35,6 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public class CorydorasFryEntity extends CorydorasEntity implements GeoEntity, EntitySize {
     public static float WIDTH = 0.4f;
     public static float HEIGHT = 0.3f;
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public CorydorasFryEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -43,18 +42,6 @@ public class CorydorasFryEntity extends CorydorasEntity implements GeoEntity, En
     @Override
     public SizeCategory getSizeCategory() {
         return SizeCategory.FRY;
-    }
-
-    private PlayState genericFlopController(AnimationState animationState) {
-        if (this.isTouchingWater()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.fry.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        } else {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.fry.flop", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
     }
 
     @Override
@@ -169,16 +156,5 @@ public class CorydorasFryEntity extends CorydorasEntity implements GeoEntity, En
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_TROPICAL_FISH_HURT;
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
-    }
-
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return this.factory;
     }
 }

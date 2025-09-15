@@ -27,20 +27,20 @@ public class HeldArcherfishGunMixin<T extends LivingEntity> extends BipedEntityM
 
     @Shadow @Final public ModelPart leftSleeve;
 
-    @Inject(method = "setAngles(Lnet/minecraft/entity/LivingEntity;FFFFF)V", at = @At("TAIL"))
-        public void setAngles(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo ci){
-        ItemStack itemStack = livingEntity.getMainHandStack();
-        if (HeldArcherfishGunMixin.isLoadedArcherfishGun(itemStack)) {
-            this.rightArm.pitch = -((float) Math.PI / 2);
-            this.rightArm.yaw = -((float) Math.PI / 12);
-            this.rightSleeve.pitch = -((float) Math.PI / 2);
-            this.rightSleeve.yaw = -((float) Math.PI / 12);
-            this.leftArm.pitch = -((float) Math.PI / 2);
-            this.leftArm.yaw = ((float) Math.PI / 4);
-            this.leftSleeve.pitch = -((float) Math.PI / 2);
-            this.leftSleeve.yaw = ((float) Math.PI / 4);
-        }
-    }
+//    @Inject(method = "setAngles(Lnet/minecraft/entity/LivingEntity;FFFFF)V", at = @At("TAIL"))
+//        public void setAngles(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo ci){
+//        ItemStack itemStack = livingEntity.getMainHandStack();
+//        if (HeldArcherfishGunMixin.isLoadedArcherfishGun(itemStack)) {
+//            this.rightArm.pitch = -((float) Math.PI / 2);
+//            this.rightArm.yaw = -((float) Math.PI / 12);
+//            this.rightSleeve.pitch = -((float) Math.PI / 2);
+//            this.rightSleeve.yaw = -((float) Math.PI / 12);
+//            this.leftArm.pitch = -((float) Math.PI / 2);
+//            this.leftArm.yaw = ((float) Math.PI / 4);
+//            this.leftSleeve.pitch = -((float) Math.PI / 2);
+//            this.leftSleeve.yaw = ((float) Math.PI / 4);
+//        }
+//    }
 
     public HeldArcherfishGunMixin(ModelPart root) {
         super(root);

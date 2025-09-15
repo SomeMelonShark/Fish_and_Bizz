@@ -39,9 +39,6 @@ import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class NeonTetraFryEntity extends NeonTetraEntity implements GeoEntity, EntitySize {
-    public static float WIDTH = 0.25f;
-    public static float HEIGHT = 0.2f;
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public NeonTetraFryEntity(EntityType<? extends NeonTetraEntity> entityType, World world) {
         super(entityType, world);
@@ -50,18 +47,6 @@ public class NeonTetraFryEntity extends NeonTetraEntity implements GeoEntity, En
     @Override
     public SizeCategory getSizeCategory() {
         return SizeCategory.FRY;
-    }
-
-    private PlayState genericFlopController(AnimationState animationState) {
-        if (this.isTouchingWater()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.fry.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        } else {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.fry.flop", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
     }
 
     @Override
@@ -160,16 +145,5 @@ public class NeonTetraFryEntity extends NeonTetraEntity implements GeoEntity, En
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_TROPICAL_FISH_HURT;
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
-    }
-
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return this.factory;
     }
 }

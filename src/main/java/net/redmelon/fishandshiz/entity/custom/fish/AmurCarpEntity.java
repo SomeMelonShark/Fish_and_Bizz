@@ -60,7 +60,6 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
     private static final TrackedData<ModEntityColor> DETAIL_COLOR = DataTracker.registerData(AmurCarpEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
     private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(AmurCarpEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public AmurCarpEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -84,17 +83,6 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
         return AnimalFishEntity.createFishAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 3)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3);
-    }
-    private PlayState genericFlopController(AnimationState animationState) {
-        if (this.isTouchingWater()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        } else {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.mediumfish.flop", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
     }
 
     @Override
@@ -157,16 +145,6 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_TROPICAL_FISH_HURT;
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
-    }
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
     }
 
     public NbtCompound writeMateData(NbtCompound nbt) {

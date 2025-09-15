@@ -13,7 +13,7 @@ public class ArcherfishSpitModel extends GeoModel<ArcherfishSpitEntity> {
 
     @Override
     public Identifier getTextureResource(ArcherfishSpitEntity animatable) {
-        return new Identifier(FishAndShiz.MOD_ID, "textures/fish/archerfish/archerfish_spit.png");
+        return new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/archerfish/archerfish_spit.png");
     }
 
     @Override

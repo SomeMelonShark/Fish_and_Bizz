@@ -2,6 +2,7 @@ package net.redmelon.fishandshiz.cclass.cmethods.goals;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.mob.PathAwareEntity;
 
 public class ShortRangeAttackGoal extends MeleeAttackGoal {

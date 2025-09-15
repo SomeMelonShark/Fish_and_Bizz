@@ -33,6 +33,15 @@ public class KillifishEggEntity extends KillifishEntity implements GeoEntity, En
     }
 
     @Override
+    protected void tickWaterBreathingAir(int air) {
+        if (this.isAlive() && !this.isInsideWaterOrBubbleColumn() && !this.isMature() && !this.isFry()) {
+            this.setAir(air);
+        } else {
+            super.tickWaterBreathingAir(air);
+        }
+    }
+
+    @Override
     public SizeCategory getSizeCategory() {
         return SizeCategory.EGG;
     }
