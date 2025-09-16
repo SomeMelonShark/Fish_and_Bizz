@@ -44,7 +44,6 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class NeonTetraEntity extends SchoolingBreedEntity implements GeoEntity, EntitySize {
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public NeonTetraEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -70,22 +69,11 @@ public class NeonTetraEntity extends SchoolingBreedEntity implements GeoEntity, 
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1);
     }
 
-    private PlayState genericFlopController(AnimationState animationState) {
-        if (this.isTouchingWater()) {
-            if (this.getTarget() != null || this.isAttacking()) {
-                animationState.getController().setAnimationSpeed(3.0f).setAnimation(RawAnimation.begin()
-                        .then("animation.fry.swim", Animation.LoopType.LOOP));
-                return PlayState.CONTINUE;
-            } else {
-                animationState.getController().setAnimationSpeed(1.0f).setAnimation(RawAnimation.begin()
-                        .then("animation.fry.swim", Animation.LoopType.LOOP));
-                return PlayState.CONTINUE;
-            }
-        } else {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.fry.flop", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
+    @Override
+    public @Nullable EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        this.setFry(true);
+        return entityData;
     }
 
     @Override
@@ -129,15 +117,5 @@ public class NeonTetraEntity extends SchoolingBreedEntity implements GeoEntity, 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_TROPICAL_FISH_HURT;
-    }
-
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
-    }
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
     }
 }

@@ -78,9 +78,19 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater()) {
             if (this.isFry()) {
-                animationState.getController().setAnimation(RawAnimation.begin()
-                        .then("animation.fry.swim", Animation.LoopType.LOOP));
-                return PlayState.CONTINUE;
+                if (this.getTarget() != null || this.isAttacking()) {
+                    animationState.getController().setAnimationSpeed(3.0f).setAnimation(RawAnimation.begin()
+                            .then("animation.fry.swim", Animation.LoopType.LOOP));
+                    return PlayState.CONTINUE;
+                } else if (!animationState.isMoving()) {
+                    animationState.getController().setAnimationSpeed(0.3f).setAnimation(RawAnimation.begin()
+                            .then("animation.fry.swim", Animation.LoopType.LOOP));
+                    return PlayState.CONTINUE;
+                } else {
+                    animationState.getController().setAnimationSpeed(1.0f).setAnimation(RawAnimation.begin()
+                            .then("animation.fry.swim", Animation.LoopType.LOOP));
+                    return PlayState.CONTINUE;
+                }
             }
             if (this.getTarget() != null || this.isAttacking()) {
                 animationState.getController().setAnimationSpeed(3.0f).setAnimation(RawAnimation.begin()
