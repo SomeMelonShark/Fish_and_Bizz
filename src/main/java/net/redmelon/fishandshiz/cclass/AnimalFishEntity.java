@@ -1,62 +1,45 @@
 package net.redmelon.fishandshiz.cclass;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.SwimAroundGoal;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
-import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.ai.pathing.SwimNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.*;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.FishEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.entry.RegistryEntryList;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.FluidTags;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.*;
-import net.redmelon.fishandshiz.cclass.cmethods.CustomCriteria;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.World;
 import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
-import net.redmelon.fishandshiz.entity.custom.fish.RedTailCatfishEntity;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-import java.util.*;
-
 public abstract class AnimalFishEntity extends HolometabolousAquaticEntity implements GeoEntity, EntitySize {
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
+    protected final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
+    private static final TrackedData<Boolean> IS_EGG = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_FRY = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_MICRO = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_MACRO = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -71,7 +54,10 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     }
 
     public static DefaultAttributeContainer.Builder createFishAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.GENERIC_MAX_HEALTH, 1.0)
+        return MobEntity.createMobAttributes()
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 1.0)
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1.0)
+                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 0.5)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.35f);
     }
 
@@ -129,12 +115,16 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
+        this.dataTracker.startTracking(IS_EGG, false);
         this.dataTracker.startTracking(IS_FRY, false);
         this.dataTracker.startTracking(IS_MICRO, false);
         this.dataTracker.startTracking(IS_MACRO, false);
         this.dataTracker.startTracking(IS_MATURE, false);
     }
 
+    public boolean isEgg() {
+        return this.dataTracker.get(IS_EGG);
+    }
     public boolean isFry() {
         return this.dataTracker.get(IS_FRY);
     }
@@ -146,6 +136,9 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     }
     public boolean isMature() {
         return this.dataTracker.get(IS_MATURE);
+    }
+    public void setEgg(boolean egg) {
+        this.dataTracker.set(IS_EGG, egg);
     }
     public void setFry(boolean fry) {
         this.dataTracker.set(IS_FRY, fry);
@@ -211,7 +204,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
 
         @Override
         public void tick() {
-            if (this.fish.isMature() || this.fish.isFry()) {
+            if (!this.fish.isEgg()) {
                 if (this.fish.isSubmergedIn(FluidTags.WATER)) {
                     this.fish.setVelocity(this.fish.getVelocity().add(0.0, 0.0, 0.0));
                 }
@@ -371,7 +364,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
             int decrease;
             int increase = getNitrogenIncreaseAmount();
 
-            if (!isFry() && !isMature()) {
+            if (!isFry() && !isMature() && isEgg()) {
                 decrease = 8;
             } else if (isFry()) {
                 decrease = 10;
@@ -384,7 +377,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
 
             checkNitrogenLevelForDamage();
         }
-        if (!this.isMature() && !this.isFry()) {
+        if (!this.isMature() && !this.isFry() && this.isEgg()) {
             if (this.isTouchingWater()) {
                 this.setVelocity(this.getVelocity().x * (this.random.nextFloat() * 0.5f - 0.25f), -0.02, this.getVelocity().z * (this.random.nextFloat() * 0.5f - 0.25f));
             }
@@ -430,6 +423,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
+        nbt.putBoolean("IsEgg", this.isEgg());
         nbt.putBoolean("IsFry", this.isFry());
         nbt.putBoolean("IsMicro", this.isMicro());
         nbt.putBoolean("IsMacro", this.isMacro());
@@ -443,6 +437,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
+        this.setEgg(nbt.getBoolean("IsEgg"));
         this.setFry(nbt.getBoolean("IsFry"));
         this.setMicro(nbt.getBoolean("IsMicro"));
         this.setMacro(nbt.getBoolean("IsMacro"));
@@ -455,6 +450,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        this.setEgg(false);
         this.setFry(false);
         this.setMicro(false);
         this.setMature(true);
@@ -466,6 +462,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
         super.copyDataToStack(stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
         nbtCompound.putBoolean("IsMature", isMature());
+        nbtCompound.putBoolean("IsEgg", isEgg());
         nbtCompound.putBoolean("IsFry", isFry());
         nbtCompound.putBoolean("IsMicro", isMicro());
         nbtCompound.putBoolean("IsMacro", isMacro());

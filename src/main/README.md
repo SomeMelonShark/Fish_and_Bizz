@@ -6,3 +6,4 @@
 - Goldfish
 - Mudskippers
 - Diseases
+- Fix player fish targeting

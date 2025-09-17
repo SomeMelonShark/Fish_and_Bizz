@@ -61,7 +61,6 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity, 
     private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(AngelfishEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public AngelfishEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
@@ -179,11 +178,6 @@ public class AngelfishEntity extends SchoolingBreedEntity implements GeoEntity, 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
-    }
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return this.factory;
     }
 
     public NbtCompound writeMateData(NbtCompound nbt) {

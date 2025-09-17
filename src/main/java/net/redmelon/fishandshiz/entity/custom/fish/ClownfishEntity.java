@@ -81,8 +81,7 @@ public class ClownfishEntity extends SchoolingBreedEntity implements GeoEntity, 
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 1)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 1);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package net.redmelon.fishandshiz.entity.client.fish.renderer;
 
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
@@ -11,18 +12,28 @@ import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.Vec3d;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.entity.client.ModModelLayers;
+import net.redmelon.fishandshiz.entity.client.fish.model.ArcherfishModel;
 import net.redmelon.fishandshiz.entity.client.fish.model.RedTailCatfishModel;
+import net.redmelon.fishandshiz.entity.custom.fish.ArcherfishEntity;
 import net.redmelon.fishandshiz.entity.custom.fish.RedTailCatfishEntity;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
-public class RedTailCatfishRenderer extends MobEntityRenderer<RedTailCatfishEntity, RedTailCatfishModel<RedTailCatfishEntity>> {
-    private static final Identifier TEXTURE = new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/red_tail_catfish/red_tail_catfish.png");
-    public RedTailCatfishRenderer(EntityRendererFactory.Context context) {
-        super(context, new RedTailCatfishModel<>(context.getPart(ModModelLayers.RED_TAIL_CATFISH)), 1.5f);
+public class RedTailCatfishRenderer extends GeoEntityRenderer<RedTailCatfishEntity> {
+    public RedTailCatfishRenderer(EntityRendererFactory.Context renderManager) {
+        super(renderManager, new RedTailCatfishModel());
+        this.shadowRadius= 2.0f;
     }
 
     @Override
-    public Identifier getTexture(RedTailCatfishEntity entity) {
-        return TEXTURE;
+    public Identifier getTextureLocation(RedTailCatfishEntity instance) {
+        return new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/red_tail_catfish/red_tail_catfish.png");
+    }
+
+    @Override
+    public RenderLayer getRenderType(RedTailCatfishEntity animatable, Identifier texture, @Nullable VertexConsumerProvider bufferSource,
+                                     float partialTick) {
+        return super.getRenderType(animatable, texture, bufferSource, partialTick);
     }
 
     @Override

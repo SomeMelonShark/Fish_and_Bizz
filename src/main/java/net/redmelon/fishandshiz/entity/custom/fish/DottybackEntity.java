@@ -73,8 +73,7 @@ public class DottybackEntity extends SchoolingBreedEntity implements GeoEntity, 
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 2)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 2);
     }
 
     @Override

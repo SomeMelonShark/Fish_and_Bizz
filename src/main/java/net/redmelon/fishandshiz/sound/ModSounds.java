@@ -20,6 +20,9 @@ public class ModSounds {
     public static final SoundEvent JELLYFISH_AMBIENT = registerSoundEvents("jellyfish_ambient");
     public static final SoundEvent JELLYFISH_HURT = registerSoundEvents("jellyfish_hurt");
     public static final SoundEvent JELLYFISH_DEATH = registerSoundEvents("jellyfish_death");
+    public static final SoundEvent RED_TAIL_CATFISH_AMBIENT = registerSoundEvents("red_tail_catfish_ambient");
+    public static final SoundEvent RED_TAIL_CATFISH_HURT = registerSoundEvents("red_tail_catfish_hurt");
+    public static final SoundEvent RED_TAIL_CATFISH_DEATH = registerSoundEvents("red_tail_catfish_death");
     public static final SoundEvent NITROGEN_DETECTOR_WARNING = registerSoundEvents("nitrogen_detector_warning");
     public static final SoundEvent FILTER_AMBIENT = registerSoundEvents("filter_ambient");
     public static final SoundEvent FILTER_FULL = registerSoundEvents("filter_full");

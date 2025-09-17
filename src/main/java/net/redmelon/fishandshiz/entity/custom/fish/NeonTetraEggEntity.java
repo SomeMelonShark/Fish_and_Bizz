@@ -74,6 +74,7 @@ public class NeonTetraEggEntity extends NeonTetraEntity implements GeoEntity, En
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         this.setMature(false);
+        this.setEgg(true);
         return entityData;
     }
 

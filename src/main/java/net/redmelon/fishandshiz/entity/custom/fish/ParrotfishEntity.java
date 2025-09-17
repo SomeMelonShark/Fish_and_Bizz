@@ -70,8 +70,6 @@ public class ParrotfishEntity extends AnimalFishEntity implements GeoEntity, Var
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
     private boolean reachedTarget;
 
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
-
     public ParrotfishEntity(EntityType<? extends AnimalFishEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -198,11 +196,6 @@ public class ParrotfishEntity extends AnimalFishEntity implements GeoEntity, Var
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
-    }
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return this.factory;
     }
 
     public NbtCompound writeMateData(NbtCompound nbt) {

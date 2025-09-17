@@ -34,6 +34,7 @@ import net.redmelon.fishandshiz.cclass.cmethods.goals.ShortRangeAttackGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.SizedTargetGoal;
 import net.redmelon.fishandshiz.entity.custom.CrayfishEntity;
 import net.redmelon.fishandshiz.entity.custom.MudCrabEntity;
+import net.redmelon.fishandshiz.sound.ModSounds;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -45,8 +46,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Map;
 
-public class RedTailCatfishEntity extends AnimalFishEntity implements AngledModelEntity, EntitySize {
-    private final Map<String, Vector3f> modelAngles = Maps.newHashMap();
+public class RedTailCatfishEntity extends AnimalFishEntity implements GeoEntity, EntitySize {
     public RedTailCatfishEntity(EntityType<? extends RedTailCatfishEntity> entityType, World world) {
         super(entityType, world);
         this.moveControl = new CoolMoveControl(this, 85, 10, 0.02f, 0.1f, true);
@@ -80,13 +80,19 @@ public class RedTailCatfishEntity extends AnimalFishEntity implements AngledMode
 
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.red_tail_catfish.swim", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        } else if (this.isAttacking()) {
-            animationState.getController().setAnimation(RawAnimation.begin()
-                    .then("animation.red_tail_catfish.bite", Animation.LoopType.PLAY_ONCE));
-            return PlayState.CONTINUE;
+            if (this.getTarget() != null || this.isAttacking()) {
+                animationState.getController().setAnimationSpeed(3.0f).setAnimation(RawAnimation.begin()
+                        .then("animation.red_tail_catfish.bite", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            }  else if (!animationState.isMoving()) {
+                animationState.getController().setAnimationSpeed(0.3f).setAnimation(RawAnimation.begin()
+                        .then("animation.red_tail_catfish.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            } else {
+                animationState.getController().setAnimationSpeed(1.0f).setAnimation(RawAnimation.begin()
+                        .then("animation.red_tail_catfish.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            }
         } else {
             animationState.getController().setAnimation(RawAnimation.begin()
                     .then("animation.red_tail_catfish.flop", Animation.LoopType.LOOP));
@@ -99,7 +105,7 @@ public class RedTailCatfishEntity extends AnimalFishEntity implements AngledMode
         super.initGoals();
         this.goalSelector.add(0, new MoveIntoWaterGoal(this));
         this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
-        this.goalSelector.add(2, new ShortRangeAttackGoal(this, 1.5f, true, 1.5f));
+        this.goalSelector.add(2, new ShortRangeAttackGoal(this, 3.5f, true, 1.5f));
 
         this.targetSelector.add(1, new SizedTargetGoal<>(this, LivingEntity.class, true, SizeCategory.VERY_LARGE, 2, 6));
         this.targetSelector.add(5, new ActiveTargetGoal<>((MobEntity)this, DrownedEntity.class, true));
@@ -145,17 +151,17 @@ public class RedTailCatfishEntity extends AnimalFishEntity implements AngledMode
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_SALMON_AMBIENT;
+        return ModSounds.RED_TAIL_CATFISH_AMBIENT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_SALMON_DEATH;
+        return ModSounds.RED_TAIL_CATFISH_DEATH;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_SALMON_HURT;
+        return ModSounds.RED_TAIL_CATFISH_HURT;
     }
 
     @Override
@@ -170,7 +176,7 @@ public class RedTailCatfishEntity extends AnimalFishEntity implements AngledMode
     }
 
     @Override
-    public Map<String, Vector3f> getModelAngles() {
-        return this.modelAngles;
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
     }
 }

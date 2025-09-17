@@ -64,7 +64,6 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity, Vari
     private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(BettaEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
 
     public BettaEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
@@ -87,9 +86,7 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity, Vari
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 2)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 1)
-                .add(EntityAttributes.GENERIC_ATTACK_SPEED, 0.5);
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 2);
     }
     private PlayState genericFlopController(AnimationState animationState) {
         if (this.isTouchingWater() && animationState.isMoving()) {
@@ -181,11 +178,6 @@ public class BettaEntity extends SchoolingBreedEntity implements GeoEntity, Vari
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
-    }
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
     }
 
     public NbtCompound writeMateData(NbtCompound nbt) {

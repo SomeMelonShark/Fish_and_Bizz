@@ -39,9 +39,7 @@ public class ModRenderer {
         BlockEntityRendererFactories.register(ModBlockEntities.SEA_ANEMONE_ENTITY, SeaAnemoneRenderer::new);
     }
     public static void renderEntities() {
-        EntityRendererRegistry.register(ModEntities.RED_TAIL_CATFISH, RedTailCatfishRenderer::new);
-
-        EntityModelLayerRegistry.registerModelLayer(ModModelLayers.RED_TAIL_CATFISH, RedTailCatfishModel::getTexturedModelData);
+        // unused because I learnt how to use geckolib more lmao
     }
     public static void renderGeckolibEntities() {
         EntityRendererRegistry.register(ModEntities.ANGELFISH, BasicVariableFishRenderer.create("angelfish", "angelfish"));
@@ -93,6 +91,7 @@ public class ModRenderer {
         EntityRendererRegistry.register(ModEntities.PARROTFISH, BasicVariableFishRenderer.create("parrotfish", "mediumfish"));
         EntityRendererRegistry.register(ModEntities.BUTTERFLYFISH, BasicVariableFishRenderer.create("butterflyfish", "mediumfish"));
         EntityRendererRegistry.register(ModEntities.TRIGGERFISH, BasicVariableFishRenderer.create("triggerfish", "mediumfish"));
+        EntityRendererRegistry.register(ModEntities.RED_TAIL_CATFISH, RedTailCatfishRenderer::new);
         EntityRendererRegistry.register(ModEntities.SALMON_EGG, BasicImmatureRenderer.eggCreate("salmon", "salmon"));
         EntityRendererRegistry.register(ModEntities.SALMON_FRY, BasicImmatureRenderer.fryCreate("salmon", "salmon"));
         EntityRendererRegistry.register(ModEntities.MUD_CRAB, BasicSmallMiscRenderer.create("mud_crab"));

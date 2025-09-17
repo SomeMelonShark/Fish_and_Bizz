@@ -77,6 +77,28 @@
       "fishandshiz:jellyfish_death"
     ]
   },
+  "red_tail_catfish_ambient": {
+    "subtitle": "sounds.fishandshiz.red_tail_catfish_ambient",
+    "sounds": [
+      "fishandshiz:red_tail_catfish_ambient_1",
+      "fishandshiz:red_tail_catfish_ambient_2"
+    ]
+  },
+  "red_tail_catfish_hurt": {
+    "subtitle": "sounds.fishandshiz.red_tail_catfish_hurt",
+    "sounds": [
+      "fishandshiz:red_tail_catfish_hurt_1",
+      "fishandshiz:red_tail_catfish_hurt_2",
+      "fishandshiz:red_tail_catfish_hurt_3"
+    ]
+  },
+  "red_tail_catfish_death": {
+    "subtitle": "sounds.fishandshiz.red_tail_catfish_death",
+    "sounds": [
+      "fishandshiz:red_tail_catfish_death",
+      "fishandshiz:red_tail_catfish_death"
+    ]
+  },
   "nitrogen_detector_warning": {
     "subtitle": "sounds.fishandshiz.nitrogen_detector_warning",
     "sounds": [

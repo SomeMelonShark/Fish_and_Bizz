@@ -44,7 +44,6 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class GraylingEntity extends SchoolingBreedEntity implements GeoEntity, EntitySize {
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
-    private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public GraylingEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -75,6 +74,10 @@ public class GraylingEntity extends SchoolingBreedEntity implements GeoEntity, E
             if (this.getTarget() != null || this.isAttacking()) {
                 animationState.getController().setAnimationSpeed(3.0f).setAnimation(RawAnimation.begin()
                         .then("animation.grayling.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            } else if (!animationState.isMoving()) {
+                animationState.getController().setAnimationSpeed(0.3f).setAnimation(RawAnimation.begin()
+                        .then("animation.mediumfish.swim", Animation.LoopType.LOOP));
                 return PlayState.CONTINUE;
             } else {
                 animationState.getController().setAnimationSpeed(1.0f).setAnimation(RawAnimation.begin()
@@ -138,10 +141,5 @@ public class GraylingEntity extends SchoolingBreedEntity implements GeoEntity, E
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
-    }
-
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
     }
 }

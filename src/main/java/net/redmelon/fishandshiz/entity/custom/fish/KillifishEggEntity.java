@@ -86,6 +86,7 @@ public class KillifishEggEntity extends KillifishEntity implements GeoEntity, En
         this.setAirResistant(true);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         this.setMature(false);
+        this.setEgg(true);
         return entityData;
     }
 

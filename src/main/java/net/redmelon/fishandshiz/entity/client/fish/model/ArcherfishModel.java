@@ -35,7 +35,7 @@ public class ArcherfishModel extends GeoModel<ArcherfishEntity> {
             EntityModelData entityModelData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
 
             root.setRotX(entityModelData.headPitch() * MathHelper.RADIANS_PER_DEGREE);
-            root.setRotX(entityModelData.netHeadYaw() * MathHelper.RADIANS_PER_DEGREE);
+            root.setRotY(entityModelData.netHeadYaw() * MathHelper.RADIANS_PER_DEGREE);
         }
     }
 }

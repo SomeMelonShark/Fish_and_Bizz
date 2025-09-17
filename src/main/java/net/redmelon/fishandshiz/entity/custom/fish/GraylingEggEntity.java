@@ -73,6 +73,7 @@ public class GraylingEggEntity extends GraylingEntity implements GeoEntity, Enti
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
         this.setMature(false);
+        this.setEgg(true);
         return entityData;
     }
 
