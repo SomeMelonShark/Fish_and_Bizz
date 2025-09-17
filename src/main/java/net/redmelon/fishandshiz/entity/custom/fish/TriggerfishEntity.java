@@ -49,7 +49,7 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class TriggerfishEntity extends SchoolingBreedEntity implements GeoEntity, VariableFishEntity<TriggerfishPattern, TriggerfishDetail>, EntitySize {
+public class TriggerfishEntity extends AnimalFishEntity implements GeoEntity, VariableFishEntity<TriggerfishPattern, TriggerfishDetail>, EntitySize {
     private static final TrackedData<TriggerfishPattern> PATTERN = DataTracker.registerData(TriggerfishEntity.class, TriggerfishPattern.TRACKED_DATA_HANDLER);
     private static final TrackedData<TriggerfishDetail> DETAIL = DataTracker.registerData(TriggerfishEntity.class, TriggerfishDetail.TRACKED_DATA_HANDLER);
     private static final TrackedData<ModEntityColor> BASE_COLOR = DataTracker.registerData(TriggerfishEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
@@ -60,7 +60,7 @@ public class TriggerfishEntity extends SchoolingBreedEntity implements GeoEntity
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(Items.SEAGRASS);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
 
-    public TriggerfishEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
+    public TriggerfishEntity(EntityType<? extends AnimalFishEntity> entityType, World world) {
         super(entityType, world);
     }
 

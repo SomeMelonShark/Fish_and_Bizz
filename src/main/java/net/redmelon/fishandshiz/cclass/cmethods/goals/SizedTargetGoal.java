@@ -16,10 +16,16 @@ public class SizedTargetGoal<T extends LivingEntity> extends ActiveTargetGoal<T>
 
     public SizedTargetGoal(MobEntity mob, Class<T> targetClass, boolean checkVisibility, SizeCategory attackerSize, int minSkip, int maxSkip) {
         super(mob, targetClass, 10, checkVisibility, false, (target) -> {
-            if (!(target instanceof EntitySize sizedTarget)) return false;
-            if (!(mob instanceof EntitySize)) return false;
+            if (!(mob instanceof EntitySize attacker)) return false;
 
-            int skip = attackerSize.ordinal() - sizedTarget.getSizeCategory().ordinal();
+            SizeCategory targetSize;
+            if (target instanceof EntitySize sizedTarget) {
+                targetSize = sizedTarget.getSizeCategory();
+            } else {
+                targetSize = SizeCategory.EGG; // 👈 fallback
+            }
+
+            int skip = attacker.getSizeCategory().ordinal() - targetSize.ordinal();
             return skip >= minSkip && skip <= maxSkip;
         });
 
