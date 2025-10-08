@@ -79,6 +79,7 @@ public class ModItemGroup {
             entries.add(ModItems.PARROTFISH_BUCKET);
             entries.add(ModItems.BUTTERFLYFISH_BUCKET);
             entries.add(ModItems.TRIGGERFISH_BUCKET);
+            entries.add(ModItems.MUDSKIPPER_BUCKET);
             entries.add(ModItems.VOLCANO_SNAIL_BUCKET);
             entries.add(ModItems.VOLCANO_SNAIL_EGG_BUCKET);
             entries.add(ModItems.RAMSHORN_SNAIL_BUCKET);

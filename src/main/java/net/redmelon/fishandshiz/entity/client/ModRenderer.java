@@ -91,6 +91,7 @@ public class ModRenderer {
         EntityRendererRegistry.register(ModEntities.PARROTFISH, BasicVariableFishRenderer.create("parrotfish", "mediumfish"));
         EntityRendererRegistry.register(ModEntities.BUTTERFLYFISH, BasicVariableFishRenderer.create("butterflyfish", "mediumfish"));
         EntityRendererRegistry.register(ModEntities.TRIGGERFISH, BasicVariableFishRenderer.create("triggerfish", "mediumfish"));
+        EntityRendererRegistry.register(ModEntities.MUDSKIPPER, BasicFishRenderer.create("mudskipper", "mudskipper"));
         EntityRendererRegistry.register(ModEntities.RED_TAIL_CATFISH, RedTailCatfishRenderer::new);
         EntityRendererRegistry.register(ModEntities.SALMON_EGG, BasicImmatureRenderer.eggCreate("salmon", "salmon"));
         EntityRendererRegistry.register(ModEntities.SALMON_FRY, BasicImmatureRenderer.fryCreate("salmon", "salmon"));

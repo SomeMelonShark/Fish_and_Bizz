@@ -151,6 +151,8 @@ public class ModItems {
             new EntityBucketItem(ModEntities.BUTTERFLYFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item TRIGGERFISH_BUCKET = registerItem("triggerfish_bucket",
             new EntityBucketItem(ModEntities.TRIGGERFISH, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
+    public static final Item MUDSKIPPER_BUCKET = registerItem("mudskipper_bucket",
+            new EntityBucketItem(ModEntities.MUDSKIPPER, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item SALMON_FRY_BUCKET = registerItem("salmon_fry_bucket",
             new EntityBucketItem(ModEntities.SALMON_FRY, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1)));
     public static final Item SALMON_EGG_BUCKET = registerItem("salmon_egg_bucket",

@@ -4,6 +4,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.SwimAroundGoal;
+import net.minecraft.entity.ai.pathing.AmphibiousSwimNavigation;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.SwimNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -39,6 +40,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public abstract class AnimalFishEntity extends HolometabolousAquaticEntity implements GeoEntity, EntitySize {
     protected final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
+    private static final TrackedData<Boolean> IS_AMPHIBIOUS = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_EGG = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_FRY = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final TrackedData<Boolean> IS_MICRO = DataTracker.registerData(AnimalFishEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
@@ -115,6 +117,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
+        this.dataTracker.startTracking(IS_AMPHIBIOUS, false);
         this.dataTracker.startTracking(IS_EGG, false);
         this.dataTracker.startTracking(IS_FRY, false);
         this.dataTracker.startTracking(IS_MICRO, false);
@@ -122,6 +125,9 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
         this.dataTracker.startTracking(IS_MATURE, false);
     }
 
+    public boolean isAmphibious() {
+        return this.dataTracker.get(IS_AMPHIBIOUS);
+    }
     public boolean isEgg() {
         return this.dataTracker.get(IS_EGG);
     }
@@ -136,6 +142,9 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     }
     public boolean isMature() {
         return this.dataTracker.get(IS_MATURE);
+    }
+    public void setAmphibious(boolean amphibious) {
+        this.dataTracker.set(IS_AMPHIBIOUS, amphibious);
     }
     public void setEgg(boolean egg) {
         this.dataTracker.set(IS_EGG, egg);
@@ -155,7 +164,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
 
     @Override
     protected void tickWaterBreathingAir(int air) {
-        if (this.isAlive() && !this.isInsideWaterOrBubbleColumn() && !this.isMature() && !this.isFry()) {
+        if (this.isAlive() && !this.isInsideWaterOrBubbleColumn() && !this.isMature() && !this.isFry() && !isAirResistant()) {
             this.setAir(air - 5);
             if (this.getAir() == -20) {
                 this.setAir(0);
@@ -172,15 +181,9 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
         this.goalSelector.add(4, new SwimToRandomPlaceGoal(this));
     }
 
-    @Override
-    protected EntityNavigation createNavigation(World world) {
-        return new SwimNavigation(this, world);
-    }
-
-    @Override
     public void travel(Vec3d movementInput) {
         if (this.canMoveVoluntarily() && this.isTouchingWater()) {
-            this.updateVelocity(0.01f, movementInput);
+            this.updateVelocity(0.01F, movementInput);
             this.move(MovementType.SELF, this.getVelocity());
             this.setVelocity(this.getVelocity().multiply(0.9));
             if (this.getTarget() == null) {
@@ -191,9 +194,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
         }
     }
 
-    protected abstract SoundEvent getFlopSound();
-
-    static class FishMoveControl
+    protected static class FishMoveControl
             extends MoveControl {
         protected final AnimalFishEntity fish;
 
@@ -205,37 +206,48 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
         @Override
         public void tick() {
             if (!this.fish.isEgg()) {
-                if (this.fish.isSubmergedIn(FluidTags.WATER)) {
-                    this.fish.setVelocity(this.fish.getVelocity().add(0.0, 0.0, 0.0));
-                }
-                if (this.state != MoveControl.State.MOVE_TO || this.fish.getNavigation().isIdle()) {
-                    this.fish.setMovementSpeed(0.0f);
-                    return;
-                }
-                float f = (float)(this.speed * this.fish.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
-                this.fish.setMovementSpeed(MathHelper.lerp(0.125f, this.fish.getMovementSpeed(), f));
-                double d = this.targetX - this.fish.getX();
-                double e = this.targetY - this.fish.getY();
-                double g = this.targetZ - this.fish.getZ();
-                double h = Math.sqrt(d * d + e * e + g * g);
-                if (h > 1.0E-6) {
-                    d /= h;
-                    e /= h;
-                    g /= h;
+                if (this.fish.isTouchingWater()) {
+                    if (this.fish.isSubmergedIn(FluidTags.WATER)) {
+                        this.fish.setVelocity(this.fish.getVelocity().add(0.0, 0.0, 0.0));
+                    }
+                    if (this.state != MoveControl.State.MOVE_TO || this.fish.getNavigation().isIdle()) {
+                        this.fish.setMovementSpeed(0.0f);
+                        return;
+                    }
+                    float f = (float) (this.speed * this.fish.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
+                    this.fish.setMovementSpeed(MathHelper.lerp(0.125f, this.fish.getMovementSpeed(), f));
+                    double d = this.targetX - this.fish.getX();
+                    double e = this.targetY - this.fish.getY();
+                    double g = this.targetZ - this.fish.getZ();
+                    double h = Math.sqrt(d * d + e * e + g * g);
+                    if (h > 1.0E-6) {
+                        d /= h;
+                        e /= h;
+                        g /= h;
 
-                    this.fish.setVelocity(
-                            this.fish.getVelocity().add(
-                                    d * this.fish.getMovementSpeed() * 0.05,
-                                    e * this.fish.getMovementSpeed() * 0.1,
-                                    g * this.fish.getMovementSpeed() * 0.05
-                            )
-                    );
-                }
+                        this.fish.setVelocity(
+                                this.fish.getVelocity().add(
+                                        d * this.fish.getMovementSpeed() * 0.05,
+                                        e * this.fish.getMovementSpeed() * 0.1,
+                                        g * this.fish.getMovementSpeed() * 0.05
+                                )
+                        );
+                    }
 
-                if (d != 0.0 || g != 0.0) {
-                    float i = (float)(MathHelper.atan2(g, d) * 57.2957763671875) - 90.0f;
-                    this.fish.setYaw(this.wrapDegrees(this.fish.getYaw(), i, 90.0f));
-                    this.fish.bodyYaw = this.fish.getYaw();
+                    if (d != 0.0 || g != 0.0) {
+                        float i = (float) (MathHelper.atan2(g, d) * 57.2957763671875) - 90.0f;
+                        this.fish.setYaw(this.wrapDegrees(this.fish.getYaw(), i, 90.0f));
+                        this.fish.bodyYaw = this.fish.getYaw();
+                    }
+                } else if (this.fish.isAmphibious() && !this.fish.isTouchingWater()){
+                    if (this.state == MoveControl.State.MOVE_TO && !this.fish.getNavigation().isIdle()) {
+                        double dx = this.targetX - this.fish.getX();
+                        double dz = this.targetZ - this.fish.getZ();
+                        float targetYaw = (float) (MathHelper.atan2(dz, dx) * (180F / Math.PI)) - 90.0F;
+                        this.fish.setYaw(this.wrapDegrees(this.fish.getYaw(), targetYaw, 90.0F));
+                        this.fish.bodyYaw = this.fish.getYaw();
+                    }
+                    super.tick();
                 }
             }
         }
@@ -321,6 +333,8 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
         }
     }
 
+    protected abstract SoundEvent getFlopSound();
+
     static class SwimToRandomPlaceGoal
             extends SwimAroundGoal {
         private final AnimalFishEntity fish;
@@ -339,7 +353,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     @Override
     public void tickMovement() {
         super.tickMovement();
-        if (!this.isTouchingWater() && this.isOnGround() && this.verticalCollision) {
+        if (!this.isTouchingWater() && this.isOnGround() && this.verticalCollision && !this.isAmphibious()) {
             this.setVelocity(this.getVelocity().add((this.random.nextFloat() * 2.0f - 1.0f) * 0.05f, 0.4f, (this.random.nextFloat() * 2.0f - 1.0f) * 0.05f));
             this.setOnGround(false);
             this.velocityDirty = true;
@@ -423,6 +437,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
+        nbt.putBoolean("IsAmphibious", this.isAmphibious());
         nbt.putBoolean("IsEgg", this.isEgg());
         nbt.putBoolean("IsFry", this.isFry());
         nbt.putBoolean("IsMicro", this.isMicro());
@@ -437,6 +452,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
+        this.setAmphibious(nbt.getBoolean("IsAmphibious"));
         this.setEgg(nbt.getBoolean("IsEgg"));
         this.setFry(nbt.getBoolean("IsFry"));
         this.setMicro(nbt.getBoolean("IsMicro"));
@@ -461,6 +477,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     public void copyDataToStack(ItemStack stack) {
         super.copyDataToStack(stack);
         NbtCompound nbtCompound = stack.getOrCreateNbt();
+        nbtCompound.putBoolean("IsAmphibious", isAmphibious());
         nbtCompound.putBoolean("IsMature", isMature());
         nbtCompound.putBoolean("IsEgg", isEgg());
         nbtCompound.putBoolean("IsFry", isFry());

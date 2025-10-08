@@ -7,3 +7,4 @@
 - Mudskippers
 - Diseases
 - Fix player fish targeting
+- Villager trade updating

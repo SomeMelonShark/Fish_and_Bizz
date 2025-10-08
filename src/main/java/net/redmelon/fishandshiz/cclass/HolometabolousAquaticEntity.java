@@ -26,12 +26,10 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.*;
 import net.redmelon.fishandshiz.cclass.cmethods.CustomCriteria;
 import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
-import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
-import java.util.function.Predicate;
 
 public abstract class HolometabolousAquaticEntity extends PassiveWaterEntity implements Bucketable, FishNitrogenAccessor, EntitySize {
     private static final TrackedData<Integer> NITROGEN_LEVEL = DataTracker.registerData(HolometabolousAquaticEntity.class, TrackedDataHandlerRegistry.INTEGER);
@@ -124,26 +122,18 @@ public abstract class HolometabolousAquaticEntity extends PassiveWaterEntity imp
 
     @Override
     protected void tickWaterBreathingAir(int air) {
-        if (this.isAlive() && !this.isInsideWaterOrBubbleColumn() && this.isAirResistant()) {
+        if (this.isAlive() && !this.isInsideWaterOrBubbleColumn() && !this.getBlockStateAtPos().isOf(Blocks.MUD) && this.isAirResistant()) {
             this.setAir(air - 1);
             if (this.getAir() == -60) {
                 this.setAir(0);
                 this.damage(this.getDamageSources().drown(), 1.0F);
             }
-        } else if (this.isAlive() && this.isInsideWaterOrBubbleColumn() && this.isAirResistant()) {
-            this.setAir(2400);
+        } else if (this.isAlive() && this.isAirResistant()) {
+            if (this.isInsideWaterOrBubbleColumn() || this.getBlockStateAtPos().isOf(Blocks.MUD)) {
+                this.setAir(2400);
+            }
         } else {
             super.tickWaterBreathingAir(air);
-        }
-    }
-
-    static class FishMoveControl
-            extends MoveControl {
-        protected final HolometabolousAquaticEntity fish;
-
-        FishMoveControl(HolometabolousAquaticEntity owner) {
-            super(owner);
-            this.fish = owner;
         }
     }
 
@@ -154,7 +144,6 @@ public abstract class HolometabolousAquaticEntity extends PassiveWaterEntity imp
         super((EntityType<? extends PassiveWaterEntity>) entityType, world);
         this.setPathfindingPenalty(PathNodeType.DANGER_FIRE, 16.0f);
         this.setPathfindingPenalty(PathNodeType.DAMAGE_FIRE, -1.0f);
-        this.moveControl = new FishMoveControl(this);
     }
 
     @Override
@@ -179,6 +168,7 @@ public abstract class HolometabolousAquaticEntity extends PassiveWaterEntity imp
 
     protected abstract int getNitrogenIncreaseAmount();
 
+    // The algorithm for finding other entities within the same water body
     private boolean floodFill(Entity entity1, Entity entity2, int maxDepth, int maxRange) {
         BlockPos start = entity1.getBlockPos();
         BlockPos target = entity2.getBlockPos();

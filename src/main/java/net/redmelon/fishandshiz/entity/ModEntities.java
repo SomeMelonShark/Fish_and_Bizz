@@ -218,6 +218,10 @@ public class ModEntities {
             new Identifier(FishAndShiz.MOD_ID, "triggerfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     TriggerfishEntity::new).dimensions(EntityDimensions.fixed(0.5f, 0.4f)).build());
 
+    public static final EntityType<MudskipperEntity> MUDSKIPPER = Registry.register(Registries.ENTITY_TYPE,
+            new Identifier(FishAndShiz.MOD_ID, "mudskipper"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
+                    MudskipperEntity::new).dimensions(EntityDimensions.fixed(0.4f, 0.2f)).build());
+
     public static final EntityType<RedTailCatfishEntity> RED_TAIL_CATFISH = Registry.register(Registries.ENTITY_TYPE,
             new Identifier(FishAndShiz.MOD_ID, "red_tail_catfish"), FabricEntityTypeBuilder.create(SpawnGroup.WATER_AMBIENT,
                     RedTailCatfishEntity::new).dimensions(EntityDimensions.fixed(1.5f, 0.6f)).build());
@@ -316,6 +320,7 @@ public class ModEntities {
         FabricDefaultAttributeRegistry.register(ModEntities.PARROTFISH, ParrotfishEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.BUTTERFLYFISH, ButterflyfishEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.TRIGGERFISH, TriggerfishEntity.setAttributes());
+        FabricDefaultAttributeRegistry.register(ModEntities.MUDSKIPPER, MudskipperEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.RED_TAIL_CATFISH, RedTailCatfishEntity.setAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.SALMON_EGG, AnimalFishEntity.createFishAttributes());
         FabricDefaultAttributeRegistry.register(ModEntities.SALMON_FRY, AnimalFishEntity.createFishAttributes());

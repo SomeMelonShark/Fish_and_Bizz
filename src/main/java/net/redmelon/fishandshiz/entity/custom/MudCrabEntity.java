@@ -1,6 +1,7 @@
 package net.redmelon.fishandshiz.entity.custom;
 
 import com.google.common.annotations.VisibleForTesting;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -70,8 +71,9 @@ public class MudCrabEntity extends EggboundEntity implements GeoEntity, EntitySi
 
     protected void initGoals() {
         this.goalSelector.add(1, new EscapeDangerGoal(this, 2.0));
-        this.goalSelector.add(1, new EscapeSuffocationGoal(this, 1.0, 10));
+        this.goalSelector.add(1, new EscapeSuffocationGoal(this, 1.1, 30));
         this.goalSelector.add(2, new EggboundMateGoal(this, 1.0));
+        this.goalSelector.add(2, new LeaveWaterGoal(this, 1.0, 30, 60));
         this.goalSelector.add(3, new WaterWanderGoal(this, 7));
         this.goalSelector.add(4, new LandWanderFarGoal(this, 1.0));
         this.goalSelector.add(4, new LookAroundGoal(this));
@@ -103,11 +105,6 @@ public class MudCrabEntity extends EggboundEntity implements GeoEntity, EntitySi
                     .then("animation.mud_crab.idle", Animation.LoopType.LOOP));
             return PlayState.CONTINUE;
         }
-    }
-
-    @Override
-    public boolean isBreedingItem(ItemStack stack) {
-        return stack.getItem() == Items.COD;
     }
 
     @Override

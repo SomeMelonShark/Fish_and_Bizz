@@ -194,7 +194,7 @@ public class ArcherfishEntity extends SchoolingBreedEntity implements GeoEntity,
         ArcherfishSpitEntity archerfishSpitEntity = new ArcherfishSpitEntity(this.getWorld(),this);
         Vec3d direction = target.getEyePos().subtract(this.getPos());
         float velocity = 1.6f;
-        float inaccuracy = 1 - this.getWorld().getDifficulty().getId() * 4;
+        float inaccuracy = 1 - this.getWorld().getDifficulty().getId();
         archerfishSpitEntity.setVelocity(direction.x, direction.y, direction.z, velocity, inaccuracy);
         this.playSound(SoundEvents.AMBIENT_UNDERWATER_ENTER, 0.6f,
                 2.0f / (this.getRandom().nextFloat() * 0.4f + 0.8f));

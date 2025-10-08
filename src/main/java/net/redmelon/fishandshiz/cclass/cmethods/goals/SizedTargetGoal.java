@@ -3,6 +3,7 @@ package net.redmelon.fishandshiz.cclass.cmethods.goals;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
 import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 
@@ -22,7 +23,7 @@ public class SizedTargetGoal<T extends LivingEntity> extends ActiveTargetGoal<T>
             if (target instanceof EntitySize sizedTarget) {
                 targetSize = sizedTarget.getSizeCategory();
             } else {
-                targetSize = SizeCategory.EGG; // 👈 fallback
+                targetSize = SizeCategory.VERY_LARGE; // fallback
             }
 
             int skip = attacker.getSizeCategory().ordinal() - targetSize.ordinal();
