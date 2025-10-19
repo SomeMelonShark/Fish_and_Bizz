@@ -19,13 +19,10 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import java.util.Map;
 
 public class ArcherfishRenderer extends GeoEntityRenderer<ArcherfishEntity> {
-    public static final Map<BiVariant, Identifier> LOCATION_BY_VARIANT =
-            Util.make(Maps.newEnumMap(BiVariant.class), (variantIdentifierEnumMap) -> {
-                variantIdentifierEnumMap.put(BiVariant.NORMAL,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/archerfish/archerfish1.png"));
-                variantIdentifierEnumMap.put(BiVariant.SPECIAL,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/archerfish/archerfish2.png"));
-            });
+    public static final Map<Integer, Identifier> LOCATION_BY_VARIANT = Util.make(Maps.newHashMap(), (map) -> {
+        map.put(0, new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/archerfish/archerfish1.png"));
+        map.put(1, new Identifier(FishAndShiz.MOD_ID, "textures/entity/fish/archerfish/archerfish2.png"));
+    });
     public ArcherfishRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new ArcherfishModel());
         this.shadowRadius= 0.3f;
@@ -33,7 +30,7 @@ public class ArcherfishRenderer extends GeoEntityRenderer<ArcherfishEntity> {
 
     @Override
     public Identifier getTextureLocation(ArcherfishEntity instance) {
-        return LOCATION_BY_VARIANT.get(instance.getVariant());
+        return LOCATION_BY_VARIANT.get(instance.getVariantId());
     }
 
     @Override

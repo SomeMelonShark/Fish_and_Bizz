@@ -337,8 +337,8 @@
   "entity_color.fishandshiz.purple": "Purple",
   "entity_color.fishandshiz.pink": "Pink",
 
-  "entity.fishandshiz.archerfish.type.NORMAL": "Normal",
-  "entity.fishandshiz.archerfish.type.SPECIAL": "Evil!",
+  "entity.fishandshiz.archerfish.type.0": "Normal",
+  "entity.fishandshiz.archerfish.type.1": "Evil!",
 
   "entity.fishandshiz.ramshorn_snail.type.NORMAL": "Cream",
   "entity.fishandshiz.ramshorn_snail.type.SPECIAL": "Melanated"

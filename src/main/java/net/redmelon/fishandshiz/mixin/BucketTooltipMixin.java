@@ -279,7 +279,7 @@ public abstract class BucketTooltipMixin {
             if (this.entityType == ModEntities.ARCHERFISH && (nbtCompound = stack.getNbt()) != null && nbtCompound.contains("BucketVariantTag", NbtElement.INT_TYPE)) {
                 int i = nbtCompound.getInt("BucketVariantTag");
                 Formatting[] formattings = new Formatting[]{Formatting.ITALIC, Formatting.GRAY};
-                String string = "entity.fishandshiz.archerfish.type." + ArcherfishEntity.getVariety(i);
+                String string = ArcherfishEntity.getVariantNameKey(i);
                 MutableText mutableText = Text.translatable(string);
                 mutableText.formatted(formattings);
                 tooltip.add(mutableText);

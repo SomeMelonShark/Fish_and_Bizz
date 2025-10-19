@@ -9,3 +9,4 @@
 - Fix player fish targeting
 - Villager trade updating
 - Non-procedural variants have procedural numbers
+- Add ways to discover mod features in-game

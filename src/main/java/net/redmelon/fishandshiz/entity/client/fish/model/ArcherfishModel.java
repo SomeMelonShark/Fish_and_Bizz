@@ -19,7 +19,7 @@ public class ArcherfishModel extends GeoModel<ArcherfishEntity> {
 
     @Override
     public Identifier getTextureResource(ArcherfishEntity animatable) {
-        return ArcherfishRenderer.LOCATION_BY_VARIANT.get(animatable.getVariant());
+        return ArcherfishRenderer.LOCATION_BY_VARIANT.get(animatable.getVariantId());
     }
 
     @Override
