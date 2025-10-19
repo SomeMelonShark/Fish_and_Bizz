@@ -6,10 +6,7 @@ import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.ActiveTargetGoal;
-import net.minecraft.entity.ai.goal.EscapeDangerGoal;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.WanderAroundGoal;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.AmphibiousSwimNavigation;
 import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -24,6 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -115,6 +113,7 @@ public class MudskipperEntity extends AnimalFishEntity implements GeoEntity, Ent
     protected void initGoals() {
         super.initGoals();
         this.goalSelector.add(0, new EscapeDangerGoal(this, 0.9));
+        this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 7.0f, 0.8, 0.9, EntityPredicates.EXCEPT_SPECTATOR::test));
         this.goalSelector.add(1, new EscapeSuffocationGoal(this, 0.9, 20));
         this.goalSelector.add(1, new BurrowInMudGoal(this, 4));
         this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));

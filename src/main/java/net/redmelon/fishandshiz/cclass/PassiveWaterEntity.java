@@ -1,6 +1,8 @@
 package net.redmelon.fishandshiz.cclass;
 
 import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.ConduitBlockEntity;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.data.DataTracker;
@@ -13,30 +15,41 @@ import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraft.world.chunk.WorldChunk;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public abstract class PassiveWaterEntity extends WaterCreatureEntity {
     protected static final TrackedData<Boolean> CHILD = DataTracker.registerData(PassiveWaterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
+    protected static final TrackedData<Boolean> NEAR_CONDUIT = DataTracker.registerData(PassiveWaterEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     public static final int BABY_AGE = -24000;
     private static final int HAPPY_TICKS = 40;
     protected int breedingAge;
     protected int forcedAge;
     protected int happyTicksRemaining;
+    private boolean nearConduit;
+    private boolean conduitChecked = false;
 
     protected PassiveWaterEntity(EntityType<? extends PassiveWaterEntity> entityType, World world) {
         super(entityType, world);
         this.setPathfindingPenalty(PathNodeType.WATER, 0.0f);
+        if (!world.isClient && world instanceof ServerWorld serverWorld) {
+            this.nearConduit = checkForActiveConduit(serverWorld, this.getBlockPos());
+        }
     }
 
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         PassiveWaterData passiveWaterData;
+        this.nearConduit = checkForActiveConduit(world.toServerWorld(), this.getBlockPos());
         if (entityData == null) {
             entityData = new PassiveWaterData(true);
         }
@@ -57,10 +70,15 @@ public abstract class PassiveWaterEntity extends WaterCreatureEntity {
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(CHILD, false);
+        this.dataTracker.startTracking(NEAR_CONDUIT, false);
     }
 
     public boolean isReadyToBreed() {
         return false;
+    }
+
+    public boolean isNearConduit() {
+        return nearConduit;
     }
 
     public int getBreedingAge() {
@@ -107,6 +125,9 @@ public abstract class PassiveWaterEntity extends WaterCreatureEntity {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt("Age", this.getBreedingAge());
         nbt.putInt("ForcedAge", this.forcedAge);
+        nbt.putBoolean("NearConduit", this.nearConduit);
+        nbt.putBoolean("ConduitChecked", this.conduitChecked);
+
     }
 
     @Override
@@ -114,6 +135,8 @@ public abstract class PassiveWaterEntity extends WaterCreatureEntity {
         super.readCustomDataFromNbt(nbt);
         this.setBreedingAge(nbt.getInt("Age"));
         this.forcedAge = nbt.getInt("ForcedAge");
+        this.nearConduit = nbt.getBoolean("NearConduit");
+        this.conduitChecked = nbt.getBoolean("ConduitChecked");
     }
 
     @Override
@@ -127,6 +150,10 @@ public abstract class PassiveWaterEntity extends WaterCreatureEntity {
     @Override
     public void tickMovement() {
         super.tickMovement();
+        if (!this.getWorld().isClient && !conduitChecked) {
+            this.nearConduit = checkForActiveConduit((ServerWorld) this.getWorld(), this.getBlockPos());
+            this.conduitChecked = true;
+        }
         if (this.getWorld().isClient) {
             if (this.happyTicksRemaining > 0) {
                 if (this.happyTicksRemaining % 4 == 0) {
@@ -145,6 +172,42 @@ public abstract class PassiveWaterEntity extends WaterCreatureEntity {
     }
 
     protected void onGrowUp() {
+    }
+
+    // Wait let's take a look :eyes:
+    private boolean checkForActiveConduit(ServerWorld world, BlockPos origin) {
+        double range = 96.0;
+        double rangeSq = range * range;
+
+        int minChunkX = (origin.getX() - (int) range) >> 4;
+        int maxChunkX = (origin.getX() + (int) range) >> 4;
+        int minChunkZ = (origin.getZ() - (int) range) >> 4;
+        int maxChunkZ = (origin.getZ() + (int) range) >> 4;
+
+        for (int cx = minChunkX; cx <= maxChunkX; cx++) {
+            for (int cz = minChunkZ; cz <= maxChunkZ; cz++) {
+                if (!world.isChunkLoaded(cx, cz)) continue;
+
+                WorldChunk chunk = world.getChunk(cx, cz);
+
+                Map<BlockPos, BlockEntity> blockEntityMap = chunk.getBlockEntities();
+
+                for (Map.Entry<BlockPos, BlockEntity> entry : blockEntityMap.entrySet()) {
+                    BlockPos pos = entry.getKey();
+                    BlockEntity be = entry.getValue();
+
+                    if (be instanceof ConduitBlockEntity conduit) {
+                        if (conduit.isActive() && conduit.isEyeOpen()) {
+                            if (pos.getSquaredDistance(origin) <= rangeSq) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     @Override

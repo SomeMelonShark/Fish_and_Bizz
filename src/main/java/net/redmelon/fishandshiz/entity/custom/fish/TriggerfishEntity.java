@@ -89,7 +89,6 @@ public class TriggerfishEntity extends AnimalFishEntity implements GeoEntity, Va
     protected void initGoals() {
         super.initGoals();
         this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25));
-        this.goalSelector.add(1, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
         this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));
         this.goalSelector.add(6, new ShortRangeAttackGoal(this, 3.0f, true, 1.0f));
 

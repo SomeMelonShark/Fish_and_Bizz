@@ -105,6 +105,11 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
     }
 
     @Override
+    protected EntityNavigation createNavigation(World world) {
+        return new SwimNavigation(this, world);
+    }
+
+    @Override
     public boolean cannotDespawn() {
         return super.cannotDespawn() || this.isFromBucket();
     }
@@ -187,7 +192,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
             this.move(MovementType.SELF, this.getVelocity());
             this.setVelocity(this.getVelocity().multiply(0.9));
             if (this.getTarget() == null) {
-                this.setVelocity(this.getVelocity().add(0.0, 0, 0.0));
+                this.setVelocity(this.getVelocity().add(0.0, 0.0, 0.0));
             }
         } else {
             super.travel(movementInput);
@@ -278,7 +283,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
             double f;
             double e;
             if (this.buoyant && this.entity.isTouchingWater()) {
-                this.entity.setVelocity(this.entity.getVelocity().add(0.0, 0.005, 0.0));
+                this.entity.setVelocity(this.entity.getVelocity().add(0.0, 0.0, 0.0));
             }
             if (this.state != MoveControl.State.MOVE_TO || this.entity.getNavigation().isIdle()) {
                 this.entity.setMovementSpeed(0.0f);
