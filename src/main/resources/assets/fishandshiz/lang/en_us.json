@@ -340,6 +340,6 @@
   "entity.fishandshiz.archerfish.type.0": "Normal",
   "entity.fishandshiz.archerfish.type.1": "Evil!",
 
-  "entity.fishandshiz.ramshorn_snail.type.NORMAL": "Cream",
-  "entity.fishandshiz.ramshorn_snail.type.SPECIAL": "Melanated"
+  "entity.fishandshiz.ramshorn_snail.type.0": "Cream",
+  "entity.fishandshiz.ramshorn_snail.type.1": "Melanated"
 }

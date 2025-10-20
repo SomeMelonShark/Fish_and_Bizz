@@ -10,10 +10,7 @@ import net.minecraft.util.Util;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.entity.client.fish.model.ArcherfishModel;
 import net.redmelon.fishandshiz.entity.custom.fish.ArcherfishEntity;
-import net.redmelon.fishandshiz.entity.custom.fish.CorydorasEntity;
-import net.redmelon.fishandshiz.entity.variant.BiVariant;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 import java.util.Map;

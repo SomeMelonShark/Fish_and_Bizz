@@ -9,19 +9,15 @@ import net.minecraft.util.Util;
 import net.redmelon.fishandshiz.FishAndShiz;
 import net.redmelon.fishandshiz.entity.client.model.RamshornSnailModel;
 import net.redmelon.fishandshiz.entity.custom.RamshornSnailEntity;
-import net.redmelon.fishandshiz.entity.variant.BiVariant;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 import java.util.Map;
 
 public class RamshornSnailRenderer extends GeoEntityRenderer<RamshornSnailEntity> {
-    public static final Map<BiVariant, Identifier> LOCATION_BY_VARIANT =
-            Util.make(Maps.newEnumMap(BiVariant.class), (variantIdentifierEnumMap) -> {
-                variantIdentifierEnumMap.put(BiVariant.NORMAL,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/ramshorn_snail1.png"));
-                variantIdentifierEnumMap.put(BiVariant.SPECIAL,
-                        new Identifier(FishAndShiz.MOD_ID, "textures/entity/ramshorn_snail2.png"));
-            });
+    public static final Map<Integer, Identifier> LOCATION_BY_VARIANT = Util.make(Maps.newHashMap(), (map) -> {
+        map.put(0, new Identifier(FishAndShiz.MOD_ID, "textures/entity/ramshorn_snail1.png"));
+        map.put(1, new Identifier(FishAndShiz.MOD_ID, "textures/entity/ramshorn_snail2.png"));
+    });
     public RamshornSnailRenderer(EntityRendererFactory.Context renderManager) {
         super(renderManager, new RamshornSnailModel());
         this.shadowRadius= 0.2f;

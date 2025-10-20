@@ -14,7 +14,7 @@ public class RamshornSnailModel extends GeoModel<RamshornSnailEntity> {
 
     @Override
     public Identifier getTextureResource(RamshornSnailEntity animatable) {
-        return RamshornSnailRenderer.LOCATION_BY_VARIANT.get(animatable.getVariant());
+        return RamshornSnailRenderer.LOCATION_BY_VARIANT.get(animatable.getVariantId());
     }
 
     @Override

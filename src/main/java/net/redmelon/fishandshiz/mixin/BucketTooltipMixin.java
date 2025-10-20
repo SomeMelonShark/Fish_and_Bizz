@@ -287,7 +287,7 @@ public abstract class BucketTooltipMixin {
             if (this.entityType == ModEntities.RAMSHORN_SNAIL && (nbtCompound = stack.getNbt()) != null && nbtCompound.contains("BucketVariantTag", NbtElement.INT_TYPE)) {
                 int i = nbtCompound.getInt("BucketVariantTag");
                 Formatting[] formattings = new Formatting[]{Formatting.ITALIC, Formatting.GRAY};
-                String string = "entity.fishandshiz.ramshorn_snail.type." + RamshornSnailEntity.getVariety(i);
+                String string = RamshornSnailEntity.getVariantNameKey(i);
                 MutableText mutableText = Text.translatable(string);
                 mutableText.formatted(formattings);
                 tooltip.add(mutableText);

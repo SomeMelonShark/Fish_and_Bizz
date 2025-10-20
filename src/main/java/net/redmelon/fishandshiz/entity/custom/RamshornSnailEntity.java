@@ -10,7 +10,6 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.server.world.ServerWorld;
@@ -28,8 +27,7 @@ import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
 import net.redmelon.fishandshiz.cclass.cmethods.goals.WaterWanderGoal;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.custom.fish.ArcherfishEntity;
-import net.redmelon.fishandshiz.entity.variant.BiVariant;
+import net.redmelon.fishandshiz.entity.variant.VariantManager;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.sound.ModSounds;
 import org.jetbrains.annotations.Nullable;
@@ -42,6 +40,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 public class RamshornSnailEntity extends AnimalWaterEntity implements GeoEntity, EntitySize {
     protected static final TrackedData<Integer> VARIANT = DataTracker.registerData(RamshornSnailEntity.class, TrackedDataHandlerRegistry.INTEGER);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
+    private static final VariantManager VARIANT_MANAGER = new VariantManager(2);
     private final AnimatableInstanceCache factory = GeckoLibUtil.createInstanceCache(this);
     public RamshornSnailEntity(EntityType<? extends AnimalWaterEntity> entityType, World world) {
         super(entityType, world);
@@ -72,9 +71,7 @@ public class RamshornSnailEntity extends AnimalWaterEntity implements GeoEntity,
     @Override
     public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
                                  @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        BiVariant variant;
         int i = random.nextInt(3);
-        int j = random.nextInt(10);
         if (spawnReason == SpawnReason.BUCKET && entityNbt != null && entityNbt.contains(BUCKET_VARIANT_TAG_KEY, NbtElement.INT_TYPE)) {
             this.setVariant(entityNbt.getInt(BUCKET_VARIANT_TAG_KEY));
             return entityData;
@@ -82,19 +79,14 @@ public class RamshornSnailEntity extends AnimalWaterEntity implements GeoEntity,
         if (spawnReason == SpawnReason.NATURAL && i == 0) {
             this.setBaby(true);
         }
-        if (spawnReason == SpawnReason.NATURAL) {
-            if (j == 0){
-                variant = BiVariant.SPECIAL;
-                this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.5f, 1.5f);
-            } else {
-                variant = BiVariant.NORMAL;
-            }
-        } else {
-            variant = BiVariant.byId(random.nextInt(1));
+        int variant = VARIANT_MANAGER.getRandomVariant(this.random);
+        if (this.random.nextInt(10) == 0 && VARIANT_MANAGER.getVariantCount() > 1) {
+            variant = VARIANT_MANAGER.normalizeId(1);
+            this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.5f, 1.5f);
         }
+        this.setVariant(variant);
         this.setAirResistant(true);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-        this.setVariant(variant.getId());
         return entityData;
     }
 
@@ -149,24 +141,16 @@ public class RamshornSnailEntity extends AnimalWaterEntity implements GeoEntity,
         this.dataTracker.startTracking(VARIANT, 0);
     }
 
-    public static BiVariant getVariety(int variant) {
-        return BiVariant.byId(variant);
-    }
-
-    public BiVariant getVariant() {
-        return BiVariant.byId(this.getTypeVariant() & 255);
+    public int getVariantId() {
+        return this.dataTracker.get(VARIANT);
     }
 
     public int getTypeVariant() {
         return this.dataTracker.get(VARIANT);
     }
 
-    protected void setVariant(BiVariant variant) {
-        this.dataTracker.set(VARIANT, variant.getId() & 255);
-    }
-
-    protected void setVariant(int variant) {
-        this.dataTracker.set(VARIANT, variant);
+    public void setVariant(int variant) {
+        this.dataTracker.set(VARIANT, VARIANT_MANAGER.normalizeId(variant));
     }
     @Override
     public void copyDataToStack(ItemStack stack) {
@@ -193,5 +177,9 @@ public class RamshornSnailEntity extends AnimalWaterEntity implements GeoEntity,
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return factory;
+    }
+    public static String getVariantNameKey(int variantId) {
+        int normalized = VARIANT_MANAGER.normalizeId(variantId);
+        return "entity.fishandshiz.ramshorn_snail.type." + normalized;
     }
 }
