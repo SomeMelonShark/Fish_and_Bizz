@@ -184,10 +184,4 @@ public class MudCrabEntity extends EggboundEntity implements GeoEntity, EntitySi
     public ItemStack getBucketItem() {
         return new ItemStack(ModItems.MUD_CRAB_BUCKET);
     }
-
-    public static boolean canSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
-        int i = world.getSeaLevel();
-        int j = i - 2;
-        return pos.getY() >= j && pos.getY() <= i + 30;
-    }
 }

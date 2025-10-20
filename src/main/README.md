@@ -1,13 +1,9 @@
 # *Plan to add:*
 - Fish health and hunger system
 - Difference between salt and fresh water  
-- Head fixes  
 - Fix Archerfish Gun multiple instance display settings  
 - Goldfish
-- Mudskippers
 - Diseases
-- Fix player fish targeting
 - Villager trade updating
-- Non-procedural variants have procedural numbers
 - Add ways to discover mod features in-game
 - Pupfish

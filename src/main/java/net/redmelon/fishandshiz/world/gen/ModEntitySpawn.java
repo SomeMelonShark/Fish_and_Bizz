@@ -9,6 +9,7 @@ import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.SchoolingFishEntity;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.biome.BiomeKeys;
+import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.entity.ModEntities;
 import net.redmelon.fishandshiz.entity.custom.MudCrabEntity;
@@ -262,6 +263,13 @@ public class ModEntitySpawn {
         SpawnRestriction.register(ModEntities.TRIGGERFISH, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawnLow);
 
+        // Mudskipper Spawns
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.MANGROVE_SWAMP), SpawnGroup.WATER_AMBIENT,
+                ModEntities.MUDSKIPPER, 5, 2, 5);
+
+        SpawnRestriction.register(ModEntities.MUDSKIPPER, SpawnRestriction.Location.ON_GROUND,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PassiveWaterEntity::canCoastSpawn);
+
         // Red Tail Catfish Spawns
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.JUNGLE), SpawnGroup.WATER_CREATURE,
                 ModEntities.RED_TAIL_CATFISH, 10, 1, 1);
@@ -281,14 +289,14 @@ public class ModEntitySpawn {
                 ModEntities.MUD_CRAB, 2, 1, 4);
 
         SpawnRestriction.register(ModEntities.MUD_CRAB, SpawnRestriction.Location.ON_GROUND,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MudCrabEntity::canSpawn);
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PassiveWaterEntity::canCoastSpawn);
 
         // Crayfish Spawns
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SWAMP), SpawnGroup.WATER_AMBIENT,
                 ModEntities.CRAYFISH, 1, 1, 2);
 
         SpawnRestriction.register(ModEntities.CRAYFISH, SpawnRestriction.Location.IN_WATER,
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MudCrabEntity::canSpawn);
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, PassiveWaterEntity::canCoastSpawn);
 
         // Lion's Mane Jellyfish Spawns
 //        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.COLD_OCEAN, BiomeKeys.OCEAN, BiomeKeys.FROZEN_OCEAN), SpawnGroup.WATER_CREATURE,

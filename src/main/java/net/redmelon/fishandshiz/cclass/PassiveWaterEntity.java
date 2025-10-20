@@ -268,4 +268,10 @@ public abstract class PassiveWaterEntity extends WaterCreatureEntity {
         int j = i - 13;
         return pos.getY() >= j && pos.getY() <= i && world.getFluidState(pos.down()).isIn(FluidTags.WATER) && world.getBlockState(pos.up()).isOf(Blocks.WATER);
     }
+
+    public static boolean canCoastSpawn(EntityType<? extends WaterCreatureEntity> type, WorldAccess world, SpawnReason reason, BlockPos pos, Random random) {
+        int i = world.getSeaLevel();
+        int j = i - 2;
+        return pos.getY() >= j && pos.getY() <= i + 30;
+    }
 }

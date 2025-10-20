@@ -1,10 +1,10 @@
-// 1.20.1	2025-06-12T16:31:39.48262	Fish And Bizz/Block Loot Tables
+// 1.20.1	2025-10-20T12:07:40.5916617	Fish And Bizz/Block Loot Tables
 f1fec996ca3195822dfd9a75d8ef5b70b1138f31 data\fishandshiz\loot_tables\blocks\sea_anemone.json
 38d2952a7d5c60d19075347261f58267a0a4ad82 data\fishandshiz\loot_tables\blocks\pothos_plant.json
 ceaa52940e30e0aa38e2e911a61081fe7e27fce8 data\fishandshiz\loot_tables\blocks\fishmeal_block.json
 4950eb8d76c4361960be12bec410113ab4d53075 data\fishandshiz\loot_tables\blocks\mulm.json
-635cde925360002fd7d354c53fa4f506b565c4f3 data\fishandshiz\loot_tables\blocks\filter.json
 88a85e79cd96618886ea1d4ed315c0605c74e7e6 data\fishandshiz\loot_tables\blocks\fanwort.json
+635cde925360002fd7d354c53fa4f506b565c4f3 data\fishandshiz\loot_tables\blocks\filter.json
 d02a1ebbd9a04f0f0497d80b444b2fdfee6064f0 data\fishandshiz\loot_tables\blocks\nitrogen_detector.json
 198b44adf1c0a74df4a2c708b837d7b091390232 data\fishandshiz\loot_tables\blocks\vallisneria.json
 88a85e79cd96618886ea1d4ed315c0605c74e7e6 data\fishandshiz\loot_tables\blocks\fanwort_plant.json
