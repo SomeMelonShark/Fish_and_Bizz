@@ -35,11 +35,19 @@ public class BasicFishRenderer <E extends AnimalFishEntity & GeoAnimatable> exte
 
     @Override
     public void render(E entity, float entityYaw, float partialTick, MatrixStack poseStack, VertexConsumerProvider bufferSource, int packedLight) {
-        if(entity.isBaby()) {
-            poseStack.scale(0.5f, 0.5f, 0.5f);
-        } else {
-            poseStack.scale(0.8f, 0.8f, 0.8f);
+        float scale = 0.8f;
+
+        if (entity.isMicro()) {
+            scale *= 0.6f;
+        } else if (entity.isMacro()) {
+            scale *= 1.0f;
         }
+
+        if (entity.isBaby()) {
+            scale *= 0.6f;
+        }
+
+        poseStack.scale(scale, scale, scale);
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 }

@@ -182,7 +182,7 @@ public class ModEntitySpawn {
         SpawnRestriction.register(ModEntities.BETTA_EGG, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawnHigh);
 
-        //Killifish Spawns
+        // Killifish Spawns
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WOODED_BADLANDS, BiomeKeys.PLAINS, BiomeKeys.DARK_FOREST), SpawnGroup.WATER_AMBIENT,
                 ModEntities.KILLIFISH, 4, 1, 3);
 

@@ -146,6 +146,7 @@ public class MudskipperEntity extends AnimalFishEntity implements GeoEntity, Ent
         this.setAmphibious(true);
         this.setAirResistant(true);
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        this.setMicro(this.isMature());
         return entityData;
     }
 

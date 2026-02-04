@@ -42,15 +42,19 @@ public class BasicVariableFishRenderer<E extends AnimalFishEntity & GeoAnimatabl
 
     @Override
     public void render(E entity, float entityYaw, float partialTick, MatrixStack poseStack, VertexConsumerProvider bufferSource, int packedLight) {
-        if (entity.isBaby()) {
-            poseStack.scale(0.4f, 0.4f, 0.4f);
-        } else if (entity.isMicro()) {
-            poseStack.scale(0.3f, 0.3f, 0.3f);
+        float scale = 0.8f;
+
+        if (entity.isMicro()) {
+            scale *= 0.6f;
         } else if (entity.isMacro()) {
-            poseStack.scale(1.0f, 1.0f, 1.0f);
-        } else {
-            poseStack.scale(0.7f, 0.7f, 0.7f);
+            scale *= 1.0f;
         }
+
+        if (entity.isBaby()) {
+            scale *= 0.6f;
+        }
+
+        poseStack.scale(scale, scale, scale);
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 
@@ -72,18 +76,10 @@ public class BasicVariableFishRenderer<E extends AnimalFishEntity & GeoAnimatabl
         }
 
         @Override
-        public void render(MatrixStack poseStack, E animatable, BakedGeoModel bakedModel, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
-            this.renderLayer(poseStack, animatable, bakedModel, animatable.getBaseColor().color(), this.getTextureResource(animatable), bufferSource, packedLight, packedOverlay, partialTick);
-            this.renderLayer(poseStack, animatable, bakedModel, animatable.getPatternColor().color(), animatable.getPattern().texture(), bufferSource, packedLight, packedOverlay, partialTick);
-            this.renderLayer(poseStack, animatable, bakedModel, animatable.getDetailColor().color(), animatable.getDetail().texture(), bufferSource, packedLight, packedOverlay, partialTick);
-
-            if (animatable.isBaby()) {
-                poseStack.scale(0.4f, 0.4f, 0.4f);
-            } else if (animatable.isMicro()) {
-                poseStack.scale(0.3f, 0.3f, 0.3f);
-            } else {
-                poseStack.scale(0.7f, 0.7f, 0.7f);
-            }
+        public void render(MatrixStack poseStack, E entity, BakedGeoModel bakedModel, RenderLayer renderType, VertexConsumerProvider bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
+            this.renderLayer(poseStack, entity, bakedModel, entity.getBaseColor().color(), this.getTextureResource(entity), bufferSource, packedLight, packedOverlay, partialTick);
+            this.renderLayer(poseStack, entity, bakedModel, entity.getPatternColor().color(), entity.getPattern().texture(), bufferSource, packedLight, packedOverlay, partialTick);
+            this.renderLayer(poseStack, entity, bakedModel, entity.getDetailColor().color(), entity.getDetail().texture(), bufferSource, packedLight, packedOverlay, partialTick);
         }
 
         public RenderLayer getRenderType(Identifier texture) {

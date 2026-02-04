@@ -71,6 +71,7 @@ public class NeonTetraEntity extends SchoolingBreedEntity implements GeoEntity, 
     @Override
     public @Nullable EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
         entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        this.setMicro(this.isMature());
         this.setFry(true);
         return entityData;
     }

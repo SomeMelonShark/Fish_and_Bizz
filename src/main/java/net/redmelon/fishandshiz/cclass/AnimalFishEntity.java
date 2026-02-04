@@ -376,7 +376,7 @@ public abstract class AnimalFishEntity extends HolometabolousAquaticEntity imple
                 this.getWorld().addParticle(ParticleTypes.HEART, this.getParticleX(1.0), this.getRandomBodyY() + 0.5, this.getParticleZ(1.0), d, e, f);
             }
         }
-        if (!this.getWorld().isClient && !this.isMature()) {
+        if (!this.getWorld().isClient && !this.isMature() && this.isTouchingWater()) {
             this.setStageAge(this.stageAge + 1);
         }
         if (this.age % 100 == 0) {

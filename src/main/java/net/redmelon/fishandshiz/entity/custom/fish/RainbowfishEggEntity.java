@@ -105,7 +105,7 @@ public class RainbowfishEggEntity extends RainbowfishEntity implements GeoEntity
         int i = random.nextBetweenExclusive(3, 5);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
-                int m = random.nextInt(4);
+                int m = random.nextInt(MUTATION_CHANCE);
                 if (m != 0) {
                     color = this.getBaseColor();
                     color2 = this.getPatternColor();

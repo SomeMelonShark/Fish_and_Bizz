@@ -111,7 +111,7 @@ public class KillifishEggEntity extends KillifishEntity implements GeoEntity, En
         int i = random.nextBetweenExclusive(1, 4);
         for (int j = 1; j <= i; ++j)
             if (world instanceof ServerWorld) {
-                int m = random.nextInt(4);
+                int m = random.nextInt(MUTATION_CHANCE);
                 if (m != 0) {
                     color = this.getBaseColor();
                     color2 = this.getPatternColor();

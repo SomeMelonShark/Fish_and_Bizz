@@ -88,7 +88,7 @@ public class FilterBlock extends WallMountedBlock implements BlockEntityProvider
                     filterEntity.setNitrogenStored(0);
                     BlockState newState = state.with(FilterBlock.NITROGEN_LEVEL, 0);
                     world.setBlockState(pos, newState, Block.NOTIFY_ALL);
-                    world.playSound(null, pos, SoundEvents.BLOCK_BEEHIVE_WORK, SoundCategory.BLOCKS, 1f, 1f);
+                    world.playSound(null, pos, SoundEvents.BLOCK_ROOTED_DIRT_BREAK, SoundCategory.BLOCKS, 1f, 1f);
 
                     return ActionResult.SUCCESS;
                 }

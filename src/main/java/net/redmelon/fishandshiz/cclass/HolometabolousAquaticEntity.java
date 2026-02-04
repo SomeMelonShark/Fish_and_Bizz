@@ -32,6 +32,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public abstract class HolometabolousAquaticEntity extends PassiveWaterEntity implements Bucketable, FishNitrogenAccessor, EntitySize {
+    protected static final int MUTATION_CHANCE = 8;
     private static final TrackedData<Integer> NITROGEN_LEVEL = DataTracker.registerData(HolometabolousAquaticEntity.class, TrackedDataHandlerRegistry.INTEGER);
     private static final TrackedData<Boolean> AIR_RESISTANT = DataTracker.registerData(HolometabolousAquaticEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
     private static final int NITROGEN_THRESHOLD = 1200;

@@ -93,6 +93,9 @@
   "item.fishandshiz.dried_culture_feed": "Dried Culture Feed",
   "item.fishandshiz.archerfish_gun": "Archerfish Gun",
   "item.fishandshiz.nitrogen_detector": "Nitrogen Detector",
+  "item.fishandshiz.filter": "Filter",
+
+  "itemgroup.fishandshiz": "Fish and Bizz",
 
   "block.fishandshiz.fishmeal_block": "Block of Fishmeal",
   "block.fishandshiz.mulm": "Mulm",
