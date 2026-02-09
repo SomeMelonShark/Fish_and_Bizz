@@ -276,6 +276,30 @@ public abstract class BucketTooltipMixin {
                     tooltip.add(text.formatted(formatting));
                 }
             }
+            if(this.entityType.equals(ModEntities.GOLDFISH)) {
+                if (nbt.contains("Pattern", NbtElement.STRING_TYPE)) {
+                    MutableText text = Text.translatable(ModEntityColor.fromId(nbt.getString("BaseColor")).getTranslationKey());
+                    tooltip.add(Text.translatable(GoldfishPattern.fromId(nbt.getString("Pattern")).getTranslationKey()).formatted(formatting));
+                    if (!nbt.getString("BaseColor").equals(nbt.getString("PatternColor"))) {
+                        text.append(", ").append(Text.translatable(ModEntityColor.fromId(nbt.getString("PatternColor")).getTranslationKey()));
+                    }
+                    if (!GoldfishDetail.fromId(nbt.getString("Detail")).equals(GoldfishDetail.NONE)) {
+                        tooltip.add(Text.translatable(GoldfishDetail.fromId(nbt.getString("Detail")).getTranslationKey()).formatted(formatting));
+                        if (!nbt.getString("DetailColor").equals(nbt.getString("BaseColor"))) {
+                            text.append(", ").append(Text.translatable(ModEntityColor.fromId(nbt.getString("DetailColor")).getTranslationKey()));
+                        }
+                    }
+                    if ((nbtCompound = stack.getNbt()) != null && nbtCompound.contains("BucketVariantTag", NbtElement.INT_TYPE)) {
+                        int i = nbtCompound.getInt("BucketVariantTag");
+                        Formatting[] formattings = new Formatting[]{Formatting.ITALIC, Formatting.YELLOW};
+                        String string = GoldfishEntity.getVariantNameKey(i);
+                        MutableText mutableText = Text.translatable(string);
+                        mutableText.formatted(formattings);
+                        tooltip.add(mutableText);
+                    }
+                    tooltip.add(text.formatted(formatting));
+                }
+            }
             if (this.entityType == ModEntities.ARCHERFISH && (nbtCompound = stack.getNbt()) != null && nbtCompound.contains("BucketVariantTag", NbtElement.INT_TYPE)) {
                 int i = nbtCompound.getInt("BucketVariantTag");
                 Formatting[] formattings = new Formatting[]{Formatting.ITALIC, Formatting.GRAY};

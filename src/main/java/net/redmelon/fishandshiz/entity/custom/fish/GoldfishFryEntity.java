@@ -1,0 +1,167 @@
+package net.redmelon.fishandshiz.entity.custom.fish;
+
+import net.minecraft.entity.Bucketable;
+import net.minecraft.entity.EntityData;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.goal.EscapeDangerGoal;
+import net.minecraft.entity.ai.goal.FleeEntityGoal;
+import net.minecraft.entity.ai.goal.SwimAroundGoal;
+import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.World;
+import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
+import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
+import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
+import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
+import net.redmelon.fishandshiz.entity.ModEntities;
+import net.redmelon.fishandshiz.entity.variant.*;
+import net.redmelon.fishandshiz.item.ModItems;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoEntity;
+
+public class GoldfishFryEntity extends GoldfishEntity implements GeoEntity, EntitySize {
+    public GoldfishFryEntity(EntityType<? extends GoldfishEntity> entityType, World world) {
+        super(entityType, world);
+    }
+
+    @Override
+    public SizeCategory getSizeCategory() {
+        return SizeCategory.FRY;
+    }
+
+    @Override
+    protected void initGoals() {
+        this.goalSelector.add(0, new EscapeDangerGoal(this, 1.25));
+        this.goalSelector.add(2, new FleeEntityGoal<PlayerEntity>(this, PlayerEntity.class, 8.0f, 1.6, 1.4, EntityPredicates.EXCEPT_SPECTATOR::test));
+        this.goalSelector.add(4, new SwimAroundGoal(this, 1.0, 10));
+        this.goalSelector.add(4, new BreedFollowGroupLeaderGoal(this));
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putInt("Age", this.stageAge);
+    }
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.setStageAge(nbt.getInt("Age"));
+    }
+    @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+    }
+    @Override
+    public void copyDataToStack(ItemStack stack) {
+        super.copyDataToStack(stack);
+        Bucketable.copyDataToStack(this, stack);
+        NbtCompound nbtCompound = stack.getOrCreateNbt();
+        nbtCompound.putInt("Age", this.getStageAge());
+    }
+    @Override
+    public void copyDataFromNbt(NbtCompound nbt) {
+        Bucketable.copyDataFromNbt(this, nbt);
+        if (nbt.contains("Age")) {
+            this.setStageAge(nbt.getInt("Age"));
+        }
+    }
+
+    @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason,
+                                 @Nullable EntityData entityData, @Nullable NbtCompound entityNbt){
+        entityData = super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        this.setFry(true);
+        this.setMature(false);
+        return entityData;
+    }
+
+    @Override
+    public @Nullable GoldfishEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+        return null;
+    }
+
+    @Override
+    protected int getMaxStageAge() {
+        return 18000;
+    }
+
+    @Override
+    protected void growUp() {
+        ModEntityColor color;
+        ModEntityColor color2;
+        ModEntityColor color3;
+        GoldfishPattern pattern;
+        GoldfishDetail detail;
+        int variant;
+        World world = this.getWorld();
+        if (world instanceof ServerWorld) {
+            color = this.getBaseColor();
+            color2 = this.getPatternColor();
+            color3 = this.getDetailColor();
+            pattern = this.getPattern();
+            detail = this.getDetail();
+            variant = this.getTypeVariant();
+            ServerWorld serverWorld = (ServerWorld)world;
+            GoldfishEntity nextEntity = ModEntities.GOLDFISH.create(this.getWorld());
+            if (nextEntity != null) {
+                nextEntity.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
+                nextEntity.initialize(serverWorld, this.getWorld().getLocalDifficulty(nextEntity.getBlockPos()), SpawnReason.CONVERSION, null, null);
+                nextEntity.setAiDisabled(this.isAiDisabled());
+                if (this.hasCustomName()) {
+                    nextEntity.setCustomName(this.getCustomName());
+                    nextEntity.setCustomNameVisible(this.isCustomNameVisible());
+                }
+                nextEntity.setPersistent();
+                nextEntity.setBaseColor(color);
+                nextEntity.setPatternColor(color2);
+                nextEntity.setDetailColor(color3);
+                nextEntity.setPattern(pattern);
+                nextEntity.setDetail(detail);
+                nextEntity.setVariant(variant);
+                this.playSound(SoundEvents.ENTITY_TROPICAL_FISH_FLOP, 0.15f, 1.0f);
+                serverWorld.spawnEntityAndPassengers(nextEntity);
+                this.discard();
+            }
+        }
+    }
+
+    @Override
+    public boolean shouldDropXp() {
+        return false;
+    }
+
+    @Override
+    protected SoundEvent getFlopSound() {
+        return SoundEvents.ENTITY_TROPICAL_FISH_FLOP;
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return SoundEvents.ENTITY_TROPICAL_FISH_AMBIENT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.ENTITY_TROPICAL_FISH_DEATH;
+    }
+
+    @Override
+    public ItemStack getBucketItem() {
+        return new ItemStack(ModItems.GOLDFISH_BUCKET);
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return SoundEvents.ENTITY_TROPICAL_FISH_HURT;
+    }
+}

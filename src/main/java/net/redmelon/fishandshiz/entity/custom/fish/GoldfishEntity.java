@@ -54,7 +54,7 @@ public class GoldfishEntity extends SchoolingBreedEntity implements GeoEntity, V
     private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(GoldfishEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
     public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
-    private static final VariantManager VARIANT_MANAGER = new VariantManager(2);
+    protected static final VariantManager VARIANT_MANAGER = new VariantManager(2);
 
     public GoldfishEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
@@ -110,8 +110,31 @@ public class GoldfishEntity extends SchoolingBreedEntity implements GeoEntity, V
     }
 
     @Override
-    public @Nullable AngelfishEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        return null;
+    public @Nullable GoldfishEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+        GoldfishEntity entity = (GoldfishEntity) var2;
+        GoldfishEggEntity eggEntity = (GoldfishEggEntity) ModEntities.GOLDFISH_EGG.create(var1);
+        if (eggEntity != null) {
+            ModEntityColor color;
+            ModEntityColor color2;
+            ModEntityColor color3;
+            GoldfishPattern pattern;
+            GoldfishDetail detail;
+            int variant;
+            color = random.nextBoolean() ? this.getBaseColor() : entity.getBaseColor();
+            color2 = random.nextBoolean() ? this.getPatternColor() : entity.getPatternColor();
+            color3 = random.nextBoolean() ? this.getDetailColor() : entity.getDetailColor();
+            pattern = random.nextBoolean() ? this.getPattern() : entity.getPattern();
+            detail = random.nextBoolean() ? this.getDetail() : entity.getDetail();
+            variant = VARIANT_MANAGER.getRandomVariant(random);
+
+            eggEntity.setBaseColor(color);
+            eggEntity.setPatternColor(color2);
+            eggEntity.setDetailColor(color3);
+            eggEntity.setPattern(pattern);
+            eggEntity.setDetail(detail);
+            eggEntity.setVariant(variant);
+        }
+        return eggEntity;
     }
 
     @Override
@@ -131,7 +154,7 @@ public class GoldfishEntity extends SchoolingBreedEntity implements GeoEntity, V
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.ANGELFISH_BUCKET);
+        return new ItemStack(ModItems.GOLDFISH_BUCKET);
     }
 
     @Override
@@ -225,6 +248,7 @@ public class GoldfishEntity extends SchoolingBreedEntity implements GeoEntity, V
                 color = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
                 color2 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
                 color3 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
+                variant = VARIANT_MANAGER.getRandomVariant(this.random);
             }
         } else {
             pattern = (ModUtil.getRandomTagValue(getWorld(), GoldfishPattern.Tag.PATTERNS, random));
@@ -232,6 +256,7 @@ public class GoldfishEntity extends SchoolingBreedEntity implements GeoEntity, V
             color = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
             color2 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
             color3 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
+            variant = VARIANT_MANAGER.getRandomVariant(this.random);
         }
         this.setVariant(variant);
         setPattern(pattern);

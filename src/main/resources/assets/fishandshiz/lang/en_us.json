@@ -48,6 +48,9 @@
   "item.fishandshiz.killifish_bucket": "Bucket of Killifish",
   "item.fishandshiz.killifish_fry_bucket": "Bucket of Killifish Fry",
   "item.fishandshiz.killifish_egg_bucket": "Bucket of Killifish Eggs",
+  "item.fishandshiz.goldfish_bucket": "Bucket of Goldfish",
+  "item.fishandshiz.goldfish_fry_bucket": "Bucket of Goldfish Fry",
+  "item.fishandshiz.goldfish_egg_bucket": "Bucket of Goldfish Eggs",
   "item.fishandshiz.clownfish_bucket": "Bucket of Clownfish",
   "item.fishandshiz.clownfish_fry_bucket": "Bucket of Clownfish Fry",
   "item.fishandshiz.clownfish_egg_bucket": "Bucket of Clownfish Eggs",
@@ -150,6 +153,9 @@
   "entity.fishandshiz.killifish": "Killifish",
   "entity.fishandshiz.killifish_fry": "Killifish Fry",
   "entity.fishandshiz.killifish_egg": "Killifish Eggs",
+  "entity.fishandshiz.goldfish": "Goldfish",
+  "entity.fishandshiz.goldfish_fry": "Goldfish Fry",
+  "entity.fishandshiz.goldfish_egg": "Goldfish Eggs",
   "entity.fishandshiz.goatfish": "Goatfish",
   "entity.fishandshiz.tang": "Tang",
   "entity.fishandshiz.tang_fry": "Tang Fry",
@@ -210,6 +216,12 @@
   "platy_pattern.fishandshiz.lateral": "Lateral",
   "platy_pattern.fishandshiz.pants": "Pants",
   "platy_pattern.fishandshiz.helmet": "Helmet",
+
+  "goldfish_pattern.fishandshiz.shade": "Shade",
+  "goldfish_pattern.fishandshiz.spotty": "Spotty",
+  "goldfish_pattern.fishandshiz.vortex": "Vortex",
+  "goldfish_pattern.fishandshiz.comet": "Comet",
+  "goldfish_pattern.fishandshiz.wen": "Wen",
 
   "clownfish_pattern.fishandshiz.saddle": "Saddle",
   "clownfish_pattern.fishandshiz.spilled": "Spilled",
@@ -279,6 +291,11 @@
   "platy_detail.fishandshiz.brace": "Brace",
   "platy_detail.fishandshiz.tail": "Tail",
 
+  "goldfish_detail.fishandshiz.bellied": "Bellied",
+  "goldfish_detail.fishandshiz.twintailed1": "Twin Tailed",
+  "goldfish_detail.fishandshiz.twintailed2": "Veil Twin Tailed",
+  "goldfish_detail.fishandshiz.astral": "Astral",
+
   "clownfish_detail.fishandshiz.lobed": "Lobed",
   "clownfish_detail.fishandshiz.accent": "Accent",
 
@@ -343,6 +360,9 @@
 
   "entity.fishandshiz.archerfish.type.0": "Normal",
   "entity.fishandshiz.archerfish.type.1": "Evil!",
+
+  "entity.fishandshiz.goldfish.type.0": "Thin",
+  "entity.fishandshiz.goldfish.type.1": "Fat",
 
   "entity.fishandshiz.ramshorn_snail.type.0": "Cream",
   "entity.fishandshiz.ramshorn_snail.type.1": "Melanated"
