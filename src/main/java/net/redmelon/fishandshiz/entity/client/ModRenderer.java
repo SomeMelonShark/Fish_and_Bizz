@@ -76,6 +76,7 @@ public class ModRenderer {
         EntityRendererRegistry.register(ModEntities.PLATY_FRY, BasicImmatureRenderer.fryCreate("platy", "platy"));
         EntityRendererRegistry.register(ModEntities.KILLIFISH, BasicVariableFishRenderer.create("killifish", "mediumfish"));
         EntityRendererRegistry.register(ModEntities.KILLIFISH_FRY, BasicImmatureRenderer.fryCreate("killifish", "killifish"));
+        EntityRendererRegistry.register(ModEntities.GOLDFISH, BasicVariableFishRenderer.create("goldfish", "goldfish"));
         EntityRendererRegistry.register(ModEntities.KILLIFISH_EGG, BasicImmatureRenderer.eggCreate("betta", "killifish"));
         EntityRendererRegistry.register(ModEntities.CLOWNFISH, BasicVariableFishRenderer.create("clownfish", "mediumfish"));
         EntityRendererRegistry.register(ModEntities.CLOWNFISH_FRY, BasicImmatureRenderer.fryCreate("platy", "platy"));

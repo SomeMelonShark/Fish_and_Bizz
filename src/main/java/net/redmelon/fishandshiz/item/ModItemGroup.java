@@ -70,6 +70,7 @@ public class ModItemGroup {
                         entries.add(ModItems.KILLIFISH_BUCKET);
                         entries.add(ModItems.KILLIFISH_FRY_BUCKET);
                         entries.add(ModItems.KILLIFISH_EGG_BUCKET);
+                        entries.add(ModItems.GOLDFISH_BUCKET);
                         entries.add(ModItems.CLOWNFISH_BUCKET);
                         entries.add(ModItems.CLOWNFISH_FRY_BUCKET);
                         entries.add(ModItems.CLOWNFISH_EGG_BUCKET);

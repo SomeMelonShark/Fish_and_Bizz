@@ -2,6 +2,8 @@ package net.redmelon.fishandshiz.entity.client.fish.model;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Identifier;
+import net.redmelon.fishandshiz.entity.custom.fish.GoldfishEntity;
+import net.redmelon.fishandshiz.entity.variant.VariableBody;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
@@ -54,6 +56,7 @@ public class BasicFishModel<E extends LivingEntity & GeoAnimatable> extends GeoM
     @Override
     @SuppressWarnings("unchecked")
     public void setCustomAnimations(E animatable, long instanceId, AnimationState<E> animationState) {
+        super.setCustomAnimations(animatable, instanceId, animationState);
         if (root != null) {
             CoreGeoBone rootBone = this.getAnimationProcessor().getBone("root");
             EntityModelData entityModelData = (EntityModelData) animationState.getExtraData().get(0);
@@ -61,6 +64,15 @@ public class BasicFishModel<E extends LivingEntity & GeoAnimatable> extends GeoM
                 rootBone.setRotX(entityModelData.headPitch() * ((float) Math.PI / 180F));
                 rootBone.setRotY(entityModelData.netHeadYaw() * ((float) Math.PI / 180F));
             }
+        }
+        //For fish with different body models
+        if (animatable instanceof GoldfishEntity fish) {
+            int body = fish.getTypeVariant();
+            CoreGeoBone bodyA = this.getAnimationProcessor().getBone("body1");
+            CoreGeoBone bodyB = this.getAnimationProcessor().getBone("body2");
+
+            if (bodyA != null) bodyA.setHidden(body != 0);
+            if (bodyB != null) bodyB.setHidden(body != 1);
         }
     }
 }

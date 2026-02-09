@@ -16,7 +16,8 @@ public class TerrestriaCompat {
 
     public static RegistryKey<Biome> CYPRESS_SWAMP = RegistryKey.of(RegistryKeys.BIOME, new Identifier("terrestria", "cypress_swamp"));
     public static RegistryKey<Biome> OASIS = RegistryKey.of(RegistryKeys.BIOME, new Identifier("terrestria", "oasis"));
-    public static RegistryKey<Biome> SAKURA_FOREST = RegistryKey.of(RegistryKeys.BIOME, new Identifier("terrestria", "japanese_maple_forest"));
+    public static RegistryKey<Biome> SAKURA_FOREST = RegistryKey.of(RegistryKeys.BIOME, new Identifier("terrestria", "sakura_forest"));
+    public static RegistryKey<Biome> JAPANESE_MAPLE_FOREST = RegistryKey.of(RegistryKeys.BIOME, new Identifier("terrestria", "japanese_maple_forest"));
     public static RegistryKey<Biome> VOLCANIC_ISLAND = RegistryKey.of(RegistryKeys.BIOME, new Identifier("terrestria", "volcanic_island"));
     public static RegistryKey<Biome> HEMLOCK_RAINFOREST = RegistryKey.of(RegistryKeys.BIOME, new Identifier("terrestria", "hemlock_rainforest"));
     public static RegistryKey<Biome> CANYON = RegistryKey.of(RegistryKeys.BIOME, new Identifier("terrestria", "canyon"));
@@ -92,6 +93,14 @@ public class TerrestriaCompat {
                     SpawnGroup.WATER_CREATURE,
                     ModEntities.AMUR_CARP_EGG,
                     1, 1, 1
+            );
+
+            // Japanese Maple Forest
+            BiomeModifications.addSpawn(
+                    BiomeSelectors.includeByKey(JAPANESE_MAPLE_FOREST),
+                    SpawnGroup.WATER_CREATURE,
+                    ModEntities.GOLDFISH,
+                    2, 3, 5
             );
 
             // Volcanic Island

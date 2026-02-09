@@ -1,19 +1,18 @@
 package net.redmelon.fishandshiz.entity.custom.fish;
 
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.EscapeDangerGoal;
+import net.minecraft.entity.ai.goal.FleeEntityGoal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.registry.RegistryKey;
@@ -21,8 +20,6 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -34,13 +31,9 @@ import net.redmelon.fishandshiz.cclass.PassiveWaterEntity;
 import net.redmelon.fishandshiz.cclass.SchoolingBreedEntity;
 import net.redmelon.fishandshiz.cclass.cmethods.EntitySize;
 import net.redmelon.fishandshiz.cclass.cmethods.SizeCategory;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedAnimalMateGoal;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.BreedFollowGroupLeaderGoal;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.ShortRangeAttackGoal;
-import net.redmelon.fishandshiz.cclass.cmethods.goals.SizedTargetGoal;
+import net.redmelon.fishandshiz.cclass.cmethods.goals.*;
 import net.redmelon.fishandshiz.entity.ModEntities;
-import net.redmelon.fishandshiz.entity.custom.CrayfishLarvaEntity;
-import net.redmelon.fishandshiz.entity.custom.MudCrabLarvaEntity;
+import net.redmelon.fishandshiz.entity.custom.RamshornSnailEntity;
 import net.redmelon.fishandshiz.entity.variant.*;
 import net.redmelon.fishandshiz.item.ModItems;
 import net.redmelon.fishandshiz.util.ModUtil;
@@ -50,23 +43,26 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, VariableFishEntity<AmurCarpPattern, AmurCarpDetail>, EntitySize {
-    private static final TrackedData<AmurCarpPattern> PATTERN = DataTracker.registerData(AmurCarpEntity.class, AmurCarpPattern.TRACKED_DATA_HANDLER);
-    private static final TrackedData<AmurCarpDetail> DETAIL = DataTracker.registerData(AmurCarpEntity.class, AmurCarpDetail.TRACKED_DATA_HANDLER);
-    private static final TrackedData<ModEntityColor> BASE_COLOR = DataTracker.registerData(AmurCarpEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
-    private static final TrackedData<ModEntityColor> PATTERN_COLOR = DataTracker.registerData(AmurCarpEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
-    private static final TrackedData<ModEntityColor> DETAIL_COLOR = DataTracker.registerData(AmurCarpEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
-    private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(AmurCarpEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
+public class GoldfishEntity extends SchoolingBreedEntity implements GeoEntity, VariableFishEntity<GoldfishPattern, GoldfishDetail>, EntitySize {
+    protected static final TrackedData<Integer> VARIANT = DataTracker.registerData(GoldfishEntity.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<GoldfishPattern> PATTERN = DataTracker.registerData(GoldfishEntity.class, GoldfishPattern.TRACKED_DATA_HANDLER);
+    private static final TrackedData<GoldfishDetail> DETAIL = DataTracker.registerData(GoldfishEntity.class, GoldfishDetail.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> BASE_COLOR = DataTracker.registerData(GoldfishEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> PATTERN_COLOR = DataTracker.registerData(GoldfishEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<ModEntityColor> DETAIL_COLOR = DataTracker.registerData(GoldfishEntity.class, ModEntityColor.TRACKED_DATA_HANDLER);
+    private static final TrackedData<NbtCompound> MATE_DATA = DataTracker.registerData(GoldfishEntity.class, TrackedDataHandlerRegistry.NBT_COMPOUND);
+    public static final Ingredient FISH_FOOD = Ingredient.ofItems(ModItems.FISH_FOOD);
     public static final String BUCKET_VARIANT_TAG_KEY = "BucketVariantTag";
-    public AmurCarpEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
+    private static final VariantManager VARIANT_MANAGER = new VariantManager(2);
+
+    public GoldfishEntity(EntityType<? extends SchoolingBreedEntity> entityType, World world) {
         super(entityType, world);
     }
 
     @Override
     public SizeCategory getSizeCategory() {
-        return SizeCategory.LARGE;
+        return SizeCategory.MEDIUM;
     }
 
     @Override
@@ -76,13 +72,31 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
         } else if (isFry()) {
             return 1;
         }
-        return 4;
+        return 5;
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalFishEntity.createFishAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 3)
-                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 3);
+                .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 2);
+    }
+
+    private PlayState genericFlopController(AnimationState animationState) {
+        if (this.isTouchingWater()) {
+            if (this.getTarget() != null || this.isAttacking()) {
+                animationState.getController().setAnimationSpeed(3.0f).setAnimation(RawAnimation.begin()
+                        .then("animation.goldfish.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            } else {
+                animationState.getController().setAnimationSpeed(1.0f).setAnimation(RawAnimation.begin()
+                        .then("animation.goldfish.swim", Animation.LoopType.LOOP));
+                return PlayState.CONTINUE;
+            }
+        } else {
+            animationState.getController().setAnimation(RawAnimation.begin()
+                    .then("animation.goldfish.flop", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
     }
 
     @Override
@@ -93,33 +107,11 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
         this.goalSelector.add(2, new BreedAnimalMateGoal(this, 1));
         this.goalSelector.add(3, new BreedFollowGroupLeaderGoal(this));
         this.goalSelector.add(6, new ShortRangeAttackGoal(this, 1.0f, true, 1.0f));
-
-        this.targetSelector.add(1, new SizedTargetGoal<>(this, LivingEntity.class, true, SizeCategory.LARGE, 2, 5));
     }
 
     @Override
-    public @Nullable AmurCarpEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
-        AmurCarpEntity entity = (AmurCarpEntity) var2;
-        AmurCarpEggEntity eggEntity = (AmurCarpEggEntity) ModEntities.AMUR_CARP_EGG.create(var1);
-        if (eggEntity != null) {
-            ModEntityColor color;
-            ModEntityColor color2;
-            ModEntityColor color3;
-            AmurCarpPattern pattern;
-            AmurCarpDetail detail;
-                color = random.nextBoolean() ? this.getBaseColor() : entity.getBaseColor();
-                color2 = random.nextBoolean() ? this.getPatternColor() : entity.getPatternColor();
-                color3 = random.nextBoolean() ? this.getDetailColor() : entity.getDetailColor();
-                pattern = random.nextBoolean() ? this.getPattern() : entity.getPattern();
-                detail = random.nextBoolean() ? this.getDetail() : entity.getDetail();
-
-            eggEntity.setBaseColor(color);
-            eggEntity.setPatternColor(color2);
-            eggEntity.setDetailColor(color3);
-            eggEntity.setPattern(pattern);
-            eggEntity.setDetail(detail);
-        }
-        return eggEntity;
+    public @Nullable AngelfishEggEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
+        return null;
     }
 
     @Override
@@ -139,12 +131,18 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
 
     @Override
     public ItemStack getBucketItem() {
-        return new ItemStack(ModItems.AMUR_CARP_BUCKET);
+        return new ItemStack(ModItems.ANGELFISH_BUCKET);
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_TROPICAL_FISH_HURT;
+    }
+
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController(this, "controller", 5, this::genericFlopController));
     }
 
     public NbtCompound writeMateData(NbtCompound nbt) {
@@ -153,6 +151,7 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
         nbt.putString("BaseColor", getBaseColor().getId().toString());
         nbt.putString("PatternColor", getPatternColor().getId().toString());
         nbt.putString("DetailColor", getDetailColor().getId().toString());
+        nbt.putInt("Variant", this.getTypeVariant());
         return nbt;
     }
 
@@ -161,28 +160,41 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
         super.writeCustomDataToNbt(nbt);
         writeMateData(nbt);
         nbt.put("MateData", getMateData());
-
     }
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        setPattern(AmurCarpPattern.fromId(nbt.getString("Pattern")));
-        setDetail(AmurCarpDetail.fromId(nbt.getString("Detail")));
+        setPattern(GoldfishPattern.fromId(nbt.getString("Pattern")));
+        setDetail(GoldfishDetail.fromId(nbt.getString("Detail")));
         setBaseColor(ModEntityColor.fromId(nbt.getString("BaseColor")));
         setPatternColor(ModEntityColor.fromId(nbt.getString("PatternColor")));
         setDetailColor(ModEntityColor.fromId(nbt.getString("DetailColor")));
+        this.setVariant(nbt.getInt("Variant"));
         if(nbt.contains("MateData", NbtElement.COMPOUND_TYPE))
             setMateData(nbt.getCompound("MateData"));
     }
     @Override
     protected void initDataTracker() {
         super.initDataTracker();
-        dataTracker.startTracking(PATTERN, AmurCarpPattern.WILD);
-        dataTracker.startTracking(DETAIL, AmurCarpDetail.NONE);
+        dataTracker.startTracking(PATTERN, GoldfishPattern.SHADE);
+        dataTracker.startTracking(DETAIL, GoldfishDetail.NONE);
         dataTracker.startTracking(BASE_COLOR, ModEntityColor.SILVER);
         dataTracker.startTracking(PATTERN_COLOR, ModEntityColor.SILVER);
         dataTracker.startTracking(DETAIL_COLOR, ModEntityColor.SILVER);
         dataTracker.startTracking(MATE_DATA, new NbtCompound());
+        this.dataTracker.startTracking(VARIANT, 0);
+    }
+
+    public int getVariantId() {
+        return this.dataTracker.get(VARIANT);
+    }
+
+    public int getTypeVariant() {
+        return this.dataTracker.get(VARIANT);
+    }
+
+    public void setVariant(int variant) {
+        this.dataTracker.set(VARIANT, VARIANT_MANAGER.normalizeId(variant));
     }
 
     @Override
@@ -193,29 +205,35 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
         ModEntityColor color;
         ModEntityColor color2;
         ModEntityColor color3;
-        AmurCarpPattern pattern;
-        AmurCarpDetail detail;
+        GoldfishPattern pattern;
+        GoldfishDetail detail;
+        int variant = VARIANT_MANAGER.getRandomVariant(this.random);
         if (spawnReason == SpawnReason.NATURAL) {
-            if (registryEntry.matchesKey(BiomeKeys.FROZEN_RIVER) | registryEntry.matchesKey(BiomeKeys.TAIGA) | (biomeId != null && biomeId.getNamespace().equals("terrestria") && biomeId.getPath().equals("sakura_forest"))) {
-                pattern = (AmurCarpPattern.WILD);
-                detail = (AmurCarpDetail.NONE);
-                color = (ModEntityColor.OFF_YELLOW);
-                color2 = (ModEntityColor.GREEN);
-                color3 = (ModEntityColor.SILVER);
+            if (this.random.nextInt(10) == 0 && VARIANT_MANAGER.getVariantCount() > 1) {
+                variant = VARIANT_MANAGER.normalizeId(0);
+                this.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.5f, 1.5f);
+            }
+            if (registryEntry.matchesKey(BiomeKeys.BAMBOO_JUNGLE) | registryEntry.matchesKey(BiomeKeys.TAIGA) | (biomeId != null && biomeId.getNamespace().equals("terrestria") && biomeId.getPath().equals("japanese_maple_forest")))  {
+                pattern = (GoldfishPattern.SHADE);
+                detail = (GoldfishDetail.NONE);
+                color = (ModEntityColor.MATTE_BLACK);
+                color2 = (ModEntityColor.EARTH_BLACK);
+                color3 = (ModEntityColor.MUDDY);
             } else {
-                pattern = (ModUtil.getRandomTagValue(getWorld(), AmurCarpPattern.Tag.PATTERNS, random));
-                detail = (ModUtil.getRandomTagValue(getWorld(), AmurCarpDetail.Tag.DETAILS, random));
+                pattern = (ModUtil.getRandomTagValue(getWorld(), GoldfishPattern.Tag.PATTERNS, random));
+                detail = (ModUtil.getRandomTagValue(getWorld(), GoldfishDetail.Tag.DETAILS, random));
                 color = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
                 color2 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
                 color3 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
             }
         } else {
-            pattern = (ModUtil.getRandomTagValue(getWorld(), AmurCarpPattern.Tag.PATTERNS, random));
-            detail = (ModUtil.getRandomTagValue(getWorld(), AmurCarpDetail.Tag.DETAILS, random));
+            pattern = (ModUtil.getRandomTagValue(getWorld(), GoldfishPattern.Tag.PATTERNS, random));
+            detail = (ModUtil.getRandomTagValue(getWorld(), GoldfishDetail.Tag.DETAILS, random));
             color = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.BASE_COLORS, random));
             color2 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.PATTERN_COLORS, random));
             color3 = (ModUtil.getRandomTagValue(getWorld(), ModEntityColor.Tag.DETAIL_COLORS, random));
         }
+        this.setVariant(variant);
         setPattern(pattern);
         setDetail(detail);
         setBaseColor(color);
@@ -248,19 +266,19 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
         return dataTracker.get(DETAIL_COLOR);
     }
 
-    public void setPattern(AmurCarpPattern pattern) {
+    public void setPattern(GoldfishPattern pattern) {
         dataTracker.set(PATTERN, pattern);
     }
 
-    public AmurCarpPattern getPattern() {
+    public GoldfishPattern getPattern() {
         return dataTracker.get(PATTERN);
     }
 
-    public void setDetail(AmurCarpDetail detail) {
+    public void setDetail(GoldfishDetail detail) {
         dataTracker.set(DETAIL, detail);
     }
 
-    public AmurCarpDetail getDetail() {
+    public GoldfishDetail getDetail() {
         return dataTracker.get(DETAIL);
     }
 
@@ -287,5 +305,13 @@ public class AmurCarpEntity extends SchoolingBreedEntity implements GeoEntity, V
         writeMateData(nbtCompound);
         nbtCompound.put("MateData", getMateData());
         nbtCompound.put(BUCKET_VARIANT_TAG_KEY, this.getMateData());
+    }
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
+    }
+    public static String getVariantNameKey(int variantId) {
+        int normalized = VARIANT_MANAGER.normalizeId(variantId);
+        return "entity.fishandshiz.goldfish.type." + normalized;
     }
 }

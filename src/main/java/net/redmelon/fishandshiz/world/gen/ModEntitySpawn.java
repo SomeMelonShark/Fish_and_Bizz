@@ -195,6 +195,13 @@ public class ModEntitySpawn {
         SpawnRestriction.register(ModEntities.KILLIFISH_EGG, SpawnRestriction.Location.IN_WATER,
                 Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawnHigh);
 
+        // Goldfish Spawns
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.TAIGA, BiomeKeys.CHERRY_GROVE, BiomeKeys.BAMBOO_JUNGLE), SpawnGroup.WATER_AMBIENT,
+                ModEntities.GOLDFISH, 1, 2, 5);
+
+        SpawnRestriction.register(ModEntities.GOLDFISH, SpawnRestriction.Location.IN_WATER,
+                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, SchoolingBreedEntity::canSpawnHigh);
+
         // Clownfish Spawns
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.WARM_OCEAN), SpawnGroup.WATER_AMBIENT,
                 ModEntities.CLOWNFISH, 20, 3, 7);
