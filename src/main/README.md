@@ -1,8 +1,10 @@
 # *Plan to add:*
+- Fix infinite Platy bug(?)
 - Fish health and hunger system
 - More water parameters
 - Difference between salt and fresh water  
-- Fix Archerfish Gun multiple instance display settings  
+- Fix Archerfish Gun multiple instance display settings 
+- Change Neon Tetra into: general Tetra class
 - Diseases
 - Villager trade updating
 - Add ways to discover mod features in-game

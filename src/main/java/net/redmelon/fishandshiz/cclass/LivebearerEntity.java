@@ -7,7 +7,6 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 
 public abstract class LivebearerEntity extends SchoolingBreedEntity{
@@ -50,7 +49,7 @@ public abstract class LivebearerEntity extends SchoolingBreedEntity{
     public void tickMovement() {
         super.tickMovement();
         if (!this.getWorld().isClient && this.hasEgg()) {
-            this.setStageAge(this.gestStage + 1);
+            this.setGestAge(this.gestStage + 1);
         }
         if (this.hasEgg()) {
             double d = this.random.nextGaussian() * 0.02;
@@ -60,7 +59,7 @@ public abstract class LivebearerEntity extends SchoolingBreedEntity{
         }
     }
 
-    protected void setStageAge(int eggAge) {
+    protected void setGestAge(int eggAge) {
         this.gestStage = eggAge;
         if ((this.gestStage >= MAX_EGG_AGE) && this.hasEgg()) {
             this.birth();

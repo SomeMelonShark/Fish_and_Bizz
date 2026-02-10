@@ -115,6 +115,11 @@ public class MudCrabEntity extends EggboundEntity implements GeoEntity, EntitySi
     }
 
     @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return stack.getItem() == Items.COD;
+    }
+
+    @Override
     public @Nullable PassiveWaterEntity createChild(ServerWorld var1, PassiveWaterEntity var2) {
         return null;
     }

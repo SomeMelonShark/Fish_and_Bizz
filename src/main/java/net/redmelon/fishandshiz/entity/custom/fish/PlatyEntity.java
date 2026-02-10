@@ -162,7 +162,6 @@ public class PlatyEntity extends LivebearerEntity implements GeoEntity, Variable
                     nextEntity.setDetail(detail);
                     this.playSound(SoundEvents.BLOCK_FROGSPAWN_HATCH, 0.15f, 1.0f);
                     serverWorld.spawnEntityAndPassengers(nextEntity);
-                    this.discard();
                 }
             }
     }
